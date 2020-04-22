@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_22_184210) do
+ActiveRecord::Schema.define(version: 2020_04_22_184728) do
+
+  create_table "course_programs", force: :cascade do |t|
+    t.integer "course_id", null: false
+    t.integer "program_id", null: false
+    t.integer "semester"
+    t.text "required"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id"], name: "index_course_programs_on_course_id"
+    t.index ["program_id"], name: "index_course_programs_on_program_id"
+  end
 
   create_table "courses", force: :cascade do |t|
     t.text "name"
@@ -41,4 +52,6 @@ ActiveRecord::Schema.define(version: 2020_04_22_184210) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "course_programs", "courses"
+  add_foreign_key "course_programs", "programs"
 end

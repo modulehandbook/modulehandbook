@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  course: one
+  program: one
+  semester: 1
+  required: MyText
+
+two:
+  course: two
+  program: two
+  semester: 1
+  required: MyText
