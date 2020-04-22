@@ -1,0 +1,87 @@
+<%= form_with(model: course, local: true) do |form| %>
+  <% if course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+        <% course.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_area :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :code %>
+    <%= form.text_area :code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mission %>
+    <%= form.text_area :mission %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ects %>
+    <%= form.number_field :ects %>
+  </div>
+
+  <div class="field">
+    <%= form.label :examination %>
+    <%= form.text_area :examination %>
+  </div>
+
+  <div class="field">
+    <%= form.label :objectives %>
+    <%= form.text_area :objectives %>
+  </div>
+
+  <div class="field">
+    <%= form.label :contents %>
+    <%= form.text_area :contents %>
+  </div>
+
+  <div class="field">
+    <%= form.label :prerequisites %>
+    <%= form.text_area :prerequisites %>
+  </div>
+
+  <div class="field">
+    <%= form.label :literature %>
+    <%= form.text_area :literature %>
+  </div>
+
+  <div class="field">
+    <%= form.label :methods %>
+    <%= form.text_area :methods %>
+  </div>
+
+  <div class="field">
+    <%= form.label :skills_knowledge_understanding %>
+    <%= form.text_area :skills_knowledge_understanding %>
+  </div>
+
+  <div class="field">
+    <%= form.label :skills_intellectual %>
+    <%= form.text_area :skills_intellectual %>
+  </div>
+
+  <div class="field">
+    <%= form.label :skills_practical %>
+    <%= form.text_area :skills_practical %>
+  </div>
+
+  <div class="field">
+    <%= form.label :skills_general %>
+    <%= form.text_area :skills_general %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

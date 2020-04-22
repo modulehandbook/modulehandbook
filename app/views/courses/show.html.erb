@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @course.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @course.code %>
+</p>
+
+<p>
+  <strong>Mission:</strong>
+  <%= @course.mission %>
+</p>
+
+<p>
+  <strong>Ects:</strong>
+  <%= @course.ects %>
+</p>
+
+<p>
+  <strong>Examination:</strong>
+  <%= @course.examination %>
+</p>
+
+<p>
+  <strong>Objectives:</strong>
+  <%= @course.objectives %>
+</p>
+
+<p>
+  <strong>Contents:</strong>
+  <%= @course.contents %>
+</p>
+
+<p>
+  <strong>Prerequisites:</strong>
+  <%= @course.prerequisites %>
+</p>
+
+<p>
+  <strong>Literature:</strong>
+  <%= @course.literature %>
+</p>
+
+<p>
+  <strong>Methods:</strong>
+  <%= @course.methods %>
+</p>
+
+<p>
+  <strong>Skills knowledge understanding:</strong>
+  <%= @course.skills_knowledge_understanding %>
+</p>
+
+<p>
+  <strong>Skills intellectual:</strong>
+  <%= @course.skills_intellectual %>
+</p>
+
+<p>
+  <strong>Skills practical:</strong>
+  <%= @course.skills_practical %>
+</p>
+
+<p>
+  <strong>Skills general:</strong>
+  <%= @course.skills_general %>
+</p>
+
+<%= link_to 'Edit', edit_course_path(@course) %> |
+<%= link_to 'Back', courses_path %>

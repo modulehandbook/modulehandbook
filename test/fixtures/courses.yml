@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  code: MyText
+  mission: MyText
+  ects: 1
+  examination: MyText
+  objectives: MyText
+  contents: MyText
+  prerequisites: MyText
+  literature: MyText
+  methods: MyText
+  skills_knowledge_understanding: MyText
+  skills_intellectual: MyText
+  skills_practical: MyText
+  skills_general: MyText
+
+two:
+  name: MyText
+  code: MyText
+  mission: MyText
+  ects: 1
+  examination: MyText
+  objectives: MyText
+  contents: MyText
+  prerequisites: MyText
+  literature: MyText
+  methods: MyText
+  skills_knowledge_understanding: MyText
+  skills_intellectual: MyText
+  skills_practical: MyText
+  skills_general: MyText
