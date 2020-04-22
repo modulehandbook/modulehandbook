@@ -2,22 +2,22 @@
 
 <h1>Programs</h1>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Code</th>
-      <th>Mission</th>
-      <th>Degree</th>
-      <th>Ects</th>
-      <th colspan="3"></th>
+      <th scope="col">Name</th>
+      <th scope="col">Code</th>
+      <th scope="col">Mission</th>
+      <th scope="col">Degree</th>
+      <th scope="col">Ects</th>
+      <th scope="col" colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @programs.each do |program| %>
       <tr>
-        <td><%= program.name %></td>
+        <td scope="row"><%= program.name %></td>
         <td><%= program.code %></td>
         <td><%= program.mission %></td>
         <td><%= program.degree %></td>

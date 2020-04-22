@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
+  root 'welcome#index'
   resources :course_programs
   resources :courses
   resources :programs

@@ -2,31 +2,31 @@
 
 <h1>Courses</h1>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Code</th>
-      <th>Mission</th>
-      <th>Ects</th>
-      <th>Examination</th>
-      <th>Objectives</th>
-      <th>Contents</th>
-      <th>Prerequisites</th>
-      <th>Literature</th>
-      <th>Methods</th>
-      <th>Skills knowledge understanding</th>
-      <th>Skills intellectual</th>
-      <th>Skills practical</th>
-      <th>Skills general</th>
-      <th colspan="3"></th>
+      <th scope="col">Name</th>
+      <th scope="col">Code</th>
+      <th scope="col">Mission</th>
+      <th scope="col">Ects</th>
+      <th scope="col">Examination</th>
+      <th scope="col">Objectives</th>
+      <th scope="col">Contents</th>
+      <th scope="col">Prerequisites</th>
+      <th scope="col">Literature</th>
+      <th scope="col">Methods</th>
+      <th scope="col">Skills knowledge understanding</th>
+      <th scope="col">Skills intellectual</th>
+      <th scope="col">Skills practical</th>
+      <th scope="col">Skills general</th>
+      <th scope="col" colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @courses.each do |course| %>
       <tr>
-        <td><%= course.name %></td>
+        <td scope="row"><%= course.name %></td>
         <td><%= course.code %></td>
         <td><%= course.mission %></td>
         <td><%= course.ects %></td>
