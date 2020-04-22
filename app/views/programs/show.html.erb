@@ -27,3 +27,7 @@
 
 <%= link_to 'Edit', edit_program_path(@program) %> |
 <%= link_to 'Back', programs_path %>
+
+<hr/>
+<h3>Courses in Program</h3>
+<%= render 'courses/index_brief', courses: @courses %>

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Courses in Program</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Code</th>
+      <th scope="col">Ects</th>
+      <th scope="col" colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% courses.each do |course| %>
+      <tr>
+        <td scope="row"><%= course.name %></td>
+        <td><%= course.code %></td>
+        <td><%= course.ects %></td>
+        <td><%= link_to 'Show', course %></td>
+        <td><%= link_to 'Edit', edit_course_path(course) %></td>
+        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Course', new_course_path %>
