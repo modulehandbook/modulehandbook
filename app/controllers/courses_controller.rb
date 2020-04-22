@@ -15,6 +15,7 @@ class CoursesController < ApplicationController
   # GET /courses/new
   def new
     @course = Course.new
+    @program = Program.find(params[:program_id]) unless params['program_id'].nil?
   end
 
   # GET /courses/1/edit
@@ -25,7 +26,7 @@ class CoursesController < ApplicationController
   # POST /courses.json
   def create
     @course = Course.new(course_params)
-
+    create_course_program_link(@course,params[:program_id])
     respond_to do |format|
       if @course.save
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
@@ -34,6 +35,12 @@ class CoursesController < ApplicationController
         format.html { render :new }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def create_course_program_link(course, program_id)
+    unless program_id.nil?
+      @course_program = @course.course_programs.build(program_id: program_id)
     end
   end
 

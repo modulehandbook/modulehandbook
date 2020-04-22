@@ -11,6 +11,14 @@
     </div>
   <% end %>
 
+  <% unless program.nil? %>
+  <h4>
+  for Program: <%= program.select_name %>
+  </h4>
+  <%= hidden_field_tag(:program_id, program.id) %>
+  <% end %>
+
+
   <div class="field">
     <%= form.label :name %>
     <%= form.text_area :name %>

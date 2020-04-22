@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Course Programs</h1>
+<h3>Course-Program Links</h3>
+<%= link_to 'New Course Program', new_course_program_path %>
+<br><br>
 
 <table class="table table-hover">
   <thead>
@@ -16,8 +18,8 @@
   <tbody>
     <% @course_programs.each do |course_program| %>
       <tr onclick = "location.href='<%= course_program_path(course_program) %>'">
-        <td scope="row"><%= course_program.course_id %></td>
-        <td><%= course_program.program_id %></td>
+        <td scope="row"><%= course_program.course.name %></td>
+        <td><%= course_program.program.name %></td>
         <td><%= course_program.semester %></td>
         <td><%= course_program.required %></td>
         <td><%= link_to 'Show', course_program %></td>
@@ -27,7 +29,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Course Program', new_course_program_path %>

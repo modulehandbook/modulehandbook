@@ -4,7 +4,7 @@ class CourseProgramsController < ApplicationController
   # GET /course_programs
   # GET /course_programs.json
   def index
-    @course_programs = CourseProgram.all
+    @course_programs = CourseProgram.includes(:course,:program)
   end
 
   # GET /course_programs/1
@@ -64,7 +64,7 @@ class CourseProgramsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course_program
-      @course_program = CourseProgram.find(params[:id])
+      @course_program = CourseProgram.includes(:course,:program).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

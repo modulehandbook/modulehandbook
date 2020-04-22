@@ -1,4 +1,7 @@
-<p id="notice"><%= notice %></p>
+
+<h3>Program: <%= @program.name %></h3>
+<p id="notice"><%= notice %>
+<%= link_to 'Edit', edit_program_path(@program) %></p>
 
 <p>
   <strong>Name:</strong>
@@ -25,9 +28,9 @@
   <%= @program.ects %>
 </p>
 
-<%= link_to 'Edit', edit_program_path(@program) %> |
-<%= link_to 'Back', programs_path %>
 
 <hr/>
 <h3>Courses in Program</h3>
+<%= link_to 'New Course', new_course_path(program_id: @program) %>
+<br><br>
 <%= render 'courses/index_brief', course_programs: @course_programs %>
