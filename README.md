@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Heroku Deployment
 
-Things you may want to cover:
+https://devcenter.heroku.com/articles/getting-started-with-rails6#migrate-your-database
 
-* Ruby version
+    git push heroku master
+    heroku run rake db:migrate
 
-* System dependencies
 
-* Configuration
+https://devcenter.heroku.com/articles/heroku-postgres-backups
 
-* Database creation
+https://devcenter.heroku.com/articles/heroku-postgres-import-export
 
-* Database initialization
+heroku pg:backups:capture
+heroku pg:backups:download
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## added bootstrap with webpack
+yarn add bootstrap jquery popper.js
