@@ -16,7 +16,7 @@
 
   <tbody>
     <% @programs.each do |program| %>
-      <tr>
+      <tr onclick = "location.href='<%= program_path(program) %>'">
         <td scope="row"><%= program.name %></td>
         <td><%= program.code %></td>
         <td><%= program.mission %></td>

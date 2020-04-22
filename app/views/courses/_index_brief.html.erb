@@ -1,27 +1,28 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Courses in Program</h1>
-
 <table class="table table-hover">
   <thead>
     <tr>
+
       <th scope="col">Name</th>
       <th scope="col">Code</th>
       <th scope="col">Ects</th>
-      <th scope="col" colspan="3"></th>
+      <th scope="col">Semester</th>
+      <th scope="col">required?</th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% courses.each do |course| %>
-      <tr>
-        <td scope="row"><%= course.name %></td>
-        <td><%= course.code %></td>
-        <td><%= course.ects %></td>
-        <td><%= link_to 'Show', course %></td>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <% course_programs.each do |course_program| %>
+      <tr onclick = "location.href='<%= course_program_path%>'">
+        <td scope="row"><%= course_program.course.name %></td>
+        <td><%= course_program.course.code %></td>
+        <td><%= course_program.course.ects %></td>
+        <td><%= course_program.semester %></td>
+        <td><%= course_program.required %></td>
+        <td><%= link_to 'Show', course_program %></td>
+        </tr>
     <% end %>
   </tbody>
 </table>
