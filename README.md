@@ -1,5 +1,6 @@
 # README
 
+
 ## Heroku Deployment
 
 https://devcenter.heroku.com/articles/getting-started-with-rails6#migrate-your-database
@@ -32,18 +33,28 @@ Some setup you must do manually if you haven't yet:
        config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
      In production, :host should be set to the actual host of your application.
-
+  (done)
   2. Ensure you have defined root_url to *something* in your config/routes.rb.
      For example:
 
        root to: "home#index"
-
+  (done)
   3. Ensure you have flash messages in app/views/layouts/application.html.erb.
      For example:
 
        <p class="notice"><%= notice %></p>
        <p class="alert"><%= alert %></p>
-
+  (done)
   4. You can copy Devise views (for customization) to your app by running:
 
        rails g devise:views
+  (not done)
+
+
+### emails
+
+~/mine/current/code/uas-module-handbook/module-handbook (devise)$ heroku addons:create sendgrid:starter
+Creating sendgrid:starter on ⬢ module-handbook... free
+Created sendgrid-curly-59499 as SENDGRID_PASSWORD, SENDGRID_USERNAME
+Use heroku addons:docs sendgrid to view documentation
+~/mine/current/code/uas-module-handbook/module-handbook (devise)
