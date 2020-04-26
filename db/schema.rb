@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2020_04_26_075557) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "course_programs", force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.integer "program_id", null: false
+    t.bigint "course_id", null: false
+    t.bigint "program_id", null: false
     t.integer "semester"
     t.text "required"
     t.datetime "created_at", precision: 6, null: false
