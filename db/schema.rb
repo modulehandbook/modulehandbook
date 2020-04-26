@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_25_204522) do
+ActiveRecord::Schema.define(version: 2020_04_26_075557) do
 
   create_table "course_programs", force: :cascade do |t|
     t.integer "course_id", null: false
@@ -72,6 +72,8 @@ ActiveRecord::Schema.define(version: 2020_04_25_204522) do
     t.datetime "locked_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "approved", default: false, null: false
+    t.index ["approved"], name: "index_users_on_approved"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
