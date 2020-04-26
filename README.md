@@ -75,3 +75,16 @@ Creating sendgrid:starter on ⬢ module-handbook... free
 Created sendgrid-curly-59499 as SENDGRID_PASSWORD, SENDGRID_USERNAME
 Use heroku addons:docs sendgrid to view documentation
 ~/mine/current/code/uas-module-handbook/module-handbook (devise)
+
+
+### send mail from console
+mailer = ActionMailer::Base.new
+
+# check settings:
+mailer.delivery_method # -> :smtp
+mailer.smtp_settings # -> { address: "localhost", port: 25, domain: "localhost.localdomain", user_name: nil, password: nil, authentication: nil, enable_starttls_auto: true }
+
+# send mail:
+mailer.mail(from: 'sender@example.com', to: 'recipient@example.com', subject: 'test', body: "Hello, you've got mail!").deliver
+
+Growing Rails Applications in Practice
