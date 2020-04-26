@@ -12,9 +12,9 @@
 
   <tbody>
     <% @users.each do |user| %>
-      <tr onclick = "location.href='<%= user_path(user) %>'">
-        <td scope="row"><%= user.email %></td>
-        <td><%= user.approved %></td>
+      <tr>
+        <td onclick = "location.href='<%= user_path(user) %>'" scope="row"><%= user.email %></td>
+        <td> <input type="checkbox" <%= user.approved ? "checked":"" %>></td>
         <td><%= link_to "Edit", edit_user_path(user) %>
       </tr>
     <% end %>
