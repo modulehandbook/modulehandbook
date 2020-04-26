@@ -1,0 +1,6 @@
+
+<li class="nav-item">
+<% if User.where(approved: false).count > 0 %>
+  <%= link_to('Approve new Users', users_path, approved: 'false', class: "nav-link") %>
+<% end %>
+</li>
