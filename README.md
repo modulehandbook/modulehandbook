@@ -50,41 +50,14 @@ Some setup you must do manually if you haven't yet:
        rails g devise:views
   (not done)
 
-### configured MailGun
-
-https://devcenter.heroku.com/articles/mailgun
-
-ActionMailer::Base.smtp_settings = {
-  :port           => ENV['MAILGUN_SMTP_PORT'],
-  :address        => ENV['MAILGUN_SMTP_SERVER'],
-  :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-  :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-  :domain         => 'module-handbook.heroku.com',
-  :authentication => :plain,
-}
-ActionMailer::Base.delivery_method = :smtp
-
 
 ### devise on heroku
 heroku config:set DEVISE_SECRET_KEY=xyz
 
 ### emails
 
-~/mine/current/code/uas-module-handbook/module-handbook (devise)$ heroku addons:create sendgrid:starter
-Creating sendgrid:starter on ⬢ module-handbook... free
-Created sendgrid-curly-59499 as SENDGRID_PASSWORD, SENDGRID_USERNAME
-Use heroku addons:docs sendgrid to view documentation
-~/mine/current/code/uas-module-handbook/module-handbook (devise)
+- set up emails with private account and plain smtp.
 
+### Devise Require admin to activate account before sign_in
 
-### send mail from console
-mailer = ActionMailer::Base.new
-
-# check settings:
-mailer.delivery_method # -> :smtp
-mailer.smtp_settings # -> { address: "localhost", port: 25, domain: "localhost.localdomain", user_name: nil, password: nil, authentication: nil, enable_starttls_auto: true }
-
-# send mail:
-mailer.mail(from: 'sender@example.com', to: 'recipient@example.com', subject: 'test', body: "Hello, you've got mail!").deliver
-
-Growing Rails Applications in Practice
+https://github.com/heartcombo/devise/wiki/How-To:-Require-admin-to-activate-account-before-sign_in
