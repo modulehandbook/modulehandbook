@@ -19,7 +19,7 @@ class ProgramsController < ApplicationController
     #   .joins(:course)
     #   .pluck(:name, :code,:ects, :semester, :required, :id)
     # this preloads the associations, courses and course_programs:
-    @course_programs = @program.course_programs.includes(:course)
+    @program_courses = @course_programs = @program.course_programs.includes(:course)
   end
 
   # GET /programs/new
