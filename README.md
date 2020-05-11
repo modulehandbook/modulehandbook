@@ -1,6 +1,24 @@
 # README
 
 
+## Starting the app locally
+
+### With Postgres 12.2:
+
+     make startdb **ODER** docker-compose up postgresql -d
+     rails s
+
+then visit http://localhost:3000/
+
+
+### With Postgres 11.7:
+
+    make startdb_11 **ODER** docker-compose up postgresql-11
+    rails s
+
+then visit http://localhost:3000/
+
+
 ## Heroku Deployment
 
 https://devcenter.heroku.com/articles/getting-started-with-rails6#migrate-your-database

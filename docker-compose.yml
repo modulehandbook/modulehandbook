@@ -10,6 +10,16 @@ services:
       - POSTGRES_DB=modhand
     ports:
       - 5433:5432
+  postgresql-11:
+    image: postgres:11.7
+    container_name: modhand-pg-dev
+    environment:
+      - APPLICATION=modhand
+      - POSTGRES_PASSWORD=modhand
+      - POSTGRES_USER=modhand
+      - POSTGRES_DB=modhand
+    ports:
+      - 5433:5432
 #  modhand:
 #    build: .
 #    image: modhand:dev
