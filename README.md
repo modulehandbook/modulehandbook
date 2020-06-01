@@ -13,8 +13,10 @@ https://devcenter.heroku.com/articles/heroku-postgres-backups
 
 https://devcenter.heroku.com/articles/heroku-postgres-import-export
 
-heroku pg:backups:capture
-heroku pg:backups:download
+### Heroku DB Backups
+
+    heroku pg:backups:capture
+    heroku pg:backups:download
 
 
 ## added bootstrap with webpack
