@@ -1,8 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyText
-  code: MyText
+  name: Informatik1
+  code: B1
   mission: MyText
   ects: 1
   examination: MyText
@@ -17,8 +17,8 @@ one:
   skills_general: MyText
 
 two:
-  name: MyText
-  code: MyText
+  name: Informatik 2
+  code: B7
   mission: MyText
   ects: 1
   examination: MyText
