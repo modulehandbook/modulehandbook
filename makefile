@@ -1,9 +1,11 @@
 start:
 	docker-compose up -d
+starts:
+	docker-compose up
 startdb:
-	docker-compose up postgresql -d
+	docker-compose up -d postgresql
 startdb_11:
-	docker-compose up postgresql-11
+	docker-compose -f docker-compose-pg11.yml up postgresql
 import_dump: $(file)
 	rails db:drop
 	rails db:create
