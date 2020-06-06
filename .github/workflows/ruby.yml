@@ -15,9 +15,12 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
-
+    services:
+      postgresql:
+        image: postgres:12.2-alpine
+        ports:
+          - 5433:5432
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby

@@ -35,4 +35,4 @@ ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 # Start the main process.
-CMD ["bundle", "exec", "unicorn", "--port", "3000"]
+CMD ["bundle", "exec", "rails", "server", "--port", "3000"]
