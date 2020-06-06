@@ -1,0 +1,16 @@
+# ignore tmp
+/tmp/*
+/log/*
+
+# sqlite databases
+/db/*.sqlite
+/public/uploads
+.git
+
+# postgres dbs
+/pg-data/**
+/pg-data-11/**
+
+# node modules
+node_modules
+npm-debug.log
