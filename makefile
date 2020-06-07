@@ -3,7 +3,7 @@ start:
 starts:
 	docker-compose up
 startdb:
-	docker-compose up -d postgresql
+	docker-compose -f docker-compose-pg12.yml up -d  postgresql
 startdb_11:
 	docker-compose -f docker-compose-pg11.yml up postgresql
 import_dump: $(file)

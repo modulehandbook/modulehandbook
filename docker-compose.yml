@@ -8,8 +8,6 @@ services:
       - POSTGRES_PASSWORD=modhand
       - POSTGRES_USER=modhand
       - POSTGRES_DB=modhand
-    ports:
-      - 5433:5432
     volumes:
       - ./pg-data:/var/lib/postgresql/data
   module-handbook-rails:
@@ -20,5 +18,7 @@ services:
       - /module-handbook/node_modules
     ports:
       - "3000:3000"
+    environment:
+      - RAILS_DB_HOST=postgresql
     depends_on:
       - postgresql
