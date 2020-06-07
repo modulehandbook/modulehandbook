@@ -17,15 +17,15 @@
 
   <tbody>
     <% @programs.each do |program| %>
-      <tr onclick = "location.href='<%= program_path(program) %>'">
-        <td scope="row"><%= program.name %></td>
-        <td><%= program.code %></td>
+      <tr >
+        <td scope="row"><%= link_to program.name, program_path(program) %></td>
+        <td><%= link_to program.code, program_path(program) %></td>
         <td><%= program.mission %></td>
         <td><%= program.degree %></td>
         <td><%= program.ects %></td>
         <td><%= link_to 'Show', program %></td>
         <td><%= link_to 'Edit', edit_program_path(program) %></td>
-        <td><%= link_to 'Destroy', program, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', program, method: :delete, id: "destroy_program_#{program.id}", data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

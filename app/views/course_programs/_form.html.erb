@@ -29,7 +29,7 @@
 
   <div class="field">
     <%= form.label :required %>
-    <%= form.text_area :required %>
+    <%=  form.select(:required,[['required','required'],['elective','elective']])%>
   </div>
 
   <div class="actions">

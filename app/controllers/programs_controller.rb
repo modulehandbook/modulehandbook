@@ -10,16 +10,7 @@ class ProgramsController < ApplicationController
   # GET /programs/1
   # GET /programs/1.json
   def show
-    # try out in rails c with
-    # p = Program.first
-    # cp = p.course_programs.joins(:course).pluck(:name, :code,:ects, :semester, :required, :id)
-    # This would collect only the required columns in an array via a join clause:
-    # @program_courses = @program
-    #   .course_programs
-    #   .joins(:course)
-    #   .pluck(:name, :code,:ects, :semester, :required, :id)
-    # this preloads the associations, courses and course_programs:
-    @program_courses = @course_programs = @program.course_programs.includes(:course)
+    @course_programs = @program.course_programs.order(:semester).includes(:course)
   end
 
   # GET /programs/new

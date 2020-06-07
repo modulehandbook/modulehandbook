@@ -3,11 +3,13 @@ require "application_system_test_case"
 class ProgramsTest < ApplicationSystemTestCase
   setup do
     @program = programs(:one)
+    @user = users(:one)
+    system_test_login(@user.email,'geheim12')
   end
 
   test "visiting the index" do
     visit programs_url
-    assert_selector "h1", text: "Programs"
+    assert_selector "h3", text: "Programs"
   end
 
   test "creating a Program" do
@@ -22,7 +24,7 @@ class ProgramsTest < ApplicationSystemTestCase
     click_on "Create Program"
 
     assert_text "Program was successfully created"
-    click_on "Back"
+    click_on "Back to Index"
   end
 
   test "updating a Program" do
@@ -42,10 +44,12 @@ class ProgramsTest < ApplicationSystemTestCase
 
   test "destroying a Program" do
     visit programs_url
+    @program = programs(:one)
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      click_on "destroy_program_#{@program.id}"
     end
 
     assert_text "Program was successfully destroyed"
+    assert_false Program.exists?(@program.id)
   end
 end

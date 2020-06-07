@@ -4,7 +4,10 @@ one:
   email: one@host.org
   confirmed_at: <%= Date.yesterday %>
   approved: true
+  encrypted_password: <%= User.new.send(:password_digest, 'geheim12') %>
 
 two:
   email: two@host.org
-
+  confirmed_at: <%= Date.today %>
+  approved: true
+  encrypted_password: <%= User.new.send(:password_digest, 'geheim12') %>

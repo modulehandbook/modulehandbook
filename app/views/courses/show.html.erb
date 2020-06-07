@@ -1,7 +1,30 @@
-<h3>Course <%= @course.name %></h3>
+<h3>Course: <%= @course.name %></h3>
 <p id="notice"><%= notice %>
-  <%= link_to 'Edit', edit_course_path(@course) %> </p>
+  <%= link_to 'Edit', edit_course_path(@course) %>, <%= link_to 'Back to Index', courses_path %> </p>
+<div class = "container">
+  <div class="row">
+    <div class = "col">
+      Already part of Programs: <br/>
+<% @programs.each do |program_name, program_id| %>
+  <%= link_to program_name, program_path(program_id)  %>,
+<% end %>
+    </div>
+    <div class = "col">
+<%= form_with(model: @course_program, local: true) do |form| %>
+    <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
+  <div class="field">
+    <%= form.label :program_id %>
+    <%= form.collection_select(:program_id, Program.order(:name), :id, :select_name) %>
+  </div>
 
+  <div class="actions">
+    <%= form.submit 'Add to Program'%>
+  </div>
+<% end %>
+    </div>
+  </div>
+</div>
+<hr/>
 <p>
   <strong>Name:</strong>
   <%= @course.name %>
@@ -20,6 +43,31 @@
 <p>
   <strong>Ects:</strong>
   <%= @course.ects %>
+</p>
+
+<p>
+  <strong>Lecture Hours:</strong>
+  <%= @course.lectureHrs %>
+</p>
+
+<p>
+  <strong>Lab Hours:</strong>
+  <%= @course.labHrs %>
+</p>
+
+<p>
+  <strong>Tutorial Hours:</strong>
+  <%= @course.tutorialHrs %>
+</p>
+
+<p>
+  <strong>Room Requirements:</strong>
+  <%= @course.room %>
+</p>
+
+<p>
+  <strong>Equipment:</strong>
+  <%= @course.equipment %>
 </p>
 
 <p>

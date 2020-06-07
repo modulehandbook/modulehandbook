@@ -1,15 +1,17 @@
 <h3>Link between Course and Program</h3>
 <p id="notice"><%= notice %>
-  <%= link_to 'Edit', edit_course_program_path(@course_program) %></p>
+  <%= link_to 'Edit', edit_course_program_path(@course_program) %>,
+  <%= link_to 'Back to Program', program_path(@course_program.program) %>,
+  <%= link_to 'Back to Index', course_programs_path %></p>
 
 <p>
   <strong>Course:</strong>
-  <%= @course_program.course.name %>
+  <%= link_to @course_program.course.name, @course_program.course %>
 </p>
 
 <p>
   <strong>Program:</strong>
-  <%= @course_program.program.name %>
+  <%= link_to @course_program.program.name, @course_program.program %>
 </p>
 
 <p>

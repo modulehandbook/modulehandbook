@@ -3,11 +3,13 @@ require "application_system_test_case"
 class CourseProgramsTest < ApplicationSystemTestCase
   setup do
     @course_program = course_programs(:one)
+    @user = users(:one)
+    system_test_login(@user.email,'geheim12')
   end
 
   test "visiting the index" do
     visit course_programs_url
-    assert_selector "h1", text: "Course Programs"
+    assert_selector "h3", text: "Course Programs"
   end
 
   test "creating a Course program" do

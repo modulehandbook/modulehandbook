@@ -28,10 +28,9 @@
 
   <tbody>
     <% @courses.each do |course| %>
-      <tr onclick = "location.href='<%= course_path(course) %>'">
-        <td scope="row"><%= course.name %></td>
-        <td><%= course.code %></td>
-
+      <tr >
+        <td scope="row"><%= link_to course.name, course_path(course)%></td>
+        <td><%= link_to course.code, course_path(course) %></td>
         <td><%= course.ects %></td>
 
         <% if false %>

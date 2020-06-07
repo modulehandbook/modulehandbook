@@ -7,15 +7,13 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
-    env:
-      RAILS_DB_HOST: postgresql
+  container-job:
     runs-on: ubuntu-latest
     services:
       postgresql:
         image: postgres:12.2-alpine
         ports:
-          - 5433:5432
+          - 5432:5432
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
@@ -26,3 +24,5 @@ jobs:
       run: bundle install
     - name: Run tests
       run: bundle exec rake
+      env:
+        RAILS_DB_HOST: localhost

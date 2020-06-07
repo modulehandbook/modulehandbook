@@ -25,9 +25,9 @@ class CourseProgramsController < ApplicationController
   # POST /course_programs.json
   def create
     @course_program = CourseProgram.new(course_program_params)
-
+    next_view_edit = params['next_view'] && params['next_view'] == 'edit'
     respond_to do |format|
-      if @course_program.save
+      if @course_program.save && !next_view_edit
         format.html { redirect_to @course_program, notice: 'Course program was successfully created.' }
         format.json { render :show, status: :created, location: @course_program }
       else

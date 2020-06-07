@@ -4,12 +4,14 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all
+    @courses = Course.order(:code)
   end
 
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @programs = @course.programs.order(:name).pluck(:name,:id)
+    @course_program = CourseProgram.new(course: @course)
   end
 
   # GET /courses/new
@@ -76,6 +78,9 @@ class CoursesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def course_params
-      params.require(:course).permit(:name, :code, :mission, :ects, :examination, :objectives, :contents, :prerequisites, :literature, :methods, :skills_knowledge_understanding, :skills_intellectual, :skills_practical, :skills_general)
+      params.require(:course).permit(:name, :code, :mission, :ects, :examination, :objectives, :contents,
+                                     :prerequisites, :literature, :methods, :skills_knowledge_understanding,
+                                     :skills_intellectual, :skills_practical, :skills_general,
+                                     :lectureHrs,:labHrs, :tutorialHrs, :equipment, :room)
     end
 end
