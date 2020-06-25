@@ -22,3 +22,7 @@ docker_clean:
 	docker rmi $(docker images -qa)
 restore_dump: $(file_source) $(file_target)
 	pg_restore -f $(file_target) $(file_source) # dump-2020-05-04.dump mh-dump-2020-05-04.dump
+dump:
+	heroku pg:backups:capture
+	heroku pg:backups:download
+	mv latest.dump ../dumps/uas-module-handbook-$(shell date +%Y-%m-%d).pgdump
