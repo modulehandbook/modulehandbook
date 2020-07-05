@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  container-job:
+  runner-job:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -20,16 +20,19 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          5432:5432
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7
-    - name: Install dependencies
-      run: bundle install
-    - name: Run tests
-      run: bundle exec rake
-      env:
-        RAILS_DB_HOST: postgres
-        POSTGRES_PORT: 5432
+      - name: Check out repo code
+        uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: bundle exec rake
+        env:
+          RAILS_DB_HOST: postgres
+          POSTGRES_PORT: 5432
