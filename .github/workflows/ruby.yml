@@ -10,7 +10,7 @@ jobs:
   container-job:
     runs-on: ubuntu-latest
     services:
-      postgresql:
+      postgres:
         image: postgres:12.2-alpine
         ports:
           - 5432:5432
@@ -25,4 +25,5 @@ jobs:
     - name: Run tests
       run: bundle exec rake
       env:
-        RAILS_DB_HOST: localhost
+        RAILS_DB_HOST: postgres
+        POSTGRES_PORT: 5432

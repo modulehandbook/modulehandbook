@@ -6,7 +6,7 @@ default: &default
   host: <%= ENV.fetch("RAILS_DB_HOST") { 'localhost' } %>
   username: modhand
   password: modhand
-  port: 5432
+  port: <%= ENV.fetch("POSTGRES_PORT") { 5432 } %>
 
 development:
   <<: *default
