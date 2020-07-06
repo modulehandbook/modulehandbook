@@ -5,7 +5,7 @@ default: &default
   timeout: 5000
   host: <%= ENV.fetch("RAILS_DB_HOST") { 'localhost' } %>
   username: modhand
-  password: modhand
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") { 'modhand' } %> 
   port: <%= ENV.fetch("POSTGRES_PORT") { 5432 } %>
 
 development:
