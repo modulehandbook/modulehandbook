@@ -4,8 +4,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   host: <%= ENV.fetch("RAILS_DB_HOST") { 'localhost' } %>
-  username: modhand
-  password: <%= ENV.fetch("POSTGRES_PASSWORD") { 'modhand' } %> 
+  username: postgres
+  password: postgres
   port: <%= ENV.fetch("POSTGRES_PORT") { 5432 } %>
 
 development:
