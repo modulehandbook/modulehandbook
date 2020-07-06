@@ -8,6 +8,11 @@ on:
 
 jobs:
   runner-job:
+    env:
+      RAILS_DB_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -21,11 +26,6 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      env:
-        RAILS_DB_HOST: localhost
-        POSTGRES_PORT: 5432
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
       - name: Check out repo code
         uses: actions/checkout@v2
       - name: Set up Ruby
