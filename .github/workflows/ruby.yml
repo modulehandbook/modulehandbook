@@ -36,4 +36,5 @@ jobs:
         env:
           RAILS_DB_HOST: localhost
           POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
