@@ -26,3 +26,8 @@ dump:
 	heroku pg:backups:capture
 	heroku pg:backups:download
 	mv latest.dump ../dumps/uas-module-handbook-$(shell date +%Y-%m-%d).pgdump
+reset_db:
+	rails db:drop RAILS_ENV=development
+	rails db:create RAILS_ENV=development
+	rails db:migrate
+	rails db:seed

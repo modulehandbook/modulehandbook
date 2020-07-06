@@ -7,13 +7,16 @@ on:
     branches: [ master ]
 
 jobs:
+  env:
+    RAILS_DB_HOST: localhost
+    POSTGRES_PORT: 5432
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
   runner-job:
     runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres
-        env:
-          POSTGRES_PASSWORD: postgres
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -35,8 +38,3 @@ jobs:
         run: rails db:create RAILS_ENV=test
       - name: Run tests
         run: rails test
-        env:
-          RAILS_DB_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
