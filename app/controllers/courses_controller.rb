@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :course_json]
 
   # GET /courses
   # GET /courses.json
@@ -12,6 +12,20 @@ class CoursesController < ApplicationController
   def show
     @programs = @course.programs.order(:name).pluck(:name,:id)
     @course_program = CourseProgram.new(course: @course)
+  end
+
+  def course_json
+    data = @course.to_json
+    code = @course.try(:code) ? @course.code : "XX"
+    name = @course.try(:name) ? @course.name : "xxx"
+    filename = Date.today.to_s + "_" + code.to_s + "-" + name.to_s
+    send_data data, :type => 'application/json; header=present', :disposition => "attachment; filename=#{filename}.json"
+  end
+
+  def courses_json
+    data = Course.all.to_json
+    filename = Date.today.to_s
+    send_data data, :type => 'application/json; header=present', :disposition => "attachment; filename=#{filename}_all-courses.json"
   end
 
   # GET /courses/new

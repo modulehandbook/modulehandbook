@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h3>Programs</h3>
+<%= link_to 'Export all Programs as JSON', programs_json_url %> <br>
 <%= link_to 'New Program', new_program_path %>
 <br><br>
 <table class="table table-hover">
@@ -12,6 +13,7 @@
       <th scope="col">Degree</th>
       <th scope="col">Ects</th>
       <th scope="col" colspan="3"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
@@ -26,6 +28,7 @@
         <td><%= link_to 'Show', program %></td>
         <td><%= link_to 'Edit', edit_program_path(program) %></td>
         <td><%= link_to 'Destroy', program, method: :delete, id: "destroy_program_#{program.id}", data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Export JSON', program_json_url(id: program.id) %></td>
       </tr>
     <% end %>
   </tbody>
