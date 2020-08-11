@@ -15,17 +15,21 @@ class CoursesController < ApplicationController
   end
 
   def course_json
+    # TODO: add names of associated programs
     data = @course.to_json
-    code = @course.try(:code) ? @course.code : "XX"
-    name = @course.try(:name) ? @course.name : "xxx"
-    filename = Date.today.to_s + "_" + code.to_s + "-" + name.to_s
-    send_data data, :type => 'application/json; header=present', :disposition => "attachment; filename=#{filename}.json"
+    code = @course.try(:code) ? @course.code : 'XX'
+    name = @course.try(:name) ? @course.name : 'xxx'
+    filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
+    send_data data, type: 'application/json; header=present',
+                    disposition: "attachment; filename=#{filename}.json"
   end
 
   def courses_json
+    # TODO: add names of associated programs
     data = Course.all.to_json
     filename = Date.today.to_s
-    send_data data, :type => 'application/json; header=present', :disposition => "attachment; filename=#{filename}_all-courses.json"
+    send_data data, type: 'application/json; header=present',
+                    disposition: "attachment; filename=#{filename}_all-courses.json"
   end
 
   # GET /courses/new

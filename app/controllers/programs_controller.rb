@@ -14,17 +14,24 @@ class ProgramsController < ApplicationController
   end
 
   def program_json
-    data = @program.to_json
-    code = @program.try(:code) ? @program.code : "XX"
-    name = @program.try(:name) ? @program.name : "xxx"
-    filename = Date.today.to_s + "_" + code.to_s + "-" + name.to_s
-    send_data data, :type => 'application/json; header=present', :disposition => "attachment; filename=#{filename}.json"
+    data = get_program_data(@program)
+    code = @program.try(:code) ? @program.code : 'XX'
+    name = @program.try(:name) ? @program.name : 'xxx'
+    filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
+    send_data data, type: 'application/json; header=present',
+                    disposition: "attachment; filename=#{filename}.json"
   end
 
   def programs_json
-    data = Program.all.to_json
+    # TODO: fix JSON output
+    programs = Program.all
+    data = []
+    programs.each do |program|
+      data << get_program_data(program)
+    end
     filename = Date.today.to_s
-    send_data data, :type => 'application/json; header=present', :disposition => "attachment; filename=#{filename}_all-programs.json"
+    send_data data, type: 'application/json; header=present',
+                    disposition: "attachment; filename=#{filename}_all-programs.json"
   end
 
   # GET /programs/new
@@ -85,5 +92,17 @@ class ProgramsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def program_params
       params.require(:program).permit(:name, :code, :mission, :degree, :ects)
+    end
+
+    def get_program_data(program)
+      data = program.as_json
+      course_programs = program.course_programs.order(:semester).includes(:course)
+      courses = []
+      course_programs.each do |cp|
+        courses << Course.find_by(id: cp.course_id).as_json
+      end
+      data['courses'] = courses
+      data = data.to_json
+      data
     end
 end
