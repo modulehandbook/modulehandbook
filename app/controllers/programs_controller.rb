@@ -23,12 +23,12 @@ class ProgramsController < ApplicationController
   end
 
   def programs_json
-    # TODO: fix JSON output
     programs = Program.all
-    data = []
+    data = [].as_json
     programs.each do |program|
-      data << get_program_data(program)
+      data << get_program_data(program).as_json
     end
+    data = data.as_json
     filename = Date.today.to_s
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}_all-programs.json"
@@ -95,14 +95,14 @@ class ProgramsController < ApplicationController
     end
 
     def get_program_data(program)
-      data = program.as_json
+      data = program.as_json(root: true)
       course_programs = program.course_programs.order(:semester).includes(:course)
       courses = []
       course_programs.each do |cp|
-        courses << Course.find_by(id: cp.course_id).as_json
+        courses << Course.find_by(id: cp.course_id).as_json(root: true)
       end
       data['courses'] = courses
-      data = data.to_json
+      data = data.as_json
       data
     end
 end

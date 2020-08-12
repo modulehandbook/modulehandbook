@@ -16,7 +16,7 @@ class CoursesController < ApplicationController
 
   def course_json
     # TODO: add names of associated programs
-    data = @course.to_json
+    data = @course.as_json(root: true)
     code = @course.try(:code) ? @course.code : 'XX'
     name = @course.try(:name) ? @course.name : 'xxx'
     filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
@@ -26,7 +26,7 @@ class CoursesController < ApplicationController
 
   def courses_json
     # TODO: add names of associated programs
-    data = Course.all.to_json
+    data = Course.all.as_json(root: true)
     filename = Date.today.to_s
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}_all-courses.json"
