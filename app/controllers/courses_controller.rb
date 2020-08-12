@@ -15,8 +15,7 @@ class CoursesController < ApplicationController
   end
 
   def course_json
-    # TODO: add names of associated programs
-    data = @course.as_json(root: true)
+    data = get_course_data(@course).as_json(root: true)
     code = @course.try(:code) ? @course.code : 'XX'
     name = @course.try(:name) ? @course.name : 'xxx'
     filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
@@ -25,8 +24,12 @@ class CoursesController < ApplicationController
   end
 
   def courses_json
-    # TODO: add names of associated programs
-    data = Course.all.as_json(root: true)
+    courses = Course.all
+    data = [].as_json
+    courses.each do |course|
+      data << get_course_data(course).as_json
+    end
+    data = data.as_json
     filename = Date.today.to_s
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}_all-courses.json"
@@ -100,5 +103,13 @@ class CoursesController < ApplicationController
                                      :prerequisites, :literature, :methods, :skills_knowledge_understanding,
                                      :skills_intellectual, :skills_practical, :skills_general,
                                      :lectureHrs,:labHrs, :tutorialHrs, :equipment, :room)
+    end
+
+    def get_course_data(course)
+      data = course.as_json(root: true)
+      programs = course.programs.order(:name).pluck(:code, :name).as_json(root: true)
+      data['programs'] = programs
+      data = data.as_json
+      data
     end
 end
