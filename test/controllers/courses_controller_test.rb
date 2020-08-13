@@ -47,4 +47,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to courses_url
   end
+
+  # TODO: write test import_course_json, export_course_json, export_courses_json
 end
