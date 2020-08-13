@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h3>Courses</h3>
-<%= link_to 'Export all Coursea as JSON', courses_json_url %> <br>
+<%= link_to 'Export all Coursea as JSON', export_courses_json_url %> <br>
 <%= link_to 'New Course', new_course_path %>
 <br><br>
 <table class="table table-hover">
@@ -51,7 +51,7 @@
         <td><%= link_to 'Show', course %></td>
         <td><%= link_to 'Edit', edit_course_path(course) %></td>
         <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to 'Export JSON', course_json_url(id: course.id) %></td>
+        <td><%= link_to 'Export JSON', export_course_json_url(id: course.id) %></td>
       </tr>
     <% end %>
   </tbody>

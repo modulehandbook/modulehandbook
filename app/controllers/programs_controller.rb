@@ -1,5 +1,5 @@
 class ProgramsController < ApplicationController
-  before_action :set_program, only: [:show, :edit, :update, :destroy, :program_json]
+  before_action :set_program, only: [:show, :edit, :update, :destroy, :export_program_json]
 
   # GET /programs
   # GET /programs.json
@@ -13,7 +13,7 @@ class ProgramsController < ApplicationController
     @course_programs = @program.course_programs.order(:semester).includes(:course)
   end
 
-  def program_json
+  def export_program_json
     data = get_program_data(@program)
     code = @program.try(:code) ? @program.code : 'XX'
     name = @program.try(:name) ? @program.name : 'xxx'
@@ -22,7 +22,7 @@ class ProgramsController < ApplicationController
                     disposition: "attachment; filename=#{filename}.json"
   end
 
-  def programs_json
+  def export_programs_json
     programs = Program.all
     data = [].as_json
     programs.each do |program|

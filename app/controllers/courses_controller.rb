@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :course_json]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :export_course_json]
 
   # GET /courses
   # GET /courses.json
@@ -14,7 +14,7 @@ class CoursesController < ApplicationController
     @course_program = CourseProgram.new(course: @course)
   end
 
-  def course_json
+  def export_course_json
     data = get_course_data(@course).as_json(root: true)
     code = @course.try(:code) ? @course.code : 'XX'
     name = @course.try(:name) ? @course.name : 'xxx'
@@ -23,7 +23,7 @@ class CoursesController < ApplicationController
                     disposition: "attachment; filename=#{filename}.json"
   end
 
-  def courses_json
+  def export_courses_json
     courses = Course.all
     data = [].as_json
     courses.each do |course|

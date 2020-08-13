@@ -1,7 +1,7 @@
 
 <h3>Program: <%= @program.name %></h3>
 <p id="notice"><%= notice %>
-  <%= link_to 'Export Program as JSON', program_json_url(id: @program.id) %> <br>
+  <%= link_to 'Export Program as JSON', export_program_json_url(id: @program.id) %> <br>
 <%= link_to 'Edit', edit_program_path(@program) %>, <%= link_to 'Back to Index', programs_path %></p>
 
 <p>
