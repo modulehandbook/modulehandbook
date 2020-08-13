@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   get 'export_courses_json', to: 'courses#export_courses_json'
   get 'export_program_json', to: 'programs#export_program_json'
   get 'export_programs_json', to: 'programs#export_programs_json'
+
+  post 'import_course_json', to: 'courses#import_course_json'
+
 end

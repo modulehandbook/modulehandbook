@@ -14,8 +14,38 @@ class CoursesController < ApplicationController
     @course_program = CourseProgram.new(course: @course)
   end
 
+  def import_course_json
+    file = params[:file].read
+    data = JSON.parse(file)
+    course = Course.new
+    course.name = data['name']
+    course.code = data['code']
+    course.mission = data['mission']
+    course.ects = data['ects']
+    course.examination = data['examination']
+    course.objectives = data['objectives']
+    course.contents = data['contents']
+    course.prerequisites = data['prerequisites']
+    course.literature = data['literature']
+    course.methods = data['methods']
+    course.skills_knowledge_understanding = data['skills_knowledge_understanding']
+    course.skills_intellectual = data['skills_intellectual']
+    course.skills_practical = data['skills_practical']
+    course.skills_general = data['skills_general']
+    course.lectureHrs = data['lectureHrs']
+    course.labHrs = data['labHrs']
+    course.tutorialHrs = data['tutorialHrs']
+    course.equipment = data['equipment']
+    course.room = data['room']
+    course.save
+    respond_to do |format|
+      format.html { redirect_to course_path(course) }
+    end
+  end
+
   def export_course_json
-    data = get_course_data(@course).as_json(root: true)
+    data = get_course_data(@course).as_json
+    data = JSON.pretty_generate(data)
     code = @course.try(:code) ? @course.code : 'XX'
     name = @course.try(:name) ? @course.name : 'xxx'
     filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
@@ -26,6 +56,7 @@ class CoursesController < ApplicationController
   def export_courses_json
     courses = Course.all
     data = [].as_json
+    data = JSON.pretty_generate(data)
     courses.each do |course|
       data << get_course_data(course).as_json
     end
@@ -106,8 +137,8 @@ class CoursesController < ApplicationController
     end
 
     def get_course_data(course)
-      data = course.as_json(root: true)
-      programs = course.programs.order(:name).pluck(:code, :name).as_json(root: true)
+      data = course.as_json
+      programs = course.programs.order(:name).pluck(:code, :name).as_json
       data['programs'] = programs
       data = data.as_json
       data

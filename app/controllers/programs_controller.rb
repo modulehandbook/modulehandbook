@@ -15,6 +15,7 @@ class ProgramsController < ApplicationController
 
   def export_program_json
     data = get_program_data(@program)
+    data = JSON.pretty_generate(data)
     code = @program.try(:code) ? @program.code : 'XX'
     name = @program.try(:name) ? @program.name : 'xxx'
     filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
@@ -25,6 +26,7 @@ class ProgramsController < ApplicationController
   def export_programs_json
     programs = Program.all
     data = [].as_json
+    data = JSON.pretty_generate(data)
     programs.each do |program|
       data << get_program_data(program).as_json
     end
@@ -95,11 +97,11 @@ class ProgramsController < ApplicationController
     end
 
     def get_program_data(program)
-      data = program.as_json(root: true)
+      data = program.as_json
       course_programs = program.course_programs.order(:semester).includes(:course)
       courses = []
       course_programs.each do |cp|
-        courses << Course.find_by(id: cp.course_id).as_json(root: true)
+        courses << Course.find_by(id: cp.course_id).as_json
       end
       data['courses'] = courses
       data = data.as_json
