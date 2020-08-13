@@ -33,5 +33,38 @@
 <hr/>
 <h3>Courses in Program</h3>
 <%= link_to 'New Course', new_course_path(program_id: @program) %>
-<br><br>
+<!-- Button trigger modal -->
+ | <a href="#" data-toggle="modal" data-target="#jsonModal">
+   Import Course from JSON
+ </a>
+ <br><br>
 <%= render 'course_list', course_programs: @course_programs %>
+
+
+
+
+
+
+<!-- JSON Course Modal -->
+<div class="modal fade" id="jsonModal" tabindex="-1" role="dialog" aria-labelledby="jsonModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <%= form_tag import_course_json_path, multipart: true do %>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Import a Course from an existing JSON-File</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= file_field_tag :file, :style => 'display:inline; margin-top:-10px' %>
+        <%= hidden_field_tag :program_id, @program.id, :style => 'display:inline; margin-top:-10px' %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= submit_tag 'Upload & Import', :class => 'btn btn-primary' %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

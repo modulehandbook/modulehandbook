@@ -38,6 +38,20 @@ class CoursesController < ApplicationController
     course.equipment = data['equipment']
     course.room = data['room']
     course.save
+    @course = course
+    create_course_program_link(course, params[:program_id]) if params[:program_id]
+    course.save
+    # else
+    #   programs = data['programs']
+    #   programs.each do |program|
+    #     #{"id"=>1, "name"=>"Internationale Medieninformatik", "code"=>"IMI-B", "mission"=>nil, "degree"=>"Bachelor", "ects"=>180, "created_at"=>"2020-08-10T12:53:42.070Z", "updated_at"=>"2020-08-10T12:53:42.070Z"}
+    #     #course_program = CourseProgram.new
+    #     #course_program. ...
+    #     #course_program.save
+    #     # TODO: finish concept!!!
+    #   end
+    # end
+
     respond_to do |format|
       format.html { redirect_to course_path(course) }
     end
@@ -138,7 +152,7 @@ class CoursesController < ApplicationController
 
     def get_course_data(course)
       data = course.as_json
-      programs = course.programs.order(:name).pluck(:code, :name).as_json
+      programs = course.programs.order(:name).as_json
       data['programs'] = programs
       data = data.as_json
       data
