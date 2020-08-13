@@ -17,42 +17,17 @@ class CoursesController < ApplicationController
   def import_course_json
     files = params[:files] || []
     files.each do |file|
-      data = JSON.parse(file.read) #, symbolize_names: true)
-      # helper? -> create_course_from_json oder so
-      course = Course.new
-      course.name = data['name']
-      course.code = data['code']
-      course.mission = data['mission']
-      course.ects = data['ects']
-      course.examination = data['examination']
-      course.objectives = data['objectives']
-      course.contents = data['contents']
-      course.prerequisites = data['prerequisites']
-      course.literature = data['literature']
-      course.methods = data['methods']
-      course.skills_knowledge_understanding = data['skills_knowledge_understanding']
-      course.skills_intellectual = data['skills_intellectual']
-      course.skills_practical = data['skills_practical']
-      course.skills_general = data['skills_general']
-      course.lectureHrs = data['lectureHrs']
-      course.labHrs = data['labHrs']
-      course.tutorialHrs = data['tutorialHrs']
-      course.equipment = data['equipment']
-      course.room = data['room']
-      course.save
-      @course = course
-      create_course_program_link(course, params[:program_id]) if params[:program_id]
-      course.save
-      # else
-      #   programs = data['programs']
-      #   programs.each do |program|
-      #     #{"id"=>1, "name"=>"Internationale Medieninformatik", "code"=>"IMI-B", "mission"=>nil, "degree"=>"Bachelor", "ects"=>180, "created_at"=>"2020-08-10T12:53:42.070Z", "updated_at"=>"2020-08-10T12:53:42.070Z"}
-      #     #course_program = CourseProgram.new
-      #     #course_program. ...
-      #     #course_program.save
-      #     # TODO: finish concept!!!
-      #   end
-      # end
+      data = JSON.parse(file.read)
+      @course = Course.create_from_json(data)
+      create_course_program_link(@course, params[:program_id]) if params[:program_id]
+      @course.save
+      # TODO: Programs erstellen lassen?
+      programs = data['programs']
+      programs.each do |program_data|
+        program = Program.create_from_json(program_data)
+        create_course_program_link(@course, program.id)
+        @course.save
+      end
     end
     respond_to do |format|
       if files.count < 1

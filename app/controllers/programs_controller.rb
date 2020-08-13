@@ -16,33 +16,19 @@ class ProgramsController < ApplicationController
   def import_program_json
     files = params[:files] || []
     files.each do |file|
-      data = JSON.parse(file.read) #, symbolize_names: true)
-      # helper? -> create_program_from_json oder so
-      program = Program.new
-      program.name = data['name']
-      program.code = data['code']
-      program.mission = data['mission']
-      program.degree = data['degree']
-      program.ects = data['ects']
-      program.save
-      @program = program
-      # else
-      #   courses = data['courses']
-      #   courses.each do |course|
-      #     #{"id": 39, "name": "Usability", "code": "WT2", "mission": null, "ects": 5, "examination": null, "objectives": null, "contents": null, "prerequisites": null, "literature": null, "methods": "SL/Ü 2/2", "skills_knowledge_understanding": null, "skills_intellectual": null, "skills_practical": null, "skills_general": null, "created_at": "2020-08-13T13:27:21.592Z", "updated_at": "2020-08-13T13:27:21.592Z", "lectureHrs": null, "labHrs": null, "tutorialHrs": null, "equipment": null, "room": null}
-      #     #course_program = CourseProgram.new
-      #     #course_program. ...
-      #     #course_program.save
-      #     # TODO: finish concept!!!
-      #   end
-      # end
+      data = JSON.parse(file.read)
+      @program = Program.create_from_json(data)
+      # TODO: Courses erstellen lassen?
+      courses = data['courses']
+      courses.each do |course_data|
+        course = Course.create_from_json(course_data)
+        course.course_programs.build(program_id: @program.id)
+        course.save
+      end
     end
     respond_to do |format|
-      if files.count != 1
-        format.html { redirect_to programs_path }
-      else
-        format.html { redirect_to program_path(@program) }
-      end
+      format.html { redirect_to programs_path } if files.count != 1
+      format.html { redirect_to program_path(@program) } if files.count == 1
     end
   end
 
