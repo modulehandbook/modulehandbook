@@ -35,7 +35,7 @@
 <%= link_to 'New Course', new_course_path(program_id: @program) %>
 <!-- Button trigger modal -->
  | <a href="#" data-toggle="modal" data-target="#jsonModal">
-   Import Course from JSON
+   Import Course(s) from JSON
  </a>
  <br><br>
 <%= render 'course_list', course_programs: @course_programs %>
@@ -57,7 +57,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= file_field_tag :file, :style => 'display:inline; margin-top:-10px' %>
+        <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
         <%= hidden_field_tag :program_id, @program.id, :style => 'display:inline; margin-top:-10px' %>
       </div>
       <div class="modal-footer">
