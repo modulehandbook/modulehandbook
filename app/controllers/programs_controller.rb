@@ -13,11 +13,44 @@ class ProgramsController < ApplicationController
     @course_programs = @program.course_programs.order(:semester).includes(:course)
   end
 
+  def import_program_json
+    files = params[:files] || []
+    files.each do |file|
+      data = JSON.parse(file.read) #, symbolize_names: true)
+      # helper? -> create_program_from_json oder so
+      program = Program.new
+      program.name = data['name']
+      program.code = data['code']
+      program.mission = data['mission']
+      program.degree = data['degree']
+      program.ects = data['ects']
+      program.save
+      @program = program
+      # else
+      #   courses = data['courses']
+      #   courses.each do |course|
+      #     #{"id": 39, "name": "Usability", "code": "WT2", "mission": null, "ects": 5, "examination": null, "objectives": null, "contents": null, "prerequisites": null, "literature": null, "methods": "SL/Ü 2/2", "skills_knowledge_understanding": null, "skills_intellectual": null, "skills_practical": null, "skills_general": null, "created_at": "2020-08-13T13:27:21.592Z", "updated_at": "2020-08-13T13:27:21.592Z", "lectureHrs": null, "labHrs": null, "tutorialHrs": null, "equipment": null, "room": null}
+      #     #course_program = CourseProgram.new
+      #     #course_program. ...
+      #     #course_program.save
+      #     # TODO: finish concept!!!
+      #   end
+      # end
+    end
+    respond_to do |format|
+      if files.count != 1
+        format.html { redirect_to programs_path }
+      else
+        format.html { redirect_to program_path(@program) }
+      end
+    end
+  end
+
   def export_program_json
     data = get_program_data(@program)
     data = JSON.pretty_generate(data)
-    code = @program.try(:code) ? @program.code : 'XX'
-    name = @program.try(:name) ? @program.name : 'xxx'
+    code = @program.try(:code) ? @program.code.gsub(' ', '') : 'XX'
+    name = @program.try(:name) ? @program.name.gsub(' ', '') : 'xxx'
     filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}.json"

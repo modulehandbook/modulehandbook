@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   get 'export_programs_json', to: 'programs#export_programs_json'
 
   post 'import_course_json', to: 'courses#import_course_json'
+  post 'import_program_json', to: 'programs#import_program_json'
 
 end

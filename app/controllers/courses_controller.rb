@@ -15,10 +15,10 @@ class CoursesController < ApplicationController
   end
 
   def import_course_json
-    #byebug
     files = params[:files] || []
     files.each do |file|
-      data = JSON.parse(file.read)
+      data = JSON.parse(file.read) #, symbolize_names: true)
+      # helper? -> create_course_from_json oder so
       course = Course.new
       course.name = data['name']
       course.code = data['code']
@@ -55,7 +55,9 @@ class CoursesController < ApplicationController
       # end
     end
     respond_to do |format|
-      if files.count > 1 && params[:program_id]
+      if files.count < 1
+        format.html { redirect_to courses_path }
+      elsif files.count > 1 && params[:program_id]
         format.html { redirect_to program_path(params[:program_id]) }
       elsif files.count > 1
         format.html { redirect_to courses_path }
@@ -68,8 +70,8 @@ class CoursesController < ApplicationController
   def export_course_json
     data = get_course_data(@course).as_json
     data = JSON.pretty_generate(data)
-    code = @course.try(:code) ? @course.code : 'XX'
-    name = @course.try(:name) ? @course.name : 'xxx'
+    code = @course.try(:code) ? @course.code.gsub(' ', '') : 'XX'
+    name = @course.try(:name) ? @course.name.gsub(' ', '') : 'xxx'
     filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}.json"
