@@ -57,7 +57,7 @@ class CoursesController < ApplicationController
     data = [].as_json
     data = JSON.pretty_generate(data)
     courses.each do |course|
-      data << get_course_data(course).as_json
+      data << get_course_data(course).to_json
     end
     data = data.as_json
     filename = Date.today.to_s

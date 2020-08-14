@@ -47,7 +47,7 @@ class ProgramsController < ApplicationController
     data = [].as_json
     data = JSON.pretty_generate(data)
     programs.each do |program|
-      data << get_program_data(program).as_json
+      data << get_program_data(program).to_json
     end
     data = data.as_json
     filename = Date.today.to_s
