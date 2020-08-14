@@ -61,7 +61,7 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, @program.code
     assert_includes response.body, @program.name
   end
-#####
+
   test "should import a program from json" do
     file = fixture_file_upload("#{Rails.root}/test/fixtures/files/2020-08-14_IMI-B-InternationaleMedieninformatik.json",'application/json')
     files_array = Array.new
