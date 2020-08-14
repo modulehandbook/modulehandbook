@@ -59,6 +59,9 @@ JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
         </button>
       </div>
       <div class="modal-body">
+        <p>
+          Here you can upload a JSON-File including an entire Program. If the JSON-File also includes Courses, they will be created as well and linked to the Program. If the Program or a Course already exists (if the code is already taken), it will not be updated but the Course-Program-Link will be created with the existing records.
+        </p>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
       </div>
       <div class="modal-footer">

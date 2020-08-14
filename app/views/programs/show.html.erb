@@ -57,6 +57,9 @@
         </button>
       </div>
       <div class="modal-body">
+        <p>
+          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will not be updated but the Course-Program-Link will be created with the existing records.
+        </p>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
         <%= hidden_field_tag :program_id, @program.id, :style => 'display:inline; margin-top:-10px' %>
       </div>

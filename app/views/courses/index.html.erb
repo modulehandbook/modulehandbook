@@ -76,6 +76,9 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
         </button>
       </div>
       <div class="modal-body">
+        <p>
+          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will not be updated.
+        </p>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
       </div>
       <div class="modal-footer">
