@@ -21,23 +21,28 @@ class CoursesController < ApplicationController
       @course = Course.create_from_json(data)
       create_course_program_link(@course, params[:program_id]) if params[:program_id]
       @course.save
-      # TODO: Programs erstellen lassen?
       programs = data['programs']
       programs.each do |program_data|
         program = Program.create_from_json(program_data)
-        create_course_program_link(@course, program.id)
+        existing_cpl = CourseProgram.find_by(course_id: @course.id, program_id: program.id)
+        if existing_cpl.nil?
+          @course_program = @course.course_programs.build(program_id: program.id,
+                                                          semester: program_data['semester'],
+                                                          required: program_data['required'])
+        end
+
         @course.save
       end
     end
     respond_to do |format|
       if files.count < 1
-        format.html { redirect_to courses_path }
+        format.html { redirect_to courses_path, notice: 'No files selected to import Course(s) from' }
       elsif files.count > 1 && params[:program_id]
-        format.html { redirect_to program_path(params[:program_id]) }
+        format.html { redirect_to program_path(params[:program_id]), notice: 'Course successfully imported into this Program' }
       elsif files.count > 1
-        format.html { redirect_to courses_path }
+        format.html { redirect_to courses_path, notice: 'Courses successfully imported' }
       else
-        format.html { redirect_to course_path(@course) }
+        format.html { redirect_to course_path(@course), notice: 'Course successfully imported' }
       end
     end
   end
@@ -138,6 +143,14 @@ class CoursesController < ApplicationController
     def get_course_data(course)
       data = course.as_json
       programs = course.programs.order(:name).as_json
+      cp_links = course.course_programs
+      programs.each do |program|
+        cp_link = cp_links.where(program_id: program['id'])
+        cp_link.each do |link|
+          program['semester'] = link.semester
+          program['required'] = link.required
+        end
+      end
       data['programs'] = programs
       data = data.as_json
       data

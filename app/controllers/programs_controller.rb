@@ -18,17 +18,22 @@ class ProgramsController < ApplicationController
     files.each do |file|
       data = JSON.parse(file.read)
       @program = Program.create_from_json(data)
-      # TODO: Courses erstellen lassen?
       courses = data['courses']
       courses.each do |course_data|
         course = Course.create_from_json(course_data)
-        course.course_programs.build(program_id: @program.id)
+        existing_cpl = CourseProgram.find_by(course_id: course.id, program_id: @program.id)
+        if existing_cpl.nil?
+          course.course_programs.build(program_id: @program.id,
+                                       semester: course_data['semester'],
+                                       required: course_data['required'])
+        end
         course.save
       end
     end
     respond_to do |format|
-      format.html { redirect_to programs_path } if files.count != 1
-      format.html { redirect_to program_path(@program) } if files.count == 1
+      format.html { redirect_to programs_path, notice: 'No files selected to import Program(s) from' } if files.count < 1
+      format.html { redirect_to programs_path, notice: 'Programs successfully imported' } if files.count > 1
+      format.html { redirect_to program_path(@program), notice: 'Program successfully imported' } if files.count == 1
     end
   end
 
@@ -117,10 +122,14 @@ class ProgramsController < ApplicationController
 
     def get_program_data(program)
       data = program.as_json
-      course_programs = program.course_programs.order(:semester).includes(:course)
-      courses = []
-      course_programs.each do |cp|
-        courses << Course.find_by(id: cp.course_id).as_json
+      courses = program.courses.order(:code).as_json
+      cp_links = program.course_programs
+      courses.each do |course|
+        cp_link = cp_links.where(course_id: course['id'])
+        cp_link.each do |link|
+          course['semester'] = link.semester
+          course['required'] = link.required
+        end
       end
       data['courses'] = courses
       data = data.as_json
