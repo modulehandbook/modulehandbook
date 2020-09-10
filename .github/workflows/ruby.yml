@@ -33,6 +33,8 @@ jobs:
           ruby-version: 2.7
       - name: Install dependencies
         run: bundle install
+      - name: Yarn Install
+        run: yarn install --check-files
       - name: Compile Assets
         run: bin/rails webpacker:compile
       - name: create test db
