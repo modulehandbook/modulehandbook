@@ -1,5 +1,5 @@
 class ProgramsController < ApplicationController
-  before_action :set_program, only: [:show, :edit, :update, :destroy]
+  before_action :set_program, only: [:show, :edit, :update, :destroy, :export_program_json]
 
   # GET /programs
   # GET /programs.json
@@ -11,6 +11,53 @@ class ProgramsController < ApplicationController
   # GET /programs/1.json
   def show
     @course_programs = @program.course_programs.order(:semester).includes(:course)
+  end
+
+  def import_program_json
+    files = params[:files] || []
+    files.each do |file|
+      data = JSON.parse(file.read)
+      @program = Program.create_from_json(data)
+      courses = data['courses']
+      courses.each do |course_data|
+        course = Course.create_from_json(course_data)
+        existing_cpl = CourseProgram.find_by(course_id: course.id, program_id: @program.id)
+        if existing_cpl.nil?
+          course.course_programs.build(program_id: @program.id,
+                                       semester: course_data['semester'],
+                                       required: course_data['required'])
+        end
+        course.save
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to programs_path, notice: 'No files selected to import Program(s) from' } if files.count < 1
+      format.html { redirect_to programs_path, notice: 'Programs successfully imported' } if files.count > 1
+      format.html { redirect_to program_path(@program), notice: 'Program successfully imported' } if files.count == 1
+    end
+  end
+
+  def export_program_json
+    data = get_program_data(@program)
+    data = JSON.pretty_generate(data)
+    code = @program.try(:code) ? @program.code.gsub(' ', '') : 'XX'
+    name = @program.try(:name) ? @program.name.gsub(' ', '') : 'xxx'
+    filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
+    send_data data, type: 'application/json; header=present',
+                    disposition: "attachment; filename=#{filename}.json"
+  end
+
+  def export_programs_json
+    programs = Program.all
+    data = [].as_json
+    data = JSON.pretty_generate(data)
+    programs.each do |program|
+      data << get_program_data(program).to_json
+    end
+    data = data.as_json
+    filename = Date.today.to_s
+    send_data data, type: 'application/json; header=present',
+                    disposition: "attachment; filename=#{filename}_all-programs.json"
   end
 
   # GET /programs/new
@@ -71,5 +118,21 @@ class ProgramsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def program_params
       params.require(:program).permit(:name, :code, :mission, :degree, :ects)
+    end
+
+    def get_program_data(program)
+      data = program.as_json
+      courses = program.courses.order(:code).as_json
+      cp_links = program.course_programs
+      courses.each do |course|
+        cp_link = cp_links.where(course_id: course['id'])
+        cp_link.each do |link|
+          course['semester'] = link.semester
+          course['required'] = link.required
+        end
+      end
+      data['courses'] = courses
+      data = data.as_json
+      data
     end
 end

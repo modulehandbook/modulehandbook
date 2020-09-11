@@ -1,6 +1,7 @@
 
 <h3>Program: <%= @program.name %></h3>
-<p id="notice"><%= notice %>
+<p id="notice"><%= notice %><br>
+  <%= link_to 'Export Program as JSON', export_program_json_url(id: @program.id) %> <br>
 <%= link_to 'Edit', edit_program_path(@program) %>, <%= link_to 'Back to Index', programs_path %></p>
 
 <p>
@@ -32,5 +33,41 @@
 <hr/>
 <h3>Courses in Program</h3>
 <%= link_to 'New Course', new_course_path(program_id: @program) %>
-<br><br>
+<!-- Button trigger modal -->
+ | <a href="#" data-toggle="modal" data-target="#jsonModal">
+   Import Course(s) from JSON
+ </a>
+ <br><br>
 <%= render 'course_list', course_programs: @course_programs %>
+
+
+
+
+
+
+<!-- JSON Modal -->
+<div class="modal fade" id="jsonModal" tabindex="-1" role="dialog" aria-labelledby="jsonModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <%= form_tag import_course_json_path, multipart: true do %>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Import a Course from an existing JSON-File</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. Any Course-Program-Links will also be created.
+        </p>
+        <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
+        <%= hidden_field_tag :program_id, @program.id, :style => 'display:inline; margin-top:-10px' %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= submit_tag 'Upload & Import', :class => 'btn btn-primary' %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

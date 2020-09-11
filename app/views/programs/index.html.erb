@@ -1,7 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <h3>Programs</h3>
-<%= link_to 'New Program', new_program_path %>
+
+<%= link_to 'New Program', new_program_path %><br>
+JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
+<!-- Button trigger modal -->
+| <a href="#" data-toggle="modal" data-target="#jsonModal">
+  Import Program(s)
+</a>
+
+
 <br><br>
 <table class="table table-hover">
   <thead>
@@ -12,6 +20,7 @@
       <th scope="col">Degree</th>
       <th scope="col">Ects</th>
       <th scope="col" colspan="3"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
@@ -26,9 +35,40 @@
         <td><%= link_to 'Show', program %></td>
         <td><%= link_to 'Edit', edit_program_path(program) %></td>
         <td><%= link_to 'Destroy', program, method: :delete, id: "destroy_program_#{program.id}", data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Export JSON', export_program_json_url(id: program.id) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+
+
+
+
+
+<!-- JSON Modal -->
+<div class="modal fade" id="jsonModal" tabindex="-1" role="dialog" aria-labelledby="jsonModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <%= form_tag import_program_json_path, multipart: true do %>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Import a Program from an existing JSON-File</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Here you can upload a JSON-File including an entire Program. If the JSON-File also includes Courses, they will be created as well and linked to the Program. If the Program or a Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. The Course-Program-Link will also be created.
+        </p>
+        <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= submit_tag 'Upload & Import', :class => 'btn btn-primary' %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

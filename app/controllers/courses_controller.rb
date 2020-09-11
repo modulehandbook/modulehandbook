@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :export_course_json]
 
   # GET /courses
   # GET /courses.json
@@ -12,6 +12,62 @@ class CoursesController < ApplicationController
   def show
     @programs = @course.programs.order(:name).pluck(:name,:id)
     @course_program = CourseProgram.new(course: @course)
+  end
+
+  def import_course_json
+    files = params[:files] || []
+    files.each do |file|
+      data = JSON.parse(file.read)
+      @course = Course.create_from_json(data)
+      create_course_program_link(@course, params[:program_id]) if params[:program_id]
+      @course.save
+      programs = data['programs']
+      programs.each do |program_data|
+        program = Program.create_from_json(program_data)
+        existing_cpl = CourseProgram.find_by(course_id: @course.id, program_id: program.id)
+        if existing_cpl.nil?
+          @course_program = @course.course_programs.build(program_id: program.id,
+                                                          semester: program_data['semester'],
+                                                          required: program_data['required'])
+        end
+
+        @course.save
+      end
+    end
+    respond_to do |format|
+      if files.count < 1
+        format.html { redirect_to courses_path, notice: 'No files selected to import Course(s) from' }
+      elsif files.count > 1 && params[:program_id]
+        format.html { redirect_to program_path(params[:program_id]), notice: 'Course successfully imported into this Program' }
+      elsif files.count > 1
+        format.html { redirect_to courses_path, notice: 'Courses successfully imported' }
+      else
+        format.html { redirect_to course_path(@course), notice: 'Course successfully imported' }
+      end
+    end
+  end
+
+  def export_course_json
+    data = get_course_data(@course).as_json
+    data = JSON.pretty_generate(data)
+    code = @course.try(:code) ? @course.code.gsub(' ', '') : 'XX'
+    name = @course.try(:name) ? @course.name.gsub(' ', '') : 'xxx'
+    filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
+    send_data data, type: 'application/json; header=present',
+                    disposition: "attachment; filename=#{filename}.json"
+  end
+
+  def export_courses_json
+    courses = Course.all
+    data = [].as_json
+    data = JSON.pretty_generate(data)
+    courses.each do |course|
+      data << get_course_data(course).to_json
+    end
+    data = data.as_json
+    filename = Date.today.to_s
+    send_data data, type: 'application/json; header=present',
+                    disposition: "attachment; filename=#{filename}_all-courses.json"
   end
 
   # GET /courses/new
@@ -82,5 +138,21 @@ class CoursesController < ApplicationController
                                      :prerequisites, :literature, :methods, :skills_knowledge_understanding,
                                      :skills_intellectual, :skills_practical, :skills_general,
                                      :lectureHrs,:labHrs, :tutorialHrs, :equipment, :room)
+    end
+
+    def get_course_data(course)
+      data = course.as_json
+      programs = course.programs.order(:name).as_json
+      cp_links = course.course_programs
+      programs.each do |program|
+        cp_link = cp_links.where(program_id: program['id'])
+        cp_link.each do |link|
+          program['semester'] = link.semester
+          program['required'] = link.required
+        end
+      end
+      data['programs'] = programs
+      data = data.as_json
+      data
     end
 end
