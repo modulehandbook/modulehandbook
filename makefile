@@ -31,3 +31,10 @@ reset_db:
 	rails db:create RAILS_ENV=development
 	rails db:migrate
 	rails db:seed
+rails_test:
+	# common fixes on Lottes Laptop
+	# in test_helper.rb -> parallelize(workers: 1)
+	# export DISABLE_SPRING=true
+	rails db:create RAILS_ENV=test
+	rails db:migrate RAILS_ENV=test
+	rails test
