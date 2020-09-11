@@ -1,5 +1,6 @@
 <h3>Course: <%= @course.name %></h3>
-<p id="notice"><%= notice %>
+<p id="notice"><%= notice %><br>
+  <%= link_to 'Export Course as JSON', export_course_json_url(id: @course.id) %> <br>
   <%= link_to 'Edit', edit_course_path(@course) %>, <%= link_to 'Back to Index', courses_path %> </p>
 <div class = "container">
   <div class="row">
