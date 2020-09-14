@@ -4,7 +4,15 @@ class CourseProgramsController < ApplicationController
   # GET /course_programs
   # GET /course_programs.json
   def index
-    @course_programs = CourseProgram.includes(:course,:program)
+    if params[:program_id]
+      @course_programs = CourseProgram.where(program_id: params[:program_id])
+    else
+      @course_programs = CourseProgram.includes(:course,:program)
+    end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @course_programs }
+    end
   end
 
   # GET /course_programs/1

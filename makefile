@@ -31,3 +31,5 @@ reset_db:
 	rails db:create RAILS_ENV=development
 	rails db:migrate
 	rails db:seed
+webpacker_stop:
+	kill $(ps aux | grep 'webpack' | awk '{print $2}')
