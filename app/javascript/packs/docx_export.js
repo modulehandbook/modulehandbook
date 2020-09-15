@@ -1,9 +1,10 @@
 // const docx = require('docx');
 //import { Document, Packer, Paragraph, TextRun } from 'docx';
-import { Document, Packer, Paragraph, TextRun } from "docx";
 // import * as docx from "docx";
-// import * as fs from 'fs'; 
 // import { saveAs } from 'FileSaver';
+const fs = require('fs');
+const { Document, Packer, Paragraph, TextRun } = require('docx');
+
 
 function fetch_course(course_id) {
   $.get("courses/" + course_id + ".json", function(fetched_course) {
@@ -70,6 +71,7 @@ $(document).ready(function() {
         });
       })
       event.preventDefault();
+      console.log("got data");
       export_docx();
     }
   );
