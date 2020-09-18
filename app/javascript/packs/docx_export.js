@@ -1,11 +1,6 @@
 
 const fs = require('fs');
-//const docx = require('./docx');
-//import { Document, Packer, Paragraph, TextRun } from './docx';
-// import * as docx from "docx";
-// import { saveAs } from 'FileSaver';
-//const { Document, Packer, Paragraph, TextRun } = require('./docx');
-
+import {saveAs} from 'file-saver';
 
 function fetch_course(course_id) {
   $.get("courses/" + course_id + ".json", function(fetched_course) {
