@@ -168,16 +168,16 @@ function export_docx(program_data) {
             ],
           }),
 
-          // new docx.TableRow({
-          //   children: [
-          //     new docx.TableCell({
-          //       children: [new docx.Paragraph("Weekly contact hours")],
-          //     }),
-          //     new docx.TableCell({
-          //       children: [new docx.Paragraph(courses[i].lectureHrs + ' hrs Lecture/Week, ' + courses[i].tutorialHrs + ' hrs Tutorial/Week, ' + courses[i].labHrs + ' hrs Lab/Week')],
-          //     }),
-          //   ],
-          // }),
+          new docx.TableRow({
+            children: [
+              new docx.TableCell({
+                children: [new docx.Paragraph("Weekly contact hours")],
+              }),
+              new docx.TableCell({
+                children: [new docx.Paragraph((courses[i].lectureHrs === null ? '' : courses[i].lectureHrs + ' hrs Lecture/Week, ') + (courses[i].tutorialHrs === null ? '' : courses[i].tutorialHrs + ' hrs Tutorial/Week, ') + (courses[i].labHrs === null ? '' : courses[i].labHrs + ' hrs Lab/Week'))],
+              }),
+            ],
+          }),
 
           new docx.TableRow({
             children: [
@@ -411,14 +411,14 @@ function export_docx(program_data) {
           new docx.TableRow({
             children: [
               new docx.TableCell({
-                children: [new docx.Paragraph('Equipment - ')],// + courses[i].equipment === null ? '' : courses[i].equipment)],
+                children: [new docx.Paragraph('Equipment - ' + (courses[i].equipment === null ? '' : courses[i].equipment))],
               }),
             ],
           }),
           new docx.TableRow({
             children: [
               new docx.TableCell({
-                children: [new docx.Paragraph('Rooms - ')],// + courses[i].room === null ? '' : courses[i].room)],
+                children: [new docx.Paragraph('Rooms - ' + (courses[i].room === null ? '' : courses[i].room))],
               }),
             ],
           }),
@@ -521,6 +521,10 @@ function export_docx(program_data) {
           }),
 
         ],
+      }),
+
+      new docx.Paragraph({
+        children: [new docx.PageBreak()],
       }),
     ];
 

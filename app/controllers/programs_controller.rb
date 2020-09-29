@@ -10,7 +10,7 @@ class ProgramsController < ApplicationController
   # GET /programs/1
   # GET /programs/1.json
   def show
-    @course_programs = @program.course_programs.order(:semester).includes(:course)
+    @course_programs = @program.course_programs.order('required DESC, semester ASC').includes(:course)
   end
 
   def import_program_json
