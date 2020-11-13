@@ -5,7 +5,7 @@ class Program < ApplicationRecord
     "#{name} (#{code})"
   end
 
-  def self.create_from_json(data)
+  def self.find_or_create_from_json(data)
     existing_program = Program.find_by(code: data['code'])
     if !existing_program.nil?
       program = existing_program
@@ -18,6 +18,40 @@ class Program < ApplicationRecord
     program.degree = data['degree']
     program.ects = data['ects']
     program.save
+    program
+  end
+
+  def self.json_import_from_file(file)
+    data = JSON.parse(file.read)
+    ProgramFactory.create(data)
+  end
+
+  def gather_data_for_json_export
+    data = self.as_json
+    courses = self.courses.order(:code).as_json
+    cp_links = self.course_programs
+    courses.each do |course|
+      cp_link = cp_links.where(course_id: course['id'])
+      cp_link.each do |link|
+        course['semester'] = link.semester
+        course['required'] = link.required
+      end
+    end
+    data['courses'] = courses
+    data = data.as_json
+    data
+  end
+end
+
+class ProgramFactory
+  def self.create(data)
+    program = Program.find_or_create_from_json(data)
+    courses = data['courses']
+    courses.each do |course_data|
+      course = Course.find_or_create_from_json(course_data)
+      cpl = CourseProgram.find_or_create_from_json(course_data, course.id, program.id)
+      course.save
+    end
     program
   end
 end

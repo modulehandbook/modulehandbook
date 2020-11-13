@@ -17,22 +17,7 @@ class CoursesController < ApplicationController
   def import_course_json
     files = params[:files] || []
     files.each do |file|
-      data = JSON.parse(file.read)
-      @course = Course.create_from_json(data)
-      create_course_program_link(@course, params[:program_id]) if params[:program_id]
-      @course.save
-      programs = data['programs']
-      programs.each do |program_data|
-        program = Program.create_from_json(program_data)
-        existing_cpl = CourseProgram.find_by(course_id: @course.id, program_id: program.id)
-        if existing_cpl.nil?
-          @course_program = @course.course_programs.build(program_id: program.id,
-                                                          semester: program_data['semester'],
-                                                          required: program_data['required'])
-        end
-
-        @course.save
-      end
+      @course = Course.json_import_from_file(file, params[:program_id])
     end
     respond_to do |format|
       if files.count < 1
@@ -48,7 +33,7 @@ class CoursesController < ApplicationController
   end
 
   def export_course_json
-    data = get_course_data(@course).as_json
+    data = @course.gather_data_for_json_export.as_json
     data = JSON.pretty_generate(data)
     code = @course.try(:code) ? @course.code.gsub(' ', '') : 'XX'
     name = @course.try(:name) ? @course.name.gsub(' ', '') : 'xxx'
@@ -62,7 +47,7 @@ class CoursesController < ApplicationController
     data = [].as_json
     data = JSON.pretty_generate(data)
     courses.each do |course|
-      data << get_course_data(course).to_json
+      data << course.gather_data_for_json_export.to_json
     end
     data = data.as_json
     filename = Date.today.to_s
@@ -138,21 +123,5 @@ class CoursesController < ApplicationController
                                      :prerequisites, :literature, :methods, :skills_knowledge_understanding,
                                      :skills_intellectual, :skills_practical, :skills_general,
                                      :lectureHrs,:labHrs, :tutorialHrs, :equipment, :room)
-    end
-
-    def get_course_data(course)
-      data = course.as_json
-      programs = course.programs.order(:name).as_json
-      cp_links = course.course_programs
-      programs.each do |program|
-        cp_link = cp_links.where(program_id: program['id'])
-        cp_link.each do |link|
-          program['semester'] = link.semester
-          program['required'] = link.required
-        end
-      end
-      data['programs'] = programs
-      data = data.as_json
-      data
     end
 end
