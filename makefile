@@ -31,6 +31,14 @@ reset_db:
 	rails db:create RAILS_ENV=development
 	rails db:migrate
 	rails db:seed
+webpacker_stop:
+	kill $(ps aux | grep 'webpack' | awk '{print $2}')
+yarn_update_docx:
+	yarn upgrade docx
+	cp node_modules/docx/build/index.js public/docx/index.js
+yarn_update:
+	yarn upgrade
+	cp node_modules/docx/build/index.js public/docx/index.js
 rails_test:
 	# common fixes on Lottes Laptop
 	# in test_helper.rb -> parallelize(workers: 1)
