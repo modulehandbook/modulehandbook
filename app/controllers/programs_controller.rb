@@ -16,19 +16,7 @@ class ProgramsController < ApplicationController
   def import_program_json
     files = params[:files] || []
     files.each do |file|
-      data = JSON.parse(file.read)
-      @program = Program.create_from_json(data)
-      courses = data['courses']
-      courses.each do |course_data|
-        course = Course.create_from_json(course_data)
-        existing_cpl = CourseProgram.find_by(course_id: course.id, program_id: @program.id)
-        if existing_cpl.nil?
-          course.course_programs.build(program_id: @program.id,
-                                       semester: course_data['semester'],
-                                       required: course_data['required'])
-        end
-        course.save
-      end
+      @program = Program.json_import_from_file(file)
     end
     respond_to do |format|
       format.html { redirect_to programs_path, notice: 'No files selected to import Program(s) from' } if files.count < 1
@@ -38,7 +26,7 @@ class ProgramsController < ApplicationController
   end
 
   def export_program_json
-    data = get_program_data(@program)
+    data = @program.gather_data_for_json_export
     data = JSON.pretty_generate(data)
     code = @program.try(:code) ? @program.code.gsub(' ', '') : 'XX'
     name = @program.try(:name) ? @program.name.gsub(' ', '') : 'xxx'
@@ -52,7 +40,7 @@ class ProgramsController < ApplicationController
     data = [].as_json
     data = JSON.pretty_generate(data)
     programs.each do |program|
-      data << get_program_data(program).to_json
+      data << program.gather_data_for_json_export.to_json
     end
     data = data.as_json
     filename = Date.today.to_s
@@ -118,21 +106,5 @@ class ProgramsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def program_params
       params.require(:program).permit(:name, :code, :mission, :degree, :ects)
-    end
-
-    def get_program_data(program)
-      data = program.as_json
-      courses = program.courses.order(:code).as_json
-      cp_links = program.course_programs
-      courses.each do |course|
-        cp_link = cp_links.where(course_id: course['id'])
-        cp_link.each do |link|
-          course['semester'] = link.semester
-          course['required'] = link.required
-        end
-      end
-      data['courses'] = courses
-      data = data.as_json
-      data
     end
 end

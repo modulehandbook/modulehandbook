@@ -39,3 +39,10 @@ yarn_update_docx:
 yarn_update:
 	yarn upgrade
 	cp node_modules/docx/build/index.js public/docx/index.js
+rails_test:
+	# common fixes on Lottes Laptop
+	# in test_helper.rb -> parallelize(workers: 1)
+	# export DISABLE_SPRING=true
+	rails db:create RAILS_ENV=test
+	rails db:migrate RAILS_ENV=test
+	rails test
