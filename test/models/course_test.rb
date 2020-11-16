@@ -5,9 +5,9 @@ class CourseTest < ActiveSupport::TestCase
   #   assert true
   # end
 
-  #describe "find_or_create_from_json creates valid course" do
-    test "find_or_create_from_json creates valid course with all details provided" do
-      course_json = JSON.parse('{
+  # describe "find_or_create_from_json creates valid course" do
+  test 'find_or_create_from_json creates valid course with all details provided' do
+    course_json = JSON.parse('{
         "id": 1,
         "name": "Informatik  1",
         "code": "B2",
@@ -31,21 +31,21 @@ class CourseTest < ActiveSupport::TestCase
         "equipment": nil,
         "room": nil
         }'.gsub('nil', 'null'))
-        assert_difference('Course.count', 1) do
-          course = Course.find_or_create_from_json(course_json)
-          assert_equal course.code, course_json['code']
-        end
-      end
+    assert_difference('Course.count', 1) do
+      course = Course.find_or_create_from_json(course_json)
+      assert_equal course.code, course_json['code']
+    end
+  end
 
-      test "find_or_create_from_json creates valid course with not all details provided" do
-        course_json = JSON.parse('{
+  test 'find_or_create_from_json creates valid course with not all details provided' do
+    course_json = JSON.parse('{
           "name": "Informatik  1",
           "code": "B3"
           }')
-          assert_difference('Course.count', 1) do
-            course = Course.find_or_create_from_json(course_json)
-            assert_equal course.code, course_json['code']
-          end
-        end
-    #end
+    assert_difference('Course.count', 1) do
+      course = Course.find_or_create_from_json(course_json)
+      assert_equal course.code, course_json['code']
+    end
+  end
+    # end
   end

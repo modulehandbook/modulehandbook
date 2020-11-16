@@ -6,9 +6,9 @@ class CourseProgram < ApplicationRecord
     cpl = CourseProgram.find_by(course_id: course_id, program_id: program_id)
     if cpl.nil?
       cpl = CourseProgram.new(course_id: course_id,
-                             program_id: program_id,
-                             semester: data['semester'],
-                             required: data['required'])
+                              program_id: program_id,
+                              semester: data['semester'],
+                              required: data['required'])
     end
     cpl.save
     cpl
