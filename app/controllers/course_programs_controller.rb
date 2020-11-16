@@ -1,4 +1,5 @@
 class CourseProgramsController < ApplicationController
+  authorize_resource
   before_action :set_course_program, only: [:show, :edit, :update, :destroy]
 
   # GET /course_programs

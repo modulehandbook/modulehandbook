@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  authorize_resource
   before_action :set_course, only: [:show, :edit, :update, :destroy, :export_course_json]
 
   # GET /courses

@@ -7,13 +7,13 @@ class Ability
     return unless user.present?
 
     merge Abilities::Writer.new(user)
-    return unless user.editor? || user.qa? || user.admin?
+    return unless user.role == 'editor' || user.role == 'qa' || user.role == 'admin'
 
     merge Abilities::Editor.new(user)
-    return unless user.qa? || user.admin?
+    return unless user.role == 'qa' || user.role == 'admin'
 
-    merge Abilities::QA.new(user)
-    return unless user.admin?
+    merge Abilities::Qa.new(user)
+    return unless user.role == 'admin'
 
     merge Abilities::Admin.new(user)
   end
