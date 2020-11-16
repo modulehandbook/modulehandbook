@@ -13,10 +13,10 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-  def system_test_login(email,password)
+  def system_test_login(email, password)
     visit new_user_session_path
-    fill_in "user_email", with: email
-    fill_in "user_password", with: password
-    click_on "Log in"
+    fill_in 'user_email', with: email
+    fill_in 'user_password', with: password
+    click_on 'Log in'
   end
 end

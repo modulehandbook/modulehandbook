@@ -6,7 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  ROLES = %i[admin writer editor qa]
+  ROLES = %i[admin writer editor qa].freeze
 
   after_initialize :set_default_role, if: :new_record?
 

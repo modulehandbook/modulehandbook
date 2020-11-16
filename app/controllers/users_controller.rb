@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   authorize_resource
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: %i[show edit update]
 
   def index
     @users = if params[:approved] == 'false'
@@ -12,12 +12,9 @@ class UsersController < ApplicationController
              end
    end
 
-  def show
+  def show; end
 
-  end
-
-  def edit
-  end
+  def edit; end
 
   def update
     respond_to do |format|
@@ -39,5 +36,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :approved, :role)
   end
-
 end

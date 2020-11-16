@@ -1,15 +1,15 @@
 class CourseProgramsController < ApplicationController
   authorize_resource
-  before_action :set_course_program, only: [:show, :edit, :update, :destroy]
+  before_action :set_course_program, only: %i[show edit update destroy]
 
   # GET /course_programs
   # GET /course_programs.json
   def index
-    if params[:program_id]
-      @course_programs = CourseProgram.where(program_id: params[:program_id])
-    else
-      @course_programs = CourseProgram.includes(:course,:program)
-    end
+    @course_programs = if params[:program_id]
+                         CourseProgram.where(program_id: params[:program_id])
+                       else
+                         CourseProgram.includes(:course, :program)
+                       end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @course_programs }
@@ -18,8 +18,7 @@ class CourseProgramsController < ApplicationController
 
   # GET /course_programs/1
   # GET /course_programs/1.json
-  def show
-  end
+  def show; end
 
   # GET /course_programs/new
   def new
@@ -27,8 +26,7 @@ class CourseProgramsController < ApplicationController
   end
 
   # GET /course_programs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /course_programs
   # POST /course_programs.json
@@ -71,13 +69,14 @@ class CourseProgramsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course_program
-      @course_program = CourseProgram.includes(:course,:program).find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def course_program_params
-      params.require(:course_program).permit(:course_id, :program_id, :semester, :required)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course_program
+    @course_program = CourseProgram.includes(:course, :program).find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def course_program_params
+    params.require(:course_program).permit(:course_id, :program_id, :semester, :required)
+  end
 end

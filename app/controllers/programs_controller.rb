@@ -1,6 +1,6 @@
 class ProgramsController < ApplicationController
   authorize_resource
-  before_action :set_program, only: [:show, :edit, :update, :destroy, :export_program_json]
+  before_action :set_program, only: %i[show edit update destroy export_program_json]
 
   # GET /programs
   # GET /programs.json
@@ -20,7 +20,9 @@ class ProgramsController < ApplicationController
       @program = Program.json_import_from_file(file)
     end
     respond_to do |format|
-      format.html { redirect_to programs_path, notice: 'No files selected to import Program(s) from' } if files.count < 1
+      if files.count < 1
+        format.html { redirect_to programs_path, notice: 'No files selected to import Program(s) from' }
+      end
       format.html { redirect_to programs_path, notice: 'Programs successfully imported' } if files.count > 1
       format.html { redirect_to program_path(@program), notice: 'Program successfully imported' } if files.count == 1
     end
@@ -55,8 +57,7 @@ class ProgramsController < ApplicationController
   end
 
   # GET /programs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /programs
   # POST /programs.json
@@ -99,13 +100,14 @@ class ProgramsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_program
-      @program = Program.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def program_params
-      params.require(:program).permit(:name, :code, :mission, :degree, :ects)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_program
+    @program = Program.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def program_params
+    params.require(:program).permit(:name, :code, :mission, :degree, :ects)
+  end
 end
