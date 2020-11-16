@@ -6,6 +6,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  ROLES = %i[admin writer editor qa]
+
+  after_initialize :set_default_role, if: :new_record?
+
+  def set_default_role
+    self.role ||= :writer
+  end
+
   after_create :send_admin_mail
   def send_admin_mail
     AdminMailer.new_user_waiting_for_approval(email).deliver

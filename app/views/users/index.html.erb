@@ -5,8 +5,9 @@
   <thead>
     <tr>
       <th scope="col">Email</th>
+      <th scope="col">Role</th>
       <th scope="col">Approved</th>
-      <th scope="col" colspan="3"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
@@ -14,8 +15,9 @@
     <% @users.each do |user| %>
       <tr>
         <td onclick = "location.href='<%= user_path(user) %>'" scope="row"><%= user.email %></td>
+        <td><%= user.role.to_s.humanize %></td>
         <td> <input type="checkbox" <%= user.approved ? "checked":"" %>></td>
-        <td><%= link_to "Edit", edit_user_path(user) %>
+        <td><%= link_to "Edit", edit_user_path(user) %></td>
       </tr>
     <% end %>
   </tbody>
