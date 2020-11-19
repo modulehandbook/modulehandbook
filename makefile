@@ -23,9 +23,14 @@ docker_clean:
 restore_dump: $(file_source) $(file_target)
 	pg_restore -f $(file_target) $(file_source) # dump-2020-05-04.dump mh-dump-2020-05-04.dump
 dump:
-	heroku pg:backups:capture
-	heroku pg:backups:download
-	mv latest.dump ../dumps/uas-module-handbook-$(shell date +%Y-%m-%d).pgdump
+	/usr/local/bin/heroku pg:backups:capture
+	/usr/local/bin/heroku pg:backups:download
+	mv latest.dump ../dumps/uas-module-handbook-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+crondump:
+	rm -f latest.dump
+	/usr/local/bin/heroku pg:backups:capture
+	/usr/local/bin/heroku pg:backups:download
+	mv latest.dump ../dumps/uas-module-handbook-cron-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 reset_db:
 	rails db:drop RAILS_ENV=development
 	rails db:create RAILS_ENV=development
