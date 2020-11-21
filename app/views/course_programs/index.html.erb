@@ -1,7 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <h3>Course-Program Links</h3>
+<% if can? :edit, @course_program %>
 <%= link_to 'New Course Program', new_course_program_path %>
+<% end %>
 <br><br>
 
 <table class="table table-hover">
@@ -12,7 +14,10 @@
       <th scope="col">Program</th>
       <th scope="col">Semester</th>
       <th scope="col">Required</th>
-      <th scope="col" colspan="3"></th>
+      <th scope="col"></th>
+      <% if can? :edit, @course_program %>
+      <th scope="col" colspan="2"></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -25,8 +30,10 @@
         <td><%= course_program.semester %></td>
         <td><%= course_program.required %></td>
         <td><%= link_to 'Show', course_program %></td>
+        <% if can? :edit, @course_program %>
         <td><%= link_to 'Edit', edit_course_program_path(course_program) %></td>
         <td><%= link_to 'Destroy', course_program, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -2,12 +2,13 @@
 
 <h3>Courses</h3>
 
-<%= link_to 'New Course', new_course_path %><br>
+<% if can? :edit, @courses %><%= link_to 'New Course', new_course_path %><br><% end %>
 JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
 <!-- Button trigger modal -->
-| <a href="#" data-toggle="modal" data-target="#jsonModal">
+<% if can? :edit, @courses %>| <a href="#" data-toggle="modal" data-target="#jsonModal">
   Import Course(s)
 </a>
+<% end %>
 
 <br><br>
 <table class="table table-hover">
@@ -30,7 +31,10 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
       <th scope="col">Skills practical</th>
       <th scope="col">Skills general</th>
       <% end %>
-      <th scope="col" colspan="3"></th>
+      <th scope="col"></th>
+      <% if can? :edit, @courses %>
+      <th scope="col" colspan="2"></th>
+      <% end %>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -58,8 +62,10 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
         <td><%= course.skills_general %></td>
         <% end %>
         <td><%= link_to 'Show', course %></td>
+        <% if can? :edit, course %>
         <td><%= link_to 'Edit', edit_course_path(course) %></td>
         <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
         <td><%= link_to 'Export JSON', export_course_json_url(id: course.id) %></td>
       </tr>
     <% end %>
