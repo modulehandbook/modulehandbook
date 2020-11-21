@@ -1,4 +1,19 @@
 <h3>Course: <%= @course.name %></h3>
+<p class="bg-<%= @course.aasm_state %>">
+  <strong>State:</strong>
+  <%= @course.aasm_state.humanize.titleize %>
+</p>
+
+<% if @course.aasm.events %>
+  End currend Phase and go to next State -
+  <% @course.aasm.events.each do |event| %>
+    <%= button_to event.name.to_s.humanize.titleize, trigger_event_path, params: { course_id: @course.id, event_name: event.name } %>
+  <% end %>
+<% end %>
+
+
+
+
 <p id="notice"><%= notice %><br>
   <%= link_to 'Export Course as JSON', export_course_json_url(id: @course.id) %> <br>
   <%= link_to 'Edit', edit_course_path(@course) %>, <%= link_to 'Back to Index', courses_path %> </p>
@@ -30,6 +45,7 @@
   <strong>Name:</strong>
   <%= @course.name %>
 </p>
+
 
 <p>
   <strong>Code:</strong>

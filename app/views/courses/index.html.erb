@@ -16,6 +16,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
       <th scope="col">Name</th>
       <th scope="col">Code</th>
       <th scope="col">Ects</th>
+      <th scope="col" colspan="2">State</th>
       <% if false %>
       <th scope="col">Mission</th>
       <th scope="col">Examination</th>
@@ -40,6 +41,8 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
         <td scope="row"><%= link_to course.name, course_path(course)%></td>
         <td><%= link_to course.code, course_path(course) %></td>
         <td><%= course.ects %></td>
+        <td class="bg-<%= course.aasm_state %>">   </td>
+        <td><%= course.aasm_state.humanize.titleize %></td>
 
         <% if false %>
         <td><%= course.mission %></td>

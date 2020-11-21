@@ -7,6 +7,7 @@
       <th scope="col">Ects</th>
       <th scope="col">Semester</th>
       <th scope="col">required?</th>
+      <th scope="col" colspan="2">State</th>
       <th scope="col" colspan="3"></th>
       <th scope="col"></th>
     </tr>
@@ -20,6 +21,8 @@
         <td><%= course_program.course.ects %></td>
         <td><%= course_program.semester %></td>
         <td><%= course_program.required %></td>
+        <td class="bg-<%= course_program.course.aasm_state %>">   </td>
+        <td><%= course_program.course.aasm_state.humanize.titleize %></td>
         <td><%= link_to 'Show Course', course_path(course_program.course) %></td>
         <td><%= link_to 'Show Link', course_program_path(course_program) %></td>
         <td><%= link_to 'Edit Link', edit_course_program_path(course_program) %></td>

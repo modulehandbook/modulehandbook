@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   # JSON Importe
   post 'import_course_json', to: 'courses#import_course_json'
   post 'import_program_json', to: 'programs#import_program_json'
+
+  post 'trigger_event', to: 'courses#trigger_event'
 end

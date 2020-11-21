@@ -65,6 +65,13 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit; end
 
+  def trigger_event
+    @course = Course.find(params[:course_id])
+    event = params[:event_name] + "!"
+    @course.send(event.to_sym)
+    redirect_to course_path(@course), notice: 'State updated'
+  end
+
   # POST /courses
   # POST /courses.json
   def create
