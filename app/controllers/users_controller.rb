@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  authorize_resource
+  load_and_authorize_resource
   before_action :set_user, only: %i[show edit update]
 
   def index

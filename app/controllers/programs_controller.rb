@@ -1,5 +1,5 @@
 class ProgramsController < ApplicationController
-  authorize_resource
+  load_and_authorize_resource
   before_action :set_program, only: %i[show edit update destroy export_program_json]
 
   # GET /programs
