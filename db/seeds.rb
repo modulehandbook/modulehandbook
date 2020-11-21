@@ -11,16 +11,15 @@ puts 'seeding database'
 users = [
   ['kleinen@infrastructure.de', :admin],
   ['admin@mail.de', :admin],
-  ['none@mail.de', :none],
+  ['reader@mail.de', :reader],
   ['writer@mail.de', :writer],
   ['editor@mail.de', :editor],
   ['qa@mail.de', :qa]
 ]
 
+User.destroy_all
 users.each do |u|
-  user = User.new(email: u[0], password: 'geheim12', password_confirmation: 'geheim12', approved: true, confirmed_at: DateTime.now, role: u[1])
-  user.skip_confirmation_notification!
-  user.save!
+  user = User.create(email: u[0], password: 'geheim12', password_confirmation: 'geheim12', approved: true, confirmed_at: DateTime.now, role: u[1])
   puts "created User #{user.email} as #{user.role}"
 end
 
