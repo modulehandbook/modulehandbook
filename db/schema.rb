@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2020_12_06_144651) do
     t.text "room"
     t.string "responsible_person"
     t.text "comment"
+    t.string "aasm_state"
   end
 
   create_table "programs", force: :cascade do |t|

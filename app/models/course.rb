@@ -1,6 +1,47 @@
 class Course < ApplicationRecord
+  include AASM
+
+  aasm whiny_transitions: :false do
+    state :in_progress, initial: true
+    state :in_review
+    state :ready_for_councils
+    state :updating
+    state :done
+
+    event :finish_writing do
+      transitions from: :in_progress, to: :in_review
+    end
+    event :no_changes_required do
+      transitions from: :in_review, to: :ready_for_councils
+    end
+    event :changes_required do
+      transitions from: :in_review, to: :in_progress
+      transitions from: :ready_for_councils, to: :in_progress
+    end
+    event :decisions_complete do
+      transitions from: :ready_for_councils, to: :done, guard: :only_term_info_edied?
+      transitions from: :ready_for_councils, to: :updating
+    end
+    event :update do
+      transitions from: :done, to: :updating
+    end
+    event :finish_updating do
+      transitions from: :updating, to: :done, guard: :only_term_info_edied?
+      transitions from: :updating, to: :in_progress
+    end
+  end
+
+  def only_term_info_edied?
+    true
+  end
+
+  def possible_events
+    self.aasm.permitted_transitions.map(&:event)
+  end
+
   has_many :course_programs, dependent: :destroy
   has_many :programs, through: :course_programs
+
   def select_name
     "#{name} (#{code})"
   end
