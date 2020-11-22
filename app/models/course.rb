@@ -22,7 +22,7 @@ class Course < ApplicationRecord
       transitions from: :ready_for_councils, to: :done, guard: :only_term_info_edied?
       transitions from: :ready_for_councils, to: :updating
     end
-    event :update do
+    event :start_update do
       transitions from: :done, to: :updating
     end
     event :finish_updating do
