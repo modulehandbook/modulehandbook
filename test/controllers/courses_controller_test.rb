@@ -22,6 +22,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
       post courses_url, params: { course: { code: @course.code, contents: @course.contents, ects: @course.ects, examination: @course.examination, literature: @course.literature, methods: @course.methods, mission: @course.mission, name: @course.name, objectives: @course.objectives, prerequisites: @course.prerequisites, skills_general: @course.skills_general, skills_intellectual: @course.skills_intellectual, skills_knowledge_understanding: @course.skills_knowledge_understanding, skills_practical: @course.skills_practical } }
     end
 
+    assert_equal Course.last.aasm_state, 'in_progress'
     assert_redirected_to course_url(Course.last)
   end
 
