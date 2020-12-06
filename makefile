@@ -20,8 +20,6 @@ docker_clean:
 	docker-compose down
 	docker rm $(docker ps -qa)
 	docker rmi $(docker images -qa)
-restore_dump: $(file_source) $(file_target)
-	pg_restore -f $(file_target) $(file_source) # dump-2020-05-04.dump mh-dump-2020-05-04.dump
 dump:
 	/usr/local/bin/heroku pg:backups:capture
 	/usr/local/bin/heroku pg:backups:download
@@ -31,6 +29,8 @@ crondump:
 	/usr/local/bin/heroku pg:backups:capture
 	/usr/local/bin/heroku pg:backups:download
 	mv latest.dump ../dumps/uas-module-handbook-cron-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+restore: $(file)
+		docker-compose exec postgresql pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand /var/lib/postgresql/$(file)
 reset_db:
 	rails db:drop RAILS_ENV=development
 	rails db:create RAILS_ENV=development
