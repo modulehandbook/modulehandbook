@@ -1,0 +1,10 @@
+
+
+
+<% if editing %>
+  <%= form.label field_name %>
+  <%= form.text_area field_name, class: "form-control", rows: 1 %>
+<% else %>
+  <b><%= form.label field_name %>:</b>
+  <div class: "form-control"> <%= @course.send(field_name) %></div>
+<% end %>
