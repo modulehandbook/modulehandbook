@@ -63,3 +63,4 @@ gem 'devise'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 gem 'redcarpet'
+gem 'simplecov', require: false, group: :test

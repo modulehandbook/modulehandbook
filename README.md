@@ -49,6 +49,11 @@ https://devcenter.heroku.com/articles/heroku-postgres-import-export
 
     0 * * * * bash && cd /Users/kleinen/mine/current/code/uas-module-handbook/module-handbook && make crondump
 
+## Test Coverage
+
+    rails test
+
+generates test coverage. does not work properly when calling rake/rake test
 
 ## added bootstrap with webpack
 yarn add bootstrap jquery popper.js
