@@ -1,17 +1,18 @@
 class Program < ApplicationRecord
   has_many :course_programs, dependent: :destroy
   has_many :courses, through: :course_programs
+  
   def select_name
     "#{name} (#{code})"
   end
 
   def self.find_or_create_from_json(data)
     existing_program = Program.find_by(code: data['code'])
-    if !existing_program.nil?
-      program = existing_program
-    else
-      program = Program.new
-    end
+    program = if !existing_program.nil?
+                existing_program
+              else
+                Program.new
+              end
     program.name = data['name']
     program.code = data['code']
     program.mission = data['mission']
@@ -27,9 +28,9 @@ class Program < ApplicationRecord
   end
 
   def gather_data_for_json_export
-    data = self.as_json
+    data = as_json
     courses = self.courses.order(:code).as_json
-    cp_links = self.course_programs
+    cp_links = course_programs
     courses.each do |course|
       cp_link = cp_links.where(course_id: course['id'])
       cp_link.each do |link|

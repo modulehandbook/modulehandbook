@@ -1,17 +1,58 @@
 class Course < ApplicationRecord
+  include AASM
+
+  aasm whiny_transitions: :false do
+    state :in_progress, initial: true
+    state :in_review
+    state :ready_for_councils
+    state :updating
+    state :done
+
+    event :finish_writing do
+      transitions from: :in_progress, to: :in_review
+    end
+    event :no_changes_required do
+      transitions from: :in_review, to: :ready_for_councils
+    end
+    event :changes_required do
+      transitions from: :in_review, to: :in_progress
+      transitions from: :ready_for_councils, to: :in_progress
+    end
+    event :decisions_complete do
+      transitions from: :ready_for_councils, to: :done, guard: :only_term_info_edied?
+      transitions from: :ready_for_councils, to: :updating
+    end
+    event :start_update do
+      transitions from: :done, to: :updating
+    end
+    event :finish_updating do
+      transitions from: :updating, to: :done, guard: :only_term_info_edied?
+      transitions from: :updating, to: :in_progress
+    end
+  end
+
+  def only_term_info_edied?
+    true
+  end
+
+  def possible_events
+    self.aasm.permitted_transitions.map(&:event)
+  end
+
   has_many :course_programs, dependent: :destroy
   has_many :programs, through: :course_programs
+
   def select_name
     "#{name} (#{code})"
   end
 
   def self.find_or_create_from_json(data)
     existing_course = Course.find_by(code: data['code'])
-    if !existing_course.nil?
-      course = existing_course
-    else
-      course = Course.new
-    end
+    course = if !existing_course.nil?
+               existing_course
+             else
+               Course.new
+             end
     course.name = data['name']
     course.code = data['code']
     course.mission = data['mission']
@@ -41,9 +82,9 @@ class Course < ApplicationRecord
   end
 
   def gather_data_for_json_export
-    data = self.as_json
+    data = as_json
     programs = self.programs.order(:name).as_json
-    cp_links = self.course_programs
+    cp_links = course_programs
     programs.each do |program|
       cp_link = cp_links.where(program_id: program['id'])
       cp_link.each do |link|
@@ -60,7 +101,9 @@ end
 class CourseFactory
   def self.create(data, program_id_from_params)
     course = Course.find_or_create_from_json(data)
-    course_program = CourseProgram.find_or_create_from_json(data, course.id, program_id_from_params) unless program_id_from_params.nil?
+    unless program_id_from_params.nil?
+      course_program = CourseProgram.find_or_create_from_json(data, course.id, program_id_from_params)
+    end
     course.save
     programs = data['programs']
     programs.each do |program_data|

@@ -2,7 +2,7 @@
 <h3>Program: <%= @program.name %></h3>
 <p id="notice"><%= notice %><br>
   <%= link_to 'Export Program as JSON', export_program_json_url(id: @program.id) %> <br>
-<%= link_to 'Edit', edit_program_path(@program) %>, <%= link_to 'Back to Index', programs_path %></p>
+  <% if can? :edit, @program %><%= link_to 'Edit', edit_program_path(@program) %>, <% end %><%= link_to 'Back to Index', programs_path %></p>
 
 <p>
   <strong>Name:</strong>
@@ -32,11 +32,13 @@
 
 <hr/>
 <h3>Courses in Program</h3>
-<%= link_to 'New Course', new_course_path(program_id: @program) %>
+
+<% if can? :edit, @program %><%= link_to 'New Course', new_course_path(program_id: @program) %>
 <!-- Button trigger modal -->
  | <a href="#" data-toggle="modal" data-target="#jsonModal">
    Import Course(s) from JSON
  </a>
+ <% end %>
  <br><br>
 <%= render 'course_list', course_programs: @course_programs %>
 

@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :export_course_json]
+  load_and_authorize_resource
+  before_action :set_course, only: %i[show edit update destroy export_course_json]
 
   # GET /courses
   # GET /courses.json
@@ -10,7 +11,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @programs = @course.programs.order(:name).pluck(:name,:id)
+    @programs = @course.programs.order(:name).pluck(:name, :id)
     @course_program = CourseProgram.new(course: @course)
   end
 
@@ -62,14 +63,20 @@ class CoursesController < ApplicationController
   end
 
   # GET /courses/1/edit
-  def edit
+  def edit; end
+
+  def trigger_event
+    @course = Course.find(params[:course_id])
+    event = params[:event_name] + "!"
+    @course.send(event.to_sym)
+    redirect_to course_path(@course), notice: 'State updated'
   end
 
   # POST /courses
   # POST /courses.json
   def create
     @course = Course.new(course_params)
-    create_course_program_link(@course,params[:program_id])
+    create_course_program_link(@course, params[:program_id])
     respond_to do |format|
       if @course.save
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
@@ -81,10 +88,8 @@ class CoursesController < ApplicationController
     end
   end
 
-  def create_course_program_link(course, program_id)
-    unless program_id.nil?
-      @course_program = @course.course_programs.build(program_id: program_id)
-    end
+  def create_course_program_link(_course, program_id)
+    @course_program = @course.course_programs.build(program_id: program_id) unless program_id.nil?
   end
 
   # PATCH/PUT /courses/1
@@ -112,11 +117,11 @@ class CoursesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      @course = Course.find(params[:id])
-    end
 
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course
+    @course = Course.find(params[:id])
+  end
     # Only allow a list of trusted parameters through.
     def course_params
       params.require(:course).permit(:name, :code, :mission, :ects, :examination, :objectives, :contents,

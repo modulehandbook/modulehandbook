@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
+  load_and_authorize_resource
+  before_action :set_user, only: %i[show edit update]
+
   def index
     @users = if params[:approved] == 'false'
                User.where(approved: false)
@@ -10,12 +12,9 @@ class UsersController < ApplicationController
              end
    end
 
-  def show
+  def show; end
 
-  end
-
-  def edit
-  end
+  def edit; end
 
   def update
     respond_to do |format|
@@ -35,7 +34,6 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:email, :approved)
+    params.require(:user).permit(:email, :approved, :role)
   end
-
 end

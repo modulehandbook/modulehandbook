@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.action_mailer.default_url_options = { host: 'module-handbook.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'module-handbook-staging.herokuapp.com' }
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -61,6 +61,8 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "module_handbook_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.perform_deliveries = false
+  config.action_mailer.raise_delivery_errors = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -68,7 +70,7 @@ Rails.application.configure do
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
-  config.i18n.fallbacks = [I18n.default_locale]
+  config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify

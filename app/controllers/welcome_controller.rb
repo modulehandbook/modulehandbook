@@ -1,4 +1,5 @@
 class WelcomeController < ApplicationController
-  def index
-  end
+  skip_authorization_check
+
+  def index; end
 end

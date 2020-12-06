@@ -7,7 +7,11 @@
       <th scope="col">Ects</th>
       <th scope="col">Semester</th>
       <th scope="col">required?</th>
-      <th scope="col" colspan="3"></th>
+      <th scope="col" colspan="2">State</th>
+      <th scope="col" colspan="2"></th>
+      <% if can? :edit, @program %>
+      <th scope="col"></th>
+      <% end %>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -20,9 +24,13 @@
         <td><%= course_program.course.ects %></td>
         <td><%= course_program.semester %></td>
         <td><%= course_program.required %></td>
+        <td class="bg-<%= course_program.course.aasm_state %>">   </td>
+        <td><%= course_program.course.aasm_state.humanize.titleize %></td>
         <td><%= link_to 'Show Course', course_path(course_program.course) %></td>
         <td><%= link_to 'Show Link', course_program_path(course_program) %></td>
+        <% if can? :edit, @program %>
         <td><%= link_to 'Edit Link', edit_course_program_path(course_program) %></td>
+        <% end %>
         <td><%= link_to 'Export JSON', export_course_json_url(id: course_program.course_id) %></td>
         </tr>
     <% end %>

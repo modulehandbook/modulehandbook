@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root 'welcome#index'
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: %i[index show edit update]
   resources :course_programs
   resources :courses
   resources :programs
@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   post 'import_course_json', to: 'courses#import_course_json'
   post 'import_program_json', to: 'programs#import_program_json'
 
+  post 'trigger_event', to: 'courses#trigger_event'
 end
