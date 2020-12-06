@@ -5,11 +5,12 @@
       <div class = "col">
         <%= render 'course_field', course: @course,
         field_name: :name, markdown: false,
-        editing: editing, form: form %>
+        editing: editing, form: form, rows: 1 %>
       </div>
       <div class = "col">
-        <%= form.label :responsible_person %>
-        <%= form.text_area :responsible_person, class: "form-control", rows: 1 %>
+        <%= render 'course_field', course: @course,
+        field_name: :responsible_person, markdown: false,
+        editing: editing, form: form, rows: 1 %>
       </div>
     </div>
   </div>
@@ -17,16 +18,17 @@
 <div class = "form-row">
 <div class = "col">
   <div class="form-group">
-    <%= form.label :code %>
-    <%= form.text_area :code, class: "form-control", rows: 1  %>
-  </div>
+    <%= render 'course_field', course: @course,
+    field_name: :code, markdown: false,
+    editing: editing, form: form, rows: 1 %>
+    </div>
  </div>
   <div class = "col">
 
     <div class="form-group">
-      <%= form.label :ects %>
-      <%= form.number_field :ects, class: "form-control" %>
-    </div>
+      <%= render 'course_field', course: @course,
+      field_name: :ects, markdown: false,
+      editing: editing, form: form, rows: 1 %></div>
     </div>
   </div>
 
@@ -35,22 +37,27 @@
 
   <div class = "col">
     <div class="form-group">
-      <%= form.label :lectureHrs %>
-      <%= form.text_area :lectureHrs, class: "form-control", rows: 1  %>
+      <%= render 'course_field', course: @course,
+      field_name: :lectureHrs, markdown: false,
+      editing: editing, form: form, rows: 1 %>
     </div>
    </div>
 
    <div class = "col">
      <div class="form-group">
-       <%= form.label :labHrs %>
-       <%= form.text_area :labHrs, class: "form-control", rows: 1  %>
+       <%= render 'course_field', course: @course,
+       field_name: :labHrs, markdown: false,
+       editing: editing, form: form, rows: 1 %>
+
      </div>
     </div>
 
     <div class = "col">
       <div class="form-group">
-        <%= form.label :tutorialHrs %>
-        <%= form.text_area :tutorialHrs, class: "form-control", rows: 1  %>
+        <%= render 'course_field', course: @course,
+        field_name: :tutorialHrs, markdown: false,
+        editing: editing, form: form, rows: 1 %>
+
       </div>
      </div>
 
@@ -61,15 +68,17 @@
 
     <div class = "col">
       <div class="form-group">
-        <%= form.label :room %>
-        <%= form.text_area :room, class: "form-control", rows: 1  %>
+        <%= render 'course_field', course: @course,
+        field_name: :room, markdown: true,
+        editing: editing, form: form, rows: 1 %>
       </div>
     </div>
 
     <div class = "col">
       <div class="form-group">
-        <%= form.label :equipment %>
-        <%= form.text_area :equipment, class: "form-control", rows: 1  %>
+        <%= render 'course_field', course: @course,
+        field_name: :equipment, markdown: true,
+        editing: editing, form: form, rows: 1 %>
       </div>
     </div>
 
@@ -77,62 +86,74 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :mission %>
-    <%= form.text_area :mission, class: "form-control", rows: 3 %>
+    <%= render 'course_field', course: @course,
+    field_name: :mission, markdown: true,
+    editing: editing, form: form, rows: 3 %>
   </div>
 
 
   <div class="form-group">
-    <%= form.label :examination %>
-    <%= form.text_area :examination, class: "form-control", rows: 3 %>
+    <%= render 'course_field', course: @course,
+    field_name: :examination, markdown: true,
+    editing: editing, form: form, rows: 3 %>
   </div>
 
   <div class="form-group">
-    <%= form.label :objectives %>
-    <%= form.text_area :objectives, class: "form-control", rows: 3 %>
+    <%= render 'course_field', course: @course,
+    field_name: :objectives, markdown: true,
+    editing: editing, form: form, rows: 7 %>
   </div>
 
   <div class="form-group">
-    <%= form.label :contents %>
-    <%= form.text_area :contents, class: "form-control", rows: 7 %>
+    <%= render 'course_field', course: @course,
+    field_name: :contents, markdown: true,
+    editing: editing, form: form, rows: 7 %>
   </div>
 
   <div class="form-group">
-    <%= form.label :prerequisites %>
-    <%= form.text_area :prerequisites, class: "form-control", rows: 3 %>
+    <%= render 'course_field', course: @course,
+    field_name: :prerequisites, markdown: true,
+    editing: editing, form: form, rows: 3 %>
   </div>
 
   <div class="form-group">
-    <%= form.label :literature %>
-    <%= form.text_area :literature, class: "form-control", rows: 7 %>
+    <%= render 'course_field', course: @course,
+    field_name: :literature, markdown: true,
+    editing: editing, form: form, rows: 7%>
   </div>
 
   <div class="form-group">
-    <%= form.label :methods %>
-    <%= form.text_area :methods, class: "form-control", rows: 7 %>
+    <%= render 'course_field', course: @course,
+    field_name: :methods, markdown: true,
+    editing: editing, form: form, rows: 7 %>
   </div>
 
   <div class="form-group">
-    <%= form.label :skills_knowledge_understanding %>
-    <%= form.text_area :skills_knowledge_understanding, class: "form-control", rows: 3 %>
+    <%= render 'course_field', course: @course,
+    field_name: :skills_knowledge_understanding, markdown: true,
+    editing: editing, form: form, rows: 3 %>
   </div>
 
   <div class="form-group">
-    <%= form.label :skills_intellectual %>
-    <%= form.text_area :skills_intellectual, class: "form-control", rows: 3 %>
+    <%= render 'course_field', course: @course,
+    field_name: :skills_intellectual, markdown: true,
+    editing: editing, form: form, rows: 3 %>
   </div>
 
   <div class="form-group">
-    <%= form.label :skills_practical %>
-    <%= form.text_area :skills_practical, class: "form-control", rows: 3 %>
+    <%= render 'course_field', course: @course,
+    field_name: :skills_practical, markdown: true,
+    editing: editing, form: form, rows: 3 %>
   </div>
 
   <div class="form-group">
-    <%= form.label :skills_general %>
-    <%= form.text_area :skills_general, class: "form-control", rows: 3 %>
+    <%= render 'course_field', course: @course,
+    field_name: :skills_general, markdown: true,
+    editing: editing, form: form, rows: 3 %>
   </div>
 
   <div class="form-group">
-    <%= form.label :comment %>
-    <%= form.text_area :comment, class: "form-control", rows: 3 %>
+    <%= render 'course_field', course: @course,
+    field_name: :comment, markdown: true,
+    editing: editing, form: form, rows: 3 %>
   </div>
