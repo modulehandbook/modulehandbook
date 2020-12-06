@@ -49,6 +49,14 @@ https://devcenter.heroku.com/articles/heroku-postgres-import-export
 
     0 * * * * bash && cd /Users/kleinen/mine/current/code/uas-module-handbook/module-handbook && make crondump
 
+## Running the Test suite
+
+    rails test
+    rails test:system
+
+
+    rails test test/** - runs all tests.
+
 ## Test Coverage
 
     rails test

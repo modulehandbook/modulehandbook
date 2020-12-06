@@ -4,6 +4,7 @@ class CoursesTest < ApplicationSystemTestCase
   setup do
     @course = courses(:one)
     @course2 = courses(:two)
+    @course3 = courses(:three)
     @user = users(:one)
     system_test_login(@user.email,'geheim12')
   end
@@ -115,6 +116,30 @@ class CoursesTest < ApplicationSystemTestCase
     assert_text new_data
     course = Course.find(@course2.id)
     assert_equal(new_data,course.room)
+  end
+
+  test "updating a Course - comment" do
+    skip("to be implemented")
+    visit edit_course_url(@course3)
+    new_data =  "does need more editing"
+    fill_in("course_comment", with: new_data)
+    click_on "Update Course"
+    assert_text "Course was successfully updated"
+    assert_text new_data
+    course = Course.find(@course3.id)
+    assert_equal(new_data,course.comment)
+  end
+
+  test "updating a Course - responsible_person" do
+    skip("to be implemented")
+    visit edit_course_url(@course3)
+    new_data =  "Prof. Dr. Barne Kleinen"
+    fill_in("course_responsible_person", with: new_data)
+    click_on "Update Course"
+    assert_text "Course was successfully updated"
+    assert_text new_data
+    course = Course.find(@course2.id)
+    assert_equal(new_data,course.responsible_person)
   end
 
   test "destroying a Course" do

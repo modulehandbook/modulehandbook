@@ -31,3 +31,21 @@ two:
   skills_intellectual: MyText
   skills_practical: MyText
   skills_general: MyText
+
+three:
+  name: Informatik 3
+  code: B15
+  mission: MyText
+  ects: 1
+  examination: MyText
+  objectives: MyText
+  contents: MyText
+  prerequisites: MyText
+  literature: MyText
+  methods: MyText
+  skills_knowledge_understanding: MyText
+  skills_intellectual: MyText
+  skills_practical: MyText
+  skills_general: MyText
+  responsible_person: Barne Kleinen
+  comment: "this module might be redundant"
