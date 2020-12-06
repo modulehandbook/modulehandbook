@@ -122,6 +122,6 @@ class CoursesController < ApplicationController
       params.require(:course).permit(:name, :code, :mission, :ects, :examination, :objectives, :contents,
                                      :prerequisites, :literature, :methods, :skills_knowledge_understanding,
                                      :skills_intellectual, :skills_practical, :skills_general,
-                                     :lectureHrs,:labHrs, :tutorialHrs, :equipment, :room)
+                                     :lectureHrs,:labHrs, :tutorialHrs, :equipment, :room, :responsible_person, :comment)
     end
 end

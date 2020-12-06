@@ -4,7 +4,7 @@ one:
   course: one
   program: one
   semester: 1
-  required: MyText
+  required: mandatory
 
 two:
   course: two

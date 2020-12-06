@@ -18,6 +18,15 @@ then visit http://localhost:3000/
 
 then visit http://localhost:3000/
 
+## Import Heroku Dump
+
+Manually, with the dumps mount in place and a current dump copied there:
+  docker-compose exec postgresql bash
+  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand /var/lib/postgresql/dumps/uas-module-handbook-cron-2020-12-06--14-00-00.pgdump
+
+or, use this for the container (also in makefile)
+
+    docker-compose exec postgresql pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand /var/lib/postgresql/$(file)
 
 ## Heroku Deployment
 
@@ -36,6 +45,23 @@ https://devcenter.heroku.com/articles/heroku-postgres-import-export
     heroku pg:backups:capture
     heroku pg:backups:download
 
+(now automatically on macos via crontab:)
+
+    0 * * * * bash && cd /Users/kleinen/mine/current/code/uas-module-handbook/module-handbook && make crondump
+
+## Running the Test suite
+
+    rails test
+    rails test:system
+
+
+    rails test test/** - runs all tests.
+
+## Test Coverage
+
+    rails test
+
+generates test coverage. does not work properly when calling rake/rake test
 
 ## added bootstrap with webpack
 yarn add bootstrap jquery popper.js

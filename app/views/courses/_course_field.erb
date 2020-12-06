@@ -1,0 +1,12 @@
+
+
+
+<% if editing %>
+  <%= form.label field_name %><%= markdown ? "(Markdown)" : "" %>
+  <%= form.text_area field_name, class: "form-control", rows: rows %>
+<% else %>
+  <b><%= form.label field_name %>:</b>
+  <div class: "form-control">
+    <%=  markdown ? md2html(@course.send(field_name)) : @course.send(field_name) %>
+  </div>
+<% end %>

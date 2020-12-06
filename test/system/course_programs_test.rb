@@ -9,35 +9,33 @@ class CourseProgramsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit course_programs_url
-    assert_selector "h3", text: "Course Programs"
+    assert_selector "h3", text: "Course-Program Links"
   end
 
   test "creating a Course program" do
     visit course_programs_url
     click_on "New Course Program"
 
-    fill_in "Course", with: @course_program.course_id
-    fill_in "Program", with: @course_program.program_id
-    fill_in "Required", with: @course_program.required
+    select @course_program.course.name, from: "Course"
+    select @course_program.program.name, from: "Program"
+    select @course_program.required, from: "Required"
     fill_in "Semester", with: @course_program.semester
     click_on "Create Course program"
 
     assert_text "Course program was successfully created"
-    click_on "Back"
   end
 
   test "updating a Course program" do
     visit course_programs_url
     click_on "Edit", match: :first
 
-    fill_in "Course", with: @course_program.course_id
-    fill_in "Program", with: @course_program.program_id
-    fill_in "Required", with: @course_program.required
+    select @course_program.course.name, from: "Course"
+    select @course_program.program.name, from: "Program"
+    select @course_program.required, from: "Required"
     fill_in "Semester", with: @course_program.semester
     click_on "Update Course program"
 
     assert_text "Course program was successfully updated"
-    click_on "Back"
   end
 
   test "destroying a Course program" do
