@@ -44,8 +44,15 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-      - name: Run tests
+      - name: Run Tests
         run: rails test
+        env:
+          RAILS_DB_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+      - name: Run System Tests
+        run: rails test:system
         env:
           RAILS_DB_HOST: localhost
           POSTGRES_PORT: 5432
