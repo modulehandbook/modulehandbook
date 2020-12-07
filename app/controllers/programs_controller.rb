@@ -5,13 +5,15 @@ class ProgramsController < ApplicationController
   # GET /programs
   # GET /programs.json
   def index
-    @programs = Program.all
+    @programs = Program.all.sort_by(&:name)
   end
 
   # GET /programs/1
   # GET /programs/1.json
   def show
-    @course_programs = @program.course_programs.order('required DESC, semester ASC').includes(:course)
+    @course_programs = @program.course_programs
+                               .includes(:course)
+                               .sort_by { |cp| [cp.required, cp.semester, cp.course.name] }
   end
 
   def import_program_json
