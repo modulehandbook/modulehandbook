@@ -29,6 +29,9 @@ class Course < ApplicationRecord
       transitions from: :updating, to: :done, guard: :only_term_info_edied?
       transitions from: :updating, to: :in_progress
     end
+    event :reset do
+      transitions to: :in_progress
+    end
   end
 
   def only_term_info_edied?
