@@ -7,10 +7,11 @@ class CourseProgramsController < ApplicationController
   def index
     @course_programs = if params[:program_id]
                          CourseProgram.where(program_id: params[:program_id])
-                                      .sort_by { |cp| [cp.program.name, cp.semester, cp.course.name] }
+                           .includes(:program,:course)
+                           .order('programs.name','semester','courses.name')
                        else
                          CourseProgram.includes(:course, :program)
-                                      .sort_by { |cp| [cp.program.name, cp.semester, cp.course.name] }
+                           .order('programs.name','semester','courses.name')
                        end
     respond_to do |format|
       format.html # index.html.erb
