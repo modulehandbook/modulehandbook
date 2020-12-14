@@ -4,6 +4,8 @@ starts:
 	docker-compose up
 startdb:
 	docker-compose -f docker-compose-pg12.yml up -d  postgresql
+bash_db:
+	docker-compose exec   postgresql
 startdb_11:
 	docker-compose -f docker-compose-pg11.yml up postgresql
 import_dump: $(file)
@@ -29,8 +31,8 @@ crondump:
 	/usr/local/bin/heroku pg:backups:capture
 	/usr/local/bin/heroku pg:backups:download
 	mv latest.dump ../dumps/uas-module-handbook-cron-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
-restore: $(file)
-		docker-compose exec postgresql pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand /var/lib/postgresql/$(file)
+db_restore: $(file)
+	docker-compose exec postgresql pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand /var/lib/postgresql/$(file)
 reset_db:
 	rails db:drop RAILS_ENV=development
 	rails db:create RAILS_ENV=development

@@ -1,6 +1,7 @@
 class CourseProgram < ApplicationRecord
   belongs_to :course
   belongs_to :program
+  validates :semester, presence: true
 
   def self.find_or_create_from_json(data, course_id, program_id)
     cpl = CourseProgram.find_by(course_id: course_id, program_id: program_id)
