@@ -5,7 +5,10 @@ import {saveAs} from 'file-saver';
 
 function export_docx(program_data) {
   // Create document
-  const doc = new docx.Document();
+  const styles = fs.readFileSync("./styles.xml", "utf-8");
+  const doc = new docx.Document({
+    externalStyles: styles,
+  });
   // Documents contain sections, you can have multiple sections per document, go here to learn more about sections
   // Example how to display page numbers
   // Import from 'docx' rather than '../build' if you install from npm
