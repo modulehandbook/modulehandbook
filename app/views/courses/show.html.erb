@@ -23,7 +23,7 @@
   <%= link_to program_name, program_path(program_id)  %>,
 <% end %>
     </div>
-<% if can? :edit, @courses %>
+<% if can? :edit, @course %>
     <div class = "col">
 <%= form_with(model: @course_program, local: true) do |form| %>
     <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
