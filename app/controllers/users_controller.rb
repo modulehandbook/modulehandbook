@@ -6,15 +6,25 @@ class UsersController < ApplicationController
 
   def index
     @users = if params[:approved] == 'false'
-               User.where(approved: false)
+               User.where(approved: false).order('email')
              else
-               User.all
+               User.all.order('email')
              end
    end
 
   def show; end
 
   def edit; end
+
+  def approve
+    user = User.find(params[:id])
+    user.approved = true
+    if user.save
+      redirect_to users_path, notice: 'User was successfully approved.'
+    else
+      redirect_to users_path, notice: 'Error approving user.'
+    end
+  end
 
   def update
     respond_to do |format|

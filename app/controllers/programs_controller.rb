@@ -14,7 +14,7 @@ class ProgramsController < ApplicationController
     @course_programs = @program
                           .course_programs
                           .includes(:course)
-                          .order('required','semester','courses.name')
+                          .order('required DESC','semester','courses.name')
     end
 
   def overview
