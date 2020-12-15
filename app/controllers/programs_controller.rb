@@ -17,6 +17,11 @@ class ProgramsController < ApplicationController
                           .order('required','semester','courses.name')
     end
 
+  def overview
+    @course_programs = @program.course_programs.includes(:course)
+    @rows = @program.course_programs.includes(:course).order("course_programs.semester","courses.code").group_by(&:semester)
+  end
+
   def import_program_json
     files = params[:files] || []
     files.each do |file|

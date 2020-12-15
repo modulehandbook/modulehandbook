@@ -1,0 +1,34 @@
+<h1>Program Overview <%= link_to @program.name, @program %></h1>
+<table class="table">
+
+    <% ects_total = 0
+    @rows.each do | semester, cps | %>
+
+    <tr>  <td><%= semester %>. Semester:
+      <% ects = cps.inject(0){|sum,cp| sum = sum + (cp.course.ects.nil? ?  0 : cp.course.ects ) }
+      ects_total += ects %>
+      <%= ects %> ECTS
+      </td>
+
+      <% cps.each do | cp | %>
+          <td colspan = "<%=cp.course.ects%>" class="bg-required-<%= cp.required %>">
+            <p class="bg-<%= cp.course.aasm_state %>">&nbsp;</p></br>
+            <small><%= cp.course.code %></small><br/>
+            <b><%=link_to cp.course.name, cp %></b><br/>
+            (<%= cp.course.ects %> ECTS)
+
+          <% end %>
+          </td>
+    </tr>
+
+
+    <% end %>
+
+
+    <tr>
+      <td>
+        Summe: <%= ects_total %> ECTS
+      </td>
+      </tr>
+
+    </table>

@@ -41,10 +41,11 @@ class CourseProgramsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy course_program' do
+    program = @course_program.program
     assert_difference('CourseProgram.count', -1) do
       delete course_program_url(@course_program)
     end
 
-    assert_redirected_to course_programs_url
+    assert_redirected_to program_url(program)
   end
 end
