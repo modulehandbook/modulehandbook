@@ -4,7 +4,7 @@
   <%= @course.aasm_state.humanize.titleize %>
 </p>
 
-<% if can? :edit, @courses && @course.aasm.events %>
+<% if can? :edit, @course %>
   End currend Phase and go to next State -
   <% @course.aasm.events.each do |event| %>
     <%= button_to event.name.to_s.humanize.titleize, trigger_event_path, params: { course_id: @course.id, event_name: event.name } %>

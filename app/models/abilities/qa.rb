@@ -10,7 +10,7 @@ module Abilities
       can %i[create read update delete], CourseProgram
       can %i[create read update delete], Course
       can %i[create read update delete], Program
-      can %i[read update], User
+      can %i[read], User
     end
   end
 end

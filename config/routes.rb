@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   post 'import_program_json', to: 'programs#import_program_json'
 
   post 'trigger_event', to: 'courses#trigger_event'
+
+  get 'approve_user', to: 'users#approve'
 end
