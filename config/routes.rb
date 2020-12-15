@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :course_programs
   resources :courses
   resources :programs
+  get 'programs/:id/overview', to: 'programs#overview', as: 'program_overview'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # JSON Exporte
@@ -17,4 +18,6 @@ Rails.application.routes.draw do
   post 'import_program_json', to: 'programs#import_program_json'
 
   post 'trigger_event', to: 'courses#trigger_event'
+
+  get 'approve_user', to: 'users#approve'
 end

@@ -7,10 +7,11 @@ class CourseProgramsController < ApplicationController
   def index
     @course_programs = if params[:program_id]
                          CourseProgram.where(program_id: params[:program_id])
-                                      .sort_by { |cp| [cp.program.name, cp.semester, cp.course.name] }
+                           .includes(:program,:course)
+                           .order('programs.name','semester','courses.name')
                        else
                          CourseProgram.includes(:course, :program)
-                                      .sort_by { |cp| [cp.program.name, cp.semester, cp.course.name] }
+                           .order('programs.name','semester','courses.name')
                        end
     respond_to do |format|
       format.html # index.html.erb
@@ -63,9 +64,10 @@ class CourseProgramsController < ApplicationController
   # DELETE /course_programs/1
   # DELETE /course_programs/1.json
   def destroy
+    @program = @course_program.program
     @course_program.destroy
     respond_to do |format|
-      format.html { redirect_to course_programs_url, notice: 'Course program was successfully destroyed.' }
+      format.html { redirect_to @program, notice: 'Course program was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

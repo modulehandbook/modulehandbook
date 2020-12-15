@@ -17,9 +17,7 @@
         <td onclick = "location.href='<%= user_path(user) %>'" scope="row"><%= user.email %></td>
         <td><%= user.role.to_s.humanize %></td>
         <td> <input type="checkbox" <%= user.approved ? "checked":"" %>></td>
-        <% if can? :edit, user %>
-        <td><%= link_to "Edit", edit_user_path(user) %></td>
-        <% end %>
+        <td><% if can? :edit, user %><%= link_to "Edit", edit_user_path(user) %><% end %><% if !user.approved && can?(:approve, user) %> | <%= link_to "Approve", approve_user_path(id: user.id) %><% end %></td>
       </tr>
     <% end %>
   </tbody>

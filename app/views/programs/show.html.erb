@@ -38,7 +38,9 @@
  | <a href="#" data-toggle="modal" data-target="#jsonModal">
    Import Course(s) from JSON
  </a>
+ |
  <% end %>
+ <%= link_to 'Overview',program_overview_path(@program) %>
  <br><br>
 <%= render 'course_list', course_programs: @course_programs %>
 

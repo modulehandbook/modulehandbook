@@ -4,7 +4,7 @@
   <%= @course.aasm_state.humanize.titleize %>
 </p>
 
-<% if can? :edit, @courses && @course.aasm.events %>
+<% if can? :edit, @course %>
   End currend Phase and go to next State -
   <% @course.aasm.events.each do |event| %>
     <%= button_to event.name.to_s.humanize.titleize, trigger_event_path, params: { course_id: @course.id, event_name: event.name } %>
@@ -14,7 +14,7 @@
 
 <p id="notice"><%= notice %><br>
   <%= link_to 'Export Course as JSON', export_course_json_url(id: @course.id) %> <br>
-  <% if can? :edit, @courses %><%= link_to 'Edit', edit_course_path(@course) %>, <% end %><%= link_to 'Back to Index', courses_path %> </p>
+  <% if can? :edit, @course %><%= link_to 'Edit', edit_course_path(@course) %>, <% end %><%= link_to 'Back to Index', courses_path %> </p>
 <div class = "container">
   <div class="row">
     <div class = "col">
@@ -23,7 +23,7 @@
   <%= link_to program_name, program_path(program_id)  %>,
 <% end %>
     </div>
-<% if can? :edit, @courses %>
+<% if can? :edit, @course %>
     <div class = "col">
 <%= form_with(model: @course_program, local: true) do |form| %>
     <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
