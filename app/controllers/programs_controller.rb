@@ -15,7 +15,7 @@ class ProgramsController < ApplicationController
                           .course_programs
                           .includes(:course)
                           .order('required DESC','semester','courses.name')
-    end
+  end
 
   def overview
     @course_programs = @program.course_programs.includes(:course)
@@ -39,9 +39,7 @@ class ProgramsController < ApplicationController
   def export_program_json
     data = @program.gather_data_for_json_export
     data = JSON.pretty_generate(data)
-    code = @program.try(:code) ? @program.code.gsub(' ', '') : 'XX'
-    name = @program.try(:name) ? @program.name.gsub(' ', '') : 'xxx'
-    filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
+    filename = generate_filename(@program)
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}.json"
   end
@@ -54,9 +52,19 @@ class ProgramsController < ApplicationController
       data << program.gather_data_for_json_export.to_json
     end
     data = data.as_json
-    filename = Date.today.to_s
+    filename = Date.today.to_s + '_all_programs'
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}_all-programs.json"
+  end
+
+  def export_program_docx
+    base_url = ENV['EXPORTER_BASE_URL'] || 'http://localhost:3030/'
+    post_url = base_url + 'docx/program'
+    program = Program.find_by(id: params[:id])
+    program_json = program.gather_data_for_json_export.to_json
+    resp = Faraday.post(post_url, program_json, 'Content-Type' => 'application/json')
+    filename = generate_filename(program)
+    send_data resp.body, filename: filename + '.docx'
   end
 
   # GET /programs/new
@@ -117,5 +125,17 @@ class ProgramsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def program_params
     params.require(:program).permit(:name, :code, :mission, :degree, :ects)
+  end
+
+  def generate_filename(program)
+    code = program.try(:code)
+    code = 'XX' if code.nil?
+    name = program.try(:name) ? program.name.gsub(' ', '') : 'xxx'
+    name = 'XX' if name.nil?
+    Date.today.to_s + '_' + to_clean_string(code) + '-' + to_clean_string(name)
+  end
+
+  def to_clean_string(string)
+    string.gsub(' ', '').to_s
   end
 end
