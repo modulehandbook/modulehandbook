@@ -62,9 +62,13 @@ class ProgramsController < ApplicationController
     post_url = base_url + 'docx/program'
     program = Program.find_by(id: params[:id])
     program_json = program.gather_data_for_json_export.to_json
-    resp = Faraday.post(post_url, program_json, 'Content-Type' => 'application/json')
-    filename = generate_filename(program)
-    send_data resp.body, filename: filename + '.docx'
+    begin
+      resp = Faraday.post(post_url, program_json, 'Content-Type' => 'application/json')
+      filename = generate_filename(program)
+      send_data resp.body, filename: filename + '.docx'
+    rescue Faraday::ConnectionFailed => e
+      redirect_to programs_path, alert: 'Error: Program could not be exported as DOCX because the connection to the external export service failed!'
+    end
   end
 
   # GET /programs/new
