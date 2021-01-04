@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<p id="alert"><%= alert %></p>
 
 <h3>Programs</h3>
 
@@ -21,11 +22,8 @@ JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
       <th scope="col">Degree</th>
       <th scope="col">Ects</th>
       <th scope="col"></th>
-      <% if can? :edit, @programs %>
-        <th class="text-center" scope="col" colspan="2"></th>
-      <% end %>
+      <th class="text-center" scope="col" colspan="2"></th>
       <th class="text-center" scope="col" colspan="2">Export</th>
-      <th scope="col"></th>
     </tr>
   </thead>
 
@@ -43,7 +41,7 @@ JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
         <td><%= link_to 'Destroy', program, method: :delete, id: "destroy_program_#{program.id}", data: { confirm: 'Are you sure?' } %></td>
         <% end %>
         <td><%= link_to 'JSON', export_program_json_url(id: program.id) %></td>
-        <td><a id="docx_export_link" href="" data-id="<%=program.id%>">DOCX</a></td>
+        <td><%= link_to 'DOCX', export_program_docx_url(id: program.id) %></td>
       </tr>
     <% end %>
   </tbody>

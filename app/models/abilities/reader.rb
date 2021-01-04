@@ -8,7 +8,8 @@ module Abilities
 
     def initialize(_user)
       can :read, :all
-      # esport docx & jsin, kein import
+      can %i[read export_course_json export_courses_json], Course
+      can %i[read export_program_json export_programs_json export_program_docx], Program
     end
   end
 end
