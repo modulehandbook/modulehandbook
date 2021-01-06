@@ -11,9 +11,15 @@ module Abilities
       # alias_action :index, :show, :to => :read
       # alias_action :new, :to => :create
       # alias_action :edit, :to => :update
-      can %i[create read update delete destroy], CourseProgram
-      can %i[create read update delete destroy export_course_json export_courses_json import_course_json], Course
-      can %i[create read update delete destroy export_program_json export_programs_json export_program_docx import_program_json], Program
+      alias_action :create, :read, :update, :delete, :destroy, to: :crud
+      alias_action :export_course_json, :export_courses_json, to: :export_course
+      alias_action :export_program_json, :export_programs_json, :export_program_docx, to: :export_program
+      alias_action :import_course_json, to: :import_course
+      alias_action :import_program_json, to: :import_program
+
+      can %i[crud], CourseProgram
+      can %i[crud export_course import_course], Course
+      can %i[crud export_program import_program], Program
       can %i[read], User
     end
   end
