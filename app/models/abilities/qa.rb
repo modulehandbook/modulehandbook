@@ -7,9 +7,9 @@ module Abilities
     include CanCan::Ability
 
     def initialize(_user)
-      can %i[create read update delete], CourseProgram
-      can %i[create read update delete export_course_json export_courses_json import_course_json], Course
-      can %i[create read update delete export_program_json export_programs_json export_program_docx import_program_json], Program
+      can %i[crud], CourseProgram
+      can %i[crud export_course import_course], Course
+      can %i[crud export_program import_program], Program
       can %i[read], User
     end
   end
