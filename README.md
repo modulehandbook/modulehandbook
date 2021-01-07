@@ -30,15 +30,32 @@ or, use this for the container (also in makefile)
 
 ## Heroku Deployment
 
-https://devcenter.heroku.com/articles/getting-started-with-rails6#migrate-your-database
+### Automatic Deployment to Staging
+
+Trigger the automatic deployment to http://module-handbook-staging.herokuapp.com/ from the branch staging with the following steps:
+
+    git checkout staging
+    git pull origin master
+    git push
+
+
+### Automatic Deployment to Production
+
+Trigger the automatic deployment to http://module-handbook.herokuapp.com/ from the branch release with the following steps:
+
+    git gheckout release
+    git pull origin master
+    git push
+
+### Push directly to heroku
 
     git push heroku master
+
+### Migration on Heroku
+
+
     heroku run rake db:migrate
 
-
-https://devcenter.heroku.com/articles/heroku-postgres-backups
-
-https://devcenter.heroku.com/articles/heroku-postgres-import-export
 
 ### Heroku DB Backups
 
