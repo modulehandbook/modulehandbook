@@ -8,7 +8,7 @@ module Abilities
 
     def initialize(_user)
       can %i[crud], CourseProgram
-      can %i[crud export_course import_course], Course
+      can %i[crud export_course import_course trigger_event], Course
       can %i[crud export_program import_program], Program
       can %i[read], User
     end

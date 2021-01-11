@@ -26,6 +26,10 @@ class CourseAdminAbilitiesTest < ApplicationSystemTestCase
     assert @ability.can?(:update, @course)
   end
 
+  test 'as admin i can trigger events' do
+    assert @ability.can?(:trigger_event, @course)
+  end
+
   test 'as admin i can delete a course' do
     assert @ability.can?(:delete, @course)
     assert @ability.can?(:destroy, @course)
