@@ -14,5 +14,5 @@ module Abilities
     end
   end
 end
-# post 'trigger_event', to: 'courses#trigger_event'
-# post 'trigger_event', to: 'courses#trigger_event'
+# post 'change_state', to: 'courses#change_state'
+# post 'change_state', to: 'courses#change_state'

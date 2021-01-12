@@ -12,14 +12,14 @@ class ProgramsController < ApplicationController
   # GET /programs/1.json
   def show
     @course_programs = @program
-                          .course_programs
-                          .includes(:course)
-                          .order('required DESC','semester','courses.name')
+                       .course_programs
+                       .includes(:course)
+                       .order('required DESC', 'semester', 'courses.name')
   end
 
   def overview
     @course_programs = @program.course_programs.includes(:course)
-    @rows = @program.course_programs.includes(:course).order("course_programs.semester","courses.code").group_by(&:semester)
+    @rows = @program.course_programs.includes(:course).order('course_programs.semester', 'courses.code').group_by(&:semester)
   end
 
   def import_program_json
@@ -62,8 +62,11 @@ class ProgramsController < ApplicationController
     post_url = base_url + 'docx/program'
     program = Program.find_by(id: params[:id])
     program_json = program.gather_data_for_json_export.to_json
+
+    logger.debug program_json
     begin
       resp = Faraday.post(post_url, program_json, 'Content-Type' => 'application/json')
+      logger.debug resp
       filename = generate_filename(program)
       send_data resp.body, filename: filename + '.docx'
     rescue Faraday::ConnectionFailed => e

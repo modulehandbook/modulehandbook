@@ -49,7 +49,7 @@ class ProgramsTest < ApplicationSystemTestCase
       click_on "destroy_program_#{@program.id}"
     end
 
-    assert_text "Program was successfully destroyed"
-    assert !(Program.exists?(@program.id))
+    assert_text 'Program was successfully destroyed'
+    assert !Program.exists?(@program.id)
   end
 end

@@ -40,5 +40,4 @@ class ProgramReaderAbilitiesTest < ApplicationSystemTestCase
   test 'as reader i cant use a programs import action' do
     assert @ability.cannot?(:import_program_json, @program)
   end
-
 end

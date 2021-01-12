@@ -26,6 +26,10 @@ class CourseAdminAbilitiesTest < ApplicationSystemTestCase
     assert @ability.can?(:update, @course)
   end
 
+  test 'as admin i can change the state' do
+    assert @ability.can?(:change_state, @course)
+  end
+
   test 'as admin i can delete a course' do
     assert @ability.can?(:delete, @course)
     assert @ability.can?(:destroy, @course)
@@ -39,5 +43,4 @@ class CourseAdminAbilitiesTest < ApplicationSystemTestCase
   test 'as admin i can use a courses import action' do
     assert @ability.can?(:import_course_json, @course)
   end
-
 end

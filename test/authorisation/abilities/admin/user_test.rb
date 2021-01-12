@@ -34,5 +34,4 @@ class UserAdminAbilitiesTest < ApplicationSystemTestCase
   test 'as admin i can approve a user' do
     assert @ability.can?(:approve, @user2)
   end
-
 end

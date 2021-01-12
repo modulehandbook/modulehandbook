@@ -26,6 +26,10 @@ class CourseWriterAbilitiesTest < ApplicationSystemTestCase
     assert @ability.can?(:update, @course)
   end
 
+  test 'as writer i cant change the state' do
+    assert @ability.cannot?(:change_state, @course)
+  end
+
   test 'as writer i can delete a course' do
     assert @ability.can?(:delete, @course)
     assert @ability.can?(:destroy, @course)
@@ -39,5 +43,4 @@ class CourseWriterAbilitiesTest < ApplicationSystemTestCase
   test 'as writer i can use a courses import action' do
     assert @ability.can?(:import_course_json, @course)
   end
-
 end

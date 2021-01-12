@@ -34,5 +34,4 @@ class UserEditorAbilitiesTest < ApplicationSystemTestCase
   test 'as editor i cant approve a user' do
     assert @ability.cannot?(:approve, @user2)
   end
-
 end

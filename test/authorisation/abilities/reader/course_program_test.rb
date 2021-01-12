@@ -30,5 +30,4 @@ class CourseProgramReaderAbilitiesTest < ApplicationSystemTestCase
     assert @ability.cannot?(:delete, @course_program)
     assert @ability.cannot?(:destroy, @course_program)
   end
-
 end
