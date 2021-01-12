@@ -26,10 +26,9 @@ class CourseEditorAbilitiesTest < ApplicationSystemTestCase
     assert @ability.can?(:update, @course)
   end
 
-  test 'as editor i can trigger events' do
-    assert @ability.can?(:trigger_event, @course)
+  test 'as editor i can change the state' do
+    assert @ability.can?(:change_state, @course)
   end
-
 
   test 'as editor i can delete a course' do
     assert @ability.can?(:delete, @course)
@@ -44,5 +43,4 @@ class CourseEditorAbilitiesTest < ApplicationSystemTestCase
   test 'as editor i can use a courses import action' do
     assert @ability.can?(:import_course_json, @course)
   end
-
 end

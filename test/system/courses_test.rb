@@ -117,29 +117,29 @@ class CoursesTest < ApplicationSystemTestCase
     assert_equal(new_data, course.room)
   end
 
-  test "updating a Course - comment" do
+  test 'updating a Course - comment' do
     visit edit_course_url(@course3)
-    new_data =  "does need more editing"
-    fill_in("course_comment", with: new_data)
-    click_on "Update Course"
-    assert_text "Course was successfully updated"
+    new_data = 'does need more editing'
+    fill_in('course_comment', with: new_data)
+    click_on 'Update Course'
+    assert_text 'Course was successfully updated'
     assert_text new_data
     course = Course.find(@course3.id)
-    assert_equal(new_data,course.comment)
+    assert_equal(new_data, course.comment)
   end
 
-  test "updating a Course - responsible_person" do
+  test 'updating a Course - responsible_person' do
     visit edit_course_url(@course3)
-    new_data =  "Prof. Dr. Barne Kleinen"
-    fill_in("course_responsible_person", with: new_data)
-    click_on "Update Course"
-    assert_text "Course was successfully updated"
+    new_data = 'Prof. Dr. Barne Kleinen'
+    fill_in('course_responsible_person', with: new_data)
+    click_on 'Update Course'
+    assert_text 'Course was successfully updated'
     assert_text new_data
     course = Course.find(@course3.id)
-    assert_equal(new_data,course.responsible_person)
+    assert_equal(new_data, course.responsible_person)
   end
 
-  test "destroying a Course" do
+  test 'destroying a Course' do
     visit courses_url
     page.accept_confirm do
       click_on 'Destroy', match: :first

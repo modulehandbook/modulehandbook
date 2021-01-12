@@ -40,5 +40,4 @@ class ProgramEditorAbilitiesTest < ApplicationSystemTestCase
   test 'as editor i can use a programs import action' do
     assert @ability.can?(:import_program_json, @program)
   end
-
 end

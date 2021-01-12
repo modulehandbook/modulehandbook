@@ -39,7 +39,7 @@ class Course < ApplicationRecord
   end
 
   def possible_events
-    self.aasm.permitted_transitions.map(&:event)
+    aasm.permitted_transitions.map(&:event)
   end
 
   has_many :course_programs, dependent: :destroy

@@ -26,8 +26,8 @@ class CourseReaderAbilitiesTest < ApplicationSystemTestCase
     assert @ability.cannot?(:update, @course)
   end
 
-  test 'as reader i cant trigger events' do
-    assert @ability.cannot?(:trigger_event, @course)
+  test 'as reader i cant change the state' do
+    assert @ability.cannot?(:change_state, @course)
   end
 
   test 'as reader i cant delete a course' do
@@ -43,5 +43,4 @@ class CourseReaderAbilitiesTest < ApplicationSystemTestCase
   test 'as reader i cant use a courses import action' do
     assert @ability.cannot?(:import_course_json, @course)
   end
-
 end

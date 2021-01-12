@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   # JSON Exporte
   get 'export_program_docx', to: 'programs#export_program_docx'
 
-  post 'trigger_event', to: 'courses#trigger_event'
+  post 'change_state', to: 'courses#change_state'
 
   get 'approve_user', to: 'users#approve'
 end

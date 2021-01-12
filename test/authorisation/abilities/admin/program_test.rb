@@ -40,5 +40,4 @@ class ProgramAdminAbilitiesTest < ApplicationSystemTestCase
   test 'as admin i can use a programs import action' do
     assert @ability.can?(:import_program_json, @program)
   end
-
 end

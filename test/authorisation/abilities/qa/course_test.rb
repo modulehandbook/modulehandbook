@@ -26,8 +26,8 @@ class CourseQAAbilitiesTest < ApplicationSystemTestCase
     assert @ability.can?(:update, @course)
   end
 
-  test 'as qa i can trigger events' do
-    assert @ability.can?(:trigger_event, @course)
+  test 'as qa i can change the state' do
+    assert @ability.can?(:change_state, @course)
   end
 
   test 'as qa i can delete a course' do
@@ -43,5 +43,4 @@ class CourseQAAbilitiesTest < ApplicationSystemTestCase
   test 'as qa i can use a courses import action' do
     assert @ability.can?(:import_course_json, @course)
   end
-
 end

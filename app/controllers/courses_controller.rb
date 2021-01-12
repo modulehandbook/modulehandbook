@@ -65,9 +65,9 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit; end
 
-  def trigger_event
+  def change_state
     @course = Course.find(params[:course_id])
-    event = params[:event_name] + "!"
+    event = params[:event_name] + '!'
     @course.send(event.to_sym)
     redirect_to course_path(@course), notice: 'State updated'
   end
@@ -122,11 +122,12 @@ class CoursesController < ApplicationController
   def set_course
     @course = Course.find(params[:id])
   end
-    # Only allow a list of trusted parameters through.
-    def course_params
-      params.require(:course).permit(:name, :code, :mission, :ects, :examination, :objectives, :contents,
-                                     :prerequisites, :literature, :methods, :skills_knowledge_understanding,
-                                     :skills_intellectual, :skills_practical, :skills_general,
-                                     :lectureHrs,:labHrs, :tutorialHrs, :equipment, :room, :responsible_person, :comment)
-    end
+
+  # Only allow a list of trusted parameters through.
+  def course_params
+    params.require(:course).permit(:name, :code, :mission, :ects, :examination, :objectives, :contents,
+                                   :prerequisites, :literature, :methods, :skills_knowledge_understanding,
+                                   :skills_intellectual, :skills_practical, :skills_general,
+                                   :lectureHrs, :labHrs, :tutorialHrs, :equipment, :room, :responsible_person, :comment)
+  end
 end

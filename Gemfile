@@ -53,10 +53,10 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
-  gem 'simplecov', require: false
-  gem 'poltergeist', '~> 1.18', '>= 1.18.1'
   gem 'phantomjs'
+  gem 'poltergeist', '~> 1.18', '>= 1.18.1'
+  gem 'simplecov', require: false
+  gem 'webdrivers'
 end
 gem 'cancancan'
 gem 'devise'

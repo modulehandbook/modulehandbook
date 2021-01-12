@@ -34,5 +34,4 @@ class UserReaderAbilitiesTest < ApplicationSystemTestCase
   test 'as reader i cant approve a user' do
     assert @ability.cannot?(:approve, @user2)
   end
-
 end
