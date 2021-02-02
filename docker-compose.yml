@@ -22,3 +22,4 @@ services:
       - RAILS_DB_HOST=postgresql
     depends_on:
       - postgresql
+  #  command: "tail -f Gemfile"

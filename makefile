@@ -26,6 +26,8 @@ dump:
 	/usr/local/bin/heroku pg:backups:capture
 	/usr/local/bin/heroku pg:backups:download
 	mv latest.dump ../dumps/uas-module-handbook-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+bash:
+	docker-compose exec module-handbook-rails bash
 crondump:
 	rm -f latest.dump
 	/usr/local/bin/heroku pg:backups:capture
