@@ -59,3 +59,7 @@ db_migrate:
 	docker-compose exec module-handbook-rails rails db:migrate
 db_seed:
 	docker-compose exec module-handbook-rails rails db:seed
+test_app:
+	docker-compose exec module-handbook-rails rails db:create RAILS_ENV=test
+	docker-compose exec module-handbook-rails rails db:migrate RAILS_ENV=test
+	docker-compose exec module-handbook-rails rails test

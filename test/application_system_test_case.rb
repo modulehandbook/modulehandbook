@@ -8,6 +8,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :poltergeist, screen_size: [1400, 1400],
                           options: { js_errors: false,
                                      phantomjs: Phantomjs.path }
+  Capybara.server = :webrick
 end
 
 # webdrivers
