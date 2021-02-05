@@ -28,5 +28,7 @@ COPY . /module-handbook
 # install yarn modules
 RUN yarn install --ignore-engines
 
+EXPOSE 3000
+
 # Start the main process.
-CMD ["bundle", "exec", "unicorn", "--port", "80"]
+CMD ["bundle", "exec", "unicorn", "--port", "3000"]
