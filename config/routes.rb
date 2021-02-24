@@ -6,8 +6,14 @@ Rails.application.routes.draw do
   resources :courses
   resources :programs
   get 'programs/:id/overview', to: 'programs#overview', as: 'program_overview'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get 'programs/:id/lehreinsatzplanung', to: 'programs#lehreinsatzplanung', as: 'program_lehreinsatzplanung'
 
+
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # get '/course_programs/lehreinsatzplanung', to:
+
+
+  get '/tests/find' => 'tests#find'
   # JSON Exporte
   get 'export_course_json', to: 'courses#export_course_json'
   get 'export_courses_json', to: 'courses#export_courses_json'
