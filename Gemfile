@@ -68,3 +68,7 @@ gem 'aasm'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 gem 'redcarpet'
+gem 'rubyXL', '~> 3.4.16'
+gem 'rubyzip', '>= 1.1.6'
+gem 'rest-client'
+gem "roo", "~> 2.8.0"
