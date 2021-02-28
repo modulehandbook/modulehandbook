@@ -23,3 +23,17 @@
     <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
   <% end %>
 <% end %>
+
+<div class="card mt-3">
+  <div class="card-body">
+    <h5 class="card-title">How to get an account?</h5>
+      <ol>
+        <li><%= link_to "Sign up", new_registration_path(resource_name) %>.</li>
+        <li>Confirm your account with the link sent to your email.</li>
+        <li>Have somone who already has an account with the role admin, editor or quality assurance approve your account.</li>
+      </ol>
+      <p class="card-text">
+        If you only need read permissions your account should now work. If you require further edit permissions ask one of the admins to set them up for you.
+      </p>
+  </div>
+</div>
