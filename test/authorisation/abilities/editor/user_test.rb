@@ -31,7 +31,7 @@ class UserEditorAbilitiesTest < ApplicationSystemTestCase
     assert @ability.cannot?(:destroy, @user2)
   end
 
-  test 'as editor i cant approve a user' do
-    assert @ability.cannot?(:approve, @user2)
+  test 'as editor i can approve a user' do
+    assert @ability.can?(:approve, @user2)
   end
 end
