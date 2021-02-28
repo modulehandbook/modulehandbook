@@ -10,7 +10,7 @@ module Abilities
       can %i[crud], CourseProgram
       can %i[crud export_course import_course change_state], Course
       can %i[crud export_program import_program], Program
-      can %i[read], User
+      can %i[read approve], User
     end
   end
 end

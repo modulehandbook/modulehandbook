@@ -10,7 +10,7 @@ class UsersController < ApplicationController
              else
                User.all.order('approved', 'email')
              end
-   end
+  end
 
   def show; end
 
