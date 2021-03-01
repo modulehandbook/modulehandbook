@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class UserReaderAbilitiesTest < ApplicationSystemTestCase
   setup do
-    @user = users(:editor)
+    @user = users(:reader)
     @user2 = users(:two)
     @ability = Ability.new(@user)
     system_test_login(@user.email, 'geheim12')

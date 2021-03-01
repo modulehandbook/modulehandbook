@@ -22,6 +22,8 @@ users.each do |u|
   user = User.create(email: u[0], password: 'geheim12', password_confirmation: 'geheim12', approved: true, confirmed_at: DateTime.now, role: u[1])
   puts "created User #{user.email} as #{user.role}"
 end
+user = User.create(email: 'unapproved@mail.de', password: 'geheim12', password_confirmation: 'geheim12', approved: false)
+puts "created unapproved User #{user.email}"
 
 # CourseProgram.destroy_all
 # Program.destroy_all
