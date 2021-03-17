@@ -1,0 +1,39 @@
+<h1 a='#comments'>Kommentare:</h1>
+
+<table class="table">
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr >
+        <td><%=comment.author.email%></td>
+        <td><%=comment.created_at%></td>
+        <td><%=comment.comment%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+add a comment:
+
+<%= form_with(model: @comment, local: true) do |form| %>
+  <% if @comment.errors.any? %>
+    <div class="form-group" id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :comment %>
+    <%= form.text_area :comment, class: "form-control"  %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>

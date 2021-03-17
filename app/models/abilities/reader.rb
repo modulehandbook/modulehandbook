@@ -10,6 +10,7 @@ module Abilities
       can :read, :all
       can %i[read export_course], Course
       can %i[read export_program], Program
+      can %i[create update delete], Comment
     end
   end
 end

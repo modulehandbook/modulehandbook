@@ -13,6 +13,8 @@ class CoursesController < ApplicationController
   def show
     @programs = @course.programs.order(:name).pluck(:name, :id)
     @course_program = CourseProgram.new(course: @course)
+    @comments = @course.comments
+    @comment = @course.comments.build(author: @current_user)
   end
 
   def import_course_json

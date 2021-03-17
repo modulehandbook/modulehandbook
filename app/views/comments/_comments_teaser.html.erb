@@ -1,0 +1,10 @@
+<% if @comments.size > 0 %>
+  There are <%= @comments.size %> comments
+<% else %>
+  There are no comments
+<% end %>
+
+
+
+<%= link_to 'Go to comments', '#comments' %>
+create comment
