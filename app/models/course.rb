@@ -1,5 +1,6 @@
 class Course < ApplicationRecord
   include AASM
+  has_many :comments, as: :commentable
 
   aasm whiny_transitions: :false do
     state :in_progress, initial: true
