@@ -4,22 +4,25 @@
   <tbody>
     <% @comments.each do |comment| %>
     <% if !comment.comment.nil? %>
-      <tr >
-        <td><%=comment.author.email%></td>
-        <td><%=comment.created_at%></td>
-        <td><%=comment.comment%></td>
-        <td>
-          <% if can? :destroy, comment %><%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %><% end %>
-          <% if can? :edit, comment %><%= link_to 'Edit', edit_comment_path(comment) %><% end %>
-
+      <tr>
+        <td><strong><%=comment.author.email%></strong>,
+          <%=comment.created_at.strftime("%d of %B %Y - %k:%M")%>
+          <em><% if comment.created_at != comment.updated_at %> (edited)<% end %></em>
         </td>
+        <td class="text-right">
+          <% if can? :edit, comment %><%= link_to 'Edit', edit_comment_path(comment) %> | <% end %>
+          <% if can? :destroy, comment %><%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %><% end %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="border-top: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=comment.comment%></td>
       </tr>
       <% end %>
     <% end %>
   </tbody>
 </table>
 
-Add a comment:
+<p class="mt-4">Add a comment:</p>
 
 <%= form_with(model: @comment, local: true) do |form| %>
   <% if @comment.errors.any? %>
@@ -44,8 +47,8 @@ Add a comment:
     <%= form.text_area :comment, class: "form-control"  %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions mb-5 pb-5">
+    <%= form.submit %> <small>(You can edit your comment for 30 minutes after you create it. You can always delete it.)</small>
   </div>
 
 <% end %>
