@@ -15,14 +15,17 @@
         </td>
       </tr>
       <tr>
-        <td colspan="2" style="border-top: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=comment.comment%></td>
+        <td colspan="2" style="border-top: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=md2html(comment.comment)%></td>
       </tr>
       <% end %>
     <% end %>
   </tbody>
 </table>
 
-<p class="mt-4">Add a comment:</p>
+<h3 class="mt-4">Add a comment:</h3>
+<p>* You can insert Markdown formating here if you wish.<br>
+  * You can edit your comment for 30 minutes after you create it.<br>
+  * You can always delete your comment.</p>
 
 <%= form_with(model: @comment, local: true) do |form| %>
   <% if @comment.errors.any? %>
@@ -48,7 +51,7 @@
   </div>
 
   <div class="actions mb-5 pb-5">
-    <%= form.submit %> <small>(You can edit your comment for 30 minutes after you create it. You can always delete it.)</small>
+    <%= form.submit %>
   </div>
 
 <% end %>
