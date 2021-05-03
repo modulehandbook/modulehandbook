@@ -11,7 +11,10 @@ module Abilities
       can %i[read export_course], Course
       can %i[read export_program], Program
       can %i[create], Comment
-      can %i[update destroy], Comment, author_id: _user.id
+      can %i[destroy], Comment, author_id: _user.id
+      can %i[edit update], Comment, Comment.where(author_id: _user.id) do |comment|
+        comment.created_at >= 30.minutes.ago
+      end
     end
   end
 end
