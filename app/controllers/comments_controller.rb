@@ -11,7 +11,23 @@ class CommentsController < ApplicationController
     end
   end
 
-  def update; end
+  def edit; end
+
+  def update
+    if @comment.update(comment_params)
+      redirect_to controller: @comment.commentable_type.downcase.pluralize,
+                  action: :show,
+                  id: @comment.commentable_id,
+                  anchor: 'comments',
+                  notice: 'Comment was successfully updated.'
+    else
+      redirect_to controller: @comment.commentable_type.downcase.pluralize,
+                  action: :show,
+                  id: @comment.commentable_id,
+                  anchor: 'comments',
+                  notice: 'Error updating comment'
+    end
+  end
 
   def destroy
     @comment = Comment.find(params[:id])

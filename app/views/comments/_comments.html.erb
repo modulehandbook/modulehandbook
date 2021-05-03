@@ -8,7 +8,11 @@
         <td><%=comment.author.email%></td>
         <td><%=comment.created_at%></td>
         <td><%=comment.comment%></td>
-        <td><% if can? :destroy, comment %><%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+        <td>
+          <% if can? :destroy, comment %><%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %><% end %>
+          <% if can? :edit, comment %><%= link_to 'Edit', edit_comment_path(comment) %><% end %>
+
+        </td>
       </tr>
       <% end %>
     <% end %>
