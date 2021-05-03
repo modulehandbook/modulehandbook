@@ -5,7 +5,7 @@
 </p>
 
 <% if can? :change_state, @course %>
-  End currend Phase and go to next State -
+  End current Phase and go to next State -
   <% @course.aasm.events.each do |event| %>
     <%= button_to event.name.to_s.humanize.titleize, change_state_path, params: { course_id: @course.id, event_name: event.name } %>
   <% end %>

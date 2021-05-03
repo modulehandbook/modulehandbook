@@ -1,18 +1,21 @@
-<h1 a='#comments'>Kommentare:</h1>
+<h1 a='#comments'>Comments:</h1>
 
 <table class="table">
   <tbody>
     <% @comments.each do |comment| %>
+    <% if !comment.comment.nil? %>
       <tr >
         <td><%=comment.author.email%></td>
         <td><%=comment.created_at%></td>
         <td><%=comment.comment%></td>
+        <td><% if can? :destroy, comment %><%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
 
-add a comment:
+Add a comment:
 
 <%= form_with(model: @comment, local: true) do |form| %>
   <% if @comment.errors.any? %>
@@ -27,8 +30,13 @@ add a comment:
     </div>
   <% end %>
 
+  <%= form.hidden_field :author_id, value: @current_user.id %>
+
+  <%= form.hidden_field :commentable_id, value: params["id"] %>
+  <%= form.hidden_field :commentable_type, value: params["controller"].singularize.capitalize %>
+
+
   <div class="form-group">
-    <%= form.label :comment %>
     <%= form.text_area :comment, class: "form-control"  %>
   </div>
 

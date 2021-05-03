@@ -10,7 +10,8 @@ module Abilities
       can :read, :all
       can %i[read export_course], Course
       can %i[read export_program], Program
-      can %i[create update delete], Comment
+      can %i[create], Comment
+      can %i[update destroy], Comment, author_id: _user.id
     end
   end
 end
