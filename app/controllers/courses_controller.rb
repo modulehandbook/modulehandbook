@@ -13,10 +13,7 @@ class CoursesController < ApplicationController
   def show
     @programs = @course.programs.order(:name).pluck(:name, :id)
     @course_program = CourseProgram.new(course: @course)
-<<<<<<< HEAD
-=======
     @comments_size = @course.comments.size
->>>>>>> 4616c1d6f7092cac10d57f2ff67765ed0bb52e33
     @comments = @course.comments
     @comment = @course.comments.build(author: @current_user)
   end
