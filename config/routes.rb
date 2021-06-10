@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'programs/:id/overview', to: 'programs#overview', as: 'program_overview'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
+  #get 'courses/:id/versions', to: 'courses#versions'
+
   # JSON Exporte
   get 'export_course_json', to: 'courses#export_course_json'
   get 'export_courses_json', to: 'courses#export_courses_json'

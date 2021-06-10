@@ -9,6 +9,10 @@ class CoursesController < ApplicationController
     @courses = Course.order(:name)
   end
 
+  def versions
+    @versions = @course.versions
+  end
+
   # GET /courses/1
   # GET /courses/1.json
   def show
