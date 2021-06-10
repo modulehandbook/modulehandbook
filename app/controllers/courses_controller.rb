@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   load_and_authorize_resource
   before_action :set_course, only: %i[show edit update destroy export_course_json]
+  before_action :set_paper_trail_whodunnit
 
   # GET /courses
   # GET /courses.json
