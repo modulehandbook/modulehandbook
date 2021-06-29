@@ -10,7 +10,8 @@ class CoursesController < ApplicationController
   end
 
   def versions
-    @versions = @course.versions
+    @versions = @course.versions.order(:created_at)
+    @programs = @course.programs.order(:name).pluck(:name, :id)
   end
 
   # GET /courses/1
