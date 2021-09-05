@@ -12,4 +12,11 @@ class LoginTest < ApplicationSystemTestCase
     click_on 'Log in'
     assert_text 'Signed in successfully.'
   end
+
+  test 'logging out' do
+    sign_in @user
+    visit root_path
+    assert_text :all, 'Logout'
+    find(:link, "Logout", visible: false).trigger('click')
+  end
 end
