@@ -1,8 +1,11 @@
 <h3>Version History of Course: <%= @course.name %></h3>
+<%= link_to "Back to Course", course_path(@course.id)  %>
+
 <p class="bg-<%= @course.aasm_state %>">
   <strong>State:</strong>
   <%= @course.aasm_state.humanize.titleize %>
 </p>
+
 
 Part of Programs:
 <% if @programs.size > 0 %>
@@ -38,13 +41,3 @@ Part of Programs:
   <% end %>
   </tbody>
 </table>
-
-
-
-
-<% if can? :change_state, @course %>
-  End current Phase and go to next State -
-  <% @course.aasm.events.each do |event| %>
-    <%= button_to event.name.to_s.humanize.titleize, change_state_path, params: { course_id: @course.id, event_name: event.name } %>
-  <% end %>
-<% end %>
