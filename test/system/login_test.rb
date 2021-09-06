@@ -17,6 +17,7 @@ class LoginTest < ApplicationSystemTestCase
     sign_in @user
     visit root_path
     assert_text :all, 'Logout'
-    find(:link, "Logout", visible: false).trigger('click')
+    find(:link, 'Logout', visible: false).trigger('click')
+    assert_text 'You need to sign in or sign up before continuing.'
   end
 end

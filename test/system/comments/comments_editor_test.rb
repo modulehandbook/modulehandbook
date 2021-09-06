@@ -1,0 +1,70 @@
+require 'application_system_test_case'
+
+class CommentsTest < ApplicationSystemTestCase
+  setup do
+    @course = courses(:one)
+    @user = users(:editor)
+    @user_other = users(:writer)
+    sign_in @user
+  end
+
+  test 'as editor i can create a comment on a course' do
+    visit course_path(@course)
+    fill_in 'comment_comment', with: 'This is a comment'
+    click_on 'Create Comment'
+    assert_text 'Comment saved successfully'
+  end
+
+  test 'as editor i can read own comment' do
+    visit course_path(@course)
+    fill_in 'comment_comment', with: 'This is a comment'
+    click_on 'Create Comment'
+    assert_text 'This is a comment'
+  end
+
+  test 'as editor i can read others comment' do
+    @course.comments.create(author: @user_other, comment: 'The other users comment')
+    visit course_path(@course)
+    assert_text 'The other users comment'
+  end
+
+  test 'as editor i can edit and update own comment' do
+    visit course_path(@course)
+    fill_in 'comment_comment', with: 'This is a comment'
+    click_on 'Create Comment'
+    assert_text 'This is a comment'
+    within '.table' do
+      click_on 'Edit'
+    end
+    fill_in 'comment_comment', with: 'This is an edited comment'
+    click_on 'Update Comment'
+    # assert_text 'This is an edited comment'
+    # assert_text '(edited)'
+  end
+
+  test 'as editor i cant edit and update others comment' do
+    @course.comments.create(author: @user_other, comment: 'The other users comment')
+    visit course_path(@course)
+    assert_text 'The other users comment'
+    within '.table' do
+      refute_text 'Edit'
+    end
+  end
+
+  test 'as editor i can delete and destroy own comment' do
+    visit course_path(@course)
+    fill_in 'comment_comment', with: 'This is a comment'
+    click_on 'Create Comment'
+    assert_text 'This is a comment'
+    click_on 'Delete'
+    refute_text 'This is a comment'
+  end
+
+  test 'as editor i cant delete and destroy others comment' do
+    @course.comments.create(author: @user_other, comment: 'The other users comment')
+    visit course_path(@course)
+    assert_text 'The other users comment'
+    refute_text 'Delete'
+  end
+
+end
