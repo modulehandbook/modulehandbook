@@ -38,8 +38,9 @@ class CommentsTest < ApplicationSystemTestCase
     end
     fill_in 'comment_comment', with: 'This is an edited comment'
     click_on 'Update Comment'
-    # assert_text 'This is an edited comment'
-    # assert_text '(edited)'
+    click_on 'Go to comments'
+    assert_text 'This is an edited comment'
+    assert_text '(edited)'
   end
 
   test 'as qa i cant edit and update others comment' do
