@@ -8,6 +8,14 @@ class CommentsTest < ApplicationSystemTestCase
     sign_in @user
   end
 
+  teardown do
+    sign_out @user
+    CourseProgram.all.delete_all
+    Program.all.delete_all
+    Course.all.delete_all
+    User.all.delete_all
+  end
+
   test 'as reader i can create a comment on a course' do
     visit course_path(@course)
     fill_in 'comment_comment', with: 'This is a comment'
@@ -33,7 +41,9 @@ class CommentsTest < ApplicationSystemTestCase
     fill_in 'comment_comment', with: 'This is a comment'
     click_on 'Create Comment'
     assert_text 'This is a comment'
-    click_on 'Edit'
+    within '.table' do
+      click_on 'Edit'
+    end
     fill_in 'comment_comment', with: 'This is an edited comment'
     click_on 'Update Comment'
     click_on 'Go to comments'
@@ -45,7 +55,9 @@ class CommentsTest < ApplicationSystemTestCase
     @course.comments.create(author: @user_other, comment: 'The other users comment')
     visit course_path(@course)
     assert_text 'The other users comment'
-    refute_text 'Edit'
+    within '.table' do
+      refute_text 'Edit'
+    end
   end
 
   test 'as reader i can delete and destroy own comment' do
@@ -63,5 +75,4 @@ class CommentsTest < ApplicationSystemTestCase
     assert_text 'The other users comment'
     refute_text 'Delete'
   end
-
 end

@@ -8,6 +8,14 @@ class CommentsTest < ApplicationSystemTestCase
     sign_in @user
   end
 
+  teardown do
+    sign_out @user
+    CourseProgram.all.delete_all
+    Program.all.delete_all
+    Course.all.delete_all
+    User.all.delete_all
+  end
+
   test 'as writer i can create a comment on a course' do
     visit course_path(@course)
     fill_in 'comment_comment', with: 'This is a comment'
@@ -67,5 +75,4 @@ class CommentsTest < ApplicationSystemTestCase
     assert_text 'The other users comment'
     refute_text 'Delete'
   end
-
 end
