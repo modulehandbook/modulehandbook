@@ -6,6 +6,7 @@ require 'simplecov'
 # SimpleCov.start
 
 class ActiveSupport::TestCase
+  include Devise::Test::IntegrationHelpers
   # Run tests in parallel with specified workers
   parallelize(workers: 1)
 
