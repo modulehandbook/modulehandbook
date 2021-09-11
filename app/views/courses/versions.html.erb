@@ -20,6 +20,7 @@ Part of Programs:
 <table class="table table-hover">
   <thead>
     <th>Author</th>
+    <th>Date</th>
     <th>Event</th>
     <th>Version Details</th>
     <th></th>
@@ -29,15 +30,30 @@ Part of Programs:
 <% @versions.each do |version| %>
   <tr>
     <td><%= User.find(version.whodunnit).email %></td>
+    <td><%= version.created_at %></td>
     <td><%= version.event %></td>
     <td>
       <% version.changeset.each do |change| %>
-      Changed "<%= change[0] %>" from "<%= change[1][0] %>" to "<%= change[1][1] %>" <br/>
+        <% if change[0]!='updated_at' %>
+          Changed "<%= change[0] %>" from "<%= change[1][0]? change[1][0] : 'no value'%>" to "<%= change[1][1]? change[1][1] : 'no_value' %>" <br/>
+        <% end %>
       <% end %>
 
     </td>
-    <td><%= button_to 'Revert to this Version', revert_to_url, params: { id: @course.id, to_version: version } %></td>
+    <td>
+      <% if can? :revert_to, @course %>
+      <% if version.next %>
+        <%= button_to 'Revert to this Version', revert_to_url, params: { id: @course.id, to_version: version.next } %>*
+      <% else %>
+        <small>>Current Version<</small>
+      <% end %>
+      <% end %>
+    </td>
     </tr>
   <% end %>
+  <tr>
+    <td colspan="4"></td>
+    <td><small>* reverting will revert to "changed to" value</small></td>
+  </tr>
   </tbody>
 </table>
