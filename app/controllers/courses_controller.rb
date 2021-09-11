@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   load_and_authorize_resource
-  before_action :set_course, only: %i[show edit update destroy export_course_json]
+  before_action :set_course, only: %i[show edit update destroy export_course_json revert_to]
   before_action :set_paper_trail_whodunnit
 
   # GET /courses
@@ -110,6 +110,22 @@ class CoursesController < ApplicationController
         format.json { render :show, status: :ok, location: @course }
       else
         format.html { render :edit }
+        format.json { render json: @course.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def revert_to
+    puts params
+    @course = @course.versions.find(params[:to_version]).reify
+    if @course.save!
+      respond_to do |format|
+        format.html { redirect_to @course, notice: 'Course was successfully reverted.' }
+        format.json { render :show, status: :ok, location: @course }
+      end
+    else
+      respond_to do |format|
+        format.html { render versions(@course) }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end

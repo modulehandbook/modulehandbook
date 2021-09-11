@@ -36,7 +36,7 @@ Part of Programs:
       <% end %>
 
     </td>
-    <td><%= link_to 'Revert to this Version', '' %></td>
+    <td><%= button_to 'Revert to this Version', revert_to_url, params: { id: @course.id, to_version: version } %></td>
     </tr>
   <% end %>
   </tbody>

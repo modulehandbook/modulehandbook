@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'export_program_docx', to: 'programs#export_program_docx'
 
   post 'change_state', to: 'courses#change_state'
+  post 'revert_to', to: 'courses#revert_to'
 
   get 'approve_user', to: 'users#approve'
 end
