@@ -19,6 +19,7 @@ Part of Programs:
 
 <table class="table table-hover">
   <thead>
+    <th>Index</th>
     <th>Author</th>
     <th>Date</th>
     <th>Event</th>
@@ -29,13 +30,14 @@ Part of Programs:
 
 <% @versions.each do |version| %>
   <tr>
+    <td><%= version.index %></td>
     <td><%= User.find(version.whodunnit).email %></td>
     <td><%= version.created_at %></td>
     <td><%= version.event %></td>
     <td>
       <% version.changeset.each do |change| %>
         <% if change[0]!='updated_at' %>
-          Changed "<%= change[0] %>" from "<%= change[1][0]? change[1][0] : 'no value'%>" to "<%= change[1][1]? change[1][1] : 'no_value' %>" <br/>
+          Changed "<%= change[0] %>" from <%= change[1][0]? '"' + change[1][0] + '"' : 'no value'%> to "<%= change[1][1]? change[1][1] : 'no_value' %>" <br/>
         <% end %>
       <% end %>
 
