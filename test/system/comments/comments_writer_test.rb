@@ -65,7 +65,9 @@ class CommentsTest < ApplicationSystemTestCase
     fill_in 'comment_comment', with: 'This is a comment'
     click_on 'Create Comment'
     assert_text 'This is a comment'
-    click_on 'Delete'
+    accept_alert do
+      click_on 'Delete'
+    end
     refute_text 'This is a comment'
   end
 
