@@ -1,0 +1,57 @@
+<h1 id='comments' class="mt-5 pt-5">Comments:</h1>
+
+<table class="table">
+  <tbody>
+    <% @comments.each do |comment| %>
+    <% if !comment.comment.nil? %>
+      <tr>
+        <td><strong><%=comment.author.email%></strong>,
+          <%=comment.created_at.strftime("%d of %B %Y - %k:%M")%>
+          <em><% if comment.created_at != comment.updated_at %> (edited)<% end %></em>
+        </td>
+        <td class="text-right">
+          <% if can? :edit, comment %><%= link_to 'Edit', edit_comment_path(comment) %> | <% end %>
+          <% if can? :destroy, comment %><%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %><% end %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="border-top: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=md2html(comment.comment)%></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<h3 class="mt-4">Add a comment:</h3>
+<p>* You can insert Markdown formating here if you wish.<br>
+  * You can edit your comment for 30 minutes after you create it.<br>
+  * You can always delete your comment.</p>
+
+<%= form_with(model: @comment, local: true) do |form| %>
+  <% if @comment.errors.any? %>
+    <div class="form-group" id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :author_id, value: @current_user.id %>
+
+  <%= form.hidden_field :commentable_id, value: params["id"] %>
+  <%= form.hidden_field :commentable_type, value: params["controller"].singularize.capitalize %>
+
+
+  <div class="form-group">
+    <%= form.text_area :comment, class: "form-control"  %>
+  </div>
+
+  <div class="actions mb-5 pb-5">
+    <%= form.submit %>
+  </div>
+
+<% end %>
