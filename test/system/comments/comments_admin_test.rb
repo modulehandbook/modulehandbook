@@ -44,9 +44,12 @@ class CommentsTest < ApplicationSystemTestCase
     within '.table' do
       click_on 'Edit'
     end
+    #byebug
+    save_and_open_page
     fill_in 'comment_comment', with: 'This is an edited comment'
     click_on 'Update Comment'
     click_on 'Go to comments'
+    save_and_open_page
     assert_text 'This is an edited comment'
     assert_text '(edited)'
   end
