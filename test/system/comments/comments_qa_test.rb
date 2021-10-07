@@ -41,12 +41,16 @@ class CommentsTest < ApplicationSystemTestCase
     fill_in 'comment_comment', with: 'This is a comment'
     click_on 'Create Comment'
     assert_text 'This is a comment'
+    save_and_open_page
     within '.table' do
-      click_on 'Edit'
+      find('#asdfasdf').click
     end
+    assert_text 'Edit comment:'
     fill_in 'comment_comment', with: 'This is an edited comment'
+    save_and_open_page
     click_on 'Update Comment'
     click_on 'Go to comments'
+    save_and_open_page
     assert_text 'This is an edited comment'
     assert_text '(edited)'
   end
