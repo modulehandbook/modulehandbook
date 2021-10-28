@@ -1,5 +1,7 @@
 <h3>Course: <%= @course.name %> </h3>
+<% if can? :versions, @course %>
 <%= link_to "See Course Versions", course_versions_url(@course.id)  %>
+<% end %>
 
 <p class="bg-<%= @course.aasm_state %>">
   <strong>State:</strong>
