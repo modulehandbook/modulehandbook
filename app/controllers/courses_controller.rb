@@ -10,7 +10,7 @@ class CoursesController < ApplicationController
   end
 
   def versions
-    @versions = @course.versions.order(:created_at)
+    @versions = @course.versions.reorder('created_at DESC')
     @programs = @course.programs.order(:name).pluck(:name, :id)
   end
 
@@ -116,7 +116,6 @@ class CoursesController < ApplicationController
   end
 
   def revert_to
-    puts params
     @course = @course.versions.find(params[:to_version]).reify
     if @course.save!
       respond_to do |format|

@@ -45,17 +45,17 @@ Part of Programs:
     <td>
       <% if can? :revert_to, @course %>
       <% if version.next %>
-        <%= button_to 'Revert to this Version', revert_to_url, params: { id: @course.id, to_version: version.next } %>*
+        <%= button_to 'Revert to this Version', revert_to_url, params: { id: @course.id, to_version: version.next } %><small>* revert to "changed to" value</small>
       <% else %>
         <small>>Current Version<</small>
       <% end %>
       <% end %>
     </td>
-    </tr>
+  </tr>
   <% end %>
   <tr>
     <td colspan="4"></td>
-    <td><small>* reverting will revert to "changed to" value</small></td>
+    <td></td>
   </tr>
   </tbody>
 </table>
