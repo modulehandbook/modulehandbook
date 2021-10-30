@@ -44,12 +44,9 @@ class CommentsTest < ApplicationSystemTestCase
     within '.table' do
       click_on 'Edit'
     end
-    #byebug
-    # save_and_open_page
     fill_in 'comment_comment', with: 'This is an edited comment'
     click_on 'Update Comment'
     click_on 'Go to comments'
-    # save_and_open_page
     assert_text 'This is an edited comment'
     assert_text '(edited)'
   end
@@ -58,15 +55,15 @@ class CommentsTest < ApplicationSystemTestCase
     @course.comments.create(author: @user_other, comment: 'The others comment')
     visit course_path(@course)
     assert_text 'The others comment'
-    # within '.table' do
-    #   assert_text 'Edit'
-    #   # click_on 'Edit'
-    # end
-    # fill_in 'comment_comment', with: 'This is an edited comment'
-    # click_on 'Update Comment'
-    # click_on 'Go to comments'
-    # assert_text 'This is an edited comment'
-    # assert_text '(edited)'
+    within '.table' do
+      assert_text 'Edit'
+      click_on 'Edit'
+    end
+    fill_in 'comment_comment', with: 'This is an edited comment'
+    click_on 'Update Comment'
+    click_on 'Go to comments'
+    assert_text 'This is an edited comment'
+    assert_text '(edited)'
   end
 
   test 'as admin i can delete and destroy own comment' do
@@ -86,10 +83,12 @@ class CommentsTest < ApplicationSystemTestCase
     @course.comments.create(author: @user_other, comment: 'The others comment')
     visit course_path(@course)
     assert_text 'The others comment'
-    # within '.table' do
-    #   assert_text 'Delete'
-    #   # click_on 'Delete'
-    # end
-    # # refute_text 'The others comment'
+    accept_alert do
+      within '.table' do
+        assert_text 'Delete'
+        click_on 'Delete'
+      end
+    end
+    refute_text 'The others comment'
   end
 end
