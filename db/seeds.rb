@@ -9,7 +9,6 @@
 puts 'seeding database'
 
 users = [
-  ['kleinen@infrastructure.de', :admin],
   ['admin@mail.de', :admin],
   ['reader@mail.de', :reader],
   ['writer@mail.de', :writer],
@@ -17,12 +16,14 @@ users = [
   ['qa@mail.de', :qa]
 ]
 
+defaultPW = ENV['SEED_USER_PW'] 
+defaultPW ||= 'geheim12'
 User.destroy_all
 users.each do |u|
-  user = User.create(email: u[0], password: 'geheim12', password_confirmation: 'geheim12', approved: true, confirmed_at: DateTime.now, role: u[1])
+  user = User.create(email: u[0], password: defaultPW, password_confirmation: defaultPW, approved: true, confirmed_at: DateTime.now, role: u[1])
   puts "created User #{user.email} as #{user.role}"
 end
-user = User.create(email: 'unapproved@mail.de', password: 'geheim12', password_confirmation: 'geheim12', approved: false)
+user = User.create(email: 'unapproved@mail.de', password: defaultPW, password_confirmation: defaultPW, approved: false)
 puts "created unapproved User #{user.email}"
 
 # CourseProgram.destroy_all
