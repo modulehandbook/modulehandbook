@@ -6,8 +6,27 @@ This is a [Ruby on Rails](https://rubyonrails.org) application using a
 
 [Bootstrap](https://getbootstrap.com) is used for the frontend.
 
-It was and is being designed and developed by a team within the joint project
+The Modulehandbook is being designed and developed by a team within the joint project
 [German International University of Applied Sciences (GIU AS) - Hochschule für Technik und Wirtschaft Berlin University of Applied Sciences - HTW Berlin](https://www.htw-berlin.de/forschung/online-forschungskatalog/projekte/projekt/?eid=2839)
+in order to ease collaborative editing of the study programs for the GIU AS.
+
+## Devise Authentication Setup
+
+The Modulehandbook uses Devise for Authentication. New Users can register
+on the site themselves, but need to be approved by any admin (an existing user
+with role 'admin'). Furthermore, they need to confirm their email.
+
+For this to work devise needs an email account configured for actionmailer.
+Create an email-Account and set these environment variables:
+
+```
+export HOSTNAME=
+export DEVISE_EMAIL=
+export SMTP_PORT=465
+export SMTP_SERVER=smtp.strato.de
+export SMTP_LOGIN=
+export SMTP_PASSWORD=
+```
 
 
 ## Starting the app locally
@@ -16,9 +35,55 @@ With a local Postgres running
 
      rails s
 
-Without a local Postgres running
+Without a local Postgres running / using docker
 
      docker-compose up
+
+## Set up server on Heroku with seeded database
+
+### Set up heroku server
+
+```
+heroku create
+git push heroku master
+heroku run rails db:migrate
+heroku open
+
+```
+
+### Set up mailer for devise
+Devise sends emails to confirm new users and for password resets.
+
+
+```
+ heroku config:set HOSTNAME=modulehandbook.server.com
+ heroku config:set SMTP_PORT=587
+ heroku config:set SMTP_SERVER=smtp.server.de
+ heroku config:set SMTP_LOGIN=email@server.com
+ heroku config:set SMTP_PASSWORD=geheim
+ heroku config:set DEVISE_EMAIL=email@server.com
+```
+
+### Seed the database
+
+```
+heroku config:set SEED_USER_PW=<pw for users in seed>
+heroku run rails db:seed RAILS_ENV=staging
+```
+
+(use RAILS_ENV=staging to avoid sending user creation email. This works on
+heroku as heroku overwrites and environment db config)
+
+The seeds creates an example program for International Media and Computation at
+HTW Berlin with one user within each role. See [db/seeds.rb](db/seeds.rb)
+
+   ['admin@mail.de', :admin],
+   ['reader@mail.de', :reader],
+   ['writer@mail.de', :writer],
+   ['editor@mail.de', :editor],
+   ['qa@mail.de', :qa]
+
+# Further Admin Info
 
 ## Import Heroku Dump
 
@@ -63,7 +128,7 @@ Everything in the branch release is automatically deployed on the production ser
     heroku pg:backups:capture
     heroku pg:backups:download
 
-(now automatically on macos via crontab:)
+(now automatically on one macos via crontab:)
 
     0 * * * * bash && cd /Users/kleinen/mine/current/code/uas-module-handbook/module-handbook && make crondump
 
@@ -83,45 +148,3 @@ generates test coverage. does not work properly when calling rake/rake test
 
 ## added bootstrap with webpack
 yarn add bootstrap jquery popper.js
-
-
-
-## devise notes
-
-Some setup you must do manually if you haven't yet:
-
-  1. Ensure you have defined default url options in your environments files. Here
-     is an example of default_url_options appropriate for a development environment
-     in config/environments/development.rb:
-
-       config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-
-     In production, :host should be set to the actual host of your application.
-  (done)
-  2. Ensure you have defined root_url to *something* in your config/routes.rb.
-     For example:
-
-       root to: "home#index"
-  (done)
-  3. Ensure you have flash messages in app/views/layouts/application.html.erb.
-     For example:
-
-       <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-  (done)
-  4. You can copy Devise views (for customization) to your app by running:
-
-       rails g devise:views
-  (done)
-
-
-### devise on heroku
-heroku config:set DEVISE_SECRET_KEY=xyz
-
-### emails
-
-- set up emails with private account and plain smtp.
-
-### Devise Require admin to activate account before sign_in
-
-https://github.com/heartcombo/devise/wiki/How-To:-Require-admin-to-activate-account-before-sign_in
