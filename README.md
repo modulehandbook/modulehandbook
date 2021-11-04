@@ -1,6 +1,13 @@
 # README
 
-This is a [Ruby on Rails](https://rubyonrails.org) application using a [Postgres Database](https://www.postgresql.org) and [Bootstrap](https://getbootstrap.com). It was and is being developed for the GIU AS - German International University of Applied Sciences Cairo.
+This is a [Ruby on Rails](https://rubyonrails.org) application using a
+[Postgres Database](https://www.postgresql.org) and Devise for Authentication
+([heartcombo/devise: Flexible authentication solution for Rails with Warden.](https://github.com/heartcombo/devise)).
+
+[Bootstrap](https://getbootstrap.com) is used for the frontend.
+
+It was and is being designed and developed by a team within the joint project
+[German International University of Applied Sciences (GIU AS) - Hochschule für Technik und Wirtschaft Berlin University of Applied Sciences - HTW Berlin](https://www.htw-berlin.de/forschung/online-forschungskatalog/projekte/projekt/?eid=2839)
 
 
 ## Starting the app locally
@@ -8,7 +15,7 @@ This is a [Ruby on Rails](https://rubyonrails.org) application using a [Postgres
 With a local Postgres running
 
      rails s
-     
+
 Without a local Postgres running
 
      docker-compose up
