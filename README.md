@@ -1,22 +1,17 @@
 # README
 
+This is a [Ruby on Rails](https://rubyonrails.org) application using a [Postgres Database](https://www.postgresql.org) and [Bootstrap](https://getbootstrap.com). It was and is being developed for the GIU AS - German International University of Applied Sciences Cairo.
+
 
 ## Starting the app locally
 
-### With Postgres 12.2:
+With a local Postgres running
 
-     make startdb **ODER** docker-compose up postgresql -d
      rails s
+     
+Without a local Postgres running
 
-then visit http://localhost:3000/
-
-
-### With Postgres 11.7:
-
-    make startdb_11 **ODER** docker-compose up postgresql-11
-    rails s
-
-then visit http://localhost:3000/
+     docker-compose up
 
 ## Import Heroku Dump
 
@@ -28,11 +23,11 @@ or, use this for the container (also in makefile)
 
     docker-compose exec postgresql pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand /var/lib/postgresql/$(file)
 
-## Heroku Deployment
+## Heroku Deployment for GIU AS
 
 ### Automatic Deployment to Staging
 
-Trigger the automatic deployment to http://module-handbook-staging.herokuapp.com/ from the branch staging with the following steps:
+Everything in the branch staging is automatically deployed on the staging server. To trigger the automatic deployment to http://module-handbook-staging.herokuapp.com/ use the following steps:
 
     git checkout staging
     git pull origin master
@@ -41,7 +36,7 @@ Trigger the automatic deployment to http://module-handbook-staging.herokuapp.com
 
 ### Automatic Deployment to Production
 
-Trigger the automatic deployment to http://module-handbook.herokuapp.com/ from the branch release with the following steps:
+Everything in the branch release is automatically deployed on the production server. To trigger the automatic deployment to http://module-handbook.herokuapp.com/ use the following steps:
 
     git gheckout release
     git pull origin master
@@ -52,7 +47,6 @@ Trigger the automatic deployment to http://module-handbook.herokuapp.com/ from t
     git push heroku master
 
 ### Migration on Heroku
-
 
     heroku run rake db:migrate
 
