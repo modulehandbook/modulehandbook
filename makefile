@@ -5,18 +5,11 @@ starts:
 startdb:
 	docker-compose -f docker-compose-pg12.yml up -d  postgresql
 bash_db:
-	docker-compose exec   postgresql
-startdb_11:
-	docker-compose -f docker-compose-pg11.yml up postgresql
+	docker-compose exec postgresql
 import_dump: $(file)
 	rails db:drop
 	rails db:create
 	cat $(file) | docker-compose exec -T postgresql psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand -f -
-	rails db:migrate
-import_dump_11: $(file)
-	rails db:drop
-	ails db:create
-	cat $(file) | docker-compose exec -T postgresql-11 psql -h localhost -U modhand modhand -f -
 	rails db:migrate
 docker_clean:
 	docker-compose down

@@ -8,7 +8,7 @@ This is a [Ruby on Rails](https://rubyonrails.org) application using a [Postgres
 With a local Postgres running
 
      rails s
-     
+
 Without a local Postgres running
 
      docker-compose up

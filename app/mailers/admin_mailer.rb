@@ -1,9 +1,14 @@
+
 class AdminMailer < Devise::Mailer
-  default from: 'module-handbook@infrastructure.de'
+
+  @@deviseEmail = ENV['DEVISE_EMAIL']
+  @@deviseEmail ||= 'module-handbook@infrastructure.de'
+
+  default from: @@deviseEmail
   layout 'mailer'
 
   def new_user_waiting_for_approval(email)
     @email = email
-    mail(to: 'module-handbook@infrastructure.de', subject: 'Module Handbook: New User Awaiting Admin Approval')
+    mail(to: @@deviseEmail, subject: 'Module Handbook: New User Awaiting Admin Approval')
   end
-  end
+end
