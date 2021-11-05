@@ -1,8 +1,7 @@
 FROM ruby:2.7.1-alpine3.11
 RUN apk update
 RUN set -ex \
-  && apk add --no-cache libpq nodejs npm bash gcompat git tzdata chromium \
-  && apk add  --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.7/main/ nodejs=12.20.1-r0
+  && apk add --no-cache libpq nodejs npm bash gcompat git tzdata chromium 
 
 # https://github.com/npm/npm/issues/20861
 RUN npm config set unsafe-perm true \
