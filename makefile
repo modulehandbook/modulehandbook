@@ -17,6 +17,21 @@ docker_clean:
 	docker-compose down
 	docker rm $(docker ps -qa)
 	docker rmi $(docker images -qa)
+restart:
+	docker-compose down --rmi all -v --remove-orphans
+	docker-compose up -d
+rebuild:
+	docker-compose up -d --build --force-recreate module-handbook-rails
+db_seed:
+	docker-compose exec module-handbook-rails rails db:create
+	docker-compose exec module-handbook-rails rails db:migrate
+	docker-compose exec module-handbook-rails rails db:seed
+test_db:
+	docker-compose exec module-handbook-rails rails db:create RAILS_ENV=test
+	docker-compose exec module-handbook-rails rails db:migrate RAILS_ENV=test
+test_all:
+	docker-compose exec module-handbook-rails rails test
+	docker-compose exec module-handbook-rails rails test:system
 dump:
 	/usr/local/bin/heroku pg:backups:capture
 	/usr/local/bin/heroku pg:backups:download

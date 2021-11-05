@@ -1,7 +1,7 @@
-FROM ruby:2.7.1-alpine3.11
+FROM ruby:2.7.1-alpine3.12
 RUN apk update
 RUN set -ex \
-  && apk add --no-cache libpq nodejs npm bash gcompat git tzdata chromium 
+  && apk add --no-cache libpq nodejs npm bash gcompat git tzdata firefox
 
 # https://github.com/npm/npm/issues/20861
 RUN npm config set unsafe-perm true \
