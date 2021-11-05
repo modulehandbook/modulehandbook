@@ -1,22 +1,98 @@
 # README
 
+This is a [Ruby on Rails](https://rubyonrails.org) application using a
+[Postgres Database](https://www.postgresql.org) and Devise for Authentication
+([heartcombo/devise: Flexible authentication solution for Rails with Warden.](https://github.com/heartcombo/devise)).
+
+[Bootstrap](https://getbootstrap.com) is used for the frontend.
+
+The Modulehandbook is being designed and developed by a team within the joint project
+[German International University of Applied Sciences (GIU AS) - Hochschule für Technik und Wirtschaft Berlin University of Applied Sciences - HTW Berlin](https://www.htw-berlin.de/forschung/online-forschungskatalog/projekte/projekt/?eid=2839)
+in order to ease collaborative editing of the study programs for the GIU AS.
+
+## Devise Authentication Setup
+
+The Modulehandbook uses Devise for Authentication. New Users can register
+on the site themselves, but need to be approved by any admin (an existing user
+with role 'admin'). Furthermore, they need to confirm their email.
+
+For this to work devise needs an email account configured for actionmailer.
+Create an email-Account and set these environment variables:
+
+```
+export HOSTNAME=
+export DEVISE_EMAIL=
+export SMTP_PORT=465
+export SMTP_SERVER=smtp.strato.de
+export SMTP_LOGIN=
+export SMTP_PASSWORD=
+```
+
 
 ## Starting the app locally
 
-### With Postgres 12.2:
+```bash
+bundle install
+rails server
+```
+This needs an open local Postgres running.
+Start postgres in docker container:
+```bash
+docker-compose -f docker-compose.yml up -d postgresql
+```
 
-     make startdb **ODER** docker-compose up postgresql -d
-     rails s
+See the [makefile](./makefile) for more useful commands.
 
-then visit http://localhost:3000/
+### Start in docker container
+**broken, see issue [issue #80](https://github.com/modulehandbook/modulehandbook/issues/80) **
+
+     docker-compose up
+
+## Set up server on Heroku with seeded database
+
+### Set up heroku server
+
+```
+heroku create
+git push heroku master
+heroku run rails db:migrate
+heroku open
+
+```
+
+### Set up mailer for devise
+Devise sends emails to confirm new users and for password resets.
 
 
-### With Postgres 11.7:
+```
+ heroku config:set HOSTNAME=modulehandbook.server.com
+ heroku config:set SMTP_PORT=587
+ heroku config:set SMTP_SERVER=smtp.server.de
+ heroku config:set SMTP_LOGIN=email@server.com
+ heroku config:set SMTP_PASSWORD=geheim
+ heroku config:set DEVISE_EMAIL=email@server.com
+```
 
-    make startdb_11 **ODER** docker-compose up postgresql-11
-    rails s
+### Seed the database
 
-then visit http://localhost:3000/
+```
+heroku config:set SEED_USER_PW=<pw for users in seed>
+heroku run rails db:seed RAILS_ENV=staging
+```
+
+(use RAILS_ENV=staging to avoid sending user creation email. This works on
+heroku as heroku overwrites and environment db config)
+
+The seeds creates an example program for International Media and Computation at
+HTW Berlin with one user within each role. See [db/seeds.rb](db/seeds.rb)
+
+   ['admin@mail.de', :admin],
+   ['reader@mail.de', :reader],
+   ['writer@mail.de', :writer],
+   ['editor@mail.de', :editor],
+   ['qa@mail.de', :qa]
+
+# Further Admin Info
 
 ## Import Heroku Dump
 
@@ -28,11 +104,11 @@ or, use this for the container (also in makefile)
 
     docker-compose exec postgresql pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand /var/lib/postgresql/$(file)
 
-## Heroku Deployment
+## Heroku Deployment for GIU AS
 
 ### Automatic Deployment to Staging
 
-Trigger the automatic deployment to http://module-handbook-staging.herokuapp.com/ from the branch staging with the following steps:
+Everything in the branch staging is automatically deployed on the staging server. To trigger the automatic deployment to http://module-handbook-staging.herokuapp.com/ use the following steps:
 
     git checkout staging
     git pull origin master
@@ -41,7 +117,7 @@ Trigger the automatic deployment to http://module-handbook-staging.herokuapp.com
 
 ### Automatic Deployment to Production
 
-Trigger the automatic deployment to http://module-handbook.herokuapp.com/ from the branch release with the following steps:
+Everything in the branch release is automatically deployed on the production server. To trigger the automatic deployment to http://module-handbook.herokuapp.com/ use the following steps:
 
     git gheckout release
     git pull origin master
@@ -53,7 +129,6 @@ Trigger the automatic deployment to http://module-handbook.herokuapp.com/ from t
 
 ### Migration on Heroku
 
-
     heroku run rake db:migrate
 
 
@@ -62,7 +137,7 @@ Trigger the automatic deployment to http://module-handbook.herokuapp.com/ from t
     heroku pg:backups:capture
     heroku pg:backups:download
 
-(now automatically on macos via crontab:)
+(now automatically on one macos via crontab:)
 
     0 * * * * bash && cd /Users/kleinen/mine/current/code/uas-module-handbook/module-handbook && make crondump
 
@@ -82,45 +157,3 @@ generates test coverage. does not work properly when calling rake/rake test
 
 ## added bootstrap with webpack
 yarn add bootstrap jquery popper.js
-
-
-
-## devise notes
-
-Some setup you must do manually if you haven't yet:
-
-  1. Ensure you have defined default url options in your environments files. Here
-     is an example of default_url_options appropriate for a development environment
-     in config/environments/development.rb:
-
-       config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-
-     In production, :host should be set to the actual host of your application.
-  (done)
-  2. Ensure you have defined root_url to *something* in your config/routes.rb.
-     For example:
-
-       root to: "home#index"
-  (done)
-  3. Ensure you have flash messages in app/views/layouts/application.html.erb.
-     For example:
-
-       <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-  (done)
-  4. You can copy Devise views (for customization) to your app by running:
-
-       rails g devise:views
-  (not done)
-
-
-### devise on heroku
-heroku config:set DEVISE_SECRET_KEY=xyz
-
-### emails
-
-- set up emails with private account and plain smtp.
-
-### Devise Require admin to activate account before sign_in
-
-https://github.com/heartcombo/devise/wiki/How-To:-Require-admin-to-activate-account-before-sign_in

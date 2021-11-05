@@ -8,6 +8,8 @@ services:
       - POSTGRES_PASSWORD=modhand
       - POSTGRES_USER=modhand
       - POSTGRES_DB=modhand
+    ports:
+      - "5432:5432" # don't do this on production!
 #    volumes:
 #      - ./pg-data:/var/lib/postgresql/data
   module-handbook-rails:

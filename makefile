@@ -3,20 +3,15 @@ start:
 starts:
 	docker-compose up
 startdb:
-	docker-compose -f docker-compose-pg12.yml up -d  postgresql
+	docker-compose up -d postgresql
+bash:
+	docker-compose exec module-handbook-rails bash
 bash_db:
-	docker-compose exec   postgresql
-startdb_11:
-	docker-compose -f docker-compose-pg11.yml up postgresql
+	docker-compose exec postgresql
 import_dump: $(file)
 	rails db:drop
 	rails db:create
 	cat $(file) | docker-compose exec -T postgresql psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand -f -
-	rails db:migrate
-import_dump_11: $(file)
-	rails db:drop
-	ails db:create
-	cat $(file) | docker-compose exec -T postgresql-11 psql -h localhost -U modhand modhand -f -
 	rails db:migrate
 docker_clean:
 	docker-compose down
@@ -26,8 +21,6 @@ dump:
 	/usr/local/bin/heroku pg:backups:capture
 	/usr/local/bin/heroku pg:backups:download
 	mv latest.dump ../dumps/uas-module-handbook-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
-bash:
-	docker-compose exec module-handbook-rails bash
 crondump:
 	rm -f latest.dump
 	/usr/local/bin/heroku pg:backups:capture
@@ -52,9 +45,11 @@ rails_test:
 	# common fixes on Lottes Laptop
 	# in test_helper.rb -> parallelize(workers: 1)
 	# export DISABLE_SPRING=true
+	rails db:drop RAILS_ENV=test
 	rails db:create RAILS_ENV=test
 	rails db:migrate RAILS_ENV=test
 	rails test
+	rails test:system
 db_migrate:
 	docker-compose exec module-handbook-rails rails db:migrate
 db_seed:

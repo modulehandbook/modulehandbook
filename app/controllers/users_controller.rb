@@ -8,9 +8,9 @@ class UsersController < ApplicationController
     @users = if params[:approved] == 'false'
                User.where(approved: false).order('email')
              else
-               User.all.order('email')
+               User.all.order('approved', 'email')
              end
-   end
+  end
 
   def show; end
 
