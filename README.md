@@ -44,7 +44,7 @@ docker-compose -f docker-compose.yml up -d postgresql
 See the [makefile](./makefile) for more useful commands.
 
 ### Start in docker container
-**broken, see issue [#80](#80)**
+**broken, see issue #80 **
 
      docker-compose up
 
