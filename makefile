@@ -3,7 +3,9 @@ start:
 starts:
 	docker-compose up
 startdb:
-	docker-compose -f docker-compose-pg12.yml up -d  postgresql
+	docker-compose up -d postgresql
+bash:
+	docker-compose exec module-handbook-rails bash
 bash_db:
 	docker-compose exec postgresql
 import_dump: $(file)
@@ -19,8 +21,6 @@ dump:
 	/usr/local/bin/heroku pg:backups:capture
 	/usr/local/bin/heroku pg:backups:download
 	mv latest.dump ../dumps/uas-module-handbook-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
-bash:
-	docker-compose exec module-handbook-rails bash
 crondump:
 	rm -f latest.dump
 	/usr/local/bin/heroku pg:backups:capture

@@ -31,11 +31,20 @@ export SMTP_PASSWORD=
 
 ## Starting the app locally
 
-With a local Postgres running
+```bash
+bundle install
+rails server
+```
+This needs an open local Postgres running.
+Start postgres in docker container:
+```bash
+docker-compose -f docker-compose.yml up -d postgresql
+```
 
-     rails s
+See the [makefile](./makefile) for more useful commands.
 
-Without a local Postgres running / using docker
+### Start in docker container
+**broken, see issue [#80](#80)**
 
      docker-compose up
 
