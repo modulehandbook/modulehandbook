@@ -4,19 +4,30 @@ starts:
 	docker-compose up
 startdb:
 	docker-compose up -d postgresql
+exec:
+	docker-compose exec module-handbook bash
+new_db:
+	docker-compose exec module-handbook rails db:create
+	docker-compose exec module-handbook rails db:migrate
+	docker-compose exec module-handbook rails db:seed
+rebuild:
+	docker build --no-cache .
 bash:
-	docker-compose exec module-handbook-rails bash
+	docker-compose exec module-handbook bash
 bash_db:
-	docker-compose exec postgresql
+	docker-compose exec module-handbook-postgres bash
 import_dump: $(file)
 	rails db:drop
 	rails db:create
 	cat $(file) | docker-compose exec -T postgresql psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand -f -
 	rails db:migrate
-docker_clean:
+rebuild:
+	docker-compose up -d --build --force-recreate module-handbook
+down:
 	docker-compose down
-	docker rm $(docker ps -qa)
-	docker rmi $(docker images -qa)
+clean:
+	rm -rf gem_cache
+	docker-compose down --rmi all -v --remove-orphans
 dump:
 	/usr/local/bin/heroku pg:backups:capture
 	/usr/local/bin/heroku pg:backups:download

@@ -1,32 +1,49 @@
-FROM ruby:2.7.1-alpine3.11
-RUN apk update
-RUN set -ex \
-  && apk add --no-cache libpq nodejs bash gcompat git tzdata \
-  && apk add  --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.7/main/ nodejs=8.9.3-r1
+# new dockerfile from https://www.digitalocean.com/community/tutorials/containerizing-a-ruby-on-rails-application-for-development-with-docker-compose-de
 
-# https://github.com/npm/npm/issues/20861
-RUN npm config set unsafe-perm true \
-  && npm install --global yarn
-# install yarn
+FROM ruby:2.7.2-alpine
 
-RUN mkdir /module-handbook
+ENV BUNDLER_VERSION=2.2.30
+
+RUN apk add --update --no-cache \
+      bash \
+      binutils-gold \
+      build-base \
+      curl \
+      file \
+      g++ \
+      gcc \
+      git \
+      less \
+      libstdc++ \
+      libffi-dev \
+      libc-dev \
+      linux-headers \
+      libxml2-dev \
+      libxslt-dev \
+      libgcrypt-dev \
+      make \
+      netcat-openbsd \
+      nodejs \
+      openssl \
+      pkgconfig \
+      postgresql-dev \
+      tzdata \
+      yarn
+
+RUN gem install bundler -v 2.2.30
+
 WORKDIR /module-handbook
-COPY Gemfile /module-handbook/Gemfile
-COPY Gemfile.lock /module-handbook/Gemfile.lock
 
-RUN set -ex \
-   && apk add --no-cache --virtual builddependencies \
-       linux-headers \
-       build-base \
-       postgresql-dev
-RUN gem install bundler \
-   && bundle install
-RUN apk del builddependencies
+COPY Gemfile Gemfile.lock ./
 
-COPY . /module-handbook
+RUN bundle config build.nokogiri --use-system-libraries
 
-# install yarn modules
-RUN yarn install --ignore-engines
+RUN bundle check || bundle install
 
-# Start the main process.
-CMD ["bundle", "exec", "unicorn", "--port", "80"]
+COPY package.json yarn.lock ./
+
+RUN yarn install --check-files
+
+COPY . ./
+
+ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]

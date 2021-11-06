@@ -1,6 +1,5 @@
 # Ignore Postgres data and dumps mounted to containers
-pg-data/*
-pg-data-11/*
+pg_data/*
 latest.dump
 dumps/**
 
@@ -44,3 +43,4 @@ coverage/**
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+.env

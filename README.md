@@ -44,9 +44,9 @@ docker-compose -f docker-compose.yml up -d postgresql
 See the [makefile](./makefile) for more useful commands.
 
 ### Start in docker container
-**broken, see issue [issue #80](https://github.com/modulehandbook/modulehandbook/issues/80) **
 
      docker-compose up
+     make new_db
 
 ## Set up server on Heroku with seeded database
 
