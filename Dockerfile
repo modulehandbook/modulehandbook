@@ -10,6 +10,7 @@ RUN apk add --update --no-cache \
       build-base \
       curl \
       file \
+      firefox \
       g++ \
       gcc \
       git \
