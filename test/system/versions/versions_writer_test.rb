@@ -1,10 +1,10 @@
 require 'application_system_test_case'
 
-class VersionsTest < ApplicationSystemTestCase
+class CommentsTest < ApplicationSystemTestCase
   setup do
     @course = courses(:one)
-    @user = users(:one)
-    @user_other = users(:writer)
+    @user = users(:writer)
+    @user_other = users(:reader)
     sign_in @user
   end
 
@@ -24,7 +24,7 @@ class VersionsTest < ApplicationSystemTestCase
     assert_text 'Course was successfully updated.'
   end
 
-  test 'as admin i can create a version on a course' do
+  test 'as writer i can create a version on a course' do
     visit course_path(@course)
     create_version(responsible_person: 'Me', ects: '2')
     click_on 'See Course Versions'
@@ -32,7 +32,7 @@ class VersionsTest < ApplicationSystemTestCase
     assert_text 'Changed'
   end
 
-  test 'as admin i can see versions of a comment' do
+  test 'as writer i can see versions of a comment' do
     visit course_path(@course)
     create_version(responsible_person: 'Me', ects: '2')
     click_on 'See Course Versions'
@@ -40,14 +40,12 @@ class VersionsTest < ApplicationSystemTestCase
     assert_text 'Changed'
   end
 
-  test 'as admin i can revert to a version of a comment' do
+  test 'as writer i can not revert to a version of a comment' do
     visit course_path(@course)
     create_version(responsible_person: 'Me', ects: '2')
     create_version(responsible_person: 'Not Me', ects: '5')
     click_on 'See Course Versions'
     assert_text 'Version History of'
-    click_on 'Revert to this Version'
-    refute_text 'Not Me'
-    assert_text 'Me'
+    refute_text 'Revert to this Version'
   end
 end
