@@ -1,14 +1,14 @@
 require 'application_system_test_case'
 
-class CommentsTest < ApplicationSystemTestCase
-  setup do
+class VersionsWriterTest < ApplicationSystemTestCase
+  def setup
     @course = courses(:one)
     @user = users(:writer)
     @user_other = users(:reader)
     sign_in @user
   end
 
-  teardown do
+  def teardown
     sign_out @user
     CourseProgram.all.delete_all
     Program.all.delete_all

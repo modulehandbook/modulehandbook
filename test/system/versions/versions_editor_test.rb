@@ -1,19 +1,24 @@
 require 'application_system_test_case'
 
-class CommentsTest < ApplicationSystemTestCase
-  setup do
+class VersionsEditorTest < ApplicationSystemTestCase
+  def setup
     @course = courses(:one)
-    @user = users(:editor)
+    @user = @user_editor = users(:editor)
     @user_other = users(:writer)
     sign_in @user
   end
 
-  teardown do
+  def teardown
     sign_out @user
     CourseProgram.all.delete_all
     Program.all.delete_all
     Course.all.delete_all
     User.all.delete_all
+  end
+
+  test 'logged in as editor' do
+    visit root_path
+    assert_text 'Logged in as ' + @user.email
   end
 
   def create_version(responsible_person:, ects:)
