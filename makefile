@@ -3,31 +3,33 @@ start:
 starts:
 	docker-compose up
 startdb:
-	docker-compose -f docker-compose-pg12.yml up -d  postgresql
+	docker-compose up -d postgresql
+exec:
+	docker-compose exec module-handbook bash
+new_db:
+	docker-compose exec module-handbook rails db:create
+	docker-compose exec module-handbook rails db:migrate
+	docker-compose exec module-handbook rails db:seed
+bash:
+	docker-compose exec module-handbook bash
 bash_db:
-	docker-compose exec   postgresql
-startdb_11:
-	docker-compose -f docker-compose-pg11.yml up postgresql
+	docker-compose exec module-handbook-postgres bash
 import_dump: $(file)
 	rails db:drop
 	rails db:create
 	cat $(file) | docker-compose exec -T postgresql psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand -f -
 	rails db:migrate
-import_dump_11: $(file)
-	rails db:drop
-	ails db:create
-	cat $(file) | docker-compose exec -T postgresql-11 psql -h localhost -U modhand modhand -f -
-	rails db:migrate
-docker_clean:
+rebuild:
+	docker-compose up -d --build --force-recreate module-handbook
+down:
 	docker-compose down
-	docker rm $(docker ps -qa)
-	docker rmi $(docker images -qa)
+clean:
+	rm -rf gem_cache
+	docker-compose down --rmi all -v --remove-orphans
 dump:
 	/usr/local/bin/heroku pg:backups:capture
 	/usr/local/bin/heroku pg:backups:download
 	mv latest.dump ../dumps/uas-module-handbook-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
-bash:
-	docker-compose exec module-handbook-rails bash
 crondump:
 	rm -f latest.dump
 	/usr/local/bin/heroku pg:backups:capture
@@ -48,6 +50,14 @@ yarn_update_docx:
 yarn_update:
 	yarn upgrade
 	cp node_modules/docx/build/index.js public/docx/index.js
+test_all:
+     docker-compose exec module-handbook rails test
+     docker-compose exec module-handbook rails test:system
+test_app:
+ 	docker-compose exec module-handbook rails db:create RAILS_ENV=test
+ 	docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
+ 	docker-compose exec module-handbook rails test
+    docker-compose exec module-handbook rails test:system
 rails_test:
 	# common fixes on Lottes Laptop
 	# in test_helper.rb -> parallelize(workers: 1)

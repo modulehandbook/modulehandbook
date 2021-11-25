@@ -8,9 +8,11 @@
 .git
 
 # postgres dbs
-/pg-data/**
-/pg-data-11/**
+/pg_data/**
 
 # node modules
-node_modules
+
 npm-debug.log
+.env
+/gem_cache/**
+/node_modules/**
