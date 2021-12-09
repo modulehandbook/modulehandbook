@@ -8,14 +8,6 @@ class VersionsWriterTest < ApplicationSystemTestCase
     sign_in @user
   end
 
-  def teardown
-    sign_out @user
-    CourseProgram.all.delete_all
-    Program.all.delete_all
-    Course.all.delete_all
-    User.all.delete_all
-  end
-
   def create_version(responsible_person:, ects:)
     click_on 'Edit'
     fill_in 'course_responsible_person', with: responsible_person
