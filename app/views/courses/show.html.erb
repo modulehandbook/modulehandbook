@@ -1,4 +1,8 @@
-<h3>Course: <%= @course.name %></h3>
+<h3>Course: <%= @course.name %> </h3>
+<% if can? :versions, @course %>
+<%= link_to "See Course Versions", course_versions_url(@course.id)  %>
+<% end %>
+
 <p class="bg-<%= @course.aasm_state %>">
   <strong>State:</strong>
   <%= @course.aasm_state.humanize.titleize %>
@@ -10,6 +14,7 @@
     <%= button_to event.name.to_s.humanize.titleize, change_state_path, params: { course_id: @course.id, event_name: event.name } %>
   <% end %>
 <% end %>
+
 
 
 <p id="notice"><%= notice %><br>

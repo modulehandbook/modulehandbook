@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'programs/:id/overview', to: 'programs#overview', as: 'program_overview'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
+  get 'courses/:id/versions', to: 'courses#versions', as: 'course_versions'
+
   # JSON Exporte
   get 'export_course_json', to: 'courses#export_course_json'
   get 'export_courses_json', to: 'courses#export_courses_json'
@@ -26,6 +28,7 @@ Rails.application.routes.draw do
   get 'export_program_docx', to: 'programs#export_program_docx'
 
   post 'change_state', to: 'courses#change_state'
+  post 'revert_to', to: 'courses#revert_to'
 
   get 'approve_user', to: 'users#approve'
 end

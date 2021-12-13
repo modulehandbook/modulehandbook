@@ -1,19 +1,11 @@
 require 'application_system_test_case'
 
-class CommentsTest < ApplicationSystemTestCase
-  setup do
+class CommentsQATest < ApplicationSystemTestCase
+  def setup
     @course = courses(:one)
     @user = users(:qa)
     @user_other = users(:writer)
     sign_in @user
-  end
-
-  teardown do
-    sign_out @user
-    CourseProgram.all.delete_all
-    Program.all.delete_all
-    Course.all.delete_all
-    User.all.delete_all
   end
 
   test 'as qa i can create a comment on a course' do
@@ -41,16 +33,13 @@ class CommentsTest < ApplicationSystemTestCase
     fill_in 'comment_comment', with: 'This is a comment'
     click_on 'Create Comment'
     assert_text 'This is a comment'
-    # save_and_open_page
     within '.table' do
       click_on 'Edit'
     end
     assert_text 'Edit comment:'
     fill_in 'comment_comment', with: 'This is an edited comment'
-    # save_and_open_page
     click_on 'Update Comment'
     click_on 'Go to comments'
-    # save_and_open_page
     assert_text 'This is an edited comment'
     assert_text '(edited)'
   end

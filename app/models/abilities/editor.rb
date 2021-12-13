@@ -7,8 +7,10 @@ module Abilities
     include CanCan::Ability
 
     def initialize(_user)
-      can %i[change_state], Course
-      can %i[approve], User
+      can %i[crud], CourseProgram
+      can %i[crud export_course import_course change_state revert_to], Course
+      can %i[crud export_program import_program], Program
+      can %i[read approve], User
     end
   end
 end

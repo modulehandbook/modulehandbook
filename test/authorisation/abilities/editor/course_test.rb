@@ -26,6 +26,11 @@ class CourseEditorAbilitiesTest < ApplicationSystemTestCase
     assert @ability.can?(:update, @course)
   end
 
+  test 'as editor i can see and revert to course versions' do
+    assert @ability.can?(:versions, @course)
+    assert @ability.can?(:revert_to, @course)
+  end
+
   test 'as editor i can change the state' do
     assert @ability.can?(:change_state, @course)
   end

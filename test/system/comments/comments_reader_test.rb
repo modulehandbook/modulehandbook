@@ -1,19 +1,11 @@
 require 'application_system_test_case'
 
-class CommentsTest < ApplicationSystemTestCase
-  setup do
+class CommentsReaderTest < ApplicationSystemTestCase
+  def setup
     @course = courses(:one)
     @user = users(:reader)
     @user_other = users(:writer)
     sign_in @user
-  end
-
-  teardown do
-    sign_out @user
-    CourseProgram.all.delete_all
-    Program.all.delete_all
-    Course.all.delete_all
-    User.all.delete_all
   end
 
   test 'as reader i can create a comment on a course' do
