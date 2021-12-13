@@ -26,6 +26,11 @@ class CourseReaderAbilitiesTest < ApplicationSystemTestCase
     assert @ability.cannot?(:update, @course)
   end
 
+  test 'as reader i cant see or revert to course versions' do
+    assert @ability.cannot?(:versions, @course)
+    assert @ability.cannot?(:revert_to, @course)
+  end
+
   test 'as reader i cant change the state' do
     assert @ability.cannot?(:change_state, @course)
   end

@@ -1,6 +1,8 @@
+# temp files from save_and_open_page
+capybara-*.html
+
 # Ignore Postgres data and dumps mounted to containers
-pg-data/*
-pg-data-11/*
+pg_data/*
 latest.dump
 dumps/**
 
@@ -44,3 +46,4 @@ coverage/**
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+.env

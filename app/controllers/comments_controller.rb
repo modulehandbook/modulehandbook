@@ -31,10 +31,16 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice: 'Comment was successfully destroyed.' }
-      format.json { head :no_content }
+    if @comment.destroy
+      respond_to do |format|
+        format.html { redirect_to request.referrer, notice: 'Comment was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to request.referrer, notice: 'Comment could not be destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 

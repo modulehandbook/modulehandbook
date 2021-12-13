@@ -26,6 +26,11 @@ class CourseWriterAbilitiesTest < ApplicationSystemTestCase
     assert @ability.can?(:update, @course)
   end
 
+  test 'as writer i can see but not revert to course versions' do
+    assert @ability.can?(:versions, @course)
+    assert @ability.cannot?(:revert_to, @course)
+  end
+
   test 'as writer i cant change the state' do
     assert @ability.cannot?(:change_state, @course)
   end

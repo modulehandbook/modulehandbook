@@ -4,54 +4,48 @@ class CommentsAdminAbilitiesTest < ApplicationSystemTestCase
   setup do
     @course = courses(:one)
     @user = users(:one)
+    @user_other = users(:two)
     @ability = Ability.new(@user)
+    @comment_own = @course.comments.create(author: @user)
+    @comment_other = @course.comments.create(author: @user_other)
     system_test_login(@user.email, 'geheim12')
   end
 
   test 'as admin i can create a comment on a course' do
-    assert @ability.can?(:create, @course)
-    assert @ability.can?(:new, @course)
+    assert @ability.can?(:create, @comment_own)
+    assert @ability.can?(:new, @comment_own)
   end
 
   test 'as admin i can read own comment' do
-    # assert @ability.can?(:read, @course_program)
-    # assert @ability.can?(:show, @course_program)
-    # assert @ability.can?(:index, @course_program)
+    assert @ability.can?(:read, @comment_own)
+    assert @ability.can?(:show, @comment_own)
+    assert @ability.can?(:index, @comment_own)
   end
 
   test 'as admin i can read others comment' do
-    # assert @ability.can?(:read, @course_program)
-    # assert @ability.can?(:show, @course_program)
-    # assert @ability.can?(:index, @course_program)
+    assert @ability.can?(:read, @comment_other)
+    assert @ability.can?(:show, @comment_other)
+    assert @ability.can?(:index, @comment_other)
   end
 
   test 'as admin i can edit and update own comment' do
-    # assert @ability.can?(:edit, @course_program)
-    # assert @ability.can?(:update, @course_program)
+    assert @ability.can?(:edit, @comment_own)
+    assert @ability.can?(:update, @comment_own)
   end
 
   test 'as admin i can edit and update others comment' do
-    # assert @ability.can?(:edit, @course_program)
-    # assert @ability.can?(:update, @course_program)
+    assert @ability.can?(:edit, @comment_other)
+    assert @ability.can?(:update, @comment_other)
   end
 
   test 'as admin i can delete and destroy own comment' do
-    # assert @ability.can?(:delete, @course_program)
-    # assert @ability.can?(:destroy, @course_program)
+    assert @ability.can?(:delete, @comment_own)
+    assert @ability.can?(:destroy, @comment_own)
   end
 
   test 'as admin i can delete and destroy others comment' do
-    # assert @ability.can?(:delete, @course_program)
-    # assert @ability.can?(:destroy, @course_program)
+    assert @ability.can?(:delete, @comment_other)
+    assert @ability.can?(:destroy, @comment_other)
   end
 
 end
-
-# dann noch system test schrieben
-
-
-# can %i[create], Comment
-# can %i[destroy], Comment, author_id: _user.id
-# can %i[edit update], Comment, Comment.where(author_id: _user.id) do |comment|
-#   comment.created_at >= 30.minutes.ago
-# end

@@ -7,10 +7,10 @@ default: &default
   username: <%= ENV.fetch("POSTGRES_USER") { 'modhand' } %>
   password: <%= ENV.fetch("POSTGRES_PASSWORD") { 'modhand' } %>
   port: <%= ENV.fetch("POSTGRES_PORT") { 5432 } %>
-  
+
 development:
   <<: *default
-  database: modhand
+  database: modhand-dev
 
 test:
   <<: *default

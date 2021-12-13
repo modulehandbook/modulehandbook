@@ -26,6 +26,11 @@ class CourseQAAbilitiesTest < ApplicationSystemTestCase
     assert @ability.can?(:update, @course)
   end
 
+  test 'as qa i can see and revert to course versions' do
+    assert @ability.can?(:versions, @course)
+    assert @ability.can?(:revert_to, @course)
+  end
+
   test 'as qa i can change the state' do
     assert @ability.can?(:change_state, @course)
   end
