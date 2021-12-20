@@ -19,13 +19,13 @@ jobs:
     services:
       module-handbook-postgres:
         image: postgres:13.4-alpine
-    #    container_name: module-handbook-postgres
         env:
-          - APPLICATION=module-handbook
-          - POSTGRES_PASSWORD=modhand
-          - POSTGRES_USER=modhand
-          - POSTGRES_DB=modhand-db-prod
-          - POSTGRES_HOST_AUTH_METHOD=password
+          APPLICATION: module-handbook
+          POSTGRES_PASSWORD: modhand
+          POSTGRES_USER: modhand
+          POSTGRES_DB: modhand-db-prod
+          POSTGRES_HOST_AUTH_METHOD: password
+          
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
