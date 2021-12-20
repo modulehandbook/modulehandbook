@@ -1,6 +1,8 @@
 # overrides for development -
 # dont ever copy to production machine!
 
+# see doc: https://docs.docker.com/compose/compose-file/compose-file-v3/
+
 version: '3.4'
 services:
   module-handbook-postgres:
@@ -9,13 +11,17 @@ services:
       ports:
       - "5432:5432" # don't do this on production!
   module-handbook:
-  #  image:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+    image: modulehandbook-local
+# currently the same
+#    ports:
+#      - "3030:3000"
     volumes:
-      - .:/module-handbook
+      - .:/module-handbook  # use app files from host
+      - /module-handbook/node_modules # but not the node_modules
     environment:
-      RAILS_MASTER_KEY: SECRET_KEY_THAT_NEEDS_TO_BE_SET_IN_PROD
+      - POSTGRES_DB=modhand-db-dev
+      - RAILS_ENV=development
+      - RAILS_MASTER_KEY=REMOVE
