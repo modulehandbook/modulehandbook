@@ -157,3 +157,11 @@ generates test coverage. does not work properly when calling rake/rake test
 
 ## added bootstrap with webpack
 yarn add bootstrap jquery popper.js
+
+
+# Deployment to HTW server with Github actions
+
+
+
+
+docker build -t modhand-prod .

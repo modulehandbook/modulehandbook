@@ -1,6 +1,7 @@
 # new dockerfile from https://www.digitalocean.com/community/tutorials/containerizing-a-ruby-on-rails-application-for-development-with-docker-compose-de
+#  docker build --target modhand-prod -t modhandbook/modhandbook-prod:latest .
 
-FROM ruby:2.7.2-alpine AS modhand-prod
+FROM ruby:2.7.2-alpine AS modhand-base
 
 ENV BUNDLER_VERSION=2.2.30
 
@@ -29,27 +30,37 @@ RUN set -ex \
   postgresql-dev \
   tzdata \
   yarn \
-  && bundle install --without development test \
+  && bundle config set --local without 'development test' \
+  && bundle install --without development test
 
 
 
 COPY package.json yarn.lock ./
-
 RUN yarn install --check-files
 
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
-FROM modhand-prod AS modhand-dev
 
-# only for dev/test
+
+
+FROM modhand-base AS modhand-prod
+
+RUN set -ex && \
+  apk del builddependencies
+
+
+
+
+FROM modhand-base AS modhand-dev
+
 ENV RAILS_ENV development
 ENV NODE_ENV development
 
 COPY . ./
-RUN bundle install
-RUN yarn install --check-files
+RUN bundle config --delete without && \
+    bundle install && \
+    yarn install --check-files
 
-RUN set -ex \
-  && apk add --no-cache  \
-  firefox \
-  && apk del builddependencies
+RUN set -ex && \
+  apk del builddependencies && \
+  apk add --no-cache  firefox
