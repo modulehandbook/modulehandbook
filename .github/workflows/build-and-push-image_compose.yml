@@ -1,4 +1,4 @@
-name: Build and push Docker image
+name: Build and push Docker image - compose
 
 on:
   push:
@@ -57,7 +57,7 @@ jobs:
         docker-compose exec module-handbook rails test
         docker-compose exec module-handbook rails test:system
         docker-compose down
-      
+
       - name: Build and push Docker image
         if: ${{ github.ref == 'refs/heads/main' }} # only build and push if on master
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
