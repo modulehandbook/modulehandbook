@@ -30,7 +30,9 @@ RUN set -ex \
   postgresql-dev \
   tzdata \
   yarn \
+  && bundle config set --local without 'development test' \
   && bundle install --without development test
+
 
 
 COPY package.json yarn.lock ./

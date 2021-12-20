@@ -14,6 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: modhand-dev
     image: modulehandbook-local
 # currently the same
 #    ports:
