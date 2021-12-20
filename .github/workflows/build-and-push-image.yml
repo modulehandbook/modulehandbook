@@ -16,7 +16,30 @@ jobs:
     permissions:
       contents: read
       packages: write
-
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    services:
+      module-handbook-postgres:
+        image: postgres:13.4-alpine
+    #    container_name: module-handbook-postgres
+        env:
+          - APPLICATION=module-handbook
+          - POSTGRES_PASSWORD=modhand
+          - POSTGRES_USER=modhand
+          - POSTGRES_DB=modhand-db-prod
+          - POSTGRES_HOST_AUTH_METHOD=password
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
