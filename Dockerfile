@@ -23,7 +23,10 @@ RUN set -ex \
   git \
   linux-headers \
   libpq \
+  libxml2-dev \
+  libxslt-dev \
   build-base \
+  pkg-config \
   postgresql-dev \
   tzdata \
   yarn \
