@@ -26,7 +26,6 @@ RUN set -ex \
   libxml2-dev \
   libxslt-dev \
   build-base \
-  pkg-config \
   postgresql-dev \
   tzdata \
   yarn \
