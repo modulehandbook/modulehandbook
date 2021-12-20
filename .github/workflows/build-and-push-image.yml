@@ -34,6 +34,15 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Build docker images
+        run: docker-compose build
+
+      - name: Run tests
+        run: docker-compose exec module-handbook rails test
+
+      - name: Run system tests
+        run: docker-compose exec module-handbook rails test:system
+
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
