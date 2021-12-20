@@ -16,4 +16,4 @@ echo "----------  RAILS_ENV = ${RAILS_ENV} --------"
 
 bundle exec rails s -b 0.0.0.0
 
-#command: "tail -f Gemfile
+# tail -f Gemfile
