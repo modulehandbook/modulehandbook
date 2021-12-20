@@ -1,0 +1,21 @@
+# overrides for development -
+# dont ever copy to production machine!
+
+version: '3.4'
+services:
+  module-handbook-postgres:
+      environment:
+        - POSTGRES_DB=modhand-db-dev # test?
+      ports:
+      - "5432:5432" # don't do this on production!
+  module-handbook:
+  #  image:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/module-handbook
+    environment:
+      RAILS_MASTER_KEY: SECRET_KEY_THAT_NEEDS_TO_BE_SET_IN_PROD
