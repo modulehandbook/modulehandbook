@@ -5,7 +5,8 @@ default: &default
   timeout: 5000
   host: <%= ENV.fetch("RAILS_DB_HOST") { 'localhost' } %>
   username: <%= ENV.fetch("POSTGRES_USER") { 'modhand' } %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD") { 'modhand' } %>
+  # heroku first, then compose file value:
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] || ENV.fetch("POSTGRES_PASSWORD") { 'modhand' } %>
   port: <%= ENV.fetch("POSTGRES_PORT") { 5432 } %>
 
 development:
@@ -17,11 +18,9 @@ test:
   database: modhand-test
 
 production:
+  <<: *default
+  # will heroku still work? https://devcenter.heroku.com/articles/heroku-postgresql
   #     url: <%= ENV['DATABASE_URL'] %>
-  adapter: postgresql
-  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   database: module_handbook_production
-  username: module_handbook
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>

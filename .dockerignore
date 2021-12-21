@@ -17,3 +17,4 @@ npm-debug.log
 .env
 /gem_cache/**
 /node_modules/**
+/config/master.key
