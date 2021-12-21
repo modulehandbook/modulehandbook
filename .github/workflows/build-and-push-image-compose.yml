@@ -43,20 +43,24 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build test image
-        uses: docker/build-push-action@v2
-        with:
-          tags: mh-test-image:latest
-          push: false
+      # - name: Build test image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     tags: mh-test-image:latest
+      #     push: false
 
-      - name: Test image
-        run: |
-          docker-compose up -d
-          docker-compose exec module-handbook rails db:create RAILS_ENV=test
-          docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
-          docker-compose exec module-handbook rails test
-          docker-compose exec module-handbook rails test:system
-          docker-compose down
+      - name: build and run test image
+        run: docker-compose up -d
+      - name: create test db
+        run: docker-compose exec module-handbook rails db:create RAILS_ENV=test
+      - name: migrate test db
+        run: docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
+      - name: rails test
+        run: docker-compose exec module-handbook rails test
+      - name: rails system test
+        run: docker-compose exec module-handbook rails test:system
+      - name: docker-compose down
+        run: docker-compose down
 
       - name: Build and push Docker image
         if: ${{ github.ref == 'refs/heads/main' }} # only build and push if on master
