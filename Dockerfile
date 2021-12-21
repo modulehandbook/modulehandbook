@@ -3,6 +3,7 @@
 
 FROM ruby:2.7.2-alpine AS modhand-base
 
+ENV MODHAND_IMAGE=modhand-base
 ENV BUNDLER_VERSION=2.2.30
 
 ENV RAILS_ENV production
@@ -11,7 +12,7 @@ ENV NODE_ENV production
 # general dependencies
 RUN apk update
 RUN set -ex \
-  && apk add --no-cache libpq nodejs bash gcompat \
+  && apk add --no-cache bash gcompat libpq nodejs tzdata \
   && gem install bundler -v 2.2.30
 
 WORKDIR /module-handbook
@@ -28,10 +29,10 @@ RUN set -ex \
   libxslt-dev \
   build-base \
   postgresql-dev \
-  tzdata \
+#  tzdata \
   yarn \
   && bundle config set --local without 'development test' \
-  && bundle install --without development test
+  && bundle install
 
 
 
@@ -44,6 +45,7 @@ ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
 
 FROM modhand-base AS modhand-prod
+ENV MODHAND_IMAGE=modhand-prod
 
 RUN set -ex && \
   apk del builddependencies
@@ -52,12 +54,13 @@ RUN set -ex && \
 
 
 FROM modhand-base AS modhand-dev
+ENV MODHAND_IMAGE=modhand-dev
 
 ENV RAILS_ENV development
 ENV NODE_ENV development
 
 COPY . ./
-RUN bundle config --delete without && \
+RUN bundle config --local --delete without && \
     bundle install && \
     yarn install --check-files
 

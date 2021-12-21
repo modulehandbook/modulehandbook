@@ -161,7 +161,22 @@ yarn add bootstrap jquery popper.js
 
 # Deployment to HTW server with Github actions
 
+## Docker and Docker Compose
+The Dockerfile contains three targets. modhand-dev contains dev and test
+dependencies which are not needed in production.
 
+ - modhand-base
+ - modhand-prod
+ - modhand-dev
 
+```
+docker build --target modhand-prod .
+```
 
-docker build -t modhand-prod .
+local startup in prod environment:
+
+```
+docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.localprod.yml up
+```
+
+see the makefile for various start/stop and database setup commands.

@@ -12,6 +12,8 @@ if [ $RAILS_MASTER_KEY == "REMOVE" ]; then
 fi
 
 echo "----------  RAILS_ENV = ${RAILS_ENV} --------"
+echo "----------  MODHAND_IMAGE = ${MODHAND_IMAGE} --------"
+
 
 
 bundle exec rails s -b 0.0.0.0

@@ -1,7 +1,8 @@
 
 start_prod:
 	docker-compose -f docker-compose.yml up -d # ommits override
-
+start_prod_local:
+	docker-compose -f docker-compose.yml -f docker-compose.localprod.yml up
 start:
 	docker-compose up -d
 starts:
