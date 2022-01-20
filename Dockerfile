@@ -17,7 +17,7 @@ RUN set -ex \
 
 WORKDIR /module-handbook
 COPY Gemfile Gemfile.lock ./
-RUN bundle config build.nokogiri --use-system-libraries
+RUN bundle config set force_ruby_platform true
 
 # build dependencies
 RUN set -ex \
