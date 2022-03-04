@@ -16,22 +16,13 @@ jobs:
     permissions:
       contents: read
       packages: write
-    services:
-      module-handbook-postgres:
-        image: postgres:13.4-alpine
-        env:
-          APPLICATION: module-handbook
-          POSTGRES_PASSWORD: modhand
-          POSTGRES_USER: modhand
-          POSTGRES_DB: modhand-db-prod
-          POSTGRES_HOST_AUTH_METHOD: password
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Log in to the Container registry
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        uses: docker/login-action@v1
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -43,8 +34,11 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+
+
+
       - name: Build and push Docker image (staging)
-        # if: ${{ github.ref == 'refs/heads/master' && github.ref_type == 'branch'}} # only build and push if on master and triggered by branch
+        if: ${{ github.ref == 'refs/heads/master' && github.ref_type == 'branch'}} # only build and push if on master and triggered by branch
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
