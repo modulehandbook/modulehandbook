@@ -1,4 +1,4 @@
-name: Build and push Docker image
+name: Build and push Docker image compose
 
 on:
   push:
@@ -25,17 +25,17 @@ jobs:
           POSTGRES_USER: modhand
           POSTGRES_DB: modhand-db-prod
           POSTGRES_HOST_AUTH_METHOD: password
-          
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Log in to the Container registry
+      #   uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      #   with:
+      #     registry: ${{ env.REGISTRY }}
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -43,21 +43,18 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build test image
-        uses: docker/build-push-action@v2
+      - name: Build and push Docker image (staging)
+        if: ${{ github.ref == 'refs/heads/main' && github.ref_type != 'tag'}} # only build and push if on master and NOT triggered by tag
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          tags: mh-test-image:latest
-          push: false
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ github.sha }}
+          labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Run tests
-        uses: addnab/docker-run-action@v3
-        with:
-          image: mh-test-image:latest
-          shell: bash
-          run: rails db:setup && rails test && rails test:system
-
-      - name: Build and push Docker image
-        if: ${{ github.ref == 'refs/heads/main' }} # only build and push if on master
+      - name: Build and push Docker image (release)
+        if: ${{ github.ref == 'refs/heads/main' && github.ref_type == 'tag'}} # only build and push if on master and triggered by tag
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
