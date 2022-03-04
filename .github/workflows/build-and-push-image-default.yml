@@ -1,5 +1,5 @@
-name: Build and push Docker image compose
-
+name: Create and publish a Docker image
+# https://docs.github.com/en/actions/publishing-packages/publishing-docker-images#publishing-images-to-github-packages
 on:
   push:
     branches: [ master ]
@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -34,25 +34,10 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-
-
-
-      - name: Build and push Docker image (staging)
-        # if: ${{ github.ref == 'refs/heads/master' && github.ref_type == 'branch'}} # only build and push if on master and triggered by branch
+      - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
-          platforms: linux/amd64 # linux/arm64
-          push: true
-          tags: ${{ github.sha }}
-          # labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Build and push Docker image (release)
-        if: ${{ github.ref == 'refs/heads/master' && github.ref_type == 'tag'}} # only build and push if on master and triggered by tag
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          # labels: ${{ steps.meta.outputs.labels }}
+          labels: ${{ steps.meta.outputs.labels }}
