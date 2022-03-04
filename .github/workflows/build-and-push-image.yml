@@ -44,14 +44,14 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image (staging)
-        if: ${{ github.ref == 'refs/heads/master' && github.ref_type == 'branch'}} # only build and push if on master and triggered by branch
+        # if: ${{ github.ref == 'refs/heads/master' && github.ref_type == 'branch'}} # only build and push if on master and triggered by branch
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ github.sha }}
-          labels: ${{ steps.meta.outputs.labels }}
+          # labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Docker image (release)
         if: ${{ github.ref == 'refs/heads/master' && github.ref_type == 'tag'}} # only build and push if on master and triggered by tag
@@ -61,4 +61,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          # labels: ${{ steps.meta.outputs.labels }}
