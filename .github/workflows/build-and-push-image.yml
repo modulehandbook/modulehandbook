@@ -28,34 +28,50 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker Staging
+      - name: Extract metadata (tags, labels) for Docker - PR
         if: ${{ github.event_name == 'pull_request' }}
-        id: meta
+        id: meta_pr
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=ref,event=pr
-
-      - name: Extract metadata (tags, labels) for Docker Staging
-        if: ${{ github.ref_type == 'branch' }}
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: type=sha
-
-      - name: Extract metadata (tags, labels) for Docker Production
-        if: ${{ github.ref_type == 'tag' }}
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: type=ref,event=tag
-
-      - name: Build and push Docker image
+      - name: Build and push Docker image - PR
+        if: ${{ github.event_name == 'pull_request' }}
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta_pr.outputs.tags }}
+          labels: ${{ steps.meta_pr.outputs.labels }}
+
+      - name: Extract metadata (tags, labels) for Docker - Staging
+        if: ${{ github.ref_type == 'branch' }}
+        id: meta_staging
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: type=sha
+      - name: Build and push Docker image - Staging
+        if: ${{ github.ref_type == 'branch' }}
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta_staging.outputs.tags }}
+          labels: ${{ steps.meta_staging.outputs.labels }}
+
+      - name: Extract metadata (tags, labels) for Docker - Production
+        if: ${{ github.ref_type == 'tag' }}
+        id: meta_production
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: type=ref,event=tag
+      - name: Build and push Docker image - Production
+        if: ${{ github.ref_type == 'tag' }}
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta_production.outputs.tags }}
+          labels: ${{ steps.meta_production.outputs.labels }}
