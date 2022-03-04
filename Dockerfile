@@ -29,11 +29,10 @@ RUN set -ex \
   libxslt-dev \
   build-base \
   postgresql-dev \
-#  tzdata \
   yarn \
   && bundle config set --local without 'development test' \
   && bundle install
-
+#  tzdata \
 
 
 COPY package.json yarn.lock ./
