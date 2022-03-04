@@ -35,7 +35,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        # if: ${{ github.ref == 'refs/heads/master' && github.ref_type == 'branch'}}
+        if: ${{ github.ref_type == 'branch' }} # && github.ref == 'refs/heads/master' }}
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
@@ -43,11 +43,11 @@ jobs:
           tags: ${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      #- name: Build and push Docker image
-      #  if: ${{ github.ref == 'refs/heads/master' && github.ref_type == 'tag'}}
-      #  uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-      #  with:
-      #    context: .
-      #    push: true
-      #    tags: ${{ steps.meta.outputs.tags }}
-      #    labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push Docker image
+        if: ${{ github.ref_type == 'tag' }} # && github.ref == 'refs/heads/master' }}
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
