@@ -3,8 +3,8 @@ name: Create and publish a Docker image
 on:
   push:
     branches: [ master ]
-  # pull_request:
-    # branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 env:
   REGISTRY: ghcr.io
@@ -27,6 +27,14 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker Staging
+        if: ${{ github.event_name == 'pull_request' }}
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: type=ref,event=pr
 
       - name: Extract metadata (tags, labels) for Docker Staging
         if: ${{ github.ref_type == 'branch' }}
