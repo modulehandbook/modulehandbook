@@ -1,33 +1,35 @@
+# default configuration for production
 version: '3.4'
 services:
   module-handbook-postgres:
+    container_name: modulehandbook-database
     image: postgres:13.4-alpine
 #    container_name: module-handbook-postgres
     environment:
       - APPLICATION=module-handbook
       - POSTGRES_PASSWORD=modhand
       - POSTGRES_USER=modhand
-      - POSTGRES_DB=modhand-dev
+      - POSTGRES_DB=modhand-db-prod
 # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
       - POSTGRES_HOST_AUTH_METHOD=password
-    ports:
-      - "5432:5432" # don't do this on production!
     volumes:
       - ./pg_data:/var/lib/postgresql/data
   module-handbook:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/modulehandbook/modulehandbook:${TAG}
+    container_name: modulehandbook
+    environment:
+      - TAG
+      - RAILS_ENV=production
+      - RAILS_DB_HOST="module-handbook-postgres"
+      - POSTGRES_USER=modhand
+      - POSTGRES_PASSWORD=modhand
+      - POSTGRES_DB=modhand-db-prod
+      - RAILS_MASTER_KEY=EMPTY
+      - RAILS_SERVE_STATIC_FILES=true
     depends_on:
       - module-handbook-postgres
-    ports:
-      - "3000:3000"
     volumes:
-      - .:/module-handbook
-    # env_file: .env
-    environment:
-      RAILS_ENV: development
-      RAILS_DB_HOST: module-handbook-postgres
-      POSTGRES_USER: modhand
-      POSTGRES_PASSWORD: modhand
-      POSTGRES_DB: modhand-dev
+      - ./logc:/usr/src/app/log
+    ports:
+      - 3030:3000
+    restart: always
