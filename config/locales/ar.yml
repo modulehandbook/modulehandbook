@@ -29,10 +29,10 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
-  course-Program: "Course-Program Links"
-  link: "Link"
-  course: "Course"
-  program: "Program"
-  semester: "Semester"
-  required: "Required"
+ar:
+  course-Program: "روابط برامج الدورات"
+  link: "رابط"
+  course: "الدورة"
+  program: "البرنامج"
+  semester: "الفصل الدواسي"
+  required: "الشروط"
