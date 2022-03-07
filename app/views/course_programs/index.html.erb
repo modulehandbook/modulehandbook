@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Course-Program Links</h3>
+<h3><%= t("course-Program") %></h3>
 <% if can? :edit, @course_program %>
 <%= link_to 'New Course Program', new_course_program_path %>
 <% end %>
@@ -9,11 +9,11 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Link</th>
-      <th scope="col">Course</th>
-      <th scope="col">Program</th>
-      <th scope="col">Semester</th>
-      <th scope="col">Required</th>
+      <th scope="col"><%= t("link") %></th>
+      <th scope="col"><%= t("course") %></th>
+      <th scope="col"><%= t("program") %></th>
+      <th scope="col"><%= t("semester") %></th>
+      <th scope="col"><%= t("required") %></th>
       <th scope="col"></th>
       <% if can? :edit, @course_program %>
       <th scope="col" colspan="2"></th>
