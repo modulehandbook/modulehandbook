@@ -31,5 +31,5 @@ services:
     volumes:
       - ./logc:/usr/src/app/log
     ports:
-      - 3030:3000
+      - "3000:3000"
     restart: always
