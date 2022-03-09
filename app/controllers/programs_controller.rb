@@ -40,7 +40,7 @@ class ProgramsController < ApplicationController
   def export_program_json
     data = @program.gather_data_for_json_export
     data = JSON.pretty_generate(data)
-    filename = generate_filename(@program)
+    filename = helpers.generate_filename(@program)
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}.json"
   end
