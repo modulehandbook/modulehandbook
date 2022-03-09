@@ -68,7 +68,7 @@ class ProgramsController < ApplicationController
     begin
       resp = Faraday.post(post_url, program_json, 'Content-Type' => 'application/json')
       logger.debug resp
-      filename = generate_filename(program)
+      filename = helpers.generate_filename(program)
       send_data resp.body, filename: filename + '.docx'
     rescue Faraday::ConnectionFailed => e
       redirect_to programs_path, alert: 'Error: Program could not be exported as DOCX because the connection to the external export service failed!'
@@ -133,17 +133,5 @@ class ProgramsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def program_params
     params.require(:program).permit(:name, :code, :mission, :degree, :ects)
-  end
-
-  def generate_filename(program)
-    code = program.try(:code)
-    code = 'XX' if code.nil?
-    name = program.try(:name) ? program.name.gsub(' ', '') : 'xxx'
-    name = 'XX' if name.nil?
-    Date.today.to_s + '_' + to_clean_string(code) + '-' + to_clean_string(name)
-  end
-
-  def to_clean_string(string)
-    string.gsub(' ', '').to_s
   end
 end

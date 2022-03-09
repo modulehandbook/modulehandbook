@@ -12,7 +12,7 @@
       <% if can? :edit, @program %>
       <th scope="col"></th>
       <% end %>
-      <th scope="col"></th>
+      <th scope="col" colspan="2">Export</th>
     </tr>
   </thead>
 
@@ -32,7 +32,8 @@
         <td><%= link_to 'Edit Link', edit_course_program_path(course_program) %></td>
         <td><%= link_to 'Delete Link', course_program, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
-        <td><%= link_to 'Export JSON', export_course_json_url(id: course_program.course_id) %></td>
+        <td><%= link_to 'JSON', export_course_json_url(id: course_program.course_id) %></td>
+        <td><%= link_to 'DOCX', export_course_docx_url(id: course_program.course_id) %></td>
         </tr>
     <% end %>
   </tbody>
