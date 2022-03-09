@@ -4,18 +4,21 @@ services:
   module-handbook-postgres:
     container_name: modulehandbook-database
     image: postgres:13.4-alpine
-#    container_name: module-handbook-postgres
+    #    container_name: module-handbook-postgres
     environment:
       - APPLICATION=module-handbook
       - POSTGRES_PASSWORD=modhand
       - POSTGRES_USER=modhand
       - POSTGRES_DB=modhand-db-prod
-# https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+      # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
       - POSTGRES_HOST_AUTH_METHOD=password
     volumes:
       - ./pg_data:/var/lib/postgresql/data
+  module-handbook-exporter:
+    image: ghcr.io/modulehandbook/exporter:${TAG_EXPORTER}
+    container_name: modulehandbook-exporter
   module-handbook:
-    image: ghcr.io/modulehandbook/modulehandbook:${TAG}
+    image: ghcr.io/modulehandbook/modulehandbook:${TAG_MH}
     container_name: modulehandbook
     environment:
       - TAG
@@ -28,6 +31,7 @@ services:
       - RAILS_SERVE_STATIC_FILES=true
     depends_on:
       - module-handbook-postgres
+      - module-handbook-exporter
     volumes:
       - ./logc:/usr/src/app/log
     ports:
