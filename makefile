@@ -1,3 +1,8 @@
+
+start_prod:
+	docker-compose -f docker-compose.yml up -d # ommits override
+start_prod_local:
+	docker-compose -f docker-compose.yml -f docker-compose.localprod.yml up
 start:
 	docker-compose up -d
 starts:
@@ -51,13 +56,13 @@ yarn_update:
 	yarn upgrade
 	cp node_modules/docx/build/index.js public/docx/index.js
 test_all:
-     docker-compose exec module-handbook rails test
-     docker-compose exec module-handbook rails test:system
+	docker-compose exec module-handbook rails test
+	docker-compose exec module-handbook rails test:system
 test_app:
- 	docker-compose exec module-handbook rails db:create RAILS_ENV=test
- 	docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
- 	docker-compose exec module-handbook rails test
-    docker-compose exec module-handbook rails test:system
+	docker-compose exec module-handbook rails db:create RAILS_ENV=test
+	docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
+	docker-compose exec module-handbook rails test
+	docker-compose exec module-handbook rails test:system
 rails_test:
 	# common fixes on Lottes Laptop
 	# in test_helper.rb -> parallelize(workers: 1)

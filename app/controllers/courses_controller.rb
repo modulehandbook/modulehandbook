@@ -65,6 +65,23 @@ class CoursesController < ApplicationController
                     disposition: "attachment; filename=#{filename}_all-courses.json"
   end
 
+  def export_course_docx
+    base_url = ENV['EXPORTER_BASE_URL'] || 'http://localhost:3030/'
+    post_url = base_url + 'docx/course'
+    course = Course.find_by(id: params[:id])
+    course_json = course.gather_data_for_json_export.to_json
+
+    logger.debug course_json
+    begin
+      resp = Faraday.post(post_url, course_json, 'Content-Type' => 'application/json')
+      logger.debug resp
+      filename = helpers.generate_filename(course)
+      send_data resp.body, filename: filename + '.docx'
+    rescue Faraday::ConnectionFailed => e
+      redirect_to courses_path, alert: 'Error: Course could not be exported as DOCX because the connection to the external export service failed!'
+    end
+  end
+
   # GET /courses/new
   def new
     @course = Course.new

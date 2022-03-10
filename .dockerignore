@@ -1,6 +1,7 @@
 # ignore tmp
 /tmp/*
 /log/*
+/logc/*
 
 # sqlite databases
 /db/*.sqlite
@@ -16,3 +17,4 @@ npm-debug.log
 .env
 /gem_cache/**
 /node_modules/**
+/config/master.key
