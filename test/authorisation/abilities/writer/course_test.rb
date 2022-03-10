@@ -43,6 +43,7 @@ class CourseWriterAbilitiesTest < ApplicationSystemTestCase
   test 'as writer i can use a courses export actions' do
     assert @ability.can?(:export_course_json, @course)
     assert @ability.can?(:export_courses_json, @course)
+    assert @ability.can?(:export_course_docx, @course)
   end
 
   test 'as writer i can use a courses import action' do
