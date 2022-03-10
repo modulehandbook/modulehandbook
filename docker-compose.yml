@@ -15,10 +15,10 @@ services:
     volumes:
       - ./pg_data:/var/lib/postgresql/data
   module-handbook-exporter:
-    image: ghcr.io/modulehandbook/exporter:${TAG_EXPORTER}
+    image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
     container_name: modulehandbook-exporter
   module-handbook:
-    image: ghcr.io/modulehandbook/modulehandbook:${TAG_MH}
+    image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
     container_name: modulehandbook
     environment:
       - TAG
