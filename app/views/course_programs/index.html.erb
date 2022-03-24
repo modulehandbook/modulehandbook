@@ -2,7 +2,7 @@
 
 <h3><%= t("course-Program") %></h3>
 <% if can? :edit, @course_program %>
-<%= link_to 'New Course Program', new_course_program_path %>
+<%= link_to (t('New Course Program')), new_course_program_path %>
 <% end %>
 <br><br>
 
@@ -24,15 +24,15 @@
   <tbody>
     <% @course_programs.each do |course_program| %>
       <tr >
-        <td scope="row"><%= link_to 'Show Link', course_program_path(course_program) %>
+        <td scope="row"><%= link_to (t('Show Link')), course_program_path(course_program) %>
         <td><%= link_to course_program.course.name, course_program.course %></td>
         <td><%= link_to course_program.program.name, course_program.program %></td>
         <td><%= course_program.semester %></td>
         <td><%= course_program.required %></td>
-        <td><%= link_to 'Show', course_program %></td>
+        <td><%= link_to (t('show')), course_program %></td>
         <% if can? :edit, @course_program %>
-        <td><%= link_to 'Edit', edit_course_program_path(course_program) %></td>
-        <td><%= link_to 'Destroy', course_program, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to (t('edit')), edit_course_program_path(course_program) %></td>
+        <td><%= link_to (t('destroy')), course_program, method: :delete, data: { confirm: (t('are you sure?')) } %></td>
         <% end %>
       </tr>
     <% end %>

@@ -2,16 +2,16 @@
 <h3>User: <%= @user.email %></h3>
 
 <p>
-  <strong>Email:</strong>
+  <strong><%= t("Email") %>:</strong>
   <%= @user.email %>
 </p>
 
 <p>
-  <strong>Role:</strong>
+  <strong><%= t("Role") %>:</strong>
   <%= @user.role.to_s.humanize %>
 </p>
 
 <p>
-  <strong>Approved:</strong>
+  <strong><%= t("Approved") %>:</strong>
   <%= @user.approved %>
 </p>

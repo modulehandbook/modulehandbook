@@ -1,15 +1,15 @@
-<h3>Course: <%= @course.name %> </h3>
+<h3><%= t('course') %>: <%= @course.name %> </h3>
 <% if can? :versions, @course %>
-<%= link_to "See Course Versions", course_versions_url(@course.id)  %>
+<%= link_to (t("See Course Versions")), course_versions_url(@course.id)  %>
 <% end %>
 
 <p class="bg-<%= @course.aasm_state %>">
-  <strong>State:</strong>
+  <strong><%= t('state') %>:</strong>
   <%= @course.aasm_state.humanize.titleize %>
 </p>
 
 <% if can? :change_state, @course %>
-  End current Phase and go to next State -
+  <%= t('End current Phase and go to next State') %>-
   <% @course.aasm.events.each do |event| %>
     <%= button_to event.name.to_s.humanize.titleize, change_state_path, params: { course_id: @course.id, event_name: event.name } %>
   <% end %>
@@ -18,12 +18,12 @@
 
 
 <p id="notice"><%= notice %><br>
-  <%= link_to 'Export Course as JSON', export_course_json_url(id: @course.id) %> <br>
-  <% if can? :edit, @course %><%= link_to 'Edit', edit_course_path(@course) %>, <% end %><%= link_to 'Back to Index', courses_path %> </p>
+  <%= link_to (t('Export Course as JSON')), export_course_json_url(id: @course.id) %> <br>
+  <% if can? :edit, @course %><%= link_to (t('edit')), edit_course_path(@course) %>, <% end %><%= link_to (t('Back to Index')), courses_path %> </p>
 <div class = "container">
   <div class="row">
     <div class = "col">
-      Already part of Programs: <br/>
+      <%= t('Already part of Programs') %>: <br/>
 <% @programs.each do |program_name, program_id| %>
   <%= link_to program_name, program_path(program_id)  %>,
 <% end %>
@@ -31,14 +31,14 @@
 <% if can? :edit, @course %>
     <div class = "col">
 <%= form_with(model: @course_program, local: true) do |form| %>
-    <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
+    <%= form.hidden_field :course_id %><%= hidden_field_tag (t('next_view')),(t('edit')) %>
   <div class="field">
     <%= form.label :program_id %>
     <%= form.collection_select(:program_id, Program.order(:name), :id, :select_name) %>
   </div>
 
   <div class="actions">
-    <%= form.submit 'Add to Program'%>
+    <%= form.submit (t('Add to Program'))%>
   </div>
 <% end %>
     </div>

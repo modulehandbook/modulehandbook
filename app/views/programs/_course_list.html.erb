@@ -2,12 +2,12 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Code</th>
-      <th scope="col">Ects</th>
-      <th scope="col">Semester</th>
-      <th scope="col">required?</th>
-      <th scope="col" colspan="2">State</th>
+      <th scope="col"><%= t('name') %></th>
+      <th scope="col"><%= t('code') %></th>
+      <th scope="col"><%= t('ects') %></th>
+      <th scope="col"><%= t('semesters') %></th>
+      <th scope="col"><%= t('required?') %></th>
+      <th scope="col" colspan="2"><%= t('state') %></th>
       <th scope="col" colspan="2"></th>
       <% if can? :edit, @program %>
       <th scope="col"></th>
@@ -26,11 +26,11 @@
         <td><%= course_program.required %></td>
         <td class="bg-<%= course_program.course.aasm_state %>">   </td>
         <td><%= course_program.course.aasm_state.humanize.titleize %></td>
-        <td><%= link_to 'Show Course', course_path(course_program.course) %></td>
-        <td><%= link_to 'Show Link', course_program_path(course_program) %></td>
+        <td><%= link_to (t('Show Course')), course_path(course_program.course) %></td>
+        <td><%= link_to (t('Show Link')), course_program_path(course_program) %></td>
         <% if can? :edit, @program %>
-        <td><%= link_to 'Edit Link', edit_course_program_path(course_program) %></td>
-        <td><%= link_to 'Delete Link', course_program, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to (t('Eِdit Link')), edit_course_program_path(course_program) %></td>
+        <td><%= link_to (t('Delete Link')), course_program, method: :delete, data: { confirm: (t('are you sure?')) } %></td>
         <% end %>
         <td><%= link_to 'Export JSON', export_course_json_url(id: course_program.course_id) %></td>
         </tr>

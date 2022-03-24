@@ -30,9 +30,141 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ar:
+  Welcome: 'أهلا '
+  Hello: 'مرحبا '
   course-Program: "روابط برامج الدورات"
   link: "رابط"
   course: "الدورة"
   program: "البرنامج"
+  programs: "البرامج"
   semester: "الفصل الدواسي"
+  semesters: "الفصل الدواسي"
   required: "الشروط"
+  required?: "مشروط؟"
+
+  New Course Program: "برنامج الدورة الجديدة"
+  editing-Course-Program: "تعديل برنامج الدورة"
+  link-between-Course-and-Program: "الرابط بين البرنامج والدورة"
+  End current Phase and go to next State: 'قم بإنهاء المرحلة الحالية وانتقل إلى الحالة التالية '
+  Export Course as JSON: 'تنزيل الدورة  كـ JSON'
+  Export Program as JSON: 'تنزيل البرنامج  كـ JSON'
+  Already part of Programs: 'بالفعل جزء من البرامج'
+  Add to Program: 'إضافة إلى البرنامج'
+  next_view: 'الواجهة التالية'
+  Import Course(s): 'تحميل دورة/دورات'
+
+  Editing Course: 'تعديل الدورة'
+  Editing Program: 'تعديل البرنامج'
+  Editing User: 'تعديل المستخدم'
+  New Course: 'دورة جديدة'
+  New Program: 'برنامج جديد'
+  Export all Courses: 'تنزيل كل الدورات'
+  See Course Versions: 'انظر إصدارات الدورة'
+
+
+  Programs: "البرامج"
+  Program: "البرنامج"
+  Courses: "الدورات"
+  Logout: "تسجيل الخروج"
+  Logged-in-as: "تسجيل الدخول باسم: "
+  Login: "تسجيل الدخول"
+  password: 'كلمة المرور'
+  remember_me: 'تذكرني'
+  How to get an account?: 'كيف تحصل على حساب؟'
+
+  name: "الاسم"
+  code: "الكود"
+  mission: "الهدف"
+  state: 'الحالة'
+  degree: "المستوى"
+  ects: "Ects"
+  Export all Programs: 'تنزيل كل البرامج'
+  edit: 'تعديل'
+  destroy: 'ازالة'
+  show: "عرض"
+  back: 'العودة'
+  form: 'الشكل'
+  examination: 'الأمتحان'
+  objectives: 'الاهداف'
+  contents: 'المحتويات'
+  prerequisites: 'المتطلبات'
+  literature: 'الادب'
+  methods: 'الطرق'
+  skills knowledge understanding: 'مهارات فهم المعرفة'
+  skills practical: 'مهارات عملية'
+  skills intellectual: 'مهارات فكرية'
+  skills general: 'المهارات العامة'
+  are you sure?: "هل انتا متاكد؟"
+  Approve new Users: "قبول مستخدمين جدد"
+  Users: 'المستخدمين'
+  Email: 'البريد الالكتروني'
+  Role: 'الدور'
+  Approved: 'موافق'
+  Approve: 'يوافق'
+  Show Link: 'إظهار الرابط'
+  Show Course: 'عرض الدورة'
+  Eِdit Link: 'تعديل الرابط'
+  Delete Link: 'مسح الرابط'
+  Program Overview: 'نظرة عامة على البرنامج'
+  Overview: 'نظرة عامة'
+  Courses in Program: 'دورات في البرنامج'
+  You can confirm your account email through the link below: 'يمكنك تأكيد البريد الإلكتروني لحسابك من خلال الرابط أدناه'
+
+  Welcome to the Module Handbook: 'Module Handbook مرحبا بك في '
+  Introduction and Manual goes here: 'هنا المقدمة ودليل الاستخدام'
+  also a link to kramdown: "kramdown وكذالك الرابط الى "
+  There are two ways to link Courses to Programs: 'هناك طريقتان لربط الدورات بالبرامج:'
+  create Course from Program site OR: 'إنشاء دورة من موقع البرنامج'
+  create CourseProgram link instance after Course and Program have been created: 'إنشاء ارتباط بينهما بعد إنشاء المقرر الدراسي والبرنامج'
+  has registered to join your site: 'سجل للانضمام إلى موقعك!'
+  An admin can approve this registration by visiting the website and editing the user: 'يمكن للمسؤول الموافقة على هذا التسجيل من خلال زيارة الموقع الإلكتروني وتحرير المستخدم'
+  Comments: ':التعليقات'
+  Add a comment: 'إضافة تعليق'
+  You can insert Markdown formating here if you wish: '* يمكنك إدراج تنسيق Markdown هنا إذا كنت ترغب في ذلك.'
+  You can edit your comment for 30 minutes after you create it: '* يمكنك تعديل تعليقك لمدة 30 دقيقة بعد إنشائه.'
+  You can always delete your comment: '* يمكنك دائما حذف تعليقك.'
+  prohibited this comment from being saved: ' منع حفظ هذا التعليق:'
+  prohibited this course_program from being saved: ' منع حفظ برنامج الدورة هذا:'
+  prohibited this course from being saved: ' منع حفظ هذه الدورة:'
+  There are: '  هناك '
+  comments: ' تعليقات '
+  There are no comments: 'لا يوجد اي تعليق'
+  Go to comments: 'الذهاب إلى التعليقات'
+  Back to Program: 'العودة إلى البرنامج'
+  Back to Index: 'العودة إلى الفهرس'
+  Back to Course: 'العودة إلى الدورة'
+  Version History of Course: 'تاريخ إصدار الدورة'
+  Nr: 'الرقم'
+  author: 'المؤلف'
+  date: 'التاريخ'
+  event: 'الحدث'
+  changeset: 'التغييرات'
+  Update: 'تغيير'
+
+  Resend confirmation instructions: 'أعد إرسال تعليمات التأكيد'
+  Resend unlock instructions: 'إعادة إرسال تعليمات إلغاء القفل'
+  Confirm my account: 'قم بتأكيد حسابي'
+  Confirm new password: 'قم بتأكيد كلمة المرور الجديدة'
+  New password: 'كلمة مرور جديدة'
+  Change my password: 'تغيير كلمة المرور الخاصة بي'
+  We are contacting you to notify you that your email is being changed to: 'نتصل بك لإعلامك بأنه يتم تغيير بريدك الإلكتروني إلى '
+  We are contacting you to notify you that your password has been changed: 'نتصل بك لإعلامك بتغيير كلمة المرور الخاصة بك.'
+  Someone has requested a link to change your password You can do this through the link below: 'شخص ما طلب رابطًا لتغيير كلمة المرور الخاصة بك. يمكنك القيام بذلك من خلال الرابط أدناه.'
+  If you did not request this, please ignore this email: 'إذا لم تطلب هذا ، يرجى تجاهل هذا البريد الإلكتروني.'
+  Your password wont change until you access the link above and create a new one: 'لن تتغير كلمة مرورك حتى تصل إلى الرابط أعلاه وتنشئ كلمة مرور جديدة.'
+  Your account has been locked due to an excessive number of unsuccessful sign in attempts: 'لقد تم قفل حسابك نتيجة لعدد كبير من محاولات تسجيل الدخول غير الناجحة.'
+  Click the link below to unlock your account: 'انقر فوق الرابط أدناه لفتح حسابك'
+  Unlock my account: 'فتح حسابي'
+  Change your password: 'تغيير كلمة المرور الخاصة بك'
+  Forgot your password: 'نسيت كلمة المرور الخاصة بك؟'
+  Send me reset password instructions: 'أرسل لي تعليمات إعادة تعيين كلمة المرور'
+  we need your current password to confirm your changes: 'نحتاج إلى كلمة مرورك الحالية لتأكيد تغييراتك'
+  Cancel my account: 'إلغاء حسابي'
+  leave blank if you dont want to change it: 'اتركه فارغا إذا كنت لا تريد تغييره'
+  Sign up: 'تسجيل حساب'
+  Log in: 'تسجيل دخول'
+  Didnt receive confirmation instructions: 'لم تتلقى تعليمات التأكيد؟'
+  Didnt receive unlock instructions: 'لم تتلقى تعليمات فتح؟'
+  Confirm your account with the link sent to your email: 'قم بتأكيد حسابك بالرابط المرسل إلى بريدك الإلكتروني'
+  Have somone who already has an account with the role admin, editor or quality assurance approve your account: 'يجب ان يوافق شخص لديه حساب مع دور المسؤول أو المحرر أو ضمان الجودة على حسابك'
+  If you only need read permissions your account should now work If you require further edit permissions ask one of the admins to set them up for you: 'إذا كنت بحاجة فقط إلى أذونات القراءة ، فيجب أن يعمل حسابك الآن. إذا كنت تحتاج إلى مزيد من أذونات التحرير ، فاطلب من أحد المسؤولين إعدادها لك'

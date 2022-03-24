@@ -1,8 +1,8 @@
-<h3>Version History of Course: <%= @course.name %></h3>
-<%= link_to "Back to Course", course_path(@course.id)  %>
+<h3><%= t('Version History of Course') %>: <%= @course.name %></h3>
+<%= link_to (t("Back to Course")), course_path(@course.id)  %>
 
 <p class="bg-<%= @course.aasm_state %>">
-  <strong>State:</strong>
+  <strong><%= t('state')%>:</strong>
   <%= @course.aasm_state.humanize.titleize %>
 </p>
 
@@ -19,11 +19,11 @@ Part of Programs:
 
 <table class="table table-hover">
   <thead>
-    <th>Nr.</th>
-    <th>Author</th>
-    <th>Date</th>
-    <th>Event</th>
-    <th>Changeset</th>
+    <th><%= t('Nr')%></th>
+    <th><%= t('author')%></th>
+    <th><%= t('date')%></th>
+    <th><%= t('event')%></th>
+    <th><%= t('changeset')%></th>
     <th></th>
   </thead>
   <tbody>

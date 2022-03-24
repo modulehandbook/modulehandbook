@@ -1,11 +1,8 @@
 
 <p class="mt-3">
-<% if @comments_size > 0 %>
-  There are <%= @comments_size %> comments
-<% else %>
-  There are no comments
-<% end %>
+<% if @comments_size > 0 %><%= t("There are") %><%= @comments_size %><%= t("comments") %>
+<% else %><%= t("There are no comments") %><% end %>
 
 <br>
-<%= link_to 'Go to comments', anchor: "comments" %>
+<%= link_to (t('Go to comments')), anchor: (t("comments")) %>
 </p>

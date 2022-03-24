@@ -1,21 +1,21 @@
 <%- if controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(resource_name) %><br />
+  <%= link_to (t("Log in")), new_session_path(resource_name) %><br />
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+  <%= link_to (t("Sign up")), new_registration_path(resource_name) %><br />
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+  <%= link_to (t("Forgot your password")), new_password_path(resource_name) %><br />
 <% end %>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+  <%= link_to (t("Didnt receive confirmation instructions")), new_confirmation_path(resource_name) %><br />
 <% end %>
 
 <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
+  <%= link_to (t("Didnt receive unlock instructions")), new_unlock_path(resource_name) %><br />
 <% end %>
 
 <%- if devise_mapping.omniauthable? %>
@@ -26,14 +26,14 @@
 
 <div class="card mt-3">
   <div class="card-body">
-    <h5 class="card-title">How to get an account?</h5>
+    <h5 class="card-title"><%= t('How to get an account?') %> </h5>
       <ol>
-        <li><%= link_to "Sign up", new_registration_path(resource_name) %>.</li>
-        <li>Confirm your account with the link sent to your email.</li>
-        <li>Have somone who already has an account with the role admin, editor or quality assurance approve your account.</li>
+        <li><%= link_to (t("Sign up")), new_registration_path(resource_name) %>.</li>
+        <li><%= t('Confirm your account with the link sent to your email') %> .</li>
+        <li><%= t('Have somone who already has an account with the role admin, editor or quality assurance approve your account') %>.</li>
       </ol>
       <p class="card-text">
-        If you only need read permissions your account should now work. If you require further edit permissions ask one of the admins to set them up for you.
+        <%= t('If you only need read permissions your account should now work If you require further edit permissions ask one of the admins to set them up for you') %>.
       </p>
   </div>
 </div>

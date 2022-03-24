@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   end
 
   root 'welcome#index'
+
   resources :users, only: %i[index show edit update]
   resources :course_programs
   resources :courses

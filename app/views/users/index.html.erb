@@ -1,12 +1,12 @@
 
-<h3>Users</h3>
+<h3><%= t("Users") %></h3>
 <br><br>
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Email</th>
-      <th scope="col">Role</th>
-      <th scope="col">Approved</th>
+      <th scope="col"><%= t("Email") %></th>
+      <th scope="col"><%= t("Role") %></th>
+      <th scope="col"><%= t("Approved") %></th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -17,7 +17,7 @@
         <td onclick = "location.href='<%= user_path(user) %>'" scope="row"><%= user.email %></td>
         <td><%= user.role.to_s.humanize %></td>
         <td> <input type="checkbox" <%= user.approved ? "checked":"" %>></td>
-        <td><% if can? :edit, user %><%= link_to "Edit", edit_user_path(user) %><% end %><% if !user.approved && can?(:approve, user) %> | <%= link_to "Approve", approve_user_path(id: user.id) %><% end %></td>
+        <td><% if can? :edit, user %><%= link_to (t("edit")), edit_user_path(user) %><% end %><% if !user.approved && can?(:approve, user) %> | <%= link_to (t("Approve")), approve_user_path(id: user.id) %><% end %></td>
       </tr>
     <% end %>
   </tbody>

@@ -36,3 +36,7 @@ en:
   program: "Program"
   semester: "Semester"
   required: "Required"
+
+  new-Course-Program: "New Course Program"
+  editing-Course-Program: "Editing Course Program"
+  link-between-Course-and-Program: "Link between Course and Program"

@@ -1,5 +1,5 @@
-<h1>New Course Program</h1>
+<h1><%= t("New Course Program") %></h1>
 
-<%= render 'form', course_program: @course_program %>
+<%= render (t('form')), course_program: @course_program %>
 
-<%= link_to 'Back', course_programs_path %>
+<%= link_to (t('back')), course_programs_path %>

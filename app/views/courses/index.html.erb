@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Courses</h3>
+<h3><%= t("Courses") %></h3>
 
-<% if can? :edit, @courses %><%= link_to 'New Course', new_course_path %><br><% end %>
-JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
+<% if can? :edit, @courses %><%= link_to (t('New Course')), new_course_path %><br><% end %>
+JSON: <%= link_to (t('Export all Courses')), export_courses_json_url %>
 <!-- Button trigger modal -->
 <% if can? :edit, @courses %>| <a href="#" data-toggle="modal" data-target="#jsonModal">
-  Import Course(s)
+  <%= t("Import Course(s)") %>
 </a>
 <% end %>
 
@@ -14,22 +14,22 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Code</th>
-      <th scope="col">Ects</th>
-      <th scope="col" colspan="2">State</th>
+      <th scope="col"><%= t("name") %></th>
+      <th scope="col"><%= t("code") %></th>
+      <th scope="col"><%= t("ects") %></th>
+      <th scope="col" colspan="2"><%= t("state") %></th>
       <% if false %>
-      <th scope="col">Mission</th>
-      <th scope="col">Examination</th>
-      <th scope="col">Objectives</th>
-      <th scope="col">Contents</th>
-      <th scope="col">Prerequisites</th>
-      <th scope="col">Literature</th>
-      <th scope="col">Methods</th>
-      <th scope="col">Skills knowledge understanding</th>
-      <th scope="col">Skills intellectual</th>
-      <th scope="col">Skills practical</th>
-      <th scope="col">Skills general</th>
+      <th scope="col"><%= t("mission") %></th>
+      <th scope="col"><%= t("examination") %></th>
+      <th scope="col"><%= t("objectives") %></th>
+      <th scope="col"><%= t("contents") %></th>
+      <th scope="col"><%= t("prerequisites") %></th>
+      <th scope="col"><%= t("literature") %></th>
+      <th scope="col"><%= t("methods") %></th>
+      <th scope="col"><%= t("skills knowledge understanding") %></th>
+      <th scope="col"><%= t("skills intellectual") %></th>
+      <th scope="col"><%= t("skills practical") %></th>
+      <th scope="col"><%= t("skills general") %></th>
       <% end %>
       <th scope="col"></th>
       <% if can? :edit, @courses %>
@@ -61,10 +61,10 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
         <td><%= course.skills_practical %></td>
         <td><%= course.skills_general %></td>
         <% end %>
-        <td><%= link_to 'Show', course %></td>
+        <td><%= link_to (t('show')), course %></td>
         <% if can? :edit, course %>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to (t('edit')), edit_course_path(course) %></td>
+        <td><%= link_to (t('destroy')), course, method: :delete, data: { confirm: (t('are you sure?')) } %></td>
         <% end %>
         <td><%= link_to 'Export JSON', export_course_json_url(id: course.id) %></td>
       </tr>

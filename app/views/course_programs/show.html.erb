@@ -1,27 +1,27 @@
-<h3>Link between Course and Program</h3>
+<h3><%= t("link-between-Course-and-Program") %></h3>
 <p id="notice"><%= notice %>
   <% if can? :edit, @course_program %>
-  <%= link_to 'Edit', edit_course_program_path(@course_program) %>,
+  <%= link_to (t('edit')), edit_course_program_path(@course_program) %>,
   <% end %>
-  <%= link_to 'Back to Program', program_path(@course_program.program) %>,
-  <%= link_to 'Back to Index', course_programs_path %></p>
+  <%= link_to (t('Back to Program')), program_path(@course_program.program) %>,
+  <%= link_to (t('Back to Index')), course_programs_path %></p>
 
 <p>
-  <strong>Course:</strong>
+  <strong><%= t("course") %>:</strong>
   <%= link_to @course_program.course.name, @course_program.course %>
 </p>
 
 <p>
-  <strong>Program:</strong>
+  <strong><%= t("program") %>:</strong>
   <%= link_to @course_program.program.name, @course_program.program %>
 </p>
 
 <p>
-  <strong>Semester:</strong>
+  <strong><%= t("semester") %>:</strong>
   <%= @course_program.semester %>
 </p>
 
 <p>
-  <strong>Required:</strong>
+  <strong><%= t("required") %>:</strong>
   <%= @course_program.required %>
 </p>
