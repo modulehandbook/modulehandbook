@@ -1,33 +1,4 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
+
 
 ar:
   Welcome: 'أهلا '
@@ -35,8 +6,6 @@ ar:
   course-Program: "روابط برامج الدورات"
   link: "رابط"
   course: "الدورة"
-  program: "البرنامج"
-  programs: "البرامج"
   semester: "الفصل الدواسي"
   semesters: "الفصل الدواسي"
   required: "الشروط"
@@ -114,7 +83,7 @@ ar:
   Introduction and Manual goes here: 'هنا المقدمة ودليل الاستخدام'
   also a link to kramdown: "kramdown وكذالك الرابط الى "
   There are two ways to link Courses to Programs: 'هناك طريقتان لربط الدورات بالبرامج:'
-  create Course from Program site OR: 'إنشاء دورة من موقع البرنامج'
+  create Course from Program site OR: 'إنشاء دورة من موقع البرنامج او'
   create CourseProgram link instance after Course and Program have been created: 'إنشاء ارتباط بينهما بعد إنشاء المقرر الدراسي والبرنامج'
   has registered to join your site: 'سجل للانضمام إلى موقعك!'
   An admin can approve this registration by visiting the website and editing the user: 'يمكن للمسؤول الموافقة على هذا التسجيل من خلال زيارة الموقع الإلكتروني وتحرير المستخدم'

@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 <p id="alert"><%= alert %></p>
 
-<h3><%= t("programs") %></h3>
+<h3><%= t("Programs") %></h3>
 
 <% if can? :edit, @programs %><%= link_to (t('New Program')), new_program_path %><br><% end %>
 JSON: <%= link_to (t("Export all Programs")), export_programs_json_url %>

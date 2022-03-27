@@ -1,42 +1,139 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
+
 
 en:
-  course-Program: "Course-Program Links"
+  Welcome: 'Welcome '
+  Hello: 'Hello '
+  course-Program: "Course-Program"
   link: "Link"
   course: "Course"
-  program: "Program"
   semester: "Semester"
-  required: "Required"
+  semesters: "Semesters"
+  required: "required"
+  required?: "required?"
 
-  new-Course-Program: "New Course Program"
+  New Course Program: "New Course Program"
   editing-Course-Program: "Editing Course Program"
   link-between-Course-and-Program: "Link between Course and Program"
+  End current Phase and go to next State: 'End current Phase and go to next State '
+  Export Course as JSON: 'Export Course as JSON'
+  Export Program as JSON: 'Export Program as JSON'
+  Already part of Programs: 'Already part of Programs'
+  Add to Program: 'Add to Program'
+  next_view: 'Next View'
+  Import Course(s): 'Import Course(s)'
+
+  Editing Course: 'Editing Course'
+  Editing Program: 'Editing Program'
+  Editing User: 'Editing User'
+  New Course: 'New Course'
+  New Program: 'New Program'
+  Export all Courses: 'Export all Courses'
+  See Course Versions: 'See Course Versions'
+
+
+  Programs: "Programs"
+  Program: "Program"
+  Courses: "Courses"
+  Logout: "Logout "
+  Logged-in-as: "Logged in as: "
+  Login: "Login"
+  password: 'password'
+  remember_me: 'remember me'
+  How to get an account?: 'How to get an account?'
+
+  name: "Name"
+  code: "Code"
+  mission: "Mission"
+  state: 'State'
+  degree: "Degree"
+  ects: "Ects"
+  Export all Programs: 'Export all Programs'
+  edit: 'Edit'
+  destroy: 'Destroy'
+  show: "Show"
+  back: 'Back'
+  form: 'Form'
+  examination: 'Examination'
+  objectives: 'Objectives'
+  contents: 'Contents'
+  prerequisites: 'Prerequisites'
+  literature: 'Literature'
+  methods: 'methods'
+  skills knowledge understanding: 'Skills knowledge understanding'
+  skills practical: 'Skills practical'
+  skills intellectual: 'Skills intellectual'
+  skills general: 'Skills general'
+  are you sure?: "Are you sure?"
+  Approve new Users: "Approve new Users"
+  Users: 'Users'
+  Email: 'Email'
+  Role: 'Role'
+  Approved: 'Approved'
+  Approve: 'Approve'
+  Show Link: 'Show Link'
+  Show Course: 'Show Course'
+  Eِdit Link: 'Eِdit Link'
+  Delete Link: 'Delete Link'
+  Program Overview: 'Program Overview'
+  Overview: 'Overview'
+  Courses in Program: 'Courses in Program'
+  You can confirm your account email through the link below: 'You can confirm your account email through the link below'
+
+  Welcome to the Module Handbook: 'Welcome to the Module Handbook '
+  Introduction and Manual goes here: 'Introduction and Manual goes here'
+  also a link to kramdown: "also a link to kramdow "
+  There are two ways to link Courses to Programs: 'There are two ways to link Courses to Programs:'
+  create Course from Program site OR: 'Create Course from Program site OR'
+  create CourseProgram link instance after Course and Program have been created: 'Create Course-Program link instance after Course and Program have been created'
+  has registered to join your site: 'has registered to join your site!'
+  An admin can approve this registration by visiting the website and editing the user: 'An admin can approve this registration by visiting the website and editing the user'
+  Comments: 'Comments:'
+  Add a comment: 'Add a comment'
+  You can insert Markdown formating here if you wish: '* You can insert Markdown formating here if you wish.'
+  You can edit your comment for 30 minutes after you create it: '* You can edit your comment for 30 minutes after you create it.'
+  You can always delete your comment: '* You can always delete your comment.'
+  prohibited this comment from being saved: ' prohibited this comment from being saved:'
+  prohibited this course_program from being saved: ' prohibited this course_program from being saved:'
+  prohibited this course from being saved: ' prohibited this course from being saved:'
+  There are: '  There are '
+  comments: ' comments '
+  There are no comments: 'There are no comments'
+  Go to comments: 'Go to comments'
+  Back to Program: 'Back to Program'
+  Back to Index: 'Back to Index'
+  Back to Course: 'Back to Course'
+  Version History of Course: 'Version History of Course'
+  Nr: 'Nr'
+  author: 'Author'
+  date: 'Date'
+  event: 'Event'
+  changeset: 'Changeset'
+  Update: 'Update'
+
+  Resend confirmation instructions: 'Resend confirmation instructions'
+  Resend unlock instructions: 'Resend unlock instructions'
+  Confirm my account: 'Confirm my account'
+  Confirm new password: 'Confirm new password'
+  New password: 'New password'
+  Change my password: 'Change my password'
+  We are contacting you to notify you that your email is being changed to: 'We are contacting you to notify you that your email is being changed to '
+  We are contacting you to notify you that your password has been changed: 'We are contacting you to notify you that your password has been changed.'
+  Someone has requested a link to change your password You can do this through the link below: 'Someone has requested a link to change your password. You can do this through the link below.'
+  If you did not request this, please ignore this email: 'If you did not request this, please ignore this email.'
+  Your password wont change until you access the link above and create a new one: 'Your password won`t change until you access the link above and create a new one.'
+  Your account has been locked due to an excessive number of unsuccessful sign in attempts: 'Your account has been locked due to an excessive number of unsuccessful sign in attempts.'
+  Click the link below to unlock your account: 'Click the link below to unlock your account'
+  Unlock my account: 'Unlock my account'
+  Change your password: 'Change your password'
+  Forgot your password: 'Forgot your password?'
+  Send me reset password instructions: 'Send me reset password instructions'
+  we need your current password to confirm your changes: 'we need your current password to confirm your changes'
+  Cancel my account: 'Cancel my account'
+  leave blank if you dont want to change it: 'leave blank if you dont want to change it'
+  Sign up: 'Sign up'
+  Log in: 'Log in'
+  Didnt receive confirmation instructions: 'Did not receive confirmation instructions?'
+  Didnt receive unlock instructions: 'Did not receive unlock instructions?'
+  Confirm your account with the link sent to your email: 'Confirm your account with the link sent to your email'
+  Have somone who already has an account with the role admin, editor or quality assurance approve your account: 'Have someone who already has an account with the role admin, editor or quality assurance approve your account'
+  If you only need read permissions your account should now work If you require further edit permissions ask one of the admins to set them up for you: 'If you only need to read permissions, your account should now work. If you require further edit permissions, ask one of the admins to set them up for you.'
