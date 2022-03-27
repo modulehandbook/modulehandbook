@@ -12,11 +12,13 @@
   <%= render 'layouts/navigation_item', link_text: (t('course-Program')), path: course_programs_path %>
   <% if can? :approve, User %><%= render 'layouts/navigation_item_approve_new_users' %><% end %>
   <%= render 'layouts/navigation_item_login_or_out' %>
-  <select (change)="selectLanguage($event)" style="margin-left: 250px; color: #666666; background-color:#f3f3f3">
-    <option value="en-US">English</option>
-    <option value="ar-AR">عربي</option>
-    <option value="de-DE">Deutsch</option>
-  </select>
+
+
+  <ul style="margin-left: 800px;color: #666666; background-color:#f3f3f3; position: fixed">
+    <li><%= link_to 'English', root_path(locale: :en) %></li>
+    <li><%= link_to 'عربي', root_path(locale: :ar) %></li>
+    <li><%= link_to 'Deutsch', root_path(locale: :de) %></li>
+  </ul>
 
 </ul>
 
