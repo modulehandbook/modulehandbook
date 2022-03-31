@@ -14,11 +14,16 @@
   <%= render 'layouts/navigation_item_login_or_out' %>
 
 
-  <ul style="margin-left: 800px;color: #666666; background-color:#f3f3f3; position: fixed">
-    <li><%= link_to 'English', root_path(locale: :en) %></li>
-    <li><%= link_to 'عربي', root_path(locale: :ar) %></li>
-    <li><%= link_to 'Deutsch', root_path(locale: :de) %></li>
-  </ul>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Language
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" href="#"><%= link_to 'English', root_path(locale: :en) %></a>
+      <a class="dropdown-item" href="#"><%= link_to 'عربي', root_path(locale: :ar) %></a>
+      <a class="dropdown-item" href="#"><%= link_to 'Deutsch', root_path(locale: :de) %></a>
+    </div>
+  </li>
 
 </ul>
 

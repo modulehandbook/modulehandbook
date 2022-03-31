@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    I18n.locale = extract_locale || I18n.default_locale
+    I18n.locale = extract_locale
   end
 
   def extract_locale
@@ -17,5 +17,5 @@ class ApplicationController < ActionController::Base
       parsed_locale.to_sym :
       nil
   end
-  check_authorization unless: :devise_controller?
+  check_authorization unless: :locale
 end
