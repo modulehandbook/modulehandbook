@@ -108,6 +108,8 @@ or, use this for the container (also in makefile)
 
 ### Automatic Deployment to Staging
 
+(Automation is done by heroku, see https://dashboard.heroku.com/apps/module-handbook-staging/deploy/github)
+
 Everything in the branch staging is automatically deployed on the staging server. To trigger the automatic deployment to http://module-handbook-staging.herokuapp.com/ use the following steps:
 
     git checkout staging
@@ -117,9 +119,11 @@ Everything in the branch staging is automatically deployed on the staging server
 
 ### Automatic Deployment to Production
 
+(Automation is done by heroku, see https://dashboard.heroku.com/apps/module-handbook/deploy/github)
+
 Everything in the branch release is automatically deployed on the production server. To trigger the automatic deployment to http://module-handbook.herokuapp.com/ use the following steps:
 
-    git gheckout release
+    git checkout release
     git pull origin master
     git push
 
