@@ -38,7 +38,7 @@ rails server
 This needs an open local Postgres running.
 Start postgres in docker container:
 ```bash
-docker-compose -f docker-compose.yml up -d postgresql
+docker-compose -f docker-compose.yml up -d module-handbook-postgres
 ```
 
 See the [makefile](./makefile) for more useful commands.
