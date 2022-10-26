@@ -14,6 +14,8 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=password
     volumes:
       - ./pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
   module-handbook-exporter:
     image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
     container_name: modulehandbook-exporter
