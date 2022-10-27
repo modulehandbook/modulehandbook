@@ -29,14 +29,10 @@ RUN set -ex \
   libxslt-dev \
   build-base \
   postgresql-dev \
-  yarn \
   && bundle config set --local without 'development test' \
   && bundle install
 #  tzdata \
 
-
-COPY package.json yarn.lock ./
-RUN yarn install --check-files
 
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
@@ -60,8 +56,7 @@ ENV NODE_ENV development
 
 COPY . ./
 RUN bundle config --local --delete without && \
-    bundle install && \
-    yarn install --check-files
+    bundle install
 
 RUN set -ex && \
   apk del builddependencies && \
