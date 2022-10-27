@@ -32,7 +32,7 @@
         <td><%= link_to 'Show', course_program %></td>
         <% if can? :edit, @course_program %>
         <td><%= link_to 'Edit', edit_course_program_path(course_program) %></td>
-        <td><%= link_to 'Destroy', course_program, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', course_program, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>
