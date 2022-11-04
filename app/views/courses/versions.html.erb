@@ -31,7 +31,7 @@ Part of Programs:
 <% @versions.each do |version| %>
   <tr>
     <td><%= version.index %></td>
-    <td><%= User.find(version.whodunnit).email %></td>
+    <td><%= version.whodunnit  ? User.find(version.whodunnit).email: "No user" %></td>
     <td><%= version.created_at %></td>
     <td><%= version.event %></td>
     <td>

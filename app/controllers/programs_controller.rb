@@ -1,5 +1,9 @@
 class ProgramsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: :export_programs_json
+  skip_authorization_check only: :export_programs_json
+  skip_before_action :authenticate_user!, only: :export_programs_json
+
+
   before_action :set_program, only: %i[show edit update destroy export_program_json]
   before_action :set_paper_trail_whodunnit
 

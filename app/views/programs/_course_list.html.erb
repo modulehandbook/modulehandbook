@@ -30,7 +30,7 @@
         <td><%= link_to 'Show Link', course_program_path(course_program) %></td>
         <% if can? :edit, @program %>
         <td><%= link_to 'Edit Link', edit_course_program_path(course_program) %></td>
-        <td><%= link_to 'Delete Link', course_program, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete Link', course_program, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>
         <td><%= link_to 'JSON', export_course_json_url(id: course_program.course_id) %></td>
         <td><%= link_to 'DOCX', export_course_docx_url(id: course_program.course_id) %></td>
