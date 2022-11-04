@@ -44,6 +44,8 @@ class ProgramsTest < ApplicationSystemTestCase
 
   test 'destroying a Program' do
     visit programs_url
+    sleep(1)
+
     @program = programs(:one)
     page.accept_confirm do
       click_on "destroy_program_#{@program.id}"
