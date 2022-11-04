@@ -40,6 +40,8 @@ class CourseProgramsTest < ApplicationSystemTestCase
 
   test 'destroying a Course program' do
     visit course_programs_url
+    sleep(1)
+
     page.accept_confirm do
       click_on 'Destroy', match: :first
     end
