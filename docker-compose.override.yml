@@ -11,6 +11,7 @@ services:
       ports:
       - "5432:5432" # don't do this on production!
   module-handbook:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,5 +26,5 @@ services:
     environment:
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
-      - RAILS_MASTER_KEY=REMOVE
+      - RAILS_MASTER_KEY=
     restart: "no"
