@@ -1,4 +1,5 @@
-
+export TAG_MODULE_HANDBOOK_EXPORTER=sha-d30c6b1
+export TAG_MODULE_HANDBOOK=development
 start_prod:
 	docker-compose -f docker-compose.yml up -d # ommits override
 start_prod_local:
