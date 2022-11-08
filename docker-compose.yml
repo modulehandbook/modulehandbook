@@ -27,7 +27,7 @@ services:
       - POSTGRES_USER=modhand
       - POSTGRES_PASSWORD=modhand
       - POSTGRES_DB=modhand-db-prod
-      - RAILS_MASTER_KEY=EMPTY
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
       - RAILS_SERVE_STATIC_FILES=true
     depends_on:
       - module-handbook-postgres
