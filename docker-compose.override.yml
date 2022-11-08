@@ -2,7 +2,6 @@
 # dont ever copy to production machine!
 
 # see doc: https://docs.docker.com/compose/compose-file/compose-file-v3/
-
 version: '3.4'
 services:
   module-handbook-postgres:
