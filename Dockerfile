@@ -32,6 +32,8 @@ RUN set -ex \
   && bundle config set --local without 'development test' \
   && apk add --no-cache build-base libxml2-dev libxslt-dev \
   && gem install nokogiri --platform=ruby -- --use-system-libraries \
+  && bundle config --delete without \
+  && bundle config --delete with \
   && bundle install
 #  tzdata \
 

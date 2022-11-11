@@ -184,3 +184,15 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-co
 ```
 
 see the makefile for various start/stop and database setup commands.
+
+### Notes for Docker running on Windows machines
+Git on windows automatically checks out all files from a Github repository with [CRLF line separator](https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/) which is problematic when building the docker image locally which runs on a linux machine, and creates a fatal error.
+
+To disable this 'feature' before checking out repository
+```
+git config --global core.autocrlf false
+```
+
+If the files were already checked out, make sure to change [docker-entrypoint.sh](entrypoints/docker-entrypoint.sh) file and [rails](bin/rails) file to the LF line separator before building the image. 
+
+This can be done through several IDEs, or even through Notepad++(Edit -> EOL Conversion -> Unix)
