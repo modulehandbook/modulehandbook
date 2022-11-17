@@ -1,5 +1,5 @@
 class CourseProgram < ApplicationRecord
-  belongs_to :course
+  belongs_to :course, :foreign_key => [:course_id]
   belongs_to :program
 
   def self.find_or_create_from_json(data, course_id, program_id)

@@ -4,7 +4,6 @@ class CoursesController < ApplicationController
   skip_before_action :authenticate_user!, only: :export_courses_json
   
   before_action :set_course, only: %i[show edit update destroy export_course_json revert_to]
-  before_action :set_paper_trail_whodunnit
 
   # GET /courses
   # GET /courses.json
@@ -144,7 +143,7 @@ class CoursesController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render versions(@course) }
+        format.html { render versions }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end

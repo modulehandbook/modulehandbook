@@ -14,6 +14,10 @@ module ModuleHandbook
     config.x.mh_hostname = ENV.fetch("HOSTNAME") { 'module-handbook.herokuapp.com' }
     config.x.mh_devise_email = ENV.fetch("DEVISE_EMAIL") { 'module-handbook@infrastructure.de' }
     config.active_record.use_yaml_unsafe_load = true
+
+    #structure.sql instead of schema.rb - needed because custom SQL features (temporal tables) cant be stored in schema.rb
+    config.active_record.schema_format = :sql
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

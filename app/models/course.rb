@@ -1,7 +1,7 @@
 class Course < ApplicationRecord
+  self.primary_keys = :id, :transaction_end
   include AASM
   has_many :comments, as: :commentable
-  has_paper_trail
 
   aasm whiny_transitions: :false do
     state :in_progress, initial: true

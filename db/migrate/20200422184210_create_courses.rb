@@ -15,8 +15,6 @@ class CreateCourses < ActiveRecord::Migration[6.0]
       t.text :skills_intellectual
       t.text :skills_practical
       t.text :skills_general
-
-      t.timestamps
     end
   end
 end
