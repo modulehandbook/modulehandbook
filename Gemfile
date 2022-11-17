@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0.4'
@@ -10,7 +10,7 @@ gem 'rails', '~> 7.0.4'
 # gem 'sqlite3', '~> 1.4'
 # end
 
-gem 'pg'
+gem 'mysql2'
 
 # Use Puma as the app server
 gem 'puma', '~> 5.6'
@@ -61,7 +61,8 @@ gem 'cancancan'
 gem 'devise'
 gem 'faraday'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby] if Gem.win_platform?
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 gem 'aasm'
 
 gem 'paper_trail'

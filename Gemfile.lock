@@ -83,7 +83,7 @@ GEM
     builder (3.2.4)
     byebug (11.1.3)
     cancancan (3.4.0)
-    capybara (3.37.1)
+    capybara (3.38.0)
       addressable
       matrix
       mini_mime (>= 0.1.3)
@@ -110,6 +110,7 @@ GEM
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.1)
     ffi (1.15.5)
+    ffi (1.15.5-x64-mingw-ucrt)
     ffi (1.15.5-x64-mingw32)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -127,10 +128,9 @@ GEM
       thor (>= 0.14, < 2.0)
     launchy (2.5.0)
       addressable (~> 2.7)
-    listen (3.1.5)
+    listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-      ruby_dep (~> 1.2)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -143,6 +143,7 @@ GEM
     mini_portile2 (2.8.0)
     minitest (5.16.3)
     msgpack (1.6.0)
+    mysql2 (0.5.4)
     net-imap (0.3.1)
       net-protocol
     net-pop (0.1.2)
@@ -155,14 +156,10 @@ GEM
     nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    nokogiri (1.13.9-x64-mingw32)
-      racc (~> 1.4)
     orm_adapter (0.5.0)
     paper_trail (13.0.0)
       activerecord (>= 5.2)
       request_store (~> 1.1)
-    pg (1.4.4)
-    pg (1.4.4-x64-mingw32)
     phantomjs (2.1.1.0)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
@@ -216,7 +213,6 @@ GEM
       railties (>= 5.0)
     rexml (3.2.5)
     ruby2_keywords (0.0.5)
-    ruby_dep (1.5.0)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -258,8 +254,11 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2022.6)
+      tzinfo (>= 1.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)
+    wdm (0.1.1)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -279,6 +278,7 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw-ucrt
   x64-mingw32
 
 DEPENDENCIES
@@ -296,8 +296,8 @@ DEPENDENCIES
   jquery-rails
   launchy
   listen (>= 3.0.5, < 3.2)
+  mysql2
   paper_trail
-  pg
   phantomjs
   poltergeist (~> 1.18, >= 1.18.1)
   puma (~> 5.6)
@@ -309,11 +309,13 @@ DEPENDENCIES
   simplecov
   spring
   turbo-rails
+  tzinfo-data
+  wdm (>= 0.1.0)
   web-console (>= 3.3.0)
   webdrivers
 
 RUBY VERSION
-   ruby 2.7.2p137
+   ruby 3.1.2p20
 
 BUNDLED WITH
    2.3.24

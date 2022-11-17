@@ -1,13 +1,13 @@
 default: &default
-  adapter: postgresql
-  encoding: unicode
+  adapter: mysql2
+  encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   host: <%= ENV.fetch("RAILS_DB_HOST") { 'localhost' } %>
-  username: <%= ENV.fetch("POSTGRES_USER") { 'modhand' } %>
+  username: <%= ENV.fetch("MARIADB_USER") { 'modhand' } %>
   # heroku first, then compose file value:
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] || ENV.fetch("POSTGRES_PASSWORD") { 'modhand' } %>
-  port: <%= ENV.fetch("POSTGRES_PORT") { 5432 } %>
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] || ENV.fetch("MARIADB_PASSWORD") { 'modhand' } %>
+  port: <%= ENV.fetch("MARIADB_PORT") { 3306 } %>
 
 development:
   <<: *default
@@ -19,8 +19,6 @@ test:
 
 production:
   <<: *default
-  # will heroku still work? https://devcenter.heroku.com/articles/heroku-postgresql
-  #     url: <%= ENV['DATABASE_URL'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   database: module_handbook_production
