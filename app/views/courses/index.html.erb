@@ -43,7 +43,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
     <% @courses.each do |course| %>
       <tr >
         <td scope="row"><%= link_to course.name, course_path(course[:id])%></td>
-        <td><%= link_to course.code, course_path(course) %></td>
+        <td><%= link_to course.code, course_path(course[:id]) %></td>
         <td><%= course.ects %></td>
         <td class="bg-<%= course.aasm_state %>">   </td>
         <td><%= course.aasm_state.humanize.titleize %></td>
@@ -61,13 +61,13 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
         <td><%= course.skills_practical %></td>
         <td><%= course.skills_general %></td>
         <% end %>
-        <td><%= link_to 'Show', course %></td>
+        <td><%= link_to 'Show', course_path(course[:id]) %></td>
         <% if can? :edit, course %>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
+        <td><%= link_to 'Edit', edit_course_path(course[:id]) %></td>
         <td><%= link_to 'Destroy', course, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>
-        <td><%= link_to 'JSON', export_course_json_url(id: course.id) %></td>
-        <td><%= link_to 'DOCX', export_course_docx_url(id: course.id) %></td>
+        <td><%= link_to 'JSON', export_course_json_url(id: course[:id]) %></td>
+        <td><%= link_to 'DOCX', export_course_docx_url(id: course[:id]) %></td>
       </tr>
     <% end %>
   </tbody>
