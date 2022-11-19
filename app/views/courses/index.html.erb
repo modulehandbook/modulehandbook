@@ -42,7 +42,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
   <tbody>
     <% @courses.each do |course| %>
       <tr >
-        <td scope="row"><%= link_to course.name, course_path(course.id)%></td>
+        <td scope="row"><%= link_to course.name, course_path(course[:id])%></td>
         <td><%= link_to course.code, course_path(course) %></td>
         <td><%= course.ects %></td>
         <td class="bg-<%= course.aasm_state %>">   </td>

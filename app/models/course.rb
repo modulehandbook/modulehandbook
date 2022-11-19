@@ -1,6 +1,7 @@
 class Course < ApplicationRecord
   self.primary_keys = :id, :transaction_end
   include AASM
+  include SystemVersioning
   has_many :comments, as: :commentable
 
   aasm whiny_transitions: :false do
