@@ -81,6 +81,8 @@ CREATE TABLE `courses` (
   `aasm_state` varchar(255) DEFAULT NULL,
   `responsible_person` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `change_list` text DEFAULT NULL,
   `transaction_start` timestamp(6) GENERATED ALWAYS AS ROW START,
   `transaction_end` timestamp(6) GENERATED ALWAYS AS ROW END,
   PRIMARY KEY (`id`,`transaction_end`),
