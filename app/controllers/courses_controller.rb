@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
   end
 
   def versions
-    @versions = @course.versions.reorder('created_at DESC')
+    @versions = @course.versions
     @programs = @course.programs.order(:name).pluck(:name, :id)
   end
 

@@ -81,12 +81,14 @@ CREATE TABLE `courses` (
   `aasm_state` varchar(255) DEFAULT NULL,
   `responsible_person` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
-  `author` varchar(255) DEFAULT NULL,
+  `author_id` bigint(20) DEFAULT NULL,
   `change_list` text DEFAULT NULL,
   `transaction_start` timestamp(6) GENERATED ALWAYS AS ROW START,
   `transaction_end` timestamp(6) GENERATED ALWAYS AS ROW END,
   PRIMARY KEY (`id`,`transaction_end`),
-  PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`)
+  KEY `author_id` (`author_id`),
+  PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
+  CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `programs`;
