@@ -4,13 +4,26 @@ module SystemVersioning
   included do
     before_save :add_author, :add_change_list
 
-
     def versions
       query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME ALL WHERE id = ? ORDER BY transaction_end ASC"
       self.class.find_by_sql [query, self[:id]]
     end
 
+    def revert(id, transaction_end)
+      query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME AS OF ? WHERE id = ? LIMIT 1"
+      query_result = self.class.find_by_sql([query, transaction_end, id])
+
+      unless query_result
+        return false
+      end
+
+      revert_object = query_result[0]
+      attributes = revert_object.attributes.except("id", "transaction_end", "transaction_start")
+      return self.update(attributes)
+    end
+
     private
+
     def add_author
       user = Thread.current[:current_user]
       if user
@@ -22,6 +35,7 @@ module SystemVersioning
       change_list = get_change_list
       self.change_list = change_list
     end
+
     def get_change_list
       change_list = ""
       self.changes.each do |attr_name, change|

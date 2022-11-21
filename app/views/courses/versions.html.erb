@@ -40,7 +40,7 @@ Part of Programs:
     <td>
       <% if can? :revert_to, @course %>
       <% if index != @versions.length - 1 %>
-        <%= button_to 'Revert to this Version', revert_to_url, params: { id: @course.id, to_version: 0 } %>
+        <%= button_to 'Revert to this Version', revert_to_url, params: { id: @course[:id], transaction_end: version.transaction_end } %>
       <% else %>
         <small>>Current Version<</small>
       <% end %>

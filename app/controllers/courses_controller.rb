@@ -135,8 +135,7 @@ class CoursesController < ApplicationController
   end
 
   def revert_to
-    @course = @course.versions.find(params[:to_version]).reify
-    if @course.save!
+    if @course.revert(params[:id], params[:transaction_end])
       respond_to do |format|
         format.html { redirect_to @course, notice: 'Course was successfully reverted.' }
         format.json { render :show, status: :ok, location: @course }
