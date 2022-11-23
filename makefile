@@ -1,6 +1,6 @@
-export TAG_MODULE_HANDBOOK_EXPORTER=sha-d30c6b1
+export TAG_MODULE_HANDBOOK_EXPORTER=sha-a51f168
 export TAG_MODULE_HANDBOOK=development
-export EXPORTER_BASE_URL=http://host.docker.internal:3030/
+# export EXPORTER_BASE_URL=http://host.docker.internal:3030/
 restart: stop start
 start_prod:
 	docker-compose -f docker-compose.yml up -d # ommits override
