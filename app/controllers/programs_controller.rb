@@ -75,7 +75,7 @@ class ProgramsController < ApplicationController
       filename = helpers.generate_filename(program)
       send_data resp.body, filename: filename + '.docx'
     rescue Faraday::ConnectionFailed => e
-      redirect_to programs_path, alert: 'Error: Program could not be exported as DOCX because the connection to the external export service failed!'
+      redirect_to programs_path, alert: 'Error: Program could not be exported as DOCX because the connection to the external export service failed! '+post_url
     end
   end
 

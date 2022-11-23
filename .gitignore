@@ -1,8 +1,9 @@
 # temp files from save_and_open_page
 capybara-*.html
 
-# Ignore Postgres data and dumps mounted to containers
+# Ignore Postgres data mounted to containers and db dumps
 pg_data/*
+pg_transfer/*
 latest.dump
 dumps/**
 

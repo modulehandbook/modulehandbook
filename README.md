@@ -10,6 +10,33 @@ The Modulehandbook is being designed and developed by a team within the joint pr
 [German International University of Applied Sciences (GIU AS) - Hochschule für Technik und Wirtschaft Berlin University of Applied Sciences - HTW Berlin](https://www.htw-berlin.de/forschung/online-forschungskatalog/projekte/projekt/?eid=2839)
 in order to ease collaborative editing of the study programs for the GIU AS.
 
+## Start Locally
+
+    make start
+
+The [makefile](./makefile) contains useful commands; have a look at it.
+`make start` uses docker-compose up to start up the docker containers
+  - module-handbook
+  - module-handbook-exporter
+  - module-handbook-postgres
+It uses the Exporter specified in TAG_MODULE_HANDBOOK_EXPORTER set in the makefile.
+
+## Set up Database
+
+You can either create a new database with seed data or import a db dump:
+
+- Seed Data: `make new_db`
+- Import Dump:
+
+1. Manually
+- copy the db dump to ./pg_transfer which is mounted to
+      cp <dump-source> ./pg_transfer/uas-module-handbook-cron-2022-11-23--13-00-00.pgdump
+- open bash in pg container
+      make bash_db
+- restore the database: (alter the file name as needed!)
+      pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-dev /var/lib/postgresql/transfer/uas-module-handbook-cron-2022-11-23--13-00-00.pgdump
+
+
 ## Devise Authentication Setup
 
 The Modulehandbook uses Devise for Authentication. New Users can register
@@ -193,6 +220,6 @@ To disable this 'feature' before checking out repository
 git config --global core.autocrlf false
 ```
 
-If the files were already checked out, make sure to change [docker-entrypoint.sh](entrypoints/docker-entrypoint.sh) file and [rails](bin/rails) file to the LF line separator before building the image. 
+If the files were already checked out, make sure to change [docker-entrypoint.sh](entrypoints/docker-entrypoint.sh) file and [rails](bin/rails) file to the LF line separator before building the image.
 
 This can be done through several IDEs, or even through Notepad++(Edit -> EOL Conversion -> Unix)
