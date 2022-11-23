@@ -48,8 +48,8 @@ CREATE TABLE `course_programs` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `index_course_programs_on_course_id` (`course_id`),
   KEY `index_course_programs_on_program_id` (`program_id`),
-  KEY `fk_rails_931b445d8c` (`course_id`),
   CONSTRAINT `fk_rails_6fe0a9b905` FOREIGN KEY (`program_id`) REFERENCES `programs` (`id`),
   CONSTRAINT `fk_rails_931b445d8c` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;

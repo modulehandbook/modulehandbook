@@ -94,8 +94,6 @@ GEM
       xpath (~> 3.2)
     childprocess (4.1.0)
     cliver (0.3.2)
-    composite_primary_keys (14.0.4)
-      activerecord (~> 7.0.2)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     devise (4.8.1)
@@ -291,7 +289,6 @@ DEPENDENCIES
   byebug
   cancancan
   capybara (>= 2.15)
-  composite_primary_keys (= 14.0.4)
   devise
   faraday
   importmap-rails (~> 1.1)

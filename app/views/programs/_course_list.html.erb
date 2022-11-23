@@ -20,7 +20,7 @@
     <% course_programs.each do |course_program| %>
       <tr>
         <td scope="row" onclick = "location.href='<%= course_path(course_program.course) %>'"><%= course_program.course.name %></td>
-        <td onclick = "location.href='<%= course_path(course_program.course[:id]) %>'"><%= course_program.course.code %></td>
+        <td onclick = "location.href='<%= course_path(course_program.course) %>'"><%= course_program.course.code %></td>
         <td><%= course_program.course.ects %></td>
         <td><%= course_program.semester %></td>
         <td><%= course_program.required %></td>

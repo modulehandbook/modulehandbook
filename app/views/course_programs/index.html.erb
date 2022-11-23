@@ -25,7 +25,7 @@
     <% @course_programs.each do |course_program| %>
       <tr >
         <td scope="row"><%= link_to 'Show Link', course_program_path(course_program) %>
-        <td><%= link_to course_program.course.name, course_path(course_program.course[:id]) %></td>
+        <td><%= link_to course_program.course.name, course_program.course %></td>
         <td><%= link_to course_program.program.name, course_program.program %></td>
         <td><%= course_program.semester %></td>
         <td><%= course_program.required %></td>

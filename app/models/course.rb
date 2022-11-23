@@ -1,5 +1,4 @@
 class Course < ApplicationRecord
-  self.primary_keys = :id, :transaction_end
   include AASM
   include SystemVersioning
   has_many :comments, as: :commentable
@@ -45,7 +44,7 @@ class Course < ApplicationRecord
     aasm.permitted_transitions.map(&:event)
   end
 
-  has_many :course_programs, dependent: :destroy, :primary_key => :id, :foreign_key => :course_id
+  has_many :course_programs, dependent: :destroy
   has_many :programs, through: :course_programs
 
   def select_name

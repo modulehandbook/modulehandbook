@@ -1,5 +1,5 @@
 <h3>Version History of Course: <%= @course.name %></h3>
-<%= link_to "Back to Course", course_path(@course[:id])  %>
+<%= link_to "Back to Course", course_path(@course)  %>
 
 <p class="bg-<%= @course.aasm_state %>">
   <strong>State:</strong>
@@ -40,7 +40,7 @@ Part of Programs:
     <td>
       <% if can? :revert_to, @course %>
       <% if index != @versions.length - 1 %>
-        <%= button_to 'Revert to this Version', revert_to_url, params: { id: @course[:id], transaction_end: version.transaction_end } %>
+        <%= button_to 'Revert to this Version', revert_to_url, params: { id: @course.id, transaction_end: version.transaction_end } %>
       <% else %>
         <small>>Current Version<</small>
       <% end %>

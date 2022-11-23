@@ -2,11 +2,12 @@ module SystemVersioning
   extend ActiveSupport::Concern
 
   included do
+    self.primary_key = :id
     before_save :add_author, :add_change_list
 
     def versions
       query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME ALL WHERE id = ? ORDER BY transaction_end ASC"
-      self.class.find_by_sql [query, self[:id]]
+      self.class.find_by_sql [query, self.id]
     end
 
     def revert(id, transaction_end)
