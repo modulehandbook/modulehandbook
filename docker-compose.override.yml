@@ -7,6 +7,8 @@ services:
   module-handbook-postgres:
       environment:
         - POSTGRES_DB=modhand-db-dev # test?
+      volumes:
+        - ./pg_transfer:/var/lib/postgresql/pg_transfer
       ports:
       - "5432:5432" # don't do this on production!
   module-handbook:
