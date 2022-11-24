@@ -5,7 +5,6 @@ class ProgramsController < ApplicationController
 
 
   before_action :set_program, only: %i[show edit update destroy export_program_json]
-  before_action :set_paper_trail_whodunnit
 
   # GET /programs
   # GET /programs.json

@@ -65,8 +65,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby] if Gem.win_pl
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 gem 'aasm'
 
-gem 'paper_trail'
-
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 gem 'redcarpet'

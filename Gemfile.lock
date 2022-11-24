@@ -157,9 +157,6 @@ GEM
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     orm_adapter (0.5.0)
-    paper_trail (13.0.0)
-      activerecord (>= 5.2)
-      request_store (~> 1.1)
     phantomjs (2.1.1.0)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
@@ -206,8 +203,6 @@ GEM
     redcarpet (3.5.1)
     redis (4.8.0)
     regexp_parser (2.6.0)
-    request_store (1.5.1)
-      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -297,7 +292,6 @@ DEPENDENCIES
   launchy
   listen (>= 3.0.5, < 3.2)
   mysql2
-  paper_trail
   phantomjs
   poltergeist (~> 1.18, >= 1.18.1)
   puma (~> 5.6)

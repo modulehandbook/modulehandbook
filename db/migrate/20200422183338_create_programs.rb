@@ -6,8 +6,6 @@ class CreatePrograms < ActiveRecord::Migration[6.0]
       t.text :mission
       t.text :degree
       t.integer :ects
-
-      t.timestamps
     end
   end
 end

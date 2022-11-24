@@ -101,10 +101,15 @@ CREATE TABLE `programs` (
   `mission` text DEFAULT NULL,
   `degree` text DEFAULT NULL,
   `ects` int(11) DEFAULT NULL,
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+  `change_list` text DEFAULT NULL,
+  `author_id` bigint(20) DEFAULT NULL,
+  `transaction_start` timestamp(6) GENERATED ALWAYS AS ROW START,
+  `transaction_end` timestamp(6) GENERATED ALWAYS AS ROW END,
+  PRIMARY KEY (`id`,`transaction_end`),
+  KEY `fk_rails_75ab144467` (`author_id`),
+  PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
+  CONSTRAINT `fk_rails_75ab144467` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -148,23 +153,6 @@ CREATE TABLE `users` (
   KEY `index_users_on_approved` (`approved`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `versions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `versions` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `item_type` varchar(255) DEFAULT NULL,
-  `{:null=>false}` varchar(255) DEFAULT NULL,
-  `item_id` bigint(20) NOT NULL,
-  `event` varchar(255) NOT NULL,
-  `whodunnit` varchar(255) DEFAULT NULL,
-  `object` longtext DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `object_changes` longtext DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_versions_on_item_type_and_item_id` (`item_type`,`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -190,6 +178,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210317102716'),
 ('20210610095625'),
 ('20210610095626'),
-('20221117095506');
+('20221117095506'),
+('20221124100158'),
+('20221124100547');
 
 

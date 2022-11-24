@@ -1,7 +1,7 @@
 class Program < ApplicationRecord
+  include SystemVersioning
   has_many :course_programs, dependent: :destroy
   has_many :courses, through: :course_programs
-  has_paper_trail
 
   def select_name
     "#{name} (#{code})"
