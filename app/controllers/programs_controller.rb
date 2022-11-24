@@ -1,10 +1,13 @@
 class ProgramsController < ApplicationController
+  include VersioningHelper
+
   load_and_authorize_resource except: :export_programs_json
   skip_authorization_check only: :export_programs_json
   skip_before_action :authenticate_user!, only: :export_programs_json
 
 
-  before_action :set_program, only: %i[show edit update destroy export_program_json]
+  before_action :set_program, only: %i[edit update destroy export_program_json]
+  before_action :set_current_as_of_time, only: %i[index show]
 
   # GET /programs
   # GET /programs.json
@@ -12,14 +15,7 @@ class ProgramsController < ApplicationController
     if params[:commit] == "Reset"
       redirect_to programs_path
     end
-
-    if params[:as_of_time] && params[:as_of_time] != ""
-      @current_as_of_time = params[:as_of_time]
-      @programs = Program.order_as_of(@current_as_of_time, :name)
-    else
-      @current_as_of_time = Time.now.to_formatted_s(:db)
-      @programs = Program.order(:name)
-    end
+    @programs = Program.order_as_of(@current_as_of_time, :name)
   end
 
   def versions
@@ -29,6 +25,12 @@ class ProgramsController < ApplicationController
   # GET /programs/1
   # GET /programs/1.json
   def show
+    @program = Program.find_as_of(@current_as_of_time, params[:id])
+
+    if params[:commit] == "Reset"
+      redirect_to program_path(@program)
+    end
+
     @course_programs = @program
                        .course_programs
                        .includes(:course)

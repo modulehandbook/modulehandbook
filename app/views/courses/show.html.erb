@@ -1,4 +1,10 @@
 <h3>Course: <%= @course.name %> </h3>
+<%= form_tag course_path(@course), method: :get do %>
+  As of Date/Time: <%= datetime_field_tag :as_of_time, @current_as_of_time%>
+  <%= submit_tag "Show" %>
+  <%= submit_tag "Reset" %>
+<% end %>
+
 <% if can? :versions, @course %>
 <%= link_to "See Course Versions", course_versions_url(@course.id)  %>
 <% end %>

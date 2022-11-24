@@ -82,6 +82,11 @@ module SystemVersioning
       return find_by_sql [query, as_of_time]
     end
 
+    def find_as_of(as_of_time, id)
+      query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP? WHERE id = ? LIMIT 1"
+      return find_by_sql([query, as_of_time, id])[0]
+    end
+
   end
 
 end

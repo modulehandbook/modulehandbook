@@ -48,8 +48,8 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
   <tbody>
     <% @courses.each do |course| %>
       <tr >
-        <td scope="row"><%= link_to course.name, course_path(course.id)%></td>
-        <td><%= link_to course.code, course_path(course) %></td>
+        <td scope="row"><%= link_to course.name, course_path(course, :as_of_time => @current_as_of_time)%></td>
+        <td><%= link_to course.code, course_path(course, :as_of_time => @current_as_of_time) %></td>
         <td><%= course.ects %></td>
         <td class="bg-<%= course.aasm_state %>">   </td>
         <td><%= course.aasm_state.humanize.titleize %></td>
@@ -67,7 +67,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
         <td><%= course.skills_practical %></td>
         <td><%= course.skills_general %></td>
         <% end %>
-        <td><%= link_to 'Show', course_path(course) %></td>
+        <td><%= link_to 'Show', course_path(course, :as_of_time => @current_as_of_time) %></td>
         <% if can? :edit, course %>
         <td><%= link_to 'Edit', edit_course_path(course) %></td>
         <td><%= link_to 'Destroy', course, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
