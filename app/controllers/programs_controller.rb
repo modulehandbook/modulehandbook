@@ -12,6 +12,10 @@ class ProgramsController < ApplicationController
     @programs = Program.order(:name)
   end
 
+  def versions
+    @versions = @program.versions
+  end
+
   # GET /programs/1
   # GET /programs/1.json
   def show
@@ -111,6 +115,20 @@ class ProgramsController < ApplicationController
         format.json { render :show, status: :ok, location: @program }
       else
         format.html { render :edit }
+        format.json { render json: @program.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def revert_to
+    if @program.revert(params[:id], params[:transaction_end])
+      respond_to do |format|
+        format.html { redirect_to @program, notice: 'Program was successfully reverted.' }
+        format.json { render :show, status: :ok, location: @program }
+      end
+    else
+      respond_to do |format|
+        format.html { render versions }
         format.json { render json: @program.errors, status: :unprocessable_entity }
       end
     end

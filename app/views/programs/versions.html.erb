@@ -1,20 +1,6 @@
-<h3>Version History of Course: <%= @course.name %></h3>
-<%= link_to "Back to Course", course_path(@course)  %>
+<h3>Version History of Program: <%= @program.name %></h3>
+<%= link_to "Back to Program", program_path(@program)  %>
 
-<p class="bg-<%= @course.aasm_state %>">
-  <strong>State:</strong>
-  <%= @course.aasm_state.humanize.titleize %>
-</p>
-
-
-Part of Programs:
-<% if @programs.size > 0 %>
-  <% @programs.each do |program_name, program_id| %>
-  <%= link_to program_name, program_path(program_id)  %>,
-  <% end %>
-<% else %>
-  none
-<% end %>
 <br/><br/>
 
 <table class="table table-hover">
@@ -38,9 +24,9 @@ Part of Programs:
     <% end %>
     </td>
     <td>
-      <% if can? :revert_to, @course %>
+      <% if can? :revert_to, @program %>
       <% if index != @versions.length - 1 %>
-        <%= button_to 'Revert to this Version', course_revert_to_url, params: { id: @course.id, transaction_end: version.transaction_end } %>
+        <%= button_to 'Revert to this Version', program_revert_to_url, params: { id: @program.id, transaction_end: version.transaction_end } %>
       <% else %>
         <small>>Current Version<</small>
       <% end %>
