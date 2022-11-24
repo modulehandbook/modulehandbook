@@ -8,6 +8,10 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
+    if params[:commit] == "Reset"
+      redirect_to courses_path
+    end
+
     if params[:as_of_time] && params[:as_of_time] != ""
       @current_as_of_time = params[:as_of_time]
       @courses = Course.order_as_of(@current_as_of_time, :name)
