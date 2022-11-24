@@ -8,7 +8,13 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.order(:name)
+    if params[:as_of_time] && params[:as_of_time] != ""
+      @current_as_of_time = params[:as_of_time]
+      @courses = Course.order_as_of(@current_as_of_time, :name)
+    else
+      @current_as_of_time = Time.now.to_formatted_s(:db)
+      @courses = Course.order(:name)
+    end
   end
 
   def versions

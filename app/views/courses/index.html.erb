@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <h3>Courses</h3>
+<%= form_tag courses_path, method: :get do %>
+  As of Date/Time: <%= datetime_field_tag :as_of_time, @current_as_of_time%>
+  <%= submit_tag "Show" %>
+<% end %>
+<br />
 
 <% if can? :edit, @courses %><%= link_to 'New Course', new_course_path %><br><% end %>
 JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
