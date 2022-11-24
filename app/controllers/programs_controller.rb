@@ -9,7 +9,17 @@ class ProgramsController < ApplicationController
   # GET /programs
   # GET /programs.json
   def index
-    @programs = Program.order(:name)
+    if params[:commit] == "Reset"
+      redirect_to programs_path
+    end
+
+    if params[:as_of_time] && params[:as_of_time] != ""
+      @current_as_of_time = params[:as_of_time]
+      @programs = Program.order_as_of(@current_as_of_time, :name)
+    else
+      @current_as_of_time = Time.now.to_formatted_s(:db)
+      @programs = Program.order(:name)
+    end
   end
 
   def versions

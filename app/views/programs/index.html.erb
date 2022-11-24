@@ -2,6 +2,11 @@
 <p id="alert"><%= alert %></p>
 
 <h3>Programs</h3>
+<%= form_tag programs_path, method: :get do %>
+  As of Date/Time: <%= datetime_field_tag :as_of_time, @current_as_of_time%>
+  <%= submit_tag "Show" %>
+  <%= submit_tag "Reset" %>
+<% end %>
 
 <% if can? :edit, @programs %><%= link_to 'New Program', new_program_path %><br><% end %>
 JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
