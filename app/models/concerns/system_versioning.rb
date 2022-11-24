@@ -72,19 +72,22 @@ module SystemVersioning
 
   class_methods do
     def all_as_of(as_of_time)
+      parsed_time = Time.parse(as_of_time)
       query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP?"
-      return find_by_sql [query, as_of_time]
+      return find_by_sql [query, parsed_time]
     end
 
     def order_as_of(as_of_time, *order_attributes)
+      parsed_time = Time.parse(as_of_time)
       order_attributes_s = order_attributes.join(", ")
       query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP? ORDER BY #{order_attributes_s} ASC"
-      return find_by_sql [query, as_of_time]
+      return find_by_sql [query, parsed_time]
     end
 
     def find_as_of(as_of_time, id)
+      parsed_time = Time.parse(as_of_time)
       query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP? WHERE id = ? LIMIT 1"
-      return find_by_sql([query, as_of_time, id])[0]
+      return find_by_sql([query, parsed_time, id])[0]
     end
 
   end

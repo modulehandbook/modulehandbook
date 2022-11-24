@@ -29,7 +29,7 @@ Part of Programs:
 
 <% @versions.each_with_index do |version, index| %>
   <tr>
-    <td><%= index %></td>
+    <td><%= link_to index, course_path(version, :as_of_time => version.transaction_end) %></td>
     <td><%= version.author_id  ? User.find(version.author_id).email: "No user" %></td>
     <td><%= version.transaction_start %></td>
     <td>
