@@ -7,6 +7,7 @@ class CoursesController < ApplicationController
   
   before_action :set_course, only: %i[edit update destroy export_course_json revert_to]
   before_action :set_current_as_of_time, only: %i[index show]
+  helper_method :is_latest_version
   # GET /courses
   # GET /courses.json
   def index
@@ -167,6 +168,21 @@ class CoursesController < ApplicationController
       format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def is_latest_version
+    current_time = Time.now
+
+    unless @course.nil? #Use course to check if available
+      return current_time.before?(@course.transaction_end)
+    end
+
+    parsed_current_as_of_time = Time.parse(@current_as_of_time)
+    current_time_s = current_time.to_formatted_s(:db)
+
+    # Equality check done on string to ignore variations in milliseconds
+    # Before check done using Time objects
+    current_time_s == @current_as_of_time || current_time.before?(parsed_current_as_of_time)
   end
 
   private

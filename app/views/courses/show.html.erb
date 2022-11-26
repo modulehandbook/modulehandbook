@@ -14,7 +14,7 @@
   <%= @course.aasm_state.humanize.titleize %>
 </p>
 
-<% if can? :change_state, @course %>
+<% if can?(:change_state, @course) && is_latest_version %>
   End current Phase and go to next State -
   <% @course.aasm.events.each do |event| %>
     <%= button_to event.name.to_s.humanize.titleize, change_state_path, params: { course_id: @course.id, event_name: event.name } %>
@@ -27,7 +27,7 @@
    </p>
 <p>
 Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> | <%= link_to 'DOCX', export_course_docx_url(id: @course.id) %> <br>
-<% if can? :edit, @course %><%= link_to 'Edit', edit_course_path(@course.id) %>, <% end %><%= link_to 'Back to Index', courses_path %>
+<% if can?(:edit, @course) && is_latest_version %><%= link_to 'Edit', edit_course_path(@course.id) %>, <% end %><%= link_to 'Back to Index', courses_path %>
 </p>
 
 <div class = "container">
@@ -38,7 +38,7 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
   <%= link_to program_name, program_path(program_id)  %>,
 <% end %>
     </div>
-<% if can? :edit, @course %>
+<% if can?(:edit, @course) && is_latest_version %>
     <div class = "col">
 <%= form_with(model: @course_program, local: true) do |form| %>
     <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>

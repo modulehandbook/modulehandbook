@@ -38,7 +38,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
       <th scope="col">Skills general</th>
       <% end %>
       <th scope="col"></th>
-      <% if can? :edit, @courses %>
+      <% if can?(:edit, @courses) && is_latest_version %>
       <th scope="col" colspan="2"></th>
       <% end %>
       <th scope="col" colspan="2">Export</th>
@@ -68,7 +68,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
         <td><%= course.skills_general %></td>
         <% end %>
         <td><%= link_to 'Show', course_path(course, :as_of_time => @current_as_of_time) %></td>
-        <% if can? :edit, course %>
+        <% if can?(:edit, course) && is_latest_version %>
         <td><%= link_to 'Edit', edit_course_path(course) %></td>
         <td><%= link_to 'Destroy', course, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>

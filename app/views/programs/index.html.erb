@@ -41,7 +41,7 @@ JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
         <td><%= program.degree %></td>
         <td><%= program.ects %></td>
         <td><%= link_to 'Show', program %></td>
-        <% if can? :edit, program %>
+        <% if can?(:edit, program) && is_latest_version %>
         <td><%= link_to 'Edit', edit_program_path(program) %></td>
         <td><%= link_to 'Destroy', program, id: "destroy_program_#{program.id}", data: {turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>
