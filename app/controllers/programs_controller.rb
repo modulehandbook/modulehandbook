@@ -33,11 +33,13 @@ class ProgramsController < ApplicationController
     if is_latest_version
       @program = Program.find(params[:id])
     else
-      @program = Program.find_as_of(@current_as_of_time, params[:id])
+      unless set_program_for_as_of_time
+        return redirect_to program_path(params[:id]), notice: "Program does not exist at that time"
+      end
     end
 
     if params[:commit] == "Reset"
-      redirect_to program_path(@program)
+      return redirect_to program_path(@program)
     end
 
     @course_programs = @program
@@ -170,6 +172,11 @@ class ProgramsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_program
     @program = Program.find(params[:id])
+  end
+
+  def set_program_for_as_of_time
+    @program = Program.find_as_of(@current_as_of_time, params[:id])
+    !@program.nil?
   end
 
   # Only allow a list of trusted parameters through.

@@ -30,13 +30,15 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     if is_latest_version
-      @course = Course.find(params[:id])
+      set_course
     else
-      @course = Course.find_as_of(@current_as_of_time, params[:id])
+      unless set_course_for_as_of_time
+        return redirect_to course_path(params[:id]), notice: "Course does not exist at that time"
+      end
     end
 
     if params[:commit] == "Reset"
-      redirect_to course_path(@course)
+      return redirect_to course_path(@course)
     end
 
     @programs = @course.programs.order(:name).pluck(:name, :id)
@@ -183,6 +185,11 @@ class CoursesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_course
     @course = Course.find(params[:id])
+  end
+
+  def set_course_for_as_of_time
+    @course = Course.find_as_of(@current_as_of_time, params[:id])
+    !@course.nil?
   end
 
   # Only allow a list of trusted parameters through.
