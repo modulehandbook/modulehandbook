@@ -5,7 +5,7 @@
   <%= submit_tag "Reset" %>
 <% end %>
 
-<% if can? :versions, @course %>
+<% if can?(:versions, @course) && !is_deleted_course?(@course.id) %>
 <%= link_to "See Course Versions", course_versions_url(@course.id)  %>
 <% end %>
 

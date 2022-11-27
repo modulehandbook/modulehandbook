@@ -1,13 +1,14 @@
 class ProgramsController < ApplicationController
   include VersioningHelper
 
-  load_and_authorize_resource except: :export_programs_json
+  load_and_authorize_resource except: %i[export_courses_json show]
   skip_authorization_check only: :export_programs_json
   skip_before_action :authenticate_user!, only: :export_programs_json
 
 
   before_action :set_program, only: %i[edit update destroy export_program_json]
   before_action :set_current_as_of_time, only: %i[index show]
+  helper_method :is_deleted_program?
 
   # GET /programs
   # GET /programs.json
@@ -30,11 +31,21 @@ class ProgramsController < ApplicationController
   # GET /programs/1
   # GET /programs/1.json
   def show
-    if is_latest_version
-      @program = Program.find(params[:id])
+    # Authorize needs to be done here to be able to show deleted programs,
+    # which cancancan wont be able to find automatically using just the id in 'load_and_authorize_resource'
+    authorize! :show, Program
+
+    id = params[:id]
+
+    if is_latest_version && !is_deleted_program?(id)
+      @program = Program.find(id)
     else
       unless set_program_for_as_of_time
-        return redirect_to program_path(params[:id]), notice: "Program does not exist at that time"
+        if is_deleted_program?(id)
+          return redirect_to programs_path, notice: "Program does not exist at that time"
+        else
+          return redirect_to program_path(id), notice: "Program does not exist at that time"
+        end
       end
     end
 
@@ -177,6 +188,10 @@ class ProgramsController < ApplicationController
   def set_program_for_as_of_time
     @program = Program.find_as_of(@current_as_of_time, params[:id])
     !@program.nil?
+  end
+
+  def is_deleted_program?(id)
+    !Program.exists?(id)
   end
 
   # Only allow a list of trusted parameters through.

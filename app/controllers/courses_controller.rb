@@ -1,12 +1,13 @@
 class CoursesController < ApplicationController
   include VersioningHelper
 
-  load_and_authorize_resource except: :export_courses_json
+  load_and_authorize_resource except: %i[export_courses_json show]
   skip_authorization_check only: :export_courses_json
   skip_before_action :authenticate_user!, only: :export_courses_json
   
   before_action :set_course, only: %i[edit update destroy export_course_json revert_to]
   before_action :set_current_as_of_time, only: %i[index show]
+  helper_method :is_deleted_course?
 
   # GET /courses
   # GET /courses.json
@@ -29,11 +30,21 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    if is_latest_version
+    # Authorize needs to be done here to be able to show deleted courses,
+    # which cancancan wont be able to find automatically using just the id in 'load_and_authorize_resource'
+    authorize! :show, Course
+
+    id = params[:id]
+
+    if is_latest_version && !is_deleted_course?(id)
       set_course
     else
       unless set_course_for_as_of_time
-        return redirect_to course_path(params[:id]), notice: "Course does not exist at that time"
+        if is_deleted_course?(id)
+          return redirect_to courses_path, notice: "Course does not exist at that time"
+        else # not deleted, can show current version instead
+          return redirect_to course_path(id), notice: "Course does not exist at that time"
+        end
       end
     end
 
@@ -190,6 +201,10 @@ class CoursesController < ApplicationController
   def set_course_for_as_of_time
     @course = Course.find_as_of(@current_as_of_time, params[:id])
     !@course.nil?
+  end
+
+  def is_deleted_course?(id)
+    !Course.exists?(id)
   end
 
   # Only allow a list of trusted parameters through.

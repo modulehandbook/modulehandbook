@@ -7,7 +7,7 @@
 <% end %>
 <p id="notice"><%= notice %><br>
   </p>
-<% if can? :versions, @program %>
+<% if can?(:versions, @program) && !is_deleted_program?(@program.id) %>
   <%= link_to "See Program Versions", program_versions_url(@program.id)  %>
 <% end %>
 <p>
