@@ -8,7 +8,6 @@ class ProgramsController < ApplicationController
 
   before_action :set_program, only: %i[edit update destroy export_program_json]
   before_action :set_current_as_of_time, only: %i[index show]
-  helper_method :is_latest_version
 
   # GET /programs
   # GET /programs.json
@@ -16,7 +15,12 @@ class ProgramsController < ApplicationController
     if params[:commit] == "Reset"
       redirect_to programs_path
     end
-    @programs = Program.order_as_of(@current_as_of_time, :name)
+
+    if is_latest_version
+      @programs = Program.order(:name)
+    else
+      @programs = Program.order_as_of(@current_as_of_time, :name)
+    end
   end
 
   def versions
@@ -26,7 +30,11 @@ class ProgramsController < ApplicationController
   # GET /programs/1
   # GET /programs/1.json
   def show
-    @program = Program.find_as_of(@current_as_of_time, params[:id])
+    if is_latest_version
+      @program = Program.find(params[:id])
+    else
+      @program = Program.find_as_of(@current_as_of_time, params[:id])
+    end
 
     if params[:commit] == "Reset"
       redirect_to program_path(@program)
@@ -155,21 +163,6 @@ class ProgramsController < ApplicationController
       format.html { redirect_to programs_url, notice: 'Program was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  def is_latest_version
-    current_time = Time.now
-
-    unless @program.nil? #Use program to check if available
-      return current_time.before?(@program.transaction_end)
-    end
-
-    parsed_current_as_of_time = Time.parse(@current_as_of_time)
-    current_time_s = current_time.to_formatted_s(:db)
-
-    # Equality check done on string to ignore variations in milliseconds
-    # Before check done using Time objects
-    current_time_s == @current_as_of_time || current_time.before?(parsed_current_as_of_time)
   end
 
   private
