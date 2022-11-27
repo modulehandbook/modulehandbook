@@ -11,8 +11,9 @@ module SystemVersioning
     end
 
     def revert(id, transaction_end)
+      parsed_time = Time.parse(transaction_end)
       query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME AS OF ? WHERE id = ? LIMIT 1"
-      query_result = self.class.find_by_sql([query, transaction_end, id])
+      query_result = self.class.find_by_sql([query, parsed_time, id])
 
       unless query_result
         return false

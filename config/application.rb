@@ -18,6 +18,10 @@ module ModuleHandbook
     #structure.sql instead of schema.rb - needed because custom SQL features (temporal tables) cant be stored in schema.rb
     config.active_record.schema_format = :sql
 
+    # Makes reading date/time easier for user.
+    # Rails change only, database still maintains UTC
+    config.time_zone = 'Berlin'
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
