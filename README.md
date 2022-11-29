@@ -23,12 +23,14 @@ It uses the Exporter specified in TAG_MODULE_HANDBOOK_EXPORTER set in the makefi
 
 ## Set up Database
 
+**see the [makefile](./makefile) for details and settings**
+
 You can either create a new database with seed data or import a db dump:
 
 - Seed Data: `make new_db`
 - Import Dump:
-
-1. Manually
+1. with makefile: `make file=<dumpfile> import_dump`
+2. Manually
 - copy the db dump to ./pg_transfer which is mounted to
       cp <dump-source> ./pg_transfer/uas-module-handbook-cron-2022-11-23--13-00-00.pgdump
 - open bash in pg container
