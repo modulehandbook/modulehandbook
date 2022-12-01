@@ -1,5 +1,23 @@
 # README
 
+## tl;dr: Quick start with an existing dump
+(other options below)
+
+Preparation:
+- install docker: https://docs.docker.com/get-docker/
+- create a new directory.
+- Put the dump in it with the name module-handbook.pgdump
+
+git clone git@github.com:modulehandbook/modulehandbook.git
+
+cd modulehandbook
+make start
+make file=../module-handbook.pgdump init
+
+open http://localhost:3000
+
+---
+
 This is a [Ruby on Rails](https://rubyonrails.org) application using a
 [Postgres Database](https://www.postgresql.org) and Devise for Authentication
 ([heartcombo/devise: Flexible authentication solution for Rails with Warden.](https://github.com/heartcombo/devise)).
