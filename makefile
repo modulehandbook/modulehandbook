@@ -28,13 +28,14 @@ clean:
 	rm -rf gem_cache
 	docker-compose down --rmi all -v --remove-orphans
 
-
 #
 # DB Tasks via rails
 #
+init: new_db import_dump
 new_db:
 	docker-compose exec module-handbook rails db:create
 	docker-compose exec module-handbook rails db:migrate
+new_db_seed: new_db
 	docker-compose exec module-handbook rails db:seed
 recreate_db:
 	docker-compose exec module-handbook rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
