@@ -2,9 +2,9 @@ name: Create and publish a Docker image
 
 on:
   push:
-    - branches: [ master ]
-    - tags:
-        - '*'
+    branches: [ master ]
+    tags:
+      - '*'
   pull_request:
     branches: [ master ]
 
