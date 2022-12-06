@@ -49,3 +49,5 @@ coverage/**
 yarn-debug.log*
 .yarn-integrity
 .env
+secrets/**
+secrets.env

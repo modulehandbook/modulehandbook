@@ -1,5 +1,3 @@
-export TAG_MODULE_HANDBOOK_EXPORTER=sha-a51f168
-export TAG_MODULE_HANDBOOK=development
 # use this to link a local exporter instance for development:
 # export EXPORTER_BASE_URL=http://host.docker.internal:3030/
 restart: stop start
@@ -102,3 +100,18 @@ rails_test:
 	rails db:migrate RAILS_ENV=test
 	rails test
 	rails test:system
+
+#
+# server admin
+#
+ssh_staging:
+	ssh local@module-handbook-staging.f4.htw-berlin.de
+cp_staging:
+	scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
+	scp secrets.env local@module-handbook-staging.f4.htw-berlin.de:~
+	scp .env.prod local@module-handbook-staging.f4.htw-berlin.de:~/.env
+  scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
+ssh_prod:
+	ssh local@module-handbook-staging.f4.htw-berlin.de
+cp_prod:
+	scp docker-compose.yml local@module-handbook.f4.htw-berlin.de:~
