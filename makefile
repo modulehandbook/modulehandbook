@@ -27,7 +27,8 @@ down:
 clean:
 	rm -rf gem_cache
 	docker-compose down --rmi all -v --remove-orphans
-
+open:
+	open http://localhost:3000
 
 #
 # DB Tasks via rails

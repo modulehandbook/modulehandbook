@@ -1,0 +1,5 @@
+ssh local@module-handbook-staging.f4.htw-berlin.de "export TAG_MODULE_HANDBOOK=ea6f5e8"
+export TAG_MODULE_HANDBOOK=ea6f5e8
+export TAG_MODULE_HANDBOOK_EXPORTER=sha-a51f168
+export RAILS_MASTER_KEY=99d9c005004b109cd0584bd49e7f00659c9927cd64af976ad58c13821ca3d8c0f02b62274efddd43ca39c9ddcebb8f1bebcbcc2900714a31058f2537344b6bd8
+scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
