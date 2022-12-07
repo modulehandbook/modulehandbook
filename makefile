@@ -140,10 +140,10 @@ open_staging:
 	open https://module-handbook-staging.f4.htw-berlin.de
 
 start_local_like_prod:
-	 docker-compose -f docker-compose.yml --env-file .env.prod up
+	 docker-compose -f docker-compose.yml --env-file .env.production up
 
 start_local_build_prod:
-	 	 docker-compose -f docker-compose.yml -f docker-compose.localprod.yml --env-file .env.prod up
+	 	 docker-compose -f docker-compose.yml -f docker-compose.localprod.yml --env-file .env.production up
 
 
 #  ** wip **
