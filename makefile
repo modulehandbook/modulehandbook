@@ -19,6 +19,8 @@ bash:
 	docker-compose exec module-handbook bash
 bash_db:
 	docker-compose exec module-handbook-postgres bash
+bash_nginx:
+	docker-compose exec nginx bash
 rebuild:
 	docker-compose up -d --build --force-recreate module-handbook
 stop: down
@@ -62,7 +64,7 @@ crondump:
 #
 # DB Import Tasks directly via postgres container
 #
-DBNAME=modhand-dev
+DBNAME=modhand-db-dev
 import_dump_complete: recreate_db import_dump
 # import from local file using cat:
 # call with  make file=x.pgdump import_dump
@@ -123,8 +125,19 @@ cp_prod:
 open_staging:
 	open http://module-handbook-staging.f4.htw-berlin.de:8080
 
+start_local_like_prod:
+	 docker-compose -f docker-compose.yml --env-file .env.prod up
+
+#  ** wip **
+
 reset_prod_db:
 	docker-compose exec module-handbook rails db:create RAILS_ENV=production
 	docker-compose exec module-handbook rails db:migrate
 import_dump_staging:
 	cat $(file) | ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+
+cert:
+	openssl genrsa -aes256 -passout pass:gsahdg -out server.pass.key 4096
+	openssl rsa -passin pass:gsahdg -in server.pass.key -out server.key
+	openssl req -new -key server.key -out server.csr
+	openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt

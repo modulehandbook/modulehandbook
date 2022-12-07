@@ -1,5 +1,5 @@
 start:
-  docker-compose up -D
+  docker-compose up -d
 bash:
   docker-compose exec module-handbook bash
 bash_db:

@@ -51,3 +51,7 @@ yarn-debug.log*
 .env
 secrets/**
 secrets.env
+
+/config/credentials/development.key
+logc/**
+nginx/log/**
