@@ -1,7 +1,7 @@
 # new dockerfile from https://www.digitalocean.com/community/tutorials/containerizing-a-ruby-on-rails-application-for-development-with-docker-compose-de
 #  docker build --target modhand-prod -t modhandbook/modhandbook-prod:latest .
 
-FROM ruby:2.7.2-alpine AS modhand-base
+FROM ruby:3.1.3-alpine3.17, AS modhand-base
 
 ENV MODHAND_IMAGE=modhand-base
 ENV BUNDLER_VERSION=2.3.24
@@ -62,4 +62,4 @@ ENV NODE_ENV development
 RUN set -ex \
    && apk add --no-cache  firefox \
    && bundle config --local --delete without \
-   && bundle install 
+   && bundle install
