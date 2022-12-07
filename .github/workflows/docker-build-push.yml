@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Log in to the Container registry
+        if: ${{ github.event_name != 'pull_request' }}
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
@@ -54,12 +55,15 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker - Staging
         if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
-        id: meta_staging
+        id: meta_staging_production
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=sha
 
+# -------------------------------------------------------------
+# Tag / Production
+# -------------------------------------------------------------
 
       - name: Extract metadata (tags, labels) for Docker - Staging & Production
         if: ${{ github.ref_type == 'tag' }}
@@ -69,10 +73,11 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=ref,event=tag
 
+# -------------------------------------------------------------
+# Build and Push
+# -------------------------------------------------------------
 
-
-
-      - name: Build and push Docker image - Staging
+      - name: Build and push Docker image - Staging and production
         if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v3
         with:
@@ -80,18 +85,5 @@ jobs:
           push: true
           target: "modhand-prod"
           build-args: rails_master_key=${{ secrets.RAILS_MASTER_KEY }}
-          tags: ${{ steps.meta_staging.outputs.tags }}
-          labels: ${{ steps.meta_staging.outputs.labels }}
-# -------------------------------------------------------------
-# Tag / Production
-# -------------------------------------------------------------
-
-  - name: Build and push Docker image - Production
-        if: ${{ github.ref_type == 'tag' }}
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          push: true
-          target:
-          tags: ${{ steps.meta_production.outputs.tags }}
-          labels: ${{ steps.meta_production.outputs.labels }}
+          tags: ${{ steps.meta_staging_production.outputs.tags }}
+          labels: ${{ steps.meta_staging_production.outputs.labels }}
