@@ -12,3 +12,8 @@ services:
     volumes:
       - .:/module-handbook  # use app files from host
       - /module-handbook/node_modules # but not the node_modules
+  nginx:
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_CERT=/etc/ssl/server.crt
+      - NGINX_KEY=/etc/ssl/server.key
