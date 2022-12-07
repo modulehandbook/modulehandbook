@@ -35,8 +35,8 @@ services:
       - module-handbook-postgres
       - module-handbook-exporter
     volumes:
-      - ./logc:/usr/src/app/log
-      # - ./entrypoints:/usr/src/app/entrypoints
+      - ./logc:/module-handbook/log
+      # - ./entrypoints:/module-handbook/entrypoints
     ports:
       - "80:3000"
     restart: always
