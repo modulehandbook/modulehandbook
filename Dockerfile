@@ -78,6 +78,8 @@ RUN set -ex && \
 
 FROM modhand-dev AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
+ENV RAILS_ENV production
+ENV NODE_ENV production
 ARG rails_master_key
 ENV RAILS_MASTER_KEY $rails_master_key
 # COPY . ./
