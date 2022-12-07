@@ -59,6 +59,19 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=sha
+
+
+      - name: Extract metadata (tags, labels) for Docker - Staging & Production
+        if: ${{ github.ref_type == 'tag' }}
+        id: meta_staging_production
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: type=ref,event=tag
+
+
+
+
       - name: Build and push Docker image - Staging
         if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v3
@@ -73,14 +86,7 @@ jobs:
 # Tag / Production
 # -------------------------------------------------------------
 
-      - name: Extract metadata (tags, labels) for Docker - Production
-        if: ${{ github.ref_type == 'tag' }}
-        id: meta_production
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: type=ref,event=tag
-      - name: Build and push Docker image - Production
+  - name: Build and push Docker image - Production
         if: ${{ github.ref_type == 'tag' }}
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:

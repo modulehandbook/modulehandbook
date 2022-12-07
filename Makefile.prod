@@ -10,3 +10,5 @@ bash_exp:
 stop: down
 down:
   docker-compose down
+clean_logs:
+  sudo rm container_logs/nginx/error.log container_logs/nginx/access.log container_logs/production.log

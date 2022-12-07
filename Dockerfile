@@ -10,36 +10,30 @@ ENV RAILS_ENV production
 ENV NODE_ENV production
 
 WORKDIR /module-handbook
-COPY . ./
-# COPY Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock ./
 
-# general dependencies
-RUN apk update \
-  && set -ex \
-  && apk add --no-cache bash gcompat libpq nodejs tzdata \
-  && gem install bundler -v $BUNDLER_VERSION
+RUN apk update && \
+   set -ex && \
+   # general dependencies
+   apk add --no-cache bash gcompat libpq nodejs tzdata && \
 
-# build dependencies
-RUN set -ex \
-  && apk add --no-cache --virtual builddependencies \
-  git \
-  linux-headers \
-  libpq \
-  libxml2-dev \
-  libxslt-dev \
-  build-base \
-  postgresql-dev
-# nokogiri
-RUN set -ex \
-  && apk add --no-cache build-base libxml2-dev libxslt-dev --virtual nokogiridependencies\
-  && gem install nokogiri --platform=ruby -- --use-system-libraries
+  # build dependencies
+  apk add --no-cache --virtual builddependencies \
+      git \
+      linux-headers \
+      libpq \
+      libxml2-dev \
+      libxslt-dev \
+      build-base \
+      postgresql-dev && \
 
-RUN set -ex \
+  apk add --no-cache build-base libxml2-dev libxslt-dev && \
+  gem install nokogiri --platform=ruby -- --use-system-libraries && \
+  gem install bundler -v $BUNDLER_VERSION && \
   bundle config set force_ruby_platform true && \
   bundle config set --local without 'development test' && \
-  bundle install
-RUN set -ex \
-  apk del builddependencies nokogiridependencies
+  bundle install && \
+  apk del builddependencies
 
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
@@ -51,9 +45,9 @@ FROM modhand-base AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
 ARG rails_master_key
 ENV RAILS_MASTER_KEY $rails_master_key
-
+COPY . ./
 RUN set -ex && \
-  rails assets:precompile
+    rails assets:precompile
 
 # -------------------------------------------------------------------
 # Development
@@ -65,12 +59,7 @@ ENV MODHAND_IMAGE=modhand-dev
 ENV RAILS_ENV development
 ENV NODE_ENV development
 
-# COPY . ./
-
 RUN set -ex \
+   && apk add --no-cache  firefox \
    && bundle config --local --delete without \
-  # && bundle config --delete with \
-   && bundle install
-
-RUN set -ex && \
-  apk add --no-cache  firefox
+   && bundle install 

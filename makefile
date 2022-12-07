@@ -112,6 +112,9 @@ rails_test:
 # server admin
 #
 deploy_staging: cp_staging restart_staging
+
+check_staging:
+	ssh local@module-handbook-staging.f4.htw-berlin.de "docker ps; df -h"
 restart_staging:
 	ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose down"
 	ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose up -d"
@@ -134,7 +137,7 @@ cp_prod:
 	scp docker-compose.yml local@module-handbook.f4.htw-berlin.de:~
 
 open_staging:
-	open http://module-handbook-staging.f4.htw-berlin.de:8080
+	open https://module-handbook-staging.f4.htw-berlin.de
 
 start_local_like_prod:
 	 docker-compose -f docker-compose.yml --env-file .env.prod up

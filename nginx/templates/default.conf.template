@@ -8,7 +8,6 @@ server {
 server {
         listen ${NGINX_SSL_PORT} ssl default_server;
         listen [::]:${NGINX_SSL_PORT} ssl default_server;
-        ssl    on;
         ssl_certificate      ${NGINX_CERT}  ;
         ssl_certificate_key  ${NGINX_KEY};
 
