@@ -57,6 +57,9 @@ You can either create a new database with seed data or import a db dump:
       pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-dev /var/lib/postgresql/transfer/uas-module-handbook-cron-2022-11-23--13-00-00.pgdump
 
 
+import for prod db:
+DBNAME=modhand-db-prod file=../uas-module-handbook-cron-2022-11-28--22-00-00.pgdump make import_dump
+
 ## Devise Authentication Setup
 
 The Modulehandbook uses Devise for Authentication. New Users can register

@@ -9,15 +9,15 @@ ENV BUNDLER_VERSION=2.3.24
 ENV RAILS_ENV production
 ENV NODE_ENV production
 
+WORKDIR /module-handbook
+COPY . ./
+# COPY Gemfile Gemfile.lock ./
+
 # general dependencies
-RUN apk update
-RUN set -ex \
+RUN apk update \
+  && set -ex \
   && apk add --no-cache bash gcompat libpq nodejs tzdata \
   && gem install bundler -v $BUNDLER_VERSION
-
-WORKDIR /module-handbook
-COPY Gemfile Gemfile.lock ./
-RUN bundle config set force_ruby_platform true
 
 # build dependencies
 RUN set -ex \
@@ -28,30 +28,36 @@ RUN set -ex \
   libxml2-dev \
   libxslt-dev \
   build-base \
-  postgresql-dev \
-  && bundle config set --local without 'development test' \
-  && apk add --no-cache build-base libxml2-dev libxslt-dev \
-  && gem install nokogiri --platform=ruby -- --use-system-libraries \
-  && bundle config --delete without \
-  && bundle config --delete with \
-  && bundle install
-#  tzdata \
+  postgresql-dev
+# nokogiri
+RUN set -ex \
+  && apk add --no-cache build-base libxml2-dev libxslt-dev --virtual nokogiridependencies\
+  && gem install nokogiri --platform=ruby -- --use-system-libraries
 
-
+RUN set -ex \
+  bundle config set force_ruby_platform true && \
+  bundle config set --local without 'development test' && \
+  bundle install
+RUN set -ex \
+  apk del builddependencies nokogiridependencies
 
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
-
-
+# -------------------------------------------------------------------
+# Production
+# -------------------------------------------------------------------
 
 FROM modhand-base AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
+ARG rails_master_key
+ENV RAILS_MASTER_KEY $rails_master_key
 
 RUN set -ex && \
-  apk del builddependencies
+  rails assets:precompile
 
-
-
+# -------------------------------------------------------------------
+# Development
+# -------------------------------------------------------------------
 
 FROM modhand-base AS modhand-dev
 ENV MODHAND_IMAGE=modhand-dev
@@ -59,10 +65,12 @@ ENV MODHAND_IMAGE=modhand-dev
 ENV RAILS_ENV development
 ENV NODE_ENV development
 
-COPY . ./
-RUN bundle config --local --delete without && \
-    bundle install
+# COPY . ./
+
+RUN set -ex \
+   && bundle config --local --delete without \
+  # && bundle config --delete with \
+   && bundle install
 
 RUN set -ex && \
-  apk del builddependencies && \
   apk add --no-cache  firefox
