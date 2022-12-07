@@ -66,8 +66,7 @@ jobs:
           context: .
           push: true
           target: "modhand-prod"
-          build-args:
-            - rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
+          build-args: rails_master_key=${{ secrets.RAILS_MASTER_KEY }}
           tags: ${{ steps.meta_staging.outputs.tags }}
           labels: ${{ steps.meta_staging.outputs.labels }}
 # -------------------------------------------------------------

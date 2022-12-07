@@ -1,6 +1,9 @@
 # use this to link a local exporter instance for development:
 # export EXPORTER_BASE_URL=http://host.docker.internal:3030/
 restart: stop start
+clean_logs:
+	rm container_logs/nginx/*.*
+	rm container_logs/*.*
 start_prod_mode:
 	docker-compose -f docker-compose.yml up -d # ommits override
 start_prod_version:
