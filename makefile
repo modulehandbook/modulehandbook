@@ -133,8 +133,15 @@ cp_entrypoint:
 
 ssh_prod:
 	ssh local@module-handbook-staging.f4.htw-berlin.de
+
 cp_prod:
+	scp Makefile.prod local@module-handbook.f4.htw-berlin.de:~/Makefile
 	scp docker-compose.yml local@module-handbook.f4.htw-berlin.de:~
+	scp .env.production local@module-handbook.f4.htw-berlin.de:~/.env
+	scp -r nginx local@module-handbook.f4.htw-berlin.de:~
+	ssh local@module-handbook.f4.htw-berlin.de "mkdir -p /home/local/secrets"
+	ssh local@module-handbook.f4.htw-berlin.de "mkdir -p secrets/nginx/production"
+	scp secrets/secrets.env local@module-handbook.f4.htw-berlin.de:~/secrets
 
 open_staging:
 	open https://module-handbook-staging.f4.htw-berlin.de
@@ -145,7 +152,7 @@ start_staging_local:
 	 docker-compose -f docker-compose.yml --env-file .env.staging up
 
 start_local_build_staging:
-	 	 docker-compose -f docker-compose.yml -f docker-compose.localprod.yml --env-file .env.production up
+	 	 docker-compose -f docker-compose.yml -f docker-compose.localprod.yml --env-file .env.staging up
 
 start_local_build_prod:
 	 	 docker-compose -f docker-compose.yml -f docker-compose.localprod.yml --env-file .env.production up

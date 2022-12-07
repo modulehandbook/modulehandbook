@@ -7,7 +7,7 @@
 # override precedence:
 # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
 
-version: '3.9'
+version: '3.4'
 services:
   module-handbook-postgres:
       environment:
