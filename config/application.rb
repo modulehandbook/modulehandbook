@@ -20,5 +20,8 @@ module ModuleHandbook
     # the framework and any gems in your application.
 
     config.hosts << "module-handbook"
+    config.hosts << "localhost"
+    # im nginx als schlichter 403 zu sehen:
+    # [ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: localhost
   end
 end

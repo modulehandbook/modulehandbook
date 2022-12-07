@@ -68,6 +68,7 @@ crondump:
 # DB Import Tasks directly via postgres container
 #
 # DBNAME=modhand-db-dev
+# DBNAME=modhand-db-prod file=
 import_dump_complete: recreate_db import_dump
 # import from local file using cat:
 # call with  make file=x.pgdump import_dump
