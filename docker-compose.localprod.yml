@@ -1,13 +1,12 @@
 # to run prod image locally, e.g. with
 # docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.localprod.yml up
-version: '3.9'
+version: '3.4'
 services:
   module-handbook:
     image: mh-local-prod
     build:
       context: .
       target: "modhand-prod"
-      image: mh-local-prod
       args:
         name: rails_master_key=$RAILS_MASTER_KEY
     volumes:
