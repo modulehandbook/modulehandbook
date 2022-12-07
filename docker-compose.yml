@@ -36,6 +36,7 @@ services:
       - module-handbook-exporter
     volumes:
       - ./logc:/usr/src/app/log
+      # - ./entrypoints:/usr/src/app/entrypoints
     ports:
       - "80:3000"
     restart: always
