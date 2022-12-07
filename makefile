@@ -1,8 +1,10 @@
 # use this to link a local exporter instance for development:
 # export EXPORTER_BASE_URL=http://host.docker.internal:3030/
 restart: stop start
-start_prod:
+start_prod_mode:
 	docker-compose -f docker-compose.yml up -d # ommits override
+start_prod_version:
+	docker-compose -f docker-compose.yml --env-file .env.prod up
 start_prod_local:
 	docker-compose -f docker-compose.yml -f docker-compose.localprod.yml up
 start:
@@ -107,10 +109,12 @@ rails_test:
 ssh_staging:
 	ssh local@module-handbook-staging.f4.htw-berlin.de
 cp_staging:
+	scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 	scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 	scp secrets.env local@module-handbook-staging.f4.htw-berlin.de:~
 	scp .env.prod local@module-handbook-staging.f4.htw-berlin.de:~/.env
-  scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
+cp_entrypoint:
+	scp entrypoints/docker-entrypoint.sh local@module-handbook-staging.f4.htw-berlin.de:~/entrypoints/docker-entrypoint.sh
 ssh_prod:
 	ssh local@module-handbook-staging.f4.htw-berlin.de
 cp_prod:
