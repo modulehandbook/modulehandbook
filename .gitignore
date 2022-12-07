@@ -53,5 +53,5 @@ secrets/**
 secrets.env
 
 /config/credentials/development.key
-logc/**
-nginx/log/**
+
+container_logs/**

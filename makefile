@@ -64,7 +64,7 @@ crondump:
 #
 # DB Import Tasks directly via postgres container
 #
-DBNAME=modhand-db-dev
+# DBNAME=modhand-db-dev
 import_dump_complete: recreate_db import_dump
 # import from local file using cat:
 # call with  make file=x.pgdump import_dump
@@ -108,15 +108,23 @@ rails_test:
 #
 # server admin
 #
+deploy_staging: cp_staging restart_staging
+restart_staging:
+	ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose down"
+	ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose up -d"
 ssh_staging:
 	ssh local@module-handbook-staging.f4.htw-berlin.de
 cp_staging:
 	scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 	scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
-	scp secrets.env local@module-handbook-staging.f4.htw-berlin.de:~
 	scp .env.prod local@module-handbook-staging.f4.htw-berlin.de:~/.env
+	scp -r nginx local@module-handbook-staging.f4.htw-berlin.de:~
+	scp -r secrets local@module-handbook-staging.f4.htw-berlin.de:~
+
+
 cp_entrypoint:
 	scp entrypoints/docker-entrypoint.sh local@module-handbook-staging.f4.htw-berlin.de:~/entrypoints/docker-entrypoint.sh
+
 ssh_prod:
 	ssh local@module-handbook-staging.f4.htw-berlin.de
 cp_prod:
@@ -127,6 +135,10 @@ open_staging:
 
 start_local_like_prod:
 	 docker-compose -f docker-compose.yml --env-file .env.prod up
+
+start_local_build_prod:
+	 	 docker-compose -f docker-compose.yml -f docker-compose.localprod.yml --env-file .env.prod up
+
 
 #  ** wip **
 

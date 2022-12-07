@@ -7,6 +7,9 @@ services:
     build:
       context: .
       target: "modhand-prod"
+      image: mh-local-prod
+      args:
+        name: rails_master_key=$RAILS_MASTER_KEY
     volumes:
       - .:/module-handbook  # use app files from host
       - /module-handbook/node_modules # but not the node_modules
