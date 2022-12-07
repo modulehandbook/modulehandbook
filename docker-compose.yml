@@ -1,4 +1,5 @@
 # default configuration for production
+# use .env file to differentiate between prod and dev
 version: '3.4'
 services:
   module-handbook-postgres:
@@ -30,13 +31,31 @@ services:
       - RAILS_SERVE_STATIC_FILES=true
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
     env_file:
-    - secrets.env
+      - ${SECRET_ENV_FILE}
     depends_on:
       - module-handbook-postgres
       - module-handbook-exporter
     volumes:
       - ./logc:/module-handbook/log
-      # - ./entrypoints:/module-handbook/entrypoints
-    ports:
-      - "80:3000"
     restart: always
+  nginx:
+     image: nginx:latest
+     container_name: reverse_proxy
+     volumes:
+         - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+         - ./nginx/log:/var/log/nginx
+         - ./nginx/cert:/etc/ssl
+         - ./nginx/templates:/etc/nginx/templates
+     ports:
+         - "80:80"
+         - "443:443"
+     environment:
+        - NGINX_HOST=localhost
+        # module-handbook-staging.f4.htw-berlin.de module-handbook.f4.htw-berlin.de
+        - NGINX_PORT=80
+        - NGINX_SSL_PORT=443
+        - NGINX_CERT=/etc/ssl/server.crt
+        - NGINX_KEY=/etc/ssl/server.key
+        - NGINX_PROXY=http://module-handbook:3000
+     depends_on:
+         - module-handbook

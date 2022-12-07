@@ -58,3 +58,7 @@ pg_transfer/**
 
 secrets/**
 secrets.env
+
+/config/credentials/development.key
+logc/**
+nginx/log/**
