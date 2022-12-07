@@ -123,9 +123,9 @@ ssh_staging:
 cp_staging:
 	scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 	scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
-	scp .env.prod local@module-handbook-staging.f4.htw-berlin.de:~/.env
+	scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
 	scp -r nginx local@module-handbook-staging.f4.htw-berlin.de:~
-	scp -r secrets local@module-handbook-staging.f4.htw-berlin.de:~
+	scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
 
 
 cp_entrypoint:
