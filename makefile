@@ -119,3 +119,12 @@ ssh_prod:
 	ssh local@module-handbook-staging.f4.htw-berlin.de
 cp_prod:
 	scp docker-compose.yml local@module-handbook.f4.htw-berlin.de:~
+
+open_staging:
+	open http://module-handbook-staging.f4.htw-berlin.de:8080
+
+reset_prod_db:
+	docker-compose exec module-handbook rails db:create RAILS_ENV=production
+	docker-compose exec module-handbook rails db:migrate
+import_dump_staging:
+	cat $(file) | ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
