@@ -78,13 +78,21 @@ courses = [
   [0, 'WTAT2 ', ' Web  Technology – Aktuelle Themen2                               ', 'elective', 'SL/Ü', ' 2/2      ', ' 5']
 ]
 
+# Representation of dates per semester for Academic year 20xx - 20xy
+# Winter 20xx: September 1 20xx -> January 31 20xy
+# Spring 20xy: February 1 20xy -> June 31 20xy
+# Seeds data is in Winter 2021 semester
+
+
 courses.each do |a|
   puts "handling #{a}"
 
   c = Course.create(code: a[1].strip,
                     name: a[2].strip,
                     methods: "#{a[4].strip} #{a[5].strip}",
-                    ects: a[6].strip.to_i)
+                    ects: a[6].strip.to_i,
+                    valid_start: '2021-09-01',
+                    valid_end: '2022-01-31')
   cp = CourseProgram.create(course: c, program: imib,
                             semester: a[0],
                             required: a[3].strip)
