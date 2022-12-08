@@ -1,8 +1,9 @@
 # temp files from save_and_open_page
 capybara-*.html
 
-# Ignore Postgres data and dumps mounted to containers
+# Ignore Postgres data mounted to containers and db dumps
 pg_data/*
+pg_transfer/*
 latest.dump
 dumps/**
 
@@ -18,11 +19,12 @@ coverage/**
 # Ignore bundler config.
 /.bundle
 
-# Ignore the default SQLite database.
+# Ignore the default SQLite database and pgdumps.
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /db/*.sqlite3-*
 /db/dumps
+*.pgdump
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -51,5 +53,12 @@ yarn-debug.log*
 config/credentials/**
 container_logs/**
 pg_transfer/**
-secrets/**
+
 **/*.pgdump
+
+secrets/**
+secrets.env
+
+/config/credentials/development.key
+
+container_logs/**

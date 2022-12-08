@@ -1,5 +1,23 @@
 # README
 
+## tl;dr: Quick start with an existing dump
+(other options below)
+
+Preparation:
+- install docker: https://docs.docker.com/get-docker/
+- create a new directory.
+- Put the dump in it with the name module-handbook.pgdump
+
+git clone git@github.com:modulehandbook/modulehandbook.git
+
+cd modulehandbook
+make start
+make file=../module-handbook.pgdump init
+
+open http://localhost:3000
+
+---
+
 This is a [Ruby on Rails](https://rubyonrails.org) application using a
 [Postgres Database](https://www.postgresql.org) and Devise for Authentication
 ([heartcombo/devise: Flexible authentication solution for Rails with Warden.](https://github.com/heartcombo/devise)).
@@ -9,6 +27,38 @@ This is a [Ruby on Rails](https://rubyonrails.org) application using a
 The Modulehandbook is being designed and developed by a team within the joint project
 [German International University of Applied Sciences (GIU AS) - Hochschule für Technik und Wirtschaft Berlin University of Applied Sciences - HTW Berlin](https://www.htw-berlin.de/forschung/online-forschungskatalog/projekte/projekt/?eid=2839)
 in order to ease collaborative editing of the study programs for the GIU AS.
+
+## Start Locally
+
+    make start
+
+The [makefile](./makefile) contains useful commands; have a look at it.
+`make start` uses docker-compose up to start up the docker containers
+  - module-handbook
+  - module-handbook-exporter
+  - module-handbook-postgres
+It uses the Exporter specified in TAG_MODULE_HANDBOOK_EXPORTER set in the makefile.
+
+## Set up Database
+
+**see the [makefile](./makefile) for details and settings**
+
+You can either create a new database with seed data or import a db dump:
+
+- Seed Data: `make new_db`
+- Import Dump:
+1. with makefile: `make file=<dumpfile> import_dump`
+2. Manually
+- copy the db dump to ./pg_transfer which is mounted to
+      cp <dump-source> ./pg_transfer/uas-module-handbook-cron-2022-11-23--13-00-00.pgdump
+- open bash in pg container
+      make bash_db
+- restore the database: (alter the file name as needed!)
+      pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-dev /var/lib/postgresql/transfer/uas-module-handbook-cron-2022-11-23--13-00-00.pgdump
+
+
+import for prod db:
+DBNAME=modhand-db-prod file=../uas-module-handbook-cron-2022-11-28--22-00-00.pgdump make import_dump
 
 ## Devise Authentication Setup
 
@@ -184,3 +234,26 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-co
 ```
 
 see the makefile for various start/stop and database setup commands.
+
+### Notes for Docker running on Windows machines
+Git on windows automatically checks out all files from a Github repository with [CRLF line separator](https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/) which is problematic when building the docker image locally which runs on a linux machine, and creates a fatal error.
+
+To disable this 'feature' before checking out repository
+```
+git config --global core.autocrlf false
+```
+
+If the files were already checked out, make sure to change [docker-entrypoint.sh](entrypoints/docker-entrypoint.sh) file and [rails](bin/rails) file to the LF line separator before building the image.
+
+This can be done through several IDEs, or even through Notepad++(Edit -> EOL Conversion -> Unix)
+
+
+# Useful commands on the servers
+
+sudo docker-compose up
+sudo docker-compose down
+
+docker stop module-handbook
+docker-compose exec module-handbook bash
+docker restart modulehandbook
+docker ps

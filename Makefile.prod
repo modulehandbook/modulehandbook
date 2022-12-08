@@ -1,0 +1,14 @@
+# does not work yet
+start:
+  docker-compose up -d
+bash:
+  docker-compose exec module-handbook bash
+bash_db:
+  docker-compose exec module-handbook-postgres bash
+bash_exp:
+  docker-compose exec module-handbook-exporter bash
+stop: down
+down:
+  docker-compose down
+clean_logs:
+  sudo rm container_logs/nginx/error.log container_logs/nginx/access.log container_logs/production.log
