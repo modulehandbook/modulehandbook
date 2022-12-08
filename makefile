@@ -64,6 +64,9 @@ crondump:
 	/usr/local/bin/heroku pg:backups:download
 	mv latest.dump ../dumps/uas-module-handbook-cron-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 
+make_dump:
+	docker-compose exec -T module-handbook-postgres pg_dump --create --verbose --clean --no-acl --no-owner -h localhost -U modhand  ${DBNAME}
+
 #
 # DB Import Tasks directly via postgres container
 #
@@ -171,6 +174,10 @@ reset_prod_db:
 	docker-compose exec module-handbook rails db:migrate
 import_dump_staging:
 	cat $(file) | ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+
+import_dump_production:
+	cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+
 
 cert:
 	openssl genrsa -aes256 -passout pass:gsahdg -out server.pass.key 4096
