@@ -1,6 +1,7 @@
 class Course < ApplicationRecord
   include AASM
   include SystemVersioning
+  include ApplicationVersioning
   has_many :comments, as: :commentable
 
   aasm whiny_transitions: :false do
