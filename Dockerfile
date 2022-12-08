@@ -80,8 +80,8 @@ FROM modhand-dev AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
 ENV RAILS_ENV production
 ENV NODE_ENV production
-ARG rails_master_key
-ENV RAILS_MASTER_KEY $rails_master_key
+ARG RAILS_MASTER_KEY
+ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
 # COPY . ./
 RUN set -ex && \
     rails assets:precompile
