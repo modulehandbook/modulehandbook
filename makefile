@@ -116,29 +116,32 @@ rails_test:
 # server admin
 #
 deploy_staging: cp_staging restart_staging
+deploy_production: cp_production restart_production
 
 check_staging:
 	ssh local@module-handbook-staging.f4.htw-berlin.de "docker ps; df -h"
+check_production:
+	ssh local@module-handbook.f4.htw-berlin.de "docker ps; df -h"
+
 restart_staging:
-	ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose down"
-	ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose up -d"
+	ssh local@module-handbook-staging.f4.htw-berlin.de "sudo docker-compose down"
+	ssh local@module-handbook-staging.f4.htw-berlin.de "sudo docker-compose up -d"
+restart_production:
+	ssh local@module-handbook.f4.htw-berlin.de "sudo docker-compose down"
+	ssh local@module-handbook.f4.htw-berlin.de "sudo docker-compose up -d"
+
 ssh_staging:
 	ssh local@module-handbook-staging.f4.htw-berlin.de
+ssh_production:
+	ssh local@module-handbook.f4.htw-berlin.de
+
 cp_staging:
 	scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 	scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 	scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
 	scp -r nginx local@module-handbook-staging.f4.htw-berlin.de:~
 	scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
-
-
-cp_entrypoint:
-	scp entrypoints/docker-entrypoint.sh local@module-handbook-staging.f4.htw-berlin.de:~/entrypoints/docker-entrypoint.sh
-
-ssh_prod:
-	ssh local@module-handbook.f4.htw-berlin.de
-
-cp_prod:
+cp_production:
 	scp Makefile.prod local@module-handbook.f4.htw-berlin.de:~/Makefile
 	scp docker-compose.yml local@module-handbook.f4.htw-berlin.de:~
 	scp .env.production local@module-handbook.f4.htw-berlin.de:~/.env
@@ -146,14 +149,13 @@ cp_prod:
 	ssh local@module-handbook.f4.htw-berlin.de "mkdir -p /home/local/secrets"
 	ssh local@module-handbook.f4.htw-berlin.de "mkdir -p secrets/nginx/production"
 	scp secrets/secrets.env local@module-handbook.f4.htw-berlin.de:~/secrets
-check_production:
-	ssh local@module-handbook.f4.htw-berlin.de "docker ps; df -h"
-
-open_production:
-		open https://module-handbook-staging.f4.htw-berlin.de
 
 open_staging:
 	open https://module-handbook-staging.f4.htw-berlin.de
+
+open_production:
+	open https://module-handbook-staging.f4.htw-berlin.de
+
 
 start_production_local:
 	 docker-compose -f docker-compose.yml --env-file .env.production up
