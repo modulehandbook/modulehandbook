@@ -246,3 +246,14 @@ git config --global core.autocrlf false
 If the files were already checked out, make sure to change [docker-entrypoint.sh](entrypoints/docker-entrypoint.sh) file and [rails](bin/rails) file to the LF line separator before building the image.
 
 This can be done through several IDEs, or even through Notepad++(Edit -> EOL Conversion -> Unix)
+
+
+# Useful commands on the servers
+
+sudo docker-compose up
+sudo docker-compose down
+
+docker stop module-handbook
+docker-compose exec module-handbook bash
+docker restart modulehandbook
+docker ps
