@@ -53,5 +53,8 @@ yarn-debug.log*
 config/credentials/**
 container_logs/**
 pg_transfer/**
-secrets/**
+
 **/*.pgdump
+
+secrets/**
+secrets.env

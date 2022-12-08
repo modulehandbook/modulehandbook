@@ -27,9 +27,10 @@ services:
       - POSTGRES_USER=modhand
       - POSTGRES_PASSWORD=modhand
       - POSTGRES_DB=modhand-db-prod
-      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
       - RAILS_SERVE_STATIC_FILES=true
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
+    env_file:
+    - secrets.env
     depends_on:
       - module-handbook-postgres
       - module-handbook-exporter

@@ -4,7 +4,7 @@
 FROM ruby:2.7.2-alpine AS modhand-base
 
 ENV MODHAND_IMAGE=modhand-base
-ENV BUNDLER_VERSION=2.2.30
+ENV BUNDLER_VERSION=2.3.24
 
 ENV RAILS_ENV production
 ENV NODE_ENV production
@@ -13,7 +13,7 @@ ENV NODE_ENV production
 RUN apk update
 RUN set -ex \
   && apk add --no-cache bash gcompat libpq nodejs tzdata \
-  && gem install bundler -v 2.2.30
+  && gem install bundler -v $BUNDLER_VERSION
 
 WORKDIR /module-handbook
 COPY Gemfile Gemfile.lock ./
