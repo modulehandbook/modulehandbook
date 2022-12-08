@@ -115,6 +115,7 @@ rails_test:
 #
 # server admin
 #
+CLEAN = "docker rmi $(docker images -f reference='*ghcr.io/modulehandbook/modulehandbook*' -q)"
 deploy_staging: cp_staging restart_staging
 deploy_production: cp_production restart_production
 
@@ -154,7 +155,7 @@ open_staging:
 	open https://module-handbook-staging.f4.htw-berlin.de
 
 open_production:
-	open https://module-handbook-staging.f4.htw-berlin.de
+	open https://module-handbook.f4.htw-berlin.de
 
 
 start_production_local:
@@ -180,9 +181,17 @@ import_dump_staging:
 import_dump_production:
 	cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
 
+# docker images -f reference='*ghcr.io/modulehandbook/modulehandbook*'
 
 cert:
 	openssl genrsa -aes256 -passout pass:gsahdg -out server.pass.key 4096
 	openssl rsa -passin pass:gsahdg -in server.pass.key -out server.key
 	openssl req -new -key server.key -out server.csr
 	openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
+
+# übernommen von der imimap
+prod_dump:
+	mkdir -p ../htw-dumps
+	ssh local@module-handbook.f4.htw-berlin.de "docker exec module-handbook-postgres pg_dump -h localhost -U modhand modhand-db-prod" > ../htw-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+import: $(file)
+	cat $(file) | docker-compose exec -T module-handbook-postgres psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -
