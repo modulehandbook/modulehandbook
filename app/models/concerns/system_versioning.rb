@@ -6,14 +6,16 @@ module SystemVersioning
     before_save :add_author, :add_change_list
 
     def versions
-      query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME ALL WHERE id = ? ORDER BY transaction_end ASC"
-      self.class.find_by_sql [query, self.id]
+      where_clause = self.class.generate_where_clause_for_id(self.class.primary_keys, self.id)
+      query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME ALL #{where_clause} ORDER BY transaction_end ASC"
+      self.class.find_by_sql [query]
     end
 
     def revert(id, transaction_end)
       parsed_time = Time.parse(transaction_end)
-      query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME AS OF ? WHERE id = ? LIMIT 1"
-      query_result = self.class.find_by_sql([query, parsed_time, id])
+      where_clause = self.class.generate_where_clause_for_id(self.class.primary_keys, id)
+      query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME AS OF ? #{where_clause} LIMIT 1"
+      query_result = self.class.find_by_sql([query, parsed_time])
 
       unless query_result
         return false
@@ -87,10 +89,33 @@ module SystemVersioning
 
     def find_as_of(as_of_time, id)
       parsed_time = Time.parse(as_of_time)
-      query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP? WHERE id = ? LIMIT 1"
-      return find_by_sql([query, parsed_time, id])[0]
+      where_clause = generate_where_clause_for_id(self.primary_keys, id)
+      query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP? #{where_clause} LIMIT 1"
+      return find_by_sql([query, parsed_time])[0]
+    end
+
+
+    # In case a composite key is used, this generates where clause considering composite keys
+    # Especially useful when using application versioning alongside system versioning
+    def generate_where_clause_for_id(primary_keys, id)
+
+      unless id.is_a? Array #Composite id could be '1,other_key' or ["1","other_key"]
+        id = id.split(",")
+      end
+
+      if primary_keys
+        where_clause = "WHERE "
+        (0...primary_keys.length).each do |i|
+          if i != 0
+            where_clause += " AND "
+          end
+          where_clause += "#{primary_keys[i]}='#{id[i]}'"
+        end
+        where_clause
+      else
+        "WHERE id = '#{id}'"
+      end
     end
 
   end
-
 end

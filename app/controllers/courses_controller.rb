@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   include VersioningHelper
 
-  load_and_authorize_resource except: %i[export_courses_json show]
+  load_and_authorize_resource except: %i[export_courses_json show revert_to]
   skip_authorization_check only: :export_courses_json
   skip_before_action :authenticate_user!, only: :export_courses_json
   
@@ -168,6 +168,8 @@ class CoursesController < ApplicationController
   end
 
   def revert_to
+    authorize! :update, @course
+
     if @course.revert(params[:id], params[:transaction_end])
       respond_to do |format|
         format.html { redirect_to @course, notice: 'Course was successfully reverted.' }
