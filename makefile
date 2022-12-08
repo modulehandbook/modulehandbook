@@ -133,7 +133,7 @@ cp_entrypoint:
 	scp entrypoints/docker-entrypoint.sh local@module-handbook-staging.f4.htw-berlin.de:~/entrypoints/docker-entrypoint.sh
 
 ssh_prod:
-	ssh local@module-handbook-staging.f4.htw-berlin.de
+	ssh local@module-handbook.f4.htw-berlin.de
 
 cp_prod:
 	scp Makefile.prod local@module-handbook.f4.htw-berlin.de:~/Makefile
@@ -143,6 +143,11 @@ cp_prod:
 	ssh local@module-handbook.f4.htw-berlin.de "mkdir -p /home/local/secrets"
 	ssh local@module-handbook.f4.htw-berlin.de "mkdir -p secrets/nginx/production"
 	scp secrets/secrets.env local@module-handbook.f4.htw-berlin.de:~/secrets
+check_production:
+	ssh local@module-handbook.f4.htw-berlin.de "docker ps; df -h"
+
+open_production:
+		open https://module-handbook-staging.f4.htw-berlin.de
 
 open_staging:
 	open https://module-handbook-staging.f4.htw-berlin.de

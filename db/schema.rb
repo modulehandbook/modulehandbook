@@ -58,9 +58,9 @@ ActiveRecord::Schema[7.0].define(version: 2021_06_10_095626) do
     t.decimal "tutorialHrs"
     t.text "equipment"
     t.text "room"
-    t.string "aasm_state"
     t.string "responsible_person"
     t.text "comment"
+    t.string "aasm_state"
   end
 
   create_table "programs", force: :cascade do |t|
