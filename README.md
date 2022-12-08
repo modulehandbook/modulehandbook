@@ -144,6 +144,19 @@ HTW Berlin with one user within each role. See [db/seeds.rb](db/seeds.rb)
 
 # Further Admin Info
 
+## Dumps
+dumps are made with pg_dump -fC (special file format) which can be restored with pg_restore
+
+- create production dump: `make dump_production`
+
+creates a file like ../mh-dumps/htw/modhand-2022-12-08--22-48-27.pgdump
+
+- import to local dev db: `make import_dump_local`, e.g.
+```bash
+DBNAME=modhand-db-dev file=../mh-dumps/htw/modhand-2022-12-08--22-48-27.pgdump make import_dump_local
+```
+
+
 ## Import Heroku Dump
 
 Manually, with the dumps mount in place and a current dump copied there:

@@ -55,17 +55,6 @@ reset_db:
 	docker-compose exec module-handbook rails db:create RAILS_ENV=development
 	docker-compose exec module-handbook rails db:migrate
 	docker-compose exec module-handbook rails db:seed
-#
-# DB Backup Heroku
-#
-crondump:
-	rm -f latest.dump
-	/usr/local/bin/heroku pg:backups:capture
-	/usr/local/bin/heroku pg:backups:download
-	mv latest.dump ../dumps/uas-module-handbook-cron-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
-
-make_dump:
-	docker-compose exec -T module-handbook-postgres pg_dump --create --verbose --clean --no-acl --no-owner -h localhost -U modhand  ${DBNAME}
 
 #
 # DB Import Tasks directly via postgres container
@@ -75,14 +64,18 @@ make_dump:
 import_dump_complete: recreate_db import_dump
 # import from local file using cat:
 # call with  make file=x.pgdump import_dump
-import_dump: $(file)
+import_dump_heroku: $(file)
 	cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
+import_dump: $(file)
+	cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}  -
+dump:
+	docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d ${DBNAME} -U modhand > ../mh-dumps/local/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+
 # this produces errors on a newly created db as rails already creates indices etc.
 # thus, this way is less preferable as errors are not shown:
 # import from file **in container** (use mounted transfer dir, e.g. see docker_compose)
 import_dump_via_transfer_dir:
 		docker-compose exec modulehandbook-database pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME} /var/lib/postgresql/$(file)
-
 #
 # Testing
 #
@@ -172,6 +165,7 @@ start_local_build_prod:
 
 #  ** wip **
 
+
 reset_prod_db:
 	docker-compose exec module-handbook rails db:create RAILS_ENV=production
 	docker-compose exec module-handbook rails db:migrate
@@ -180,6 +174,18 @@ import_dump_staging:
 
 import_dump_production:
 	cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+
+import_dump_local:
+	cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
+
+dump_production:
+		ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+cron_dump:
+	# ping -t 2 module-handbook.f4.htw-berlin.de; if [ $$? == 0 ]; then ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump ; fi
+	PING := $(ping -t 2 module-handbook.f4.htw-berlin.de)
+	echo pingable
+	ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+
 
 # docker images -f reference='*ghcr.io/modulehandbook/modulehandbook*'
 
@@ -190,8 +196,21 @@ cert:
 	openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
 
 # übernommen von der imimap
+
+
+DUMP_COMMAND_WDROP="pg_dump --create --clean --no-acl --no-owner -h localhost -U modhand modhand-db-prod"
+IMPORT_COMMAND="psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -"
+DUMP_COMMAND="docker exec modulehandbook-database pg_dump -h localhost -U modhand modhand-db-prod"
+
+
 prod_dump:
 	mkdir -p ../htw-dumps
-	ssh local@module-handbook.f4.htw-berlin.de "docker exec module-handbook-postgres pg_dump -h localhost -U modhand modhand-db-prod" > ../htw-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+	ssh local@module-handbook.f4.htw-berlin.de "docker exec postgres pg_dump -h localhost -U modhand modhand-db-prod" > ../htw-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 import: $(file)
 	cat $(file) | docker-compose exec -T module-handbook-postgres psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -
+
+
+
+#------------
+list_db:
+	psql -h localhost -l -U modhand
