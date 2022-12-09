@@ -44,15 +44,13 @@ jobs:
       - name: Run Tests
         id: run-tests
         run: rails test
-        continue-on-error: true
 
       - name: Run System Tests
         id: test-system
         run: rails test:system
-  echolog:
-    runs-on: ubuntu-latest
-    if: ${{ always() }}
-    needs: runner-job
-    steps:
+
       - name: Echo Log
-        run: cat ./log/test.log
+        if: ${{ failure() }}
+        run: |
+          echo "a test failed, here's the test.log"
+          cat ./log/test.log
