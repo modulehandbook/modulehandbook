@@ -56,4 +56,6 @@ jobs:
 
       - name: Some Info
         if: ${{ always() }}
-        run: cat "log/test.log"
+        run: |
+          ls -lart log
+          less "log/test.log"
