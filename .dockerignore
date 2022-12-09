@@ -3,27 +3,24 @@
 /log*
 /container_logs*
 
-# sqlite databases
 /db/*.sqlite
 /public/uploads*
 
 .git
 
-# postgres dbs
 /pg_data**
 /pg_transfer*
-# node modules
+
 
 npm-debug.log
 .env
 /gem_cache/**
-/node_modules/**l
+/node_modules*
 /config/master.key
 /secrets*
 secrets.env
 
 /public/assets*
-
 
 # Ignore simplecov report
 /coverage*
