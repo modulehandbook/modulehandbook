@@ -87,6 +87,8 @@ test_all:
 	docker-compose exec module-handbook rails test:system
 test_system:
 	docker-compose exec module-handbook rails test:system
+test_one:
+	docker-compose exec module-handbook rails test test/system/comments/comments_editor_test.rb:55
 test_app:
 	docker-compose exec module-handbook rails db:create RAILS_ENV=test
 	docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
