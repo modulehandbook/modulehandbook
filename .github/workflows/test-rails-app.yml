@@ -2,7 +2,7 @@ name: Test rails app
 
 on:
   push:
-    branches: [ master, deployment ]
+    branches: [ master, dockerfile ]
   pull_request:
     branches: [ master ]
 
