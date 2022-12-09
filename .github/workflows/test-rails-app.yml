@@ -28,6 +28,7 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+        # somehow can't access the global env
     steps:
       - name: Check out repo code
         uses: actions/checkout@v2
@@ -50,6 +51,8 @@ jobs:
         run: rails test:system
   echolog:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: runner-job
     steps:
       - name: Echo Log
-        run: cat log/test.log
+        run: cat ./log/test.log
