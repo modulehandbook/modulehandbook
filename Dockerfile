@@ -12,12 +12,14 @@ COPY Gemfile Gemfile.lock ./
 ENV GEN_DEPS bash gcompat libpq tzdata
 ENV BUILD_DEPS git linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev
 ENV NOKOGIRI_SYSTEM_LIBS build-base libxml2-dev libxslt-dev
+ENV JS_RUNTIME nodejs
 ENV AO --no-install-recommends --no-cache
 # general dependencies
 RUN apk update \
   && set -ex \
   && apk add $AO $GEN_DEPS \
   && apk add $AO --virtual builddependencies $BUILD_DEPS \
+  && apk add $AO --virtual jsruntime $JS_RUNTIME \
   && apk add $AO $NOKOGIRI_SYSTEM_LIBS \
   && gem install nokogiri --platform=ruby -- --use-system-libraries \
   && gem install bundler -v $BUNDLER_VERSION \
@@ -39,8 +41,9 @@ ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
 
 COPY . ./
 
-RUN set -ex && \
-  rails assets:precompile
+RUN set -ex  \
+  && rails assets:precompile \
+  && apk del jsruntime
 
 # -------------------------------------------------------------------
 # Development
@@ -52,12 +55,8 @@ ENV MODHAND_IMAGE=modhand-dev
 ENV RAILS_ENV development
 ENV NODE_ENV development
 
+RUN bundle config --local --delete without \
+    && bundle install
 
-
-RUN \
-   && bundle config --local --delete without \
-   && bundle config --delete with \
-   && bundle install
-
-RUN set -ex && \
-  apk add $AO  firefox
+RUN set -ex  \
+  && apk add $AO  firefox
