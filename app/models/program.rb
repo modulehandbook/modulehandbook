@@ -1,6 +1,8 @@
 class Program < ApplicationRecord
   include SystemVersioning
-  has_many :course_programs, dependent: :destroy
+  include ApplicationVersioning
+
+  has_many :course_programs, dependent: :destroy, :foreign_key => [:program_id, :program_valid_end]
   has_many :courses, through: :course_programs
 
   def select_name

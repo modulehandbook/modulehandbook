@@ -45,7 +45,7 @@ class Course < ApplicationRecord
     aasm.permitted_transitions.map(&:event)
   end
 
-  has_many :course_programs, dependent: :destroy
+  has_many :course_programs, dependent: :destroy, :foreign_key => [:course_id, :course_valid_end]
   has_many :programs, through: :course_programs
 
   def select_name
