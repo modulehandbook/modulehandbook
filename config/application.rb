@@ -24,7 +24,10 @@ module ModuleHandbook
     config.hosts << "module-handbook"
     config.hosts << "localhost"
     config.hosts << "module-handbook.f4.htw-berlin.de"
+    config.hosts << "141.45.146.125"
     config.hosts << "module-handbook-staging.f4.htw-berlin.de"
+    config.hosts << "141.45.146.126"
+
     # im nginx als schlichter 403 zu sehen:
     # [ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: localhost
   end

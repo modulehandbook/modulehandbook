@@ -2,10 +2,14 @@ name: Test rails app
 
 on:
   push:
-    branches: [ master, deployment ]
+    branches: [ master, dockerfile ]
   pull_request:
     branches: [ master ]
-
+env:
+  RAILS_DB_HOST: localhost
+  POSTGRES_PORT: 5432
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
 jobs:
   runner-job:
     runs-on: ubuntu-latest
@@ -24,6 +28,7 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+        # somehow can't access the global env
     steps:
       - name: Check out repo code
         uses: actions/checkout@v2
@@ -33,24 +38,24 @@ jobs:
           ruby-version: 3.1.2
       - name: Install dependencies
         run: bundle install
+
       - name: create test db
         run: rails db:create RAILS_ENV=test
-        env:
-          RAILS_DB_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+
       - name: Run Tests
+        id: run-tests
         run: rails test
-        env:
-          RAILS_DB_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+
       - name: Run System Tests
+        id: test-system
         run: rails test:system
-        env:
-          RAILS_DB_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+
+      - name: Echo Log
+        if: ${{ failure() }}
+        run: cat "log/test.log"
+
+      - name: Some Info
+        if: ${{ always() }}
+        run: |
+          ls -lart log
+          less "log/test.log"

@@ -2,7 +2,7 @@ name: Create and publish a Docker image
 
 on:
   push:
-    branches: [ master, deployment ]
+    branches: [ master, dockerfile ]
     tags:
       - '*'
   pull_request:
@@ -58,14 +58,14 @@ jobs:
 # -------------------------------------------------------------
 
       - name: Extract metadata (tags, labels) for Docker - Staging
-        if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/deployment'}}
+        if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/dockerfile'}}
         id: meta_staging
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=sha
       - name: Build and push Docker image - Staging
-        if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/deployment'}}
+        if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/dockerfile'}}
         uses: docker/build-push-action@v3
         with:
           context: .
