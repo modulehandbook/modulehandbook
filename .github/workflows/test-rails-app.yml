@@ -1,18 +1,19 @@
 name: Test rails app
 
 on:
+  workflow_call:
 #   push:
 #     branches: [ master ]
-  workflow_call:
-  pull_request:
-    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
 env:
   RAILS_DB_HOST: localhost
   POSTGRES_PORT: 5432
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
 jobs:
-  runner-job:
+  test:
+    name: Test App
     runs-on: ubuntu-latest
     services:
       postgres:
