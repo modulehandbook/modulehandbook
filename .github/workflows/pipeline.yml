@@ -30,6 +30,7 @@ jobs:
       tags: ${{ inputs.tags }}
       push: ${{ inputs.push }}
       target: ${{ inputs.target }}
+    secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
 
 
