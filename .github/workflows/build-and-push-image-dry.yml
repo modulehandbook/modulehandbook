@@ -1,4 +1,4 @@
-name: Do build and push
+name: Pipeline
 
 on:
   workflow_call:
@@ -9,6 +9,10 @@ on:
       push:
         required: true
         type: boolean
+      target:
+        required: false
+        type: string
+        default: modhand-prod
 
 env:
   REGISTRY: ghcr.io
@@ -58,7 +62,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          target: "modhand-prod"
+          target: ${{ inputs.target }}
           build-args: RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}

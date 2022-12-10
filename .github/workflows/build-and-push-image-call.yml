@@ -23,6 +23,7 @@ jobs:
     with:
       tags: type=ref,event=pr
       push: false
+      target: modhand-prod-no-assets
   staging:
     name: Staging
     if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
