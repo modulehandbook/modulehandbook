@@ -3,7 +3,7 @@ on:
   workflow_call:
     secrets:
       rails_master_key:
-      required: false
+        required: false
     inputs:
       tags:
         required: true
