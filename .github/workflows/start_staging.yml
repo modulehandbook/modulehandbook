@@ -1,7 +1,7 @@
 name: Staging Pipeline
 on:
   push:
-    branches: [ nb ]
+    branches: [ master ]
     tags-ignore: [ '*' ]
 
 jobs:
