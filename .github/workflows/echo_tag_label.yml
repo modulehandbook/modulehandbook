@@ -19,18 +19,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: ls -a
-        run: |
-          echo "--------  worflows"
-          ls -lart .github/actions
       - name: Call Tag Action
         # the `uses' attribute must be a path, a Docker image, or owner/repo@ref
         uses: ./.github/actions/tag_and_label
         with:
           stage: pull_request
-          registry: ${{ env.REGISTRY }}
-          image_name: ${{ env.IMAGE_NAME }}
-        id: meta_for_all
+        id: image_tag
+      - name: Extract metadata (tags, labels) for Docker - PR
+        if: ${{ inputs.stage == 'pull_request' }}
+        uses: docker/metadata-action@v4
+        with:
+            images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            tags: ${{ steps.image_tag.outputs.tags}}        
       - name: Echo Result
         run: |
           echo "tags: ${{ steps.meta_for_all.outputs.tags }}"
