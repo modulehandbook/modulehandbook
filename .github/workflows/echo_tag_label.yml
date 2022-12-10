@@ -1,8 +1,8 @@
-name: Create and publish a Docker image
+name: Echo Tag and Label
 
 on:
   push:
-    branches: [ dry-gh-action ]
+    branches: [  master, dry-gh-action ]
     tags:
       - '*'
   pull_request:
