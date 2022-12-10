@@ -33,9 +33,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: "echo stage: ${{ inputs.stage }}"
+    - run: echo stage ${{ inputs.stage }}
       shell: bash
-    - run: echo "repo: ${{ inputs.registry }}/${{ inputs.image_name }}.
+    - run: echo repo ${{ inputs.registry }}/${{ inputs.image_name }}
       shell: bash
     - name: Extract metadata (tags, labels) for Docker - PR
       if: ${{ inputs.stage == 'pull_request' }}
