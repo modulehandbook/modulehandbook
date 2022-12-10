@@ -11,23 +11,24 @@ description: 'get docker metadata depending on build stage'
 #      image_name:
 #        required: true
 #        type: string
-    inputs:
-      stage:
-        required: false
-        default: pull_request
-        type: string
-      registry:
-        required: false
-        default: my_registry
-        type: string
-      image_name:
-        required: false
-        default: my_image_name
-        type: string
-#outputs:
-#  random-number:
-#    description: "Random number"
-#    value: ${{ steps.random-number-generator.outputs.random-number }}
+inputs:
+  stage:
+    required: false
+    default: pull_request
+    type: string
+  registry:
+    required: false
+    default: my_registry
+    type: string
+  image_name:
+    required: false
+    default: my_image_name
+    type: string
+#  outputs:
+#    tags:
+#      value: my_tag
+#    labels:
+#    value: my_label
 
 runs:
   using: "composite"
