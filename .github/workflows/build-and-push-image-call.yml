@@ -2,11 +2,11 @@ name: Continuous Delivery Pipeline
 
 on:
   push:
-    branches: [ master ]
+    branches: [ deactivated ]
     tags:
-      - '*'
+      - 'deactivated'
   pull_request:
-    branches: [ master ]
+    branches: [ deactivated ]
 
 jobs:
   info:

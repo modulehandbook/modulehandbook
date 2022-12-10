@@ -2,7 +2,6 @@ name: Production Pipeline
 on:
   push:
     tags: [ '*' ]
-    branches-ignore: [ '!master' ]
 
 jobs:
   production:
