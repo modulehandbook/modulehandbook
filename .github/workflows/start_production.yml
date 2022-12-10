@@ -11,4 +11,5 @@ jobs:
      with:
        tags: type=ref,event=tag
        push: true
+     secrets:
        rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
