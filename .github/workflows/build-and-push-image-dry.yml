@@ -15,6 +15,9 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  test_app:
+    name: Test Rails App
+    uses: ./.github/workflows/test-rails-app.yml
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
@@ -47,8 +50,8 @@ jobs:
           tags: ${{ inputs.tags}}
       - name: Metadata Results
         run: |
-           echo "tags ${{ steps.meta.outputs.tags }}"
-           echo "labels ${{ steps.meta.outputs.labels }}"
+           echo "---- tags:\n ${{ steps.meta.outputs.tags }}"
+           echo "---- labels:\n ${{ steps.meta.outputs.labels }}"
 
       - name: Build and push Docker image
         if: ${{ false }}

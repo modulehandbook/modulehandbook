@@ -1,8 +1,9 @@
 name: Test rails app
 
 on:
-  push:
-    branches: [ master, dockerfile ]
+#   push:
+#     branches: [ master ]
+  workflow_call:
   pull_request:
     branches: [ master ]
 env:
