@@ -21,13 +21,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Extract metadata (tags, labels) for Docker - PR
-        if: ${{ github.event_name == 'pull_request' }}
         id: meta_for_all
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: ${{ env.META_PARAM }}
-          
+
       - name: Echo Result
         run: |
           echo "tags: ${{ steps.meta_for_all.outputs.tags }}"
