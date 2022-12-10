@@ -12,21 +12,21 @@ jobs:
   pull-request:
     name: Pull Request
     if: ${{ github.event_name == 'pull_request' }}
-    uses: .github/workflows/build-and-push-image-dry.yml
+    uses: ./.github/workflows/build-and-push-image-dry.yml
     with:
       tags: type=ref,event=pr
       push: false
   staging:
     name: Staging
     if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/dockerfile'}}
-    uses: .github/workflows/build-and-push-image-dry.yml
+    uses: ./.github/workflows/build-and-push-image-dry.yml
     with:
       tags: type=sha
       push: true
   production:
      name: Release
      if: ${{ github.ref_type == 'tag' }}
-     uses: .github/workflows/build-and-push-image-dry.yml
+     uses: ../.github/workflows/build-and-push-image-dry.yml
      with:
        tags: type=ref,event=tag
        push: true
