@@ -2,11 +2,11 @@ name: Call build and push
 
 on:
   push:
-    branches: [ dryaction ]
+    branches: [ master ]
     tags:
       - '*'
   pull_request:
-    branches: [ master, dryaction ]
+    branches: [ master ]
 
 jobs:
   info:
@@ -25,7 +25,7 @@ jobs:
       push: false
   staging:
     name: Staging
-    if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/dryaction'}}
+    if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
     uses: ./.github/workflows/build-and-push-image-dry.yml
     with:
       tags: type=sha
