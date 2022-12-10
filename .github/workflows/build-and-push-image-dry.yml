@@ -48,7 +48,7 @@ jobs:
            echo tags ${{ steps.meta.outputs.tags }}
            echo labels ${{ steps.meta.outputs.labels }}
       - name: Build and push Docker image
-        if {{ false }}
+        if: {{ false }}
         uses: docker/build-push-action@v3
         with:
           context: .
