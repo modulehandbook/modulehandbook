@@ -48,3 +48,4 @@ runs:
       run: |
         echo "input {{ inputs.pull_request}} and event_name {{ github.event_name }} do not match!"
         exit 4711
+      shell: bash
