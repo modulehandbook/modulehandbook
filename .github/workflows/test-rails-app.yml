@@ -2,7 +2,8 @@ name: Test rails app
 
 on:
   push:
-    branches: [ '!master' ]
+# run individually on each push to see the pattern of intermittent fails
+#    branches: [ '!master' ]
   workflow_call:
 #   push:
 #     branches: [ master ]

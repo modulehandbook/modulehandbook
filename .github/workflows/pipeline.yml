@@ -23,7 +23,7 @@ jobs:
     uses: ./.github/workflows/test-rails-app.yml
 
   build_and_push:
-#    needs: test_app   #### for now to get faster results on the builds
+    needs: test_app   #### for now to get faster results on the builds
     name: Build and Push Docker Image
     uses: ./.github/workflows/build-and-push-image-dry.yml
     with:
