@@ -14,7 +14,7 @@ on:
         default: modhand-prod
       secrets:
         rails_master_key:
-          required: true
+          required: false
 
 jobs:
   test_app:

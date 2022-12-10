@@ -15,7 +15,7 @@ on:
         default: modhand-prod
     secrets:
       rails_master_key:
-        required: true
+        required: false
 
 env:
   REGISTRY: ghcr.io
