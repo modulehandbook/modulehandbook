@@ -13,6 +13,9 @@ on:
         required: false
         type: string
         default: modhand-prod
+    secrets:
+      rails_master_key:
+        required: true
 
 env:
   REGISTRY: ghcr.io
@@ -59,7 +62,7 @@ jobs:
         with:
           context: .
           target: ${{ inputs.target }}
-          build-args: RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+          build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

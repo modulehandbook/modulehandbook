@@ -12,3 +12,4 @@ jobs:
     with:
       tags: type=sha
       push: true
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}

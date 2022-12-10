@@ -12,3 +12,4 @@ jobs:
       tags: type=ref,event=pr
       push: false
       target: modhand-prod-no-assets
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}

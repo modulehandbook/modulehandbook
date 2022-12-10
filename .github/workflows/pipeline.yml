@@ -12,20 +12,24 @@ on:
         required: false
         type: string
         default: modhand-prod
-        
+      secrets:
+        rails_master_key:
+          required: true
+
 jobs:
   test_app:
     name: Test
     uses: ./.github/workflows/test-rails-app.yml
 
   build_and_push:
-    needs: test_app
+#    needs: test_app   #### for now to get faster results on the builds
     name: Build and Push Docker Image
     uses: ./.github/workflows/build-and-push-image-dry.yml
     with:
       tags: ${{ inputs.tags }}
       push: ${{ inputs.push }}
       target: ${{ inputs.target }}
+      rails_master_key: ${{ secrets.rails_master_key }}
 
 
   info:
