@@ -1,0 +1,14 @@
+name: PR Pipeline
+on:
+    pull_request:
+      branches: [ master ]
+
+jobs:
+  pull-request:
+    name: Pull Request
+    if: ${{ github.event_name == 'pull_request' }}
+    uses: ./.github/workflows/pipeline.yml
+    with:
+      tags: type=ref,event=pr
+      push: false
+      target: modhand-prod-no-assets

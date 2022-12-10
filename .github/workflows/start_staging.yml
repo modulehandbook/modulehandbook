@@ -1,0 +1,13 @@
+name: Staging Pipeline
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  staging:
+    name: Staging
+    if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
+    uses: ./.github/workflows/pipeline.yml
+    with:
+      tags: type=sha
+      push: true

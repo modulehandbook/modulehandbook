@@ -1,4 +1,4 @@
-name: Pipeline
+name: Build and Push Image
 
 on:
   workflow_call:
@@ -19,11 +19,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  test_app:
-    name: Test Rails App
-    uses: ./.github/workflows/test-rails-app.yml
   build-and-push-image:
-    needs: test_app
     runs-on: ubuntu-latest
     permissions:
       contents: read

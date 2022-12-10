@@ -1,0 +1,13 @@
+name: Production Pipeline
+on:
+  push:
+    tags: [ '*' ]
+
+jobs:
+  production:
+     name: Release
+     if: ${{ github.ref_type == 'tag' }}
+     uses: ./.github/workflows/pipeline.yml
+     with:
+       tags: type=ref,event=tag
+       push: true
