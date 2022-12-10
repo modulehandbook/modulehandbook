@@ -16,7 +16,17 @@ jobs:
   build-backend:
     name: Backend Build
     uses: ./.github/workflows/fail-or-not.yml
-
+jobs:
+  try-step:
+    name: Call From Step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Fail or not
+        uses: ./.github/workflows/fail-or-not.yml
+        with:
+          fail: true
 #jobs:
 #  echo-label:
 #    name: Echo Label

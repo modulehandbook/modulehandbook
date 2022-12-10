@@ -1,4 +1,4 @@
-name: Tag and Label
+name: Tag & Label 
 
 on:
   workflow_call:
