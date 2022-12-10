@@ -1,0 +1,19 @@
+name: Fail or Not
+
+on:
+  workflow_call:
+    inputs:
+      fail:
+        required: false
+        default: false
+        type: boolean
+jobs:
+  fail-or-not:
+    name: fon # fails depending on input, shortened to have a clearer wf visualization
+    runs-on: ubuntu-latest
+    steps:
+      - name: One Step
+        run: echo "About to make the decision...."
+      - name: Decide
+        if: ${{ inputs.fail }}
+        run: echo "Must fail!"; exit 4711
