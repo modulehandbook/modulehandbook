@@ -42,7 +42,7 @@ runs:
       uses: docker/metadata-action@v4
       with:
         images: ${{ inputs.registry }}/${{ inputs.image_name }}
-        tags: type=ref,event=pr
+        tags: type=sha
     - name: Assert
       if: ${{ inputs.stage == 'pull_request' && ! (github.event_name == 'pull_request') }}
       run: |

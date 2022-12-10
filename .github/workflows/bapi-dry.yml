@@ -7,7 +7,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  META_PARAM: type=sha
+  META_PARAM: type=ref,event=tag # production
+  #META_PARAM: type=sha # staging
   #META_PARAM: type=ref,event=pr
 
 jobs:
