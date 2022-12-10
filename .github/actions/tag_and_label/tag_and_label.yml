@@ -1,0 +1,49 @@
+name: Tag & Label
+
+description: 'get docker metadata depending on build stage'
+#    inputs:
+#      stage:
+#        required: true
+#        type: string
+#      registry:
+#        required: true
+#        type: string
+#      image_name:
+#        required: true
+#        type: string
+    inputs:
+      stage:
+        required: false
+        default: pull_request
+        type: string
+      registry:
+        required: false
+        default: my_registry
+        type: string
+      image_name:
+        required: false
+        default: my_image_name
+        type: string
+#outputs:
+#  random-number:
+#    description: "Random number"
+#    value: ${{ steps.random-number-generator.outputs.random-number }}
+
+runs:
+  using: "composite"
+  steps:
+    - run: echo stage: ${{ inputs.stage }}.
+      shell: bash
+    - run: echo "repo: ${{ inputs.registry }}/${{ inputs.image_name }}.
+      shell: bash
+    - name: Extract metadata (tags, labels) for Docker - PR
+      if: ${{ inputs.stage == 'pull_request' }}
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ inputs.registry }}/${{ inputs.image_name }}
+        tags: type=ref,event=pr
+    - name: Assert
+      if: ${{ inputs.stage == 'pull_request' && ! (github.event_name == 'pull_request') }}
+      run: |
+        echo "input {{ inputs.pull_request}} and event_name {{ github.event_name }} do not match!"
+        exit 4711
