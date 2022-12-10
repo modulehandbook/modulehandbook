@@ -25,7 +25,7 @@ jobs:
       push: false
   staging:
     name: Staging
-    if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/dryrun'}}
+    if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/dryaction'}}
     uses: ./.github/workflows/build-and-push-image-dry.yml
     with:
       tags: type=sha
