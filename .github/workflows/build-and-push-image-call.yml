@@ -9,6 +9,12 @@ on:
     branches: [ master ]
 
 jobs:
+  info:
+    runs-on: ubuntu-latest
+    run: |
+        echo event_name ${{ github.event_name }}
+        echo ref_type ${{ github.ref_type }}
+        echo ref ${{ github.ref }}
   pull-request:
     name: Pull Request
     if: ${{ github.event_name == 'pull_request' }}

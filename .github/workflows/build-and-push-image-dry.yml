@@ -24,7 +24,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+      - name: Workflow Info
+        run: |
+          echo event_name ${{ github.event_name }}
+          echo ref_type ${{ github.ref_type }}
+          echo ref ${{ github.ref }}
       - name: Log in to the Container registry
         if: ${{ github.event_name != 'pull_request' }}
         uses: docker/login-action@v2
@@ -34,14 +38,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker - PR
-        if: ${{ github.event_name == 'pull_request' }}
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: ${{ inputs.tags}}
-
+      - name: Metadata Results
+        run: |
+           echo tags ${{ steps.meta.outputs.tags }}
+           echo labels ${{ steps.meta.outputs.labels }}
       - name: Build and push Docker image
+        if {{ false }}
         uses: docker/build-push-action@v3
         with:
           context: .
