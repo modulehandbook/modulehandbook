@@ -1,0 +1,69 @@
+name: Pipeline
+
+on:
+  workflow_call:
+    inputs:
+      tags:
+        required: true
+        type: string
+      push:
+        required: true
+        type: boolean
+      target:
+        required: false
+        type: string
+        default: modhand-prod
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test_app:
+    name: Test Rails App
+    uses: ./.github/workflows/test-rails-app.yml
+  build-and-push-image:
+    needs: test_app
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Workflow Info
+        run: |
+          echo event_name ${{ github.event_name }}
+          echo ref_type ${{ github.ref_type }}
+          echo ref ${{ github.ref }}
+          echo inputs tags ${{ inputs.tags }}
+          echo inputs push ${{ inputs.push }}
+      - name: Log in to the Container registry
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker - PR
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: ${{ inputs.tags}}
+      - name: Metadata Results
+        run: |
+           echo "---- tags:\n ${{ steps.meta.outputs.tags }}"
+           echo "---- labels:\n ${{ steps.meta.outputs.labels }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          target: ${{ inputs.target }}
+          build-args: RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+          push: ${{ inputs.push }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

@@ -29,18 +29,25 @@ RUN apk update \
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
 # -------------------------------------------------------------------
+# Production without assets (for Pull Requests)
+# -------------------------------------------------------------------
+
+FROM modhand-base AS modhand-prod-no-assets
+ENV MODHAND_IMAGE=modhand-prod-no-assets
+
+COPY . ./
+
+# -------------------------------------------------------------------
 # Production
 # -------------------------------------------------------------------
 
-FROM modhand-base AS modhand-prod
+FROM modhand-prod-no-assets AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
 ARG RAILS_MASTER_KEY
 ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
 
-COPY . ./
-
 RUN set -ex  \
-  && rails assets:precompile 
+  && rails assets:precompile
 
 # -------------------------------------------------------------------
 # Development
