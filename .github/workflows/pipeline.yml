@@ -1,6 +1,9 @@
 name: "Pipeline"
 on:
   workflow_call:
+    secrets:
+      rails_master_key:
+      required: false
     inputs:
       tags:
         required: true
@@ -12,9 +15,7 @@ on:
         required: false
         type: string
         default: modhand-prod
-      secrets:
-        rails_master_key:
-          required: false
+
 
 jobs:
   test_app:
