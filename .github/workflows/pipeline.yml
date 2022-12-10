@@ -4,6 +4,7 @@ on:
     secrets:
       rails_master_key:
         required: false
+        type: string
     inputs:
       tags:
         required: true
