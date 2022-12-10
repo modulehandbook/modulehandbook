@@ -1,4 +1,4 @@
-name: Staging Pipeline
+name: Staging
 on:
   push:
     branches: [ master ]
@@ -7,8 +7,10 @@ on:
 jobs:
   staging:
     name: Staging
-    if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
+    # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
     uses: ./.github/workflows/pipeline.yml
     with:
       tags: type=sha
       push: true
+    secrets:
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}

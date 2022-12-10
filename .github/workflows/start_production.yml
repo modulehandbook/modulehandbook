@@ -1,4 +1,4 @@
-name: Production Pipeline
+name: Production
 on:
   push:
     tags: [ '*' ]
@@ -6,8 +6,11 @@ on:
 jobs:
   production:
      name: Release
-     if: ${{ github.ref_type == 'tag' }}
+     # this will not work as the ref is ref/tags/0...
+     # if: github.ref == 'refs/heads/master'
      uses: ./.github/workflows/pipeline.yml
      with:
        tags: type=ref,event=tag
        push: true
+     secrets:
+       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}

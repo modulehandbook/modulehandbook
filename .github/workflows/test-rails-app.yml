@@ -1,6 +1,9 @@
-name: Test rails app
+name: Test App
 
 on:
+  push:
+# run individually on each push to see the pattern of intermittent fails
+#    branches: [ '!master' ]
   workflow_call:
 #   push:
 #     branches: [ master ]
@@ -13,7 +16,7 @@ env:
   POSTGRES_PASSWORD: postgres
 jobs:
   test:
-    name: Test App
+    name: rails
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -32,6 +35,8 @@ jobs:
           POSTGRES_PASSWORD: postgres
         # somehow can't access the global env
     steps:
+      - uses: browser-actions/setup-firefox@latest
+      - run: firefox --version
       - name: Check out repo code
         uses: actions/checkout@v2
       - name: Set up Ruby
