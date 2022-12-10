@@ -1,6 +1,8 @@
 name: Test rails app
 
 on:
+  push:
+    branches: [ !master ]
   workflow_call:
 #   push:
 #     branches: [ master ]
