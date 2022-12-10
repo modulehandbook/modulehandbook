@@ -35,8 +35,6 @@ jobs:
           POSTGRES_PASSWORD: postgres
         # somehow can't access the global env
     steps:
-      - uses: browser-actions/setup-firefox@latest
-      - run: firefox --version
       - name: Check out repo code
         uses: actions/checkout@v2
       - name: Set up Ruby

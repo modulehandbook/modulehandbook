@@ -1,4 +1,4 @@
-name: Create and publish a Docker image
+name: (old, can be deleted) Create and publish a Docker image
 
 on:
   push:
