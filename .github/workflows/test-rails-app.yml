@@ -1,4 +1,4 @@
-name: Test rails app
+name: Test App
 
 on:
   push:
@@ -16,7 +16,7 @@ env:
   POSTGRES_PASSWORD: postgres
 jobs:
   test:
-    name: Test App
+    name: rails
     runs-on: ubuntu-latest
     services:
       postgres:

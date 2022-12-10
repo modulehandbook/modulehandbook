@@ -1,11 +1,11 @@
-name: PR Pipeline
+name: Pull Request
 on:
     pull_request:
         branches: [ 'master' ]
 
 jobs:
   pull-request:
-    name: Pull Request
+    name: Pipeline
     if: ${{ github.event_name == 'pull_request' }}
     uses: ./.github/workflows/pipeline.yml
     with:

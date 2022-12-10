@@ -35,6 +35,7 @@ jobs:
 
 
   info:
+    name: Info on Parameter
     runs-on: ubuntu-latest
     steps:
       - run: |

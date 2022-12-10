@@ -1,4 +1,4 @@
-name: Production Pipeline
+name: Production
 on:
   push:
     tags: [ '*' ]
