@@ -25,7 +25,7 @@ jobs:
           ls -lart .github/actions
       - name: Call Tag Action
         # the `uses' attribute must be a path, a Docker image, or owner/repo@ref
-        uses: .github/actions/tag_and_label
+        uses: ./.github/actions/tag_and_label
         with:
           stage: pull_request
           registry: ${{ env.REGISTRY }}
