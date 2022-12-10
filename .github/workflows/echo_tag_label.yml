@@ -13,48 +13,25 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-backend:
-    name: Backend Build
-    uses: ./.github/workflows/fail-or-not.yml
-
-  try-step:
-    name: Call From Step
+  echo-label:
+    name: Echo Label
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Fail or not
-        uses: ./.github/workflows/fail-or-not.yml
+      - name: ls -a
+        run: |
+          echo "--------  worflows"
+          ls -lart .github/actions
+      - name: Call Tag Action
+        # the `uses' attribute must be a path, a Docker image, or owner/repo@ref
+        uses: .github/actions/tag_and_label
         with:
-          fail: true
-#jobs:
-#  echo-label:
-#    name: Echo Label
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#      - name: ls -a
-#        run: |
-#          echo "-------- ls "
-#          ls -a
-#          echo "--------  worflows"
-#          ls -lart .github/workflows
-#      - name: Frontend Build
-#        uses: ./.github/workflows/echo_tag_label.yml
-
-  #    - name: Stop Here
-  #      run: exit 1
-  #    - name: Call Tag Workflow
-  #      # the `uses' attribute must be a path, a Docker image, or owner/repo@ref
-  #      uses: .github/workflows/tag_and_label.yml
-  #      with:
-  #        stage: pull_request
-  #        registry: ${{ env.REGISTRY }}
-  #        image_name: ${{ env.IMAGE_NAME }}
-  #      id: meta_for_all
-  #    - name: Echo Result
-  #      run: |
-  #        echo "tags: ${{ steps.meta_for_all.outputs.tags }}"
-  #        echo "labels: ${{ steps.meta_for_all.outputs.labels }}"
-#
+          stage: pull_request
+          registry: ${{ env.REGISTRY }}
+          image_name: ${{ env.IMAGE_NAME }}
+        id: meta_for_all
+      - name: Echo Result
+        run: |
+          echo "tags: ${{ steps.meta_for_all.outputs.tags }}"
+          echo "labels: ${{ steps.meta_for_all.outputs.labels }}"
