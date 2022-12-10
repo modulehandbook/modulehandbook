@@ -1,7 +1,7 @@
 name: PR Pipeline
 on:
     pull_request:
-        branches: [ master ]
+        branches: [ 'master' ]
 
 jobs:
   pull-request:
