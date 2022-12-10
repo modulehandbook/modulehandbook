@@ -39,7 +39,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: ${{ input.tags}}
+          tags: ${{ inputs.tags}}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
@@ -47,6 +47,6 @@ jobs:
           context: .
           target: "modhand-prod"
           build-args: RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
-          push: ${{ input.push }}
+          push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
