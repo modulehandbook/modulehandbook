@@ -32,7 +32,7 @@ puts "created unapproved User #{user.email}"
 
 # Representation of dates per semester for Academic year 20xx - 20xy
 # Winter 20xx: September 1 20xx -> January 31 20xy
-# Spring 20xy: February 1 20xy -> June 31 20xy
+# Spring 20xy: February 1 20xy -> June 30 20xy
 # Seeds data in Winter 2021 semester
 
 imib = Program.create(name: 'Internationale Medieninformatik', code: 'IMI-B', degree: 'Bachelor', ects: 180,  valid_start: '2021-09-01', valid_end: '2022-01-31')

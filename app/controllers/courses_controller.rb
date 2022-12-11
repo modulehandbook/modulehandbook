@@ -137,7 +137,14 @@ class CoursesController < ApplicationController
   # POST /courses.json
   def create
     @course = Course.new(course_params)
+
+    unless @course.save # Save first to generate id of course, to be used when creating link
+      format.html { render :new }
+      format.json { render json: @course.errors, status: :unprocessable_entity }
+    end
+
     create_course_program_link(@course, params[:program_id])
+
     respond_to do |format|
       if @course.save
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
@@ -150,7 +157,12 @@ class CoursesController < ApplicationController
   end
 
   def create_course_program_link(_course, program_id)
-    @course_program = @course.course_programs.build(program_id: program_id) unless program_id.nil?
+    if program_id.nil?
+      @course_program = nil
+      return
+    end
+    split = split_to_id_and_valid_end(program_id)
+    @course_program = @course.course_programs.build(program_id: split[0], program_valid_end: split[1])
   end
 
   # PATCH/PUT /courses/1
@@ -214,6 +226,7 @@ class CoursesController < ApplicationController
     params.require(:course).permit(:name, :code, :mission, :ects, :examination, :objectives, :contents,
                                    :prerequisites, :literature, :methods, :skills_knowledge_understanding,
                                    :skills_intellectual, :skills_practical, :skills_general,
-                                   :lectureHrs, :labHrs, :tutorialHrs, :equipment, :room, :responsible_person, :comment)
+                                   :lectureHrs, :labHrs, :tutorialHrs, :equipment, :room, :responsible_person, :comment,
+                                   :semester_season,  :semester_year)
   end
 end

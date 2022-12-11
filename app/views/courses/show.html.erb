@@ -61,7 +61,7 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
 <hr/>
 
 <%= form_with(model: @course, local: true) do |form| %>
-<%= render 'course_template', course: @course, editing: false, form: form %>
+<%= render 'course_template', course: @course, editing: false, form: form, is_create: false %>
 <% end %>
 
 
