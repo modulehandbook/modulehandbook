@@ -191,7 +191,8 @@ class ProgramsController < ApplicationController
   end
 
   def is_deleted_program?(id)
-    !Program.find(id)
+    split = split_to_id_and_valid_end(id)
+    !Program.exists?(id: split[0], valid_end: split[1])
   end
 
   # Only allow a list of trusted parameters through.

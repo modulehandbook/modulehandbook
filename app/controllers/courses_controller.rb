@@ -218,7 +218,8 @@ class CoursesController < ApplicationController
   end
 
   def is_deleted_course?(id)
-    !Course.find(id)
+    split = split_to_id_and_valid_end(id)
+    !Course.exists?(id: split[0], valid_end: split[1])
   end
 
   # Only allow a list of trusted parameters through.
