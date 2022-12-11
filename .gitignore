@@ -62,3 +62,6 @@ secrets.env
 /config/credentials/development.key
 
 container_logs/**
+
+# Ignore enviroment variables file
+config/local_env.yml

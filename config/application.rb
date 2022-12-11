@@ -11,6 +11,17 @@ module ModuleHandbook
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
+    # Used for Windows only
+    # Since Windows does not support Unix Environment Variables: export VAR="VALUE"
+    # An environment file is used instead while testing
+    # http://railsapps.github.io/rails-environment-variables.html (Option Three)
+    config.before_configuration do
+      env_file = File.join(Rails.root, 'config', 'local_env.yml')
+      YAML.load(File.open(env_file)).each do |key, value|
+        ENV[key.to_s] = value
+      end if File.exists?(env_file)
+    end
+
     config.x.mh_hostname = ENV.fetch("HOSTNAME") { 'module-handbook.herokuapp.com' }
     config.x.mh_devise_email = ENV.fetch("DEVISE_EMAIL") { 'module-handbook@infrastructure.de' }
     config.active_record.use_yaml_unsafe_load = true
