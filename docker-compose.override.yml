@@ -1,12 +1,19 @@
 # overrides for local usage & development -
-# dont ever copy to production machine!
+# ------------------------------------------------
+# ** don't ever copy to production machine! **
+# ------------------------------------------------
 
 # see doc: https://docs.docker.com/compose/compose-file/compose-file-v3/
+# override precedence:
+# https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
+
 version: '3.4'
 services:
   module-handbook-postgres:
       environment:
         - POSTGRES_DB=modhand-db-dev # test?
+      volumes:
+        - ./pg_transfer:/var/lib/postgresql/pg_transfer
       ports:
       - "5432:5432" # don't do this on production!
   module-handbook:
@@ -16,9 +23,8 @@ services:
       dockerfile: Dockerfile
       target: modhand-dev
     image: mh-local-dev
-# currently the same
-#    ports:
-#      - "3030:3000"
+    ports:
+      - "3000:3000"
     volumes:
       - .:/module-handbook  # use app files from host
       - /module-handbook/node_modules # but not the node_modules
@@ -26,4 +32,5 @@ services:
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
       - RAILS_MASTER_KEY=
+      # - EXPORTER_BASE_URL=
     restart: "no"

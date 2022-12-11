@@ -1,10 +1,12 @@
-name: Create and publish a Docker image
+name: (old, can be deleted) Create and publish a Docker image
 
 on:
   push:
-    branches: [ master ]
+    branches: [ deactivated ]
+    tags:
+      - 'deactivated*'
   pull_request:
-    branches: [ master ]
+    branches: [ deactivated ]
 
 env:
   REGISTRY: ghcr.io
@@ -19,59 +21,78 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Log in to the Container registry
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+# -------------------------------------------------------------
+# Pull Request
+# -------------------------------------------------------------
+
       - name: Extract metadata (tags, labels) for Docker - PR
         if: ${{ github.event_name == 'pull_request' }}
         id: meta_pr
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=ref,event=pr
       - name: Build and push Docker image - PR
         if: ${{ github.event_name == 'pull_request' }}
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@v3
         with:
           context: .
-          push: true
+          target: "modhand-prod"
+          build-args: RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta_pr.outputs.tags }}
           labels: ${{ steps.meta_pr.outputs.labels }}
 
+# -------------------------------------------------------------
+# Staging
+# -------------------------------------------------------------
+
       - name: Extract metadata (tags, labels) for Docker - Staging
-        if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
+        if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/dockerfile'}}
         id: meta_staging
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=sha
       - name: Build and push Docker image - Staging
-        if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/dockerfile'}}
+        uses: docker/build-push-action@v3
         with:
           context: .
+          target: "modhand-prod"
+          build-args: RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
           push: true
           tags: ${{ steps.meta_staging.outputs.tags }}
           labels: ${{ steps.meta_staging.outputs.labels }}
 
+# -------------------------------------------------------------
+# Tag / Production
+# -------------------------------------------------------------
+
       - name: Extract metadata (tags, labels) for Docker - Production
-        if: ${{ github.ref_type == 'tag' && github.ref == 'refs/heads/master'}}
+        if: ${{ github.ref_type == 'tag' }}
         id: meta_production
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=ref,event=tag
       - name: Build and push Docker image - Production
-        if: ${{ github.ref_type == 'tag' && github.ref == 'refs/heads/master'}}
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        if: ${{ github.ref_type == 'tag' }}
+        uses: docker/build-push-action@v3
         with:
           context: .
+          target: "modhand-prod"
+          build-args: RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
           push: true
           tags: ${{ steps.meta_production.outputs.tags }}
           labels: ${{ steps.meta_production.outputs.labels }}

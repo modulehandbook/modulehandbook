@@ -1,20 +1,26 @@
 # ignore tmp
-/tmp/*
-/log/*
-/logc/*
+/tmp*
+/log*
+/container_logs*
 
-# sqlite databases
 /db/*.sqlite
-/public/uploads
+/public/uploads*
+
 .git
 
-# postgres dbs
-/pg_data/**
+/pg_data**
+/pg_transfer*
 
-# node modules
 
 npm-debug.log
 .env
 /gem_cache/**
-/node_modules/**
+/node_modules*
 /config/master.key
+/secrets*
+secrets.env
+
+/public/assets*
+
+# Ignore simplecov report
+/coverage*

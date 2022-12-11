@@ -1,0 +1,16 @@
+name: Production
+on:
+  push:
+    tags: [ '*' ]
+
+jobs:
+  production:
+     name: Release
+     # this will not work as the ref is ref/tags/0...
+     # if: github.ref == 'refs/heads/master'
+     uses: ./.github/workflows/pipeline.yml
+     with:
+       tags: type=ref,event=tag
+       push: true
+     secrets:
+       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}

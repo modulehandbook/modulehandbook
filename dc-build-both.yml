@@ -1,0 +1,20 @@
+# call with docker-compose -f dc-build-both.yml --env-file secrets/masterkey build
+version: "3.9"
+services:
+  dev:
+    image: dc-build-both-dev
+    build:
+      context: .
+      target: modhand-dev
+  prod-pr:
+    image: dc-build-both-prod-no-assets
+    build:
+      context: .
+      target: modhand-prod-no-assets
+  prod:
+    image: dc-build-both-prod
+    build:
+      context: .
+      target: modhand-prod
+      args:
+        RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}

@@ -1,0 +1,48 @@
+name: "Pipeline"
+on:
+  workflow_call:
+    secrets:
+      rails_master_key:
+        required: false
+    inputs:
+      tags:
+        required: true
+        type: string
+      push:
+        required: true
+        type: boolean
+      target:
+        required: false
+        type: string
+        default: modhand-prod
+
+
+jobs:
+  test_app:
+    name: Test
+    uses: ./.github/workflows/test-rails-app.yml
+
+  build_and_push:
+    needs: test_app   #### for now to get faster results on the builds
+    name: Build and Push Docker Image
+    uses: ./.github/workflows/build-and-push-image-dry.yml
+    with:
+      tags: ${{ inputs.tags }}
+      push: ${{ inputs.push }}
+      target: ${{ inputs.target }}
+    secrets:
+      rails_master_key: ${{ secrets.rails_master_key }}
+
+
+  info:
+    name: Info on Parameter
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo event_name ${{ github.event_name }}
+          echo ref_type ${{ github.ref_type }}
+          echo ref ${{ github.ref }}
+          echo "----- inputs ------"
+          echo "tags: ${{ inputs.tags }}"
+          echo "push: ${{ inputs.push }}"
+          echo "target: ${{ inputs.target }}"
