@@ -12,6 +12,16 @@
     </div>
   <% end %>
 
+  <% if is_create %>
+    <div class="form-row">
+      <div class="col">
+        <%= form.label "Semester"  %>
+        <%= form.select :semester_season, ["Winter", "Spring"], :selected => "Winter" %>
+        <%= form.select :semester_year, 2019..5.year.from_now.year, :selected => Time.current.year %>
+      </div>
+    </div>
+  <%  end %>
+
   <div class="form-group">
     <%= form.label :name %>
     <%= form.text_area :name, class: "form-control"  %>
