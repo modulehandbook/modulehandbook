@@ -11,7 +11,7 @@ module ModuleHandbook
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
-    config.x.mh_hostname = ENV.fetch("HOSTNAME") { 'module-handbook.herokuapp.com' }
+    config.x.mh_hostname = ENV.fetch("DEVISE_EMAIL_HOSTNAME") { 'module-handbook.f4.htw-berlin.de' }
     config.x.mh_devise_email = ENV.fetch("DEVISE_EMAIL") { 'module-handbook@infrastructure.de' }
     config.active_record.use_yaml_unsafe_load = true
     # Settings in config/environments/* take precedence over those specified here.
