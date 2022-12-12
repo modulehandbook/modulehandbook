@@ -134,7 +134,7 @@ class ProgramsController < ApplicationController
         format.html { redirect_to @program, notice: 'Program was successfully created.' }
         format.json { render :show, status: :created, location: @program }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @program.errors, status: :unprocessable_entity }
       end
     end
@@ -148,7 +148,7 @@ class ProgramsController < ApplicationController
         format.html { redirect_to @program, notice: 'Program was successfully updated.' }
         format.json { render :show, status: :ok, location: @program }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @program.errors, status: :unprocessable_entity }
       end
     end
@@ -162,7 +162,7 @@ class ProgramsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render versions }
+        format.html { render versions, status: :unprocessable_entity }
         format.json { render json: @program.errors, status: :unprocessable_entity }
       end
     end

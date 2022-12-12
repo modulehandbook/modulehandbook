@@ -43,7 +43,7 @@ class CourseProgramsController < ApplicationController
         format.html { redirect_to @course_program, notice: 'Course program was successfully created.' }
         format.json { render :show, status: :created, location: @course_program }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @course_program.errors, status: :unprocessable_entity }
       end
     end
@@ -57,7 +57,7 @@ class CourseProgramsController < ApplicationController
         format.html { redirect_to @course_program, notice: 'Course program was successfully updated.' }
         format.json { render :show, status: :ok, location: @course_program }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @course_program.errors, status: :unprocessable_entity }
       end
     end
