@@ -203,16 +203,16 @@ cert:
 # übernommen von der imimap
 
 
-DUMP_COMMAND_WDROP="pg_dump --create --clean --no-acl --no-owner -h localhost -U modhand modhand-db-prod"
-IMPORT_COMMAND="psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -"
-DUMP_COMMAND="docker exec modulehandbook-database pg_dump -h localhost -U modhand modhand-db-prod"
-
-
-prod_dump:
-	mkdir -p ../htw-dumps
-	ssh local@module-handbook.f4.htw-berlin.de "docker exec postgres pg_dump -h localhost -U modhand modhand-db-prod" > ../htw-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
-import: $(file)
-	cat $(file) | docker-compose exec -T module-handbook-postgres psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -
+#DUMP_COMMAND_WDROP="pg_dump --create --clean --no-acl --no-owner -h localhost -U modhand modhand-db-prod"
+#IMPORT_COMMAND="psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -"
+#DUMP_COMMAND="docker exec modulehandbook-database pg_dump -h localhost -U modhand modhand-db-prod"
+#
+#
+#prod_dump:
+#	mkdir -p ../htw-dumps
+#	ssh local@module-handbook.f4.htw-berlin.de "docker exec postgres pg_dump -h localhost -U modhand modhand-db-prod" > ../htw-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+#import: $(file)
+#	cat $(file) | docker-compose exec -T module-handbook-postgres psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -
 
 
 
