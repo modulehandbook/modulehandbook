@@ -30,6 +30,9 @@ services:
       - POSTGRES_DB=modhand-db-prod
       - RAILS_SERVE_STATIC_FILES=true
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
+      - DEVISE_EMAIL_HOSTNAME=${DEVISE_EMAIL_HOSTNAME}
+      - DEVISE_EMAIL=${DEVISE_EMAIL}
+
     env_file:
       - ${SECRET_ENV_FILE}
     depends_on:
