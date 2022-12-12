@@ -28,7 +28,11 @@ module VersioningHelper
       return composite_key.split(",")
     end
 
-    composite_key.split(" ")
+    if composite_key.include?(" ")
+      return composite_key.split(" ")
+    end
+
+    composite_key
   end
 
   def get_semester_name(valid_end)

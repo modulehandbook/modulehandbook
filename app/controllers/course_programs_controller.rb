@@ -1,4 +1,6 @@
 class CourseProgramsController < ApplicationController
+  include VersioningHelper
+
   load_and_authorize_resource
   before_action :set_course_program, only: %i[show edit update destroy]
 
@@ -80,7 +82,22 @@ class CourseProgramsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
+  # + split id to extract valid_end if required
   def course_program_params
-    params.require(:course_program).permit(:course_id, :program_id, :semester, :required)
+    formatted_params = params.require(:course_program).permit(:course_id, :program_id, :course_valid_end, :program_valid_end, :semester, :required)
+
+    unless formatted_params.key?(:course_valid_end)
+      split = split_to_id_and_valid_end(formatted_params[:course_id])
+      formatted_params[:course_id] = split[0]
+      formatted_params[:course_valid_end] = split[1]
+    end
+
+    unless formatted_params.key?(:program_valid_end)
+      split = split_to_id_and_valid_end(formatted_params[:program_id])
+      formatted_params[:program_id] = split[0]
+      formatted_params[:program_valid_end] = split[1]
+    end
+
+    formatted_params
   end
 end

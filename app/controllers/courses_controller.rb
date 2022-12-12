@@ -52,7 +52,7 @@ class CoursesController < ApplicationController
       return redirect_to course_path(@course)
     end
 
-    @programs = @course.programs.order(:name).pluck(:name, :id)
+    @programs = @course.programs.order(:name)
     @course_program = CourseProgram.new(course: @course)
     @comments_size = @course.comments.size
     @comments = @course.comments

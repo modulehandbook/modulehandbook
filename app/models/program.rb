@@ -10,6 +10,10 @@ class Program < ApplicationRecord
     "#{name} (#{code})"
   end
 
+  def select_name_with_semester
+    "#{name} (#{code}) - #{get_semester_name(self[:valid_end])}"
+  end
+
   def self.find_or_create_from_json(data)
     existing_program = Program.find_by(code: data['code'])
     program = if !existing_program.nil?

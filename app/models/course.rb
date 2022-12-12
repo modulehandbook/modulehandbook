@@ -54,6 +54,10 @@ class Course < ApplicationRecord
     "#{name} (#{code})"
   end
 
+  def select_name_with_semester
+    "#{name} (#{code}) - #{get_semester_name(self[:valid_end])}"
+  end
+
   def self.find_or_create_from_json(data)
     existing_course = Course.find_by(code: data['code'])
     course = if !existing_course.nil?

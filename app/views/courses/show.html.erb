@@ -34,17 +34,19 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
   <div class="row">
     <div class = "col">
       Already part of Programs: <br/>
-<% @programs.each do |program_name, program_id| %>
-  <%= link_to program_name, program_path(program_id)  %>,
+<% @programs.each do |program| %>
+  <%= link_to "#{program.name} - #{get_semester_name(program.valid_end)}", program_path(program)  %>,
 <% end %>
     </div>
 <% if can?(:edit, @course) && is_latest_version %>
     <div class = "col">
 <%= form_with(model: @course_program, local: true) do |form| %>
-    <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
+        <%= form.hidden_field :course_id %>
+        <%= form.hidden_field :course_valid_end %>
+        <%= hidden_field_tag 'next_view','edit' %>
   <div class="field">
     <%= form.label :program_id %>
-    <%= form.collection_select(:program_id, Program.order(:name), :id, :select_name) %>
+    <%= form.collection_select(:program_id, Program.where(:valid_end => @course.valid_end).order(:name), :id, :select_name_with_semester) %>
   </div>
 
   <div class="actions">
