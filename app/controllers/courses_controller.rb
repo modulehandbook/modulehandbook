@@ -40,7 +40,7 @@ class CoursesController < ApplicationController
     split = split_to_id_and_valid_end(id)
 
     if is_selected_different_semester(split[1])
-      return redirect_to course_path("#{split[0]},#{@current_semester}",:as_of_time => @current_as_of_time)
+      return redirect_to course_path("#{split[0]},#{@current_semester}",:as_of_time => params[:as_of_time])
     end
 
 

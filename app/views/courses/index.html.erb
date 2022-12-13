@@ -1,16 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h3>Courses</h3>
-<%= form_tag courses_path, method: :get do %>
-  Semester:
-  <%= select_tag :current_semester_season, options_for_select(get_existing_semester_seasons, get_semester_season(@current_semester)) %>
-  <%= select_tag :current_semester_year, options_for_select(get_existing_semester_years, get_semester_year(@current_semester)) %>
-  <br><br>
-  As of Date/Time: <%= datetime_field_tag :as_of_time, @current_as_of_time%>
-  <br><br>
-  <%= submit_tag "Show" %>
-  <%= submit_tag "Reset" %>
-<% end %>
+
+<%= render 'layouts/semester_and_date_selectors', path: courses_path%>
 <br />
 
 <% if can? :edit, @courses %><%= link_to 'New Course', new_course_path %><br><% end %>
