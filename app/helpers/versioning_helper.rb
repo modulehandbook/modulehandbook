@@ -31,6 +31,22 @@ module VersioningHelper
 
   end
 
+  def set_current_semester_in_show
+    season = params[:current_semester_season]
+    year = params[:current_semester_year]
+    id = params[:id]
+    if id && !season && !year
+      split = split_to_id_and_valid_end(id)
+      @current_semester = Date.parse(split[1])
+    else
+      set_current_semester
+    end
+  end
+
+  def is_selected_different_semester(valid_end_s)
+    @current_semester != Date.parse(valid_end_s)
+  end
+
   def get_existing_semester_seasons
     has_winter = @existing_semesters.find { |semester| semester.month == 1 }
     has_spring = @existing_semesters.find { |semester| semester.month == 6 }

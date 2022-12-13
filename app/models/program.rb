@@ -1,6 +1,5 @@
 class Program < ApplicationRecord
-  include SystemVersioning
-  include ApplicationVersioning
+  include CombinedVersioning
   include SemesterDataAdder
 
   has_many :course_programs, dependent: :destroy, :foreign_key => [:program_id, :program_valid_end]

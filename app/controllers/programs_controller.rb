@@ -7,7 +7,9 @@ class ProgramsController < ApplicationController
 
 
   before_action :set_program, only: %i[edit update destroy export_program_json]
-  before_action :set_current_as_of_time, only: %i[index show]
+  before_action :set_current_as_of_time, :set_existing_semesters, only: %i[index show]
+  before_action :set_current_semester, only: %i[index]
+  before_action :set_current_semester_in_show, only: %i[show]
   helper_method :is_deleted_program?
 
   # GET /programs
@@ -18,9 +20,9 @@ class ProgramsController < ApplicationController
     end
 
     if is_latest_version
-      @programs = Program.order(:name)
+      @programs = Program.order_valid_at(@current_semester,:name)
     else
-      @programs = Program.order_as_of(@current_as_of_time, :name)
+      @programs = Program.order_valid_at_as_of(@current_semester,@current_as_of_time, :name)
     end
   end
 
@@ -36,6 +38,11 @@ class ProgramsController < ApplicationController
     authorize! :show, Program
 
     id = params[:id]
+    split = split_to_id_and_valid_end(id)
+
+    if is_selected_different_semester(split[1])
+      return redirect_to program_path("#{split[0]},#{@current_semester}",:as_of_time => params[:as_of_time])
+    end
 
     if is_latest_version && !is_deleted_program?(id)
       @program = Program.find(id)
@@ -193,6 +200,16 @@ class ProgramsController < ApplicationController
   def is_deleted_program?(id)
     split = split_to_id_and_valid_end(id)
     !Program.exists?(id: split[0], valid_end: split[1])
+  end
+
+  def set_existing_semesters
+    id = params[:id]
+    if !id
+      @existing_semesters = Program.order(:valid_end).distinct.pluck(:valid_end)
+    else
+      split = split_to_id_and_valid_end(id)
+      @existing_semesters = Program.where(id: split[0]).order(:valid_end).distinct.pluck(:valid_end)
+    end
   end
 
   # Only allow a list of trusted parameters through.

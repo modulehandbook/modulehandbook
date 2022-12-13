@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
   before_action :set_course, only: %i[edit update destroy export_course_json revert_to]
   before_action :set_current_as_of_time, :set_existing_semesters, only: %i[index show]
   before_action :set_current_semester, only: %i[index]
-  before_action :set_current_semester_of_course, only: %i[show]
+  before_action :set_current_semester_in_show, only: %i[show]
   helper_method :is_deleted_course?
 
   # GET /courses
@@ -237,22 +237,6 @@ class CoursesController < ApplicationController
     else
       split = split_to_id_and_valid_end(id)
       @existing_semesters = Course.where(id: split[0]).order(:valid_end).distinct.pluck(:valid_end)
-    end
-  end
-
-  def is_selected_different_semester(valid_end_s)
-    @current_semester != Date.parse(valid_end_s)
-  end
-
-  def set_current_semester_of_course
-    season = params[:current_semester_season]
-    year = params[:current_semester_year]
-    id = params[:id]
-    if id && !season && !year
-      split = split_to_id_and_valid_end(id)
-      @current_semester = Date.parse(split[1])
-    else
-      set_current_semester
     end
   end
 

@@ -1,10 +1,8 @@
 
 <h3>Program: <%= @program.name %></h3>
-<%= form_tag program_path(@program), method: :get do %>
-  As of Date/Time: <%= datetime_field_tag :as_of_time, @current_as_of_time%>
-  <%= submit_tag "Show" %>
-  <%= submit_tag "Reset" %>
-<% end %>
+
+<%= render 'layouts/semester_and_date_selectors', path: program_path(@program)%>
+
 <p id="notice"><%= notice %><br>
   </p>
 <% if can?(:versions, @program) && !is_deleted_program?(@program.id) %>

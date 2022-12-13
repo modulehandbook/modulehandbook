@@ -3,16 +3,19 @@ class CourseProgramsController < ApplicationController
 
   load_and_authorize_resource
   before_action :set_course_program, only: %i[show edit update destroy]
+  before_action :set_existing_semesters, only: %i[index]
+  before_action :set_current_semester, only: %i[index]
 
   # GET /course_programs
   # GET /course_programs.json
   def index
     @course_programs = if params[:program_id]
-                         CourseProgram.where(program_id: params[:program_id])
+                         CourseProgram.where(program_id: params[:program_id], program_valid_end: @current_semester)
                                       .includes(:program, :course)
                                       .order('programs.name', 'semester', 'courses.name')
                        else
-                         CourseProgram.includes(:course, :program)
+                         CourseProgram.where(program_valid_end: @current_semester)
+                                      .includes(:course, :program)
                                       .order('programs.name', 'semester', 'courses.name')
                        end
     respond_to do |format|
@@ -79,6 +82,12 @@ class CourseProgramsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_course_program
     @course_program = CourseProgram.includes(:course, :program).find(params[:id])
+  end
+
+  def set_existing_semesters
+      @existing_semesters = []
+      @existing_semesters = @existing_semesters + Program.distinct.pluck(:valid_end)
+      @existing_semesters = @existing_semesters + Course.distinct.pluck(:valid_end)
   end
 
   # Only allow a list of trusted parameters through.
