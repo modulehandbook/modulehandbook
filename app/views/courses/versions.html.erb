@@ -33,7 +33,7 @@ Part of Programs:
     <td><%= version.author_id  ? User.find(version.author_id).email: "No user" %></td>
     <td><%= version.transaction_start %></td>
     <td>
-      <% version.change_list.split("\n").each do |change|%>
+      <% (version.change_list || "").split("\n").each do |change|%>
         <%= change %> <br/>
     <% end %>
     </td>

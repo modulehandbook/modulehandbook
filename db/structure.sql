@@ -49,16 +49,23 @@ CREATE TABLE `course_programs` (
   `updated_at` datetime(6) NOT NULL,
   `course_valid_end` date NOT NULL,
   `program_valid_end` date NOT NULL,
-  PRIMARY KEY (`id`),
+  `change_list` text DEFAULT NULL,
+  `author_id` bigint(20) DEFAULT NULL,
+  `transaction_start` timestamp(6) GENERATED ALWAYS AS ROW START,
+  `transaction_end` timestamp(6) GENERATED ALWAYS AS ROW END,
+  PRIMARY KEY (`id`,`transaction_end`),
   KEY `index_course_programs_on_course_id` (`course_id`),
   KEY `index_course_programs_on_program_id` (`program_id`),
   KEY `fk_rails_f83525775e` (`course_valid_end`),
   KEY `fk_rails_aed77cf7f2` (`program_valid_end`),
+  KEY `fk_rails_3c473c8eda` (`author_id`),
+  PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
+  CONSTRAINT `fk_rails_3c473c8eda` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_6fe0a9b905` FOREIGN KEY (`program_id`) REFERENCES `programs` (`id`),
   CONSTRAINT `fk_rails_931b445d8c` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
   CONSTRAINT `fk_rails_aed77cf7f2` FOREIGN KEY (`program_valid_end`) REFERENCES `programs` (`valid_end`),
   CONSTRAINT `fk_rails_f83525775e` FOREIGN KEY (`course_valid_end`) REFERENCES `courses` (`valid_end`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `courses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -99,7 +106,7 @@ CREATE TABLE `courses` (
   KEY `index_courses_on_valid_end` (`valid_end`),
   PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
   CONSTRAINT `fk_rails_8419f1d78e` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `programs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -123,7 +130,7 @@ CREATE TABLE `programs` (
   KEY `index_programs_on_valid_end` (`valid_end`),
   PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
   CONSTRAINT `fk_rails_75ab144467` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -165,7 +172,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_confirmation_token` (`confirmation_token`),
   UNIQUE KEY `index_users_on_unlock_token` (`unlock_token`),
   KEY `index_users_on_approved` (`approved`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -198,6 +205,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20221124100158'),
 ('20221124100547'),
 ('20221126141328'),
-('20221209104330');
+('20221209104330'),
+('20221213142950');
 
 

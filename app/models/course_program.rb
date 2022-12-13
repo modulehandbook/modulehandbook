@@ -1,4 +1,6 @@
 class CourseProgram < ApplicationRecord
+  include SystemVersioning
+
   belongs_to :course, :foreign_key => [:course_id, :course_valid_end]
   belongs_to :program, :foreign_key => [:program_id, :program_valid_end]
 

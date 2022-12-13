@@ -6,14 +6,14 @@ module SystemVersioning
     before_save :add_author, :add_change_list
 
     def versions
-      where_clause = self.class.generate_where_clause_for_id(self.class.primary_keys, self.id)
+      where_clause = self.class.generate_where_clause_for_id(self.class.try(:primary_keys), self.id)
       query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME ALL #{where_clause} ORDER BY transaction_end ASC"
       self.class.find_by_sql [query]
     end
 
     def revert(id, transaction_end)
-      parsed_time = parse_time(transaction_end)
-      where_clause = self.class.generate_where_clause_for_id(self.class.primary_keys, id)
+      parsed_time = self.class.parse_time(transaction_end)
+      where_clause = self.class.generate_where_clause_for_id(self.class.try(:primary_keys), id)
       query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME AS OF ? #{where_clause} LIMIT 1"
       query_result = self.class.find_by_sql([query, parsed_time])
 
@@ -87,9 +87,28 @@ module SystemVersioning
       return find_by_sql [query, parsed_time]
     end
 
+    def where_as_of(as_of_time, where_attributes)
+      parsed_time = parse_time(as_of_time)
+
+      where_attributes_s = "WHERE "
+      first = true
+
+      where_attributes.each do |attr|
+        unless first
+          where_attributes_s += " AND "
+        end
+        first = false
+
+        where_attributes_s += "#{attr[0]} = '#{attr[1]}'"
+      end
+
+      query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP? #{where_attributes_s}"
+      return find_by_sql [query, parsed_time]
+    end
+
     def find_as_of(as_of_time, id)
       parsed_time = parse_time(as_of_time)
-      where_clause = generate_where_clause_for_id(self.primary_keys, id)
+      where_clause = generate_where_clause_for_id(try(:primary_keys), id)
       query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP? #{where_clause} LIMIT 1"
       return find_by_sql([query, parsed_time])[0]
     end
@@ -106,12 +125,12 @@ module SystemVersioning
     # In case a composite key is used, this generates where clause considering composite keys
     # Especially useful when using application versioning alongside system versioning
     def generate_where_clause_for_id(primary_keys, id)
-
-      unless id.is_a? Array #Composite id could be '1,other_key' or ["1","other_key"]
-        id = id.split(",")
-      end
-
       if primary_keys
+
+        unless id.is_a? Array #Composite id could be '1,other_key' or ["1","other_key"]
+          id = id.split(",")
+        end
+
         where_clause = "WHERE "
         (0...primary_keys.length).each do |i|
           if i != 0

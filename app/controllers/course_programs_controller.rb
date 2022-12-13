@@ -1,32 +1,78 @@
 class CourseProgramsController < ApplicationController
   include VersioningHelper
 
-  load_and_authorize_resource
-  before_action :set_course_program, only: %i[show edit update destroy]
+  load_and_authorize_resource except: %i[show]
+  before_action :set_course_program, only: %i[edit update destroy]
+  before_action :set_current_as_of_time, only: %i[index show]
   before_action :set_existing_semesters, only: %i[index]
   before_action :set_current_semester, only: %i[index]
+  helper_method :is_deleted_course_program?
+
 
   # GET /course_programs
   # GET /course_programs.json
   def index
-    @course_programs = if params[:program_id]
-                         CourseProgram.where(program_id: params[:program_id], program_valid_end: @current_semester)
-                                      .includes(:program, :course)
-                                      .order('programs.name', 'semester', 'courses.name')
-                       else
-                         CourseProgram.where(program_valid_end: @current_semester)
-                                      .includes(:course, :program)
-                                      .order('programs.name', 'semester', 'courses.name')
-                       end
+    if params[:commit] == "Reset"
+      redirect_to course_programs_path
+    end
+
+    if is_latest_version
+      @course_programs = if params[:program_id]
+                           CourseProgram.where(program_id: params[:program_id], program_valid_end: @current_semester)
+                                        .includes(:program, :course)
+                                        .order('programs.name', 'semester', 'courses.name')
+                         else
+                           CourseProgram.where(program_valid_end: @current_semester)
+                                        .includes(:course, :program)
+                                        .order('programs.name', 'semester', 'courses.name')
+                         end
+    else
+      @course_programs = if params[:program_id]
+                           CourseProgram.includes(:program, :course)
+                                        .where_as_of(@current_as_of_time,program_id: params[:program_id], program_valid_end: @current_semester)
+                                        .sort_by { |cp| cp.program.name + cp.semester.to_s + cp.course.name }
+                         else
+                           CourseProgram.includes(:course, :program)
+                                        .where_as_of(@current_as_of_time,program_valid_end: @current_semester)
+                                        .sort_by { |cp| cp.program.name + cp.semester.to_s + cp.course.name }
+                         end
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @course_programs }
     end
   end
 
+  def versions
+    @versions = @course_program.versions
+  end
+
   # GET /course_programs/1
   # GET /course_programs/1.json
-  def show; end
+  def show
+    # Authorize needs to be done here to be able to show deleted course program,
+    # which cancancan wont be able to find automatically using just the id in 'load_and_authorize_resource'
+    authorize! :show, CourseProgram
+
+    id = params[:id]
+
+    if is_latest_version && !is_deleted_course_program?(id)
+      set_course_program
+    else
+      unless set_course_program_for_as_of_time
+        if is_deleted_course_program?(id)
+          return redirect_to course_programs_path, notice: "Course-Program link does not exist at that time"
+        else
+          return redirect_to course_program_path(id), notice:  "Course-Program link does not exist at that time"
+        end
+      end
+    end
+
+    if params[:commit] == "Reset"
+      return redirect_to course_program_path(@course_program)
+    end
+  end
 
   # GET /course_programs/new
   def new
@@ -66,6 +112,20 @@ class CourseProgramsController < ApplicationController
     end
   end
 
+  def revert_to
+    if @course_program.revert(params[:id], params[:transaction_end])
+      respond_to do |format|
+        format.html { redirect_to @course_program, notice: 'Course-Program was successfully reverted.' }
+        format.json { render :show, status: :ok, location: @course_program }
+      end
+    else
+      respond_to do |format|
+        format.html { render versions, status: :unprocessable_entity }
+        format.json { render json: @course_program.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /course_programs/1
   # DELETE /course_programs/1.json
   def destroy
@@ -82,6 +142,15 @@ class CourseProgramsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_course_program
     @course_program = CourseProgram.includes(:course, :program).find(params[:id])
+  end
+
+  def set_course_program_for_as_of_time
+    @course_program = CourseProgram.includes(:course, :program).find_as_of(@current_as_of_time, params[:id])
+    !@course_program.nil?
+  end
+
+  def is_deleted_course_program?(id)
+    !CourseProgram.exists?(id:id)
   end
 
   def set_existing_semesters

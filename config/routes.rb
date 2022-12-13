@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   get 'courses/:id/versions', to: 'courses#versions', as: 'course_versions'
   get 'programs/:id/versions', to: 'programs#versions', as: 'program_versions'
+  get 'course_programs/:id/versions', to: 'course_programs#versions', as: 'course_program_versions'
 
   # JSON Exporte
   get 'export_course_json', to: 'courses#export_course_json'
@@ -32,6 +33,7 @@ Rails.application.routes.draw do
   post 'change_state', to: 'courses#change_state'
   post 'course_revert_to', to: 'courses#revert_to'
   post 'program_revert_to', to: 'programs#revert_to'
+  post 'course_program_revert_to', to: 'course_programs#revert_to'
 
   get 'approve_user', to: 'users#approve'
 end
