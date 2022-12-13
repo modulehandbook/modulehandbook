@@ -19,6 +19,43 @@ module VersioningHelper
     current_time_s == @current_as_of_time || current_time.before?(parsed_current_as_of_time)
   end
 
+  def set_current_semester
+    season = params[:current_semester_season]
+    year = params[:current_semester_year]
+    if season && year
+      @current_semester = get_valid_end_from_season_and_year(season, year.to_i)
+    else
+      # Last element is latest semester
+      @current_semester = @existing_semesters[-1]
+    end
+
+  end
+
+  def get_existing_semester_seasons
+    has_winter = @existing_semesters.find { |semester| semester.month == 1 }
+    has_spring = @existing_semesters.find { |semester| semester.month == 6 }
+    seasons = []
+
+    if has_winter
+      seasons.append("Winter")
+    end
+
+    if has_spring
+      seasons.append("Spring")
+    end
+
+    seasons
+  end
+
+  def get_existing_semester_years
+    years = []
+    @existing_semesters.each do |semester|
+      years.append(get_semester_year(semester))
+    end
+
+    years.uniq.sort
+  end
+
   def split_to_id_and_valid_end(composite_key)
     if composite_key.is_a? Array
       return composite_key

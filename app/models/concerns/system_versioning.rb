@@ -12,7 +12,7 @@ module SystemVersioning
     end
 
     def revert(id, transaction_end)
-      parsed_time = Time.parse(transaction_end)
+      parsed_time = parse_time(transaction_end)
       where_clause = self.class.generate_where_clause_for_id(self.class.primary_keys, id)
       query = "SELECT * FROM #{self.class.table_name} FOR SYSTEM_TIME AS OF ? #{where_clause} LIMIT 1"
       query_result = self.class.find_by_sql([query, parsed_time])
@@ -75,25 +75,33 @@ module SystemVersioning
 
   class_methods do
     def all_as_of(as_of_time)
-      parsed_time = Time.parse(as_of_time)
+      parsed_time = parse_time(as_of_time)
       query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP?"
       return find_by_sql [query, parsed_time]
     end
 
     def order_as_of(as_of_time, *order_attributes)
-      parsed_time = Time.parse(as_of_time)
+      parsed_time = parse_time(as_of_time)
       order_attributes_s = order_attributes.join(", ")
       query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP? ORDER BY #{order_attributes_s} ASC"
       return find_by_sql [query, parsed_time]
     end
 
     def find_as_of(as_of_time, id)
-      parsed_time = Time.parse(as_of_time)
+      parsed_time = parse_time(as_of_time)
       where_clause = generate_where_clause_for_id(self.primary_keys, id)
       query = "SELECT * FROM #{table_name} FOR SYSTEM_TIME AS OF TIMESTAMP? #{where_clause} LIMIT 1"
       return find_by_sql([query, parsed_time])[0]
     end
 
+
+    def parse_time(time)
+      if time.is_a? Time
+        return time
+      end
+
+      Time.parse(time)
+    end
 
     # In case a composite key is used, this generates where clause considering composite keys
     # Especially useful when using application versioning alongside system versioning

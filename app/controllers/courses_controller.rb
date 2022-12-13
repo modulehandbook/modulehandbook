@@ -6,7 +6,7 @@ class CoursesController < ApplicationController
   skip_before_action :authenticate_user!, only: :export_courses_json
   
   before_action :set_course, only: %i[edit update destroy export_course_json revert_to]
-  before_action :set_current_as_of_time, only: %i[index show]
+  before_action :set_current_as_of_time, :set_existing_semesters, :set_current_semester, only: %i[index show]
   helper_method :is_deleted_course?
 
   # GET /courses
@@ -16,9 +16,9 @@ class CoursesController < ApplicationController
       redirect_to courses_path
     end
     if is_latest_version
-      @courses = Course.order(:name)
+      @courses = Course.order_valid_at(@current_semester, :name)
     else
-      @courses = Course.order_as_of(@current_as_of_time, :name)
+      @courses = Course.order_valid_at_as_of(@current_semester, @current_as_of_time, :name)
     end
   end
 
@@ -221,6 +221,17 @@ class CoursesController < ApplicationController
     split = split_to_id_and_valid_end(id)
     !Course.exists?(id: split[0], valid_end: split[1])
   end
+
+  def set_existing_semesters
+    id = params[:id]
+    if !id
+      @existing_semesters = Course.order(:valid_end).distinct.pluck(:valid_end)
+    else
+      split = split_to_id_and_valid_end(id)
+      @existing_semesters = Course.where(id: split[0]).order(:valid_end).distinct.pluck(:valid_end)
+    end
+  end
+
 
   # Only allow a list of trusted parameters through.
   def course_params

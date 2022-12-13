@@ -1,7 +1,6 @@
 class Course < ApplicationRecord
   include AASM
-  include SystemVersioning
-  include ApplicationVersioning
+  include CombinedVersioning
   include SemesterDataAdder
 
   has_many :comments, as: :commentable
