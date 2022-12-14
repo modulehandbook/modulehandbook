@@ -26,16 +26,14 @@ end
 user = User.create(email: 'unapproved@mail.de', password: defaultPW, password_confirmation: defaultPW, approved: false)
 puts "created unapproved User #{user.email}"
 
-# CourseProgram.destroy_all
-# Program.destroy_all
-# Course.destroy_all
 
 # Representation of dates per semester for Academic year 20xx - 20xy
 # Winter 20xx: September 1 20xx -> January 31 20xy
 # Spring 20xy: February 1 20xy -> June 30 20xy
-# Seeds data in Winter 2021 semester
+# Seeds data in Winter 2021 and Spring 2022 semester
 
-imib = Program.create(name: 'Internationale Medieninformatik', code: 'IMI-B', degree: 'Bachelor', ects: 180,  valid_start: '2021-09-01', valid_end: '2022-01-31')
+imibWinter = Program.create(name: 'Internationale Medieninformatik', code: 'IMI-B', degree: 'Bachelor', ects: 180,  valid_start: '2021-09-01', valid_end: '2022-01-31')
+imibSpring = Program.create(name: 'Internationale Medieninformatik', code: 'IMI-B', degree: 'Bachelor', ects: 180,  valid_start: '2022-02-01', valid_end: '2022-06-30')
 
 # [1,"Nr","Modulbezeichnung                  ","Art","Form",","SWS","L",P
 courses = [
@@ -85,8 +83,10 @@ courses = [
 
 
 
+# Winter semester
+winterCourses = []
 courses.each do |a|
-  puts "handling #{a}"
+  puts "handling #{a} - Winter"
 
   c = Course.create(code: a[1].strip,
                     name: a[2].strip,
@@ -94,7 +94,23 @@ courses.each do |a|
                     ects: a[6].strip.to_i,
                     valid_start: '2021-09-01',
                     valid_end: '2022-01-31')
-  cp = CourseProgram.create(course: c, program: imib,
+  winterCourses.append(c)
+  cp = CourseProgram.create(course: c, program: imibWinter,
                             semester: a[0],
                             required: a[3].strip)
+end
+
+
+# Spring semester
+(0...winterCourses.length).each do |i|
+  course = winterCourses[i]
+  puts "handling #{courses[i]} - Spring"
+
+  attributes = course.attributes.except("valid_start", "valid_end", "transaction_end", "transaction_start")
+  attributes = attributes.merge(valid_start: '2022-02-01', valid_end: '2022-06-30')
+
+  c = Course.create(attributes)
+  cp = CourseProgram.create(course: c, program: imibSpring,
+                            semester: courses[i][0],
+                            required: courses[i][3].strip)
 end
