@@ -45,8 +45,6 @@ CREATE TABLE `course_programs` (
   `program_id` bigint(20) NOT NULL,
   `semester` int(11) DEFAULT NULL,
   `required` text DEFAULT NULL,
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
   `course_valid_end` date NOT NULL,
   `program_valid_end` date NOT NULL,
   `change_list` text DEFAULT NULL,
@@ -65,7 +63,7 @@ CREATE TABLE `course_programs` (
   CONSTRAINT `fk_rails_931b445d8c` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
   CONSTRAINT `fk_rails_aed77cf7f2` FOREIGN KEY (`program_valid_end`) REFERENCES `programs` (`valid_end`),
   CONSTRAINT `fk_rails_f83525775e` FOREIGN KEY (`course_valid_end`) REFERENCES `courses` (`valid_end`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `courses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -106,7 +104,7 @@ CREATE TABLE `courses` (
   KEY `index_courses_on_valid_end` (`valid_end`),
   PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
   CONSTRAINT `fk_rails_8419f1d78e` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `programs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -130,7 +128,7 @@ CREATE TABLE `programs` (
   KEY `index_programs_on_valid_end` (`valid_end`),
   PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
   CONSTRAINT `fk_rails_75ab144467` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -172,7 +170,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_confirmation_token` (`confirmation_token`),
   UNIQUE KEY `index_users_on_unlock_token` (`unlock_token`),
   KEY `index_users_on_approved` (`approved`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

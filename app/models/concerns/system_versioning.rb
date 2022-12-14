@@ -22,7 +22,7 @@ module SystemVersioning
       end
 
       revert_object = query_result[0]
-      attributes = revert_object.attributes.except("id", "transaction_end", "transaction_start")
+      attributes = revert_object.attributes.except("id", "transaction_end", "transaction_start", "valid_start", "valid_end")
       return self.update(attributes)
     end
 
