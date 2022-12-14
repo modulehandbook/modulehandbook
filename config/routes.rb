@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :courses
   resources :programs
   resources :comments, only: %i[create edit update destroy]
+  resources :semesters, only: %i[index new]
+  post 'semester_generate', to: 'semesters#generate'
 
   get 'programs/:id/overview', to: 'programs#overview', as: 'program_overview'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

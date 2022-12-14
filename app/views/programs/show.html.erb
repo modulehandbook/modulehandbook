@@ -6,7 +6,7 @@
 <p id="notice"><%= notice %><br>
   </p>
 <% if can?(:versions, @program) && !is_deleted_program?(@program.id) %>
-  <%= link_to "See Program Versions", program_versions_url(@program.id)  %>
+  <%= link_to "See Program Versions", program_versions_url(@program)  %>
 <% end %>
 <p>
   Export Program as <%= link_to 'JSON', export_program_json_url(id: @program.id) %> | <%= link_to 'DOCX', export_program_docx_url(id: @program.id) %> <br>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Semesters</h3>
+
+<% if can?(:edit, Program) && can?(:edit, Course) %>
+  <%= link_to 'New Semester', new_semester_path %>
+<% end %>
+
+<br><br>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Semester</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @existing_semesters.each do |semester| %>
+    <tr>
+      <td><%= link_to get_semester_name(semester), programs_path(:current_semester_year => get_semester_year(semester), :current_semester_season => get_semester_season(semester)) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

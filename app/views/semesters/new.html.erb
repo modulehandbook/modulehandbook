@@ -1,0 +1,51 @@
+<h1>New Semester</h1>
+<p id="notice"><%= notice %></p>
+
+<% if @errors && !@errors.empty? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@errors.count, "error") %> found when creating semester</h2>
+
+    <ul>
+      <% @errors.each do |errors| %>
+        <% errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<p style="color: red">Note: Creating a semester that already exists will add missing content and update existing content.</p>
+
+<%= form_tag(semester_generate_path) do %>
+
+
+  <div class="form-row">
+    <div class="col">
+      <%= label_tag "New Semester"  %>
+      <%= select_tag :new_semester_season, options_for_select(["Winter", "Spring"], "Winter") %>
+      <%= select_tag :new_semester_year, options_for_select(2019..5.year.from_now.year, Time.current.year) %>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="form-row">
+    <div class="col">
+      <%=label_tag "Copy courses and programs from"  %>
+      <%= select_tag :copy_semester_season, options_for_select(get_existing_semester_seasons) %>
+      <%= select_tag :copy_semester_year, options_for_select(get_existing_semester_years) %>
+    </div>
+  </div>
+  <p>To create a semester without copying, just create a course or program in the desired semester</p>
+
+  <br>
+  <div class="actions">
+    <%= submit_tag "Create Semester" %>
+  </div>
+
+<% end %>
+
+
+
+<%= link_to 'Back', semesters_path %>
