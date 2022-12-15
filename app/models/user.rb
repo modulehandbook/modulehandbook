@@ -3,12 +3,17 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :trackable,
          :recoverable, :rememberable, :validatable, :confirmable
 
   ROLES = %i[admin reader writer editor qa].freeze
 
   after_initialize :set_default_role, if: :new_record?
+
+  def format_time(at)
+    return "" if (at.nil? || at == "")
+    at.strftime("%d/%m/%y (%H:%M)")
+  end
 
   def set_default_role
     self.role ||= :reader

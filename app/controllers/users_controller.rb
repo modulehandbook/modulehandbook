@@ -6,9 +6,9 @@ class UsersController < ApplicationController
 
   def index
     @users = if params[:approved] == 'false'
-               User.where(approved: false).order('email')
+               User.accessible_by(current_ability).where(approved: false).order('email')
              else
-               User.all.order('approved', 'email')
+               User.accessible_by(current_ability).order('approved', 'email')
              end
   end
 
@@ -44,6 +44,10 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:email, :approved, :role)
+    if can? :manage_access, User
+        params.require(:user).permit(:email, :approved, :role)
+    else
+        params.require(:user).permit(:email)
+    end
   end
 end
