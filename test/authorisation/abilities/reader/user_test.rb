@@ -15,10 +15,16 @@ class UserReaderAbilitiesTest < ApplicationSystemTestCase
     assert @ability.cannot?(:new, @user2)
   end
 
-  test 'as reader i can read a user' do
-    assert @ability.can?(:read, @user2)
-    assert @ability.can?(:show, @user2)
-    assert @ability.can?(:index, @user2)
+  test 'as reader i can own user object' do
+    assert @ability.can?(:read, @user)
+    assert @ability.can?(:show, @user)
+    assert @ability.can?(:index, @user)
+  end
+
+  test 'as reader i cant read other users' do
+    assert @ability.cannot?(:read, @user2)
+    assert @ability.cannot?(:show, @user2)
+    assert @ability.cannot?(:index, @user2)
   end
 
   test 'as reader i cant edit and update a user' do
