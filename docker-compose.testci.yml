@@ -1,0 +1,41 @@
+version: '3.9'
+services:
+  module-handbook-postgres-testci:
+    container_name: modulehandbook-database-testci
+    image: postgres:13.4-alpine
+    #    container_name: module-handbook-postgres
+    environment:
+      - APPLICATION=module-handbook
+      - POSTGRES_PASSWORD=modhand
+      - POSTGRES_USER=modhand
+      - POSTGRES_DB=modhand-db-testci
+      - POSTGRES_HOST_AUTH_METHOD=password
+#     volumes:
+#       - ./pg_data:/var/lib/postgresql/data
+  module-handbook-exporter:
+    image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
+    container_name: modulehandbook-exporter
+
+  module-handbook:
+    image: modhand-testci:latest
+    container_name: modulehandbook-testci
+    environment:
+      - TAG
+      - RAILS_ENV=test
+      - RAILS_DB_HOST="module-handbook-postgres-testci"
+      - POSTGRES_USER=modhand
+      - POSTGRES_PASSWORD=modhand
+      - POSTGRES_DB=modhand-db-testci
+      - RAILS_SERVE_STATIC_FILES=true
+      - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
+      - DEVISE_EMAIL_HOSTNAME=${DEVISE_EMAIL_HOSTNAME}
+      - DEVISE_EMAIL=${DEVISE_EMAIL}
+
+  #  env_file:
+  #    - ${SECRET_ENV_FILE}
+    depends_on:
+      - module-handbook-postgres-testci
+      - module-handbook-exporter
+    volumes:
+      - ./container_logs:/module-handbook/log
+    restart: "no"

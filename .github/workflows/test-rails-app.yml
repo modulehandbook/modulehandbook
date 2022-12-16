@@ -2,13 +2,8 @@ name: Test App
 
 on:
   push:
-# run individually on each push to see the pattern of intermittent fails
-#    branches: [ '!master' ]
+    branches: [ '!master' ]
   workflow_call:
-#   push:
-#     branches: [ master ]
-#  pull_request:
-#    branches: [ master ]
 env:
   RAILS_DB_HOST: localhost
   POSTGRES_PORT: 5432

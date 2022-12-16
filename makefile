@@ -157,7 +157,12 @@ open_production:
 
 
 testci:
-	docker-compose -f docker-compose.yml  docker-compose.override.testci.yml up
+	docker build --target  modhand-prod-no-assets --tag modhand-prod-no-assets:latest .
+	docker build --file Dockerfile.testci . --tag modhand-testci:latest
+	docker-compose -f docker-compose.testci.yml up
+testci_stop:
+	docker-compose -f docker-compose.testci.yml down
+
 start_production_local:
 	 docker-compose -f docker-compose.yml --env-file .env.production up
 start_staging_local:
