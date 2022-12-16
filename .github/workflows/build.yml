@@ -54,17 +54,18 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=sha
+          
       - name: Metadata Results
         run: |
            echo "---- tags:\n ${{ steps.meta.outputs.tags }}"
            echo "---- labels:\n ${{ steps.meta.outputs.labels }}"
 
       - name: Build and push Docker image
-       uses: docker/build-push-action@v3
-       with:
-         context: .
-         target: modhand-prod
-         build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
-         push: true
-         tags: ${{ steps.meta.outputs.tags }}
-         labels: ${{ steps.meta.outputs.labels }}
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          target: modhand-prod
+          build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
