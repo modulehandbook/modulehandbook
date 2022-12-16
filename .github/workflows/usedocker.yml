@@ -33,7 +33,11 @@ jobs:
 
       - name: test in container
         run: |
-          make test_app
+          docker-compose up -d
+          docker-compose exec module-handbook rails db:create RAILS_ENV=test
+          docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
+          docker-compose exec module-handbook rails test
+          docker-compose exec module-handbook rails test:system
 
       - name: Build and push Docker image
         if: ${{ github.event_name != 'pull_request' }}
