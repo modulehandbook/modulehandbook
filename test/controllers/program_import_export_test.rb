@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ProgramsControllerTest < ActionDispatch::IntegrationTest
+class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
     @program = programs(:one)

@@ -6,58 +6,34 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user = users(:reader)
     @admin = users(:one)
     @qa = users(:qa)
-    sign_in @admin
+    # sign_in @admin
+    # https://www.rubydoc.info/gems/devise/2.2.8#test-helpers
+    sign_out :user # make sure not still signed in from other tests
   end
 
-  test 'should get index' do
-    get users_url
+  test 'should not be signed in' do
+    get root_path
+    assert_redirected_to new_user_session_path
+    follow_redirect!
     assert_response :success
+    assert_nil @controller.current_user
   end
 
-  #replaced by devise sign up
   test 'should get new' do
-#    get new_user_url
-     get new_user_registration_url
-  #  assert_response :success
+    get new_user_registration_url
+    assert_response :success
+    assert_nil @controller.current_user
+
+  end
+
+  test 'should get new with login' do
+    sign_in @admin
+    get new_user_registration_url
     assert_redirected_to root_url
   end
 
-  # adapted to devise, does not really work
-  test 'should create user' do
-  #  assert_difference('User.count') do
-      post user_registration_url, params: {
-        user: {
-          email: "new_user_registration@mail.com",
-          password: "geheim12",
-          password_confirmation: "geheim12"
-          }
-      }
-#    end
-    assert_redirected_to root_url
-  end
+#  teardown do
+#    sign_out @admin
+#  end
 
-  test 'should show course' do
-    get user_url(@qa)
-    assert_response :success
-  end
-
-  test 'should get edit' do
-    get edit_user_url(@qa)
-    assert_response :success
-  end
-
-  test 'should update user' do
-    patch user_url(@user), params: { user: {  email: 'user33@mail.de'  } }
-#    assert_redirected_to user_url(@user)
-     assert_redirected_to users_url
-  end
-
-  test 'should destroy course' do
-
-    assert_difference('User.count', -1) do
-      delete user_registration_url(@user.id)
-    end
-
-    assert_redirected_to users_url
-  end
 end

@@ -1,6 +1,6 @@
 require 'application_system_test_case'
 
-class DeviseApiTest < ApplicationSystemTestCase
+class UserEditorTest < ApplicationSystemTestCase
   def setup
     @user_editor = users(:editor)
     @user = @user_editor

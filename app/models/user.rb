@@ -6,9 +6,20 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :trackable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  has_many :versions, foreign_key: "whodunnit"
+
   ROLES = %i[admin reader writer editor qa].freeze
 
   after_initialize :set_default_role, if: :new_record?
+
+  before_destroy :check_for_versions
+
+  def check_for_versions
+    if (versions.count > 0)
+      errors.add(:base, "User can't be Destroyed because there are Associated Versions")
+      throw :abort
+    end
+  end
 
   def format_time(at)
     return "" if (at.nil? || at == "")

@@ -156,6 +156,8 @@ open_production:
 	open https://module-handbook.f4.htw-berlin.de
 
 
+testci:
+	docker-compose -f docker-compose.yml  docker-compose.override.testci.yml up
 start_production_local:
 	 docker-compose -f docker-compose.yml --env-file .env.production up
 start_staging_local:
@@ -224,3 +226,7 @@ list_db:
 # call with make yaml yf=
 yaml:
 	python3 -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))' < $(yf)
+
+find_duplicates:
+	echo "OneNameTest ist die Demo, der name darf doppelt da sein"
+	find . -name "*.rb" | xargs grep "^\s*class" | sed -e "s/.*class//g" | sed -e "s/ <.*//g" |  sort | uniq -c| grep -v -e "1"
