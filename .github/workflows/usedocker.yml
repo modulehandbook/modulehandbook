@@ -2,7 +2,7 @@ name: test on docker
 
 on:
   push:
-    branch: master
+    branch: version_index
 
 env:
   REGISTRY: ghcr.io
