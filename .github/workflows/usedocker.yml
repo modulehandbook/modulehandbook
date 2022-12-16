@@ -7,6 +7,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: "modulehandbook/modulehandbook"
+  RAILS_MASTER_KEY: ${{ secrets.rails_master_key }}
 
 jobs:
   test-and-push-image:
