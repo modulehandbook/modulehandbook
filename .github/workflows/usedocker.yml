@@ -36,12 +36,12 @@ jobs:
 
       - name: test in modhand-testci
         run: |
-          docker-compose -f docker-compose.testci.yml up -d
-          docker ps
-          docker exec modulehandbook-testci rails db:create RAILS_ENV=test
-          docker exec modulehandbook-testci rails db:migrate RAILS_ENV=test
-          docker exec modulehandbook-testci rails test
-          docker exec modulehandbook-testci rails test:system
+          	docker-compose -f docker-compose.testci.yml up -d
+          	docker ps
+          	docker exec -ti modulehandbook-testci rails db:create RAILS_ENV=test
+          	docker exec -ti modulehandbook-testci rails db:migrate RAILS_ENV=test
+          	docker exec -ti modulehandbook-testci rails test
+          	docker exec -ti modulehandbook-testci rails test:system
 
 
       - name: Log in to the Container registry

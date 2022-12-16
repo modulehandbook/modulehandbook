@@ -155,11 +155,19 @@ open_staging:
 open_production:
 	open https://module-handbook.f4.htw-berlin.de
 
-
-testci:
+build_testci_images:
 	docker build --target  modhand-prod-no-assets --tag modhand-prod-no-assets:latest .
 	docker build --file Dockerfile.testci . --tag modhand-testci:latest
-	docker-compose -f docker-compose.testci.yml up
+testci_local: build_testci_images testci
+testci:
+	docker-compose -f docker-compose.testci.yml up -d
+	docker ps
+	docker exec modulehandbook-testci rails db:create RAILS_ENV=test
+	docker exec modulehandbook-testci rails db:migrate RAILS_ENV=test
+	docker exec modulehandbook-testci rails test
+	docker exec modulehandbook-testci rails test:system
+
+
 testci_stop:
 	docker-compose -f docker-compose.testci.yml down
 
