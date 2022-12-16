@@ -2,7 +2,7 @@ class CoursesController < ApplicationController
   load_and_authorize_resource except: :export_courses_json
   skip_authorization_check only: :export_courses_json
   skip_before_action :authenticate_user!, only: :export_courses_json
-  
+
   before_action :set_course, only: %i[show edit update destroy export_course_json revert_to]
   before_action :set_paper_trail_whodunnit
 

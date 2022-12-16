@@ -156,6 +156,13 @@ open_production:
 	open https://module-handbook.f4.htw-berlin.de
 
 
+testci:
+	docker build --target  modhand-prod-no-assets --tag modhand-prod-no-assets:latest .
+	docker build --file Dockerfile.testci . --tag modhand-testci:latest
+	docker-compose -f docker-compose.testci.yml up
+testci_stop:
+	docker-compose -f docker-compose.testci.yml down
+
 start_production_local:
 	 docker-compose -f docker-compose.yml --env-file .env.production up
 start_staging_local:
@@ -224,3 +231,7 @@ list_db:
 # call with make yaml yf=
 yaml:
 	python3 -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))' < $(yf)
+
+find_duplicates:
+	echo "OneNameTest ist die Demo, der name darf doppelt da sein"
+	find . -name "*.rb" | xargs grep "^\s*class" | sed -e "s/.*class//g" | sed -e "s/ <.*//g" |  sort | uniq -c| grep -v -e "1"

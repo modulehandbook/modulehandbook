@@ -16,6 +16,23 @@ class UsersController < ApplicationController
 
   def edit; end
 
+  def destroy
+    if can? :destroy, @user
+        if current_user == @user
+            @user.errors.add(:base, "Logged in User can't be destroyed.")
+            result = false
+        else
+          result = @user.destroy
+        end
+      messages = result ? {notice: "User was successfully destroyed."} : {alert: "User could not be destroyed: #{@user.errors.full_messages} "}
+      respond_to do |format|
+        format.html { redirect_to users_url, messages }
+        format.json { head :no_content }
+      end
+
+    end
+  end
+
   def approve
     user = User.find(params[:id])
     user.approved = true

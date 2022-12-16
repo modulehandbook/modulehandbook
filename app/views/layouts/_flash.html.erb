@@ -1,0 +1,10 @@
+<% bootstrap_class = { "notice" => "alert-success", "alert" => "alert-danger"}
+
+["alert", "notice"].each do | flash_type |
+  if flash[flash_type] %>
+<p class="alert <%= bootstrap_class[flash_type]%>" role="alert" >
+  <%= flash[flash_type] %>
+</p>
+    <% end
+  end
+%>

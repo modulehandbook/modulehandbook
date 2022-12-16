@@ -24,11 +24,17 @@
         <td><%= user.format_time(user.current_sign_in_at) %></td>
         <td><%= user.format_time(user.last_sign_in_at) %></td>
 
-        <td><% if can? :edit, user %>
-              <%= link_to "Edit", edit_user_path(user) %>
-          <% end %>
 
-        </td>
+            <td>  <% if can? :edit, user %>
+                <%= link_to "Edit", edit_user_path(user) %>
+                <% end %>
+            </td>
+            <td> <%= user.versions.count %>
+            <td>
+        <% if can? :destroy, user %>
+                <%= link_to 'Destroy', user, id: "destroy_user_#{user.id}", data: {turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+        <% end %>
+            </td>
       </tr>
     <% end %>
   </tbody>

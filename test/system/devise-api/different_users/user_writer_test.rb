@@ -1,6 +1,6 @@
 require 'application_system_test_case'
 
-class DeviseApiTest < ApplicationSystemTestCase
+class UserWriterTest < ApplicationSystemTestCase
   def setup
     @user_writer = users(:writer)
     @user = @user_writer
