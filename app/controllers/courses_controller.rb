@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
 
   before_action :set_course, only: %i[show edit update destroy export_course_json revert_to]
   before_action :set_paper_trail_whodunnit
-
+  include VersionsHelper
   # GET /courses
   # GET /courses.json
   def index
@@ -13,9 +13,13 @@ class CoursesController < ApplicationController
   end
 
   def versions
+    
     @versions = @course.versions.reorder('created_at DESC')
+    @versions_authors = @versions.map{|v| [v, papertrail_author(v) ]}
     @programs = @course.programs.order(:name).pluck(:name, :id)
   end
+
+
 
   # GET /courses/1
   # GET /courses/1.json

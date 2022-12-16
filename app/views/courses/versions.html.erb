@@ -28,10 +28,10 @@ Part of Programs:
   </thead>
   <tbody>
 
-<% @versions.each do |version| %>
+<% @versions_authors.each do |version, author| %>
   <tr>
     <td><%= version.index %></td>
-    <td><%= version.whodunnit  ? User.find(version.whodunnit).email: "No user" %></td>
+    <td><%= author %></td>
     <td><%= version.created_at %></td>
     <td><%= version.event %></td>
     <td>

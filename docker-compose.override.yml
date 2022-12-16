@@ -11,7 +11,7 @@ version: '3.4'
 services:
   module-handbook-postgres:
       environment:
-        - POSTGRES_DB=modhand-db-dev # test?
+        - POSTGRES_DB=modhand-db-dev
 #      volumes:
 #        - ./pg_transfer:/var/lib/postgresql/pg_transfer
       ports:
