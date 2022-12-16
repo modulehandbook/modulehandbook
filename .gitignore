@@ -62,3 +62,4 @@ secrets.env
 /config/credentials/development.key
 
 container_logs/**
+.idea/**
