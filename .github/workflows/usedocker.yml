@@ -35,13 +35,12 @@ jobs:
           tags: modhand-testci:latest
 
       - name: test in modhand-testci
-        run: |
-          docker-compose -f docker-compose.testci.yml up -d
-          docker ps
-          docker exec -ti modulehandbook-testci rails db:create RAILS_ENV=test
-          docker exec -ti modulehandbook-testci rails db:migrate RAILS_ENV=test
-          docker exec -ti modulehandbook-testci rails test
-          docker exec -ti modulehandbook-testci rails test:system
+        run: docker-compose -f docker-compose.testci.yml up -d
+      - run: docker ps  
+      - run: docker exec modulehandbook-testci rails db:create RAILS_ENV=test
+      - run: docker exec modulehandbook-testci rails db:migrate RAILS_ENV=test
+      - run: docker exec modulehandbook-testci rails test
+      - run: docker exec modulehandbook-testci rails test:system
 
       - name: Log in to the Container registry
         if: ${{ github.event_name != 'pull_request' }}
