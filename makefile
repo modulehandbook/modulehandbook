@@ -162,6 +162,7 @@ testci_local: build_testci_images testci
 testci:
 	docker-compose -f docker-compose.testci.yml up -d
 	docker ps
+	docker exec modulehandbook-testci rails db:drop RAILS_ENV=test
 	docker exec modulehandbook-testci rails db:create RAILS_ENV=test
 	docker exec modulehandbook-testci rails db:migrate RAILS_ENV=test
 	docker exec modulehandbook-testci rails test
