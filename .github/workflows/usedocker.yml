@@ -10,10 +10,11 @@ env:
 
 jobs:
   test-and-push-image:
+    name: Test on Docker Image
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Log in to the Container registry
         if: ${{ github.event_name != 'pull_request' }}
         uses: docker/login-action@v2
@@ -21,14 +22,14 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-       - name: Build Dev Image
-         uses: docker/build-push-action@v3
-         with:
-           context: .
-           target: modhand-dev
-           build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
-           push: false
-           tags: modhand-dev:latest
+      - name: Build Dev Image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          target: modhand-dev
+          build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
+          push: false
+          tags: modhand-dev:latest
 
       - name: test in container
         run: |
