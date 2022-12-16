@@ -9,9 +9,9 @@ services:
       target: "modhand-prod"
       args:
         RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-    volumes:
-      - .:/module-handbook  # use app files from host
-      - /module-handbook/node_modules # but not the node_modules
+#    volumes:
+#      - .:/module-handbook  # use app files from host
+#      - /module-handbook/node_modules # but not the node_modules
   nginx:
     environment:
       - NGINX_HOST=localhost
