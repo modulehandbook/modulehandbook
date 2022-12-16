@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :users
+
+
+  root 'welcome#index'
+  
+  resources :users, only: %i[index show edit update]
+  devise_for :users, controllers: {
+      sessions: 'users/sessions'
+    }
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
 
-  root 'welcome#index'
-  resources :users, only: %i[index show edit update]
   resources :course_programs
   resources :courses
   resources :programs
