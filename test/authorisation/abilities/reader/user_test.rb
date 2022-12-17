@@ -4,10 +4,11 @@ require 'application_system_test_case'
 
 class UserReaderAbilitiesTest < ApplicationSystemTestCase
   setup do
-    @user = users(:reader)
+    @reader = users(:reader)
+    @user1 = users(:one)
     @user2 = users(:two)
-    @ability = Ability.new(@user)
-    system_test_login(@user.email, 'geheim12')
+    @ability = Ability.new(@reader)
+    system_test_login(@reader.email, 'geheim12')
   end
 
   test 'as reader i cant create a user' do
@@ -15,16 +16,22 @@ class UserReaderAbilitiesTest < ApplicationSystemTestCase
     assert @ability.cannot?(:new, @user2)
   end
 
-  test 'as reader i can own user object' do
-    assert @ability.can?(:read, @user)
-    assert @ability.can?(:show, @user)
-    assert @ability.can?(:index, @user)
+  test 'as reader i can read own user object' do
+    assert @ability.can?(:read, @reader)
+    assert @ability.can?(:show, @reader)
+    assert @ability.can?(:index, @reader)
   end
 
-  test 'as reader i cant read other users' do
+  test 'as reader i cant read other users with readable false' do
     assert @ability.cannot?(:read, @user2)
     assert @ability.cannot?(:show, @user2)
     assert @ability.cannot?(:index, @user2)
+  end
+
+  test 'as reader i can read other users with readable true' do
+    assert @ability.can(:read, @user1)
+    assert @ability.can(:show, @user1)
+    assert @ability.can(:index, @user1)
   end
 
   test 'as reader i cant edit and update a user' do

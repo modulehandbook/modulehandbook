@@ -19,7 +19,7 @@ two:
   role: :admin
   full_name: Edrice Amr Hemede Masudi
   faculty: Faculty of Informatics & Computer Science
-  readable: true
+  readable: false
   about: some more info
 
 reader:
