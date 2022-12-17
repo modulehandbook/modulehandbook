@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
   resources :users, only: %i[index show edit update destroy]
 
-
+  resources :versions, only: %i[index]
   resources :course_programs
   resources :courses
   resources :programs

@@ -48,7 +48,6 @@ coverage/**
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
-.env
 
 config/credentials/**
 container_logs/**

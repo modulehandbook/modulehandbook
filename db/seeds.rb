@@ -26,9 +26,8 @@ end
 user = User.create(email: 'unapproved@mail.de', password: defaultPW, password_confirmation: defaultPW, approved: false)
 puts "created unapproved User #{user.email}"
 
-# CourseProgram.destroy_all
-# Program.destroy_all
-# Course.destroy_all
+Program.destroy_all
+Course.destroy_all
 
 imib = Program.create(name: 'Internationale Medieninformatik', code: 'IMI-B', degree: 'Bachelor', ects: 180)
 
@@ -91,6 +90,7 @@ courses.each do |a|
 end
 
 # add some versions
+Version.destroy_all
 
 writer = User.find_by(email: "writer@mail.de")
 puts writer.inspect
