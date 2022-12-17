@@ -1,6 +1,6 @@
-require 'application_system_test_case'
+require 'test_helper'
 
-class CommentsAdminAbilitiesTest < ApplicationSystemTestCase
+class CommentsAdminAbilitiesTest <  ActiveSupport::TestCase
   setup do
     @course = courses(:one)
     @user = users(:one)
@@ -8,7 +8,7 @@ class CommentsAdminAbilitiesTest < ApplicationSystemTestCase
     @ability = Ability.new(@user)
     @comment_own = @course.comments.create(author: @user)
     @comment_other = @course.comments.create(author: @user_other)
-    system_test_login(@user.email, 'geheim12')
+    # system_test_login(@user.email, 'geheim12')
   end
 
   test 'as admin i can create a comment on a course' do

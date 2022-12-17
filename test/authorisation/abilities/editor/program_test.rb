@@ -7,7 +7,7 @@ class ProgramEditorAbilitiesTest < ApplicationSystemTestCase
     @program = programs(:one)
     @user = users(:editor)
     @ability = Ability.new(@user)
-    system_test_login(@user.email, 'geheim12')
+    # system_test_login(@user.email, 'geheim12')
   end
 
   test 'as editor i can create a program' do

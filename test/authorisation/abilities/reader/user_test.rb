@@ -8,7 +8,7 @@ class UserReaderAbilitiesTest < ApplicationSystemTestCase
     @user1 = users(:one)
     @user2 = users(:two)
     @ability = Ability.new(@reader)
-    system_test_login(@reader.email, 'geheim12')
+    # system_test_login(@reader.email, 'geheim12')
   end
 
   test 'as reader i cant create a user' do

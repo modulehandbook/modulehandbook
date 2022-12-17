@@ -7,7 +7,7 @@ class UserQAAbilitiesTest < ApplicationSystemTestCase
     @user = users(:qa)
     @user2 = users(:two)
     @ability = Ability.new(@user)
-    system_test_login(@user.email, 'geheim12')
+    # system_test_login(@user.email, 'geheim12')
   end
 
   test 'as qa i cant create a user' do

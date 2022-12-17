@@ -8,7 +8,7 @@ class UserWriterAbilitiesTest < ApplicationSystemTestCase
     @user1 = users(:one)
     @user2 = users(:two)
     @ability = Ability.new(@user)
-    system_test_login(@user.email, 'geheim12')
+    # system_test_login(@user.email, 'geheim12')
   end
 
   test 'as writer i cant create a user' do

@@ -8,7 +8,7 @@ class CommentsReaderAbilitiesTest < ApplicationSystemTestCase
     @ability = Ability.new(@user)
     @comment_own = @course.comments.create(author: @user)
     @comment_other = @course.comments.create(author: @user_other)
-    system_test_login(@user.email, 'geheim12')
+    # system_test_login(@user.email, 'geheim12')
   end
 
   test 'as reader i can create a comment on a course' do
