@@ -5,9 +5,14 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   before_action :select_fields_index, only: %i[index ]
   before_action :select_fields_single, only: %i[show edit update]
+  #before_action :select_fields_edit, only: %i[]
 
   def select_fields_single
       include_fields(UserAttrs::SHOW)
+  end
+
+  def select_fields_edit
+      include_fields(UserAttrs::EDITABLE)
   end
 
   def select_fields_index
@@ -17,6 +22,8 @@ class UsersController < ApplicationController
   def include_fields(include_fields)
     if can? :see_admin_fields, User
       @include_fields = include_fields
+    elsif @user && (current_user == @user)
+      @include_fields = include_fields & UserAttrs::OWN_READABLE_FIELDS
     else
       @include_fields = include_fields & UserAttrs::READABLE
     end

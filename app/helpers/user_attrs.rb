@@ -1,4 +1,5 @@
 class UserAttrs
+
   COMPUTED = %i[
   faculty_name
   versions_count].freeze
@@ -12,6 +13,18 @@ class UserAttrs
   approved
   readable
   versions_count].freeze
+
+  EDITABLE = %i[
+  id
+  full_name
+  email
+  readable
+  faculty
+  about].freeze
+
+  EDITABLE_ADMIN = %i[
+  role
+  approved].freeze
 
   READABLE = %i[
   id
@@ -41,6 +54,8 @@ class UserAttrs
   reset_password_sent_at].freeze
 
   SHOW = (READABLE + ADMIN).freeze
+
+  OWN_READABLE_FIELDS = (READABLE + ADMIN).freeze
 
   SECRET = %i[
   encrypted_password

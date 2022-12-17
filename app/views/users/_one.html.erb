@@ -16,22 +16,39 @@ user = @user
     <tr>
       <th colspan="2" scope="col" ><h3>Showing User: <%= @user.email %></h3></</th>
 
-    <% if can? :edit, @user %>
+    <% if (action == :show ) && (can? :edit, @user) %>
       <th>
         <button type="button" class="btn btn-warning btn-sm">
             <%= link_to "Edit", edit_user_path(@user) %>
         </button>
       </th>
-
     <% end %>
+
       </tr>
   </thead>
 
   <tbody>
 
-    <%  @fields.each do | field_name | %>
-      <%= render 'field_in_show', user: user, field_name: field_name %>
+
+
+<% if show_form %>
+
+    <%= form_with(model: user, local: true) do |form| %>
+        <%= render 'form_start', user: user, form: form %>
+
+        <%= render 'fields_in_one' , fields: @fields, user: user, action: action, form: form, show_form: show_form%>
+
+        <%= render 'form_end', user: user, form: form %>
     <% end %>
+
+<% else %>
+
+    <%= render 'fields_in_one', user: user, field_name: field_name, action: action, form: form, show_form: show_form %>
+
+<% end %>
+
+
+
 
   </tbody>
 
