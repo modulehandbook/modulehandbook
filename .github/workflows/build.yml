@@ -53,7 +53,9 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: type=sha
+          tags: |
+            type=sha,event=push
+            type=semver, pattern={{version}}
 
       - name: Metadata Results
         run: |
