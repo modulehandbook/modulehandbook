@@ -37,7 +37,7 @@ jobs:
       - name: test in modhand-testci
         run: docker-compose -f docker-compose.testci.yml up -d
       - run: docker ps
-      - run: docker exec modulehandbook-testci rails db:drop RAILS_ENV=test 
+      - run: docker exec modulehandbook-testci rails db:drop RAILS_ENV=test
       - run: docker exec modulehandbook-testci rails db:create RAILS_ENV=test
       - run: docker exec modulehandbook-testci rails db:migrate RAILS_ENV=test
       - run: docker exec modulehandbook-testci rails test
@@ -57,13 +57,24 @@ jobs:
       - name: Check outputs
         run: echo ${{ steps.sha.outputs.sha_short }}
 
+      - name: Extract metadata (tags, labels) for Docker - PR
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: type=sha
+
+      - name: Metadata Results
+        run: |
+           echo "---- tags:\n ${{ steps.meta.outputs.tags }}"
+           echo "---- labels:\n ${{ steps.meta.outputs.labels }}"
 
       - name: Build and push Docker image
-        if: ${{ github.event_name != 'pull_request' }}
         uses: docker/build-push-action@v3
         with:
           context: .
           target: modhand-prod
           build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
           push: true
-          tags: modulehandbook/modulhandbook:sha2-${{ steps.sha.outputs.sha_short }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

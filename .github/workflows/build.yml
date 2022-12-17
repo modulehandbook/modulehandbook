@@ -1,8 +1,8 @@
 name: build container
 
 on:
-  push:
-    branch: version_index
+#  push:
+#    branch: version_index
 
 env:
   REGISTRY: ghcr.io
@@ -13,7 +13,7 @@ env:
 
 jobs:
   test-and-push-image:
-    name: Test on Docker Image
+    name: just build and push
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -54,7 +54,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=sha
-          
+
       - name: Metadata Results
         run: |
            echo "---- tags:\n ${{ steps.meta.outputs.tags }}"
