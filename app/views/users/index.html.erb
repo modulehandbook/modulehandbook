@@ -5,7 +5,7 @@
   <thead>
     <tr>
       <%  @fields.each do | field_name | %>
-      <th scope="col"><%= field_name %></th>
+      <th scope="col"><%= field_name.to_s.humanize %></th>
       <% end %>
     </tr>
   </thead>
