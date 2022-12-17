@@ -27,6 +27,14 @@ class User < ApplicationRecord
     at.strftime("%d/%m/%y (%H:%M)")
   end
 
+  def faculty_name
+    @faculty_name ||= faculty ? faculty.name : "---"
+  end
+
+  def versions_count
+    @versions_count ||= versions.count
+  end
+
   def set_default_role
     self.role ||= :reader
   end

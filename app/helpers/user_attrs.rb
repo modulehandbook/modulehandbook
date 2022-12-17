@@ -1,17 +1,21 @@
 class UserAttrs
+  COMPUTED = %i[
+  faculty_name
+  versions_count].freeze
 
   READABLE = %i[
   id
   full_name
   email
   role
-  faculty_id
+  faculty_name
   about
   approved
   unconfirmed_email].freeze
 
   ADMIN = %i[
   readable
+  versions_count
   created_at
   updated_at
   sign_in_count

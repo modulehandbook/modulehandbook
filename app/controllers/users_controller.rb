@@ -5,16 +5,29 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   #before_action :set_user, only: %i[show edit update]
 
+  def prepare_index(include_fields)
+    @include_fields = include_fields
+    @select_fields = @include_fields - UserAttrs::COMPUTED + %i[faculty_id]
+    @fields = @include_fields - [:id]
+  end
+
   def index
+    prepare_index(UserAttrs::READABLE + UserAttrs::ADMIN)
     @users = if params[:approved] == 'false'
-               User.accessible_by(current_ability).where(approved: false).order('email').select(UserAttrs::SHOW)
+               User.accessible_by(current_ability).where(approved: false).order('email').select(@select_fields)
              else
-               User.accessible_by(current_ability).order('approved', 'email').select(UserAttrs::SHOW)
+               User.accessible_by(current_ability).order('approved', 'email').select(@select_fields)
              end
   end
 
-  def public_index
-    @users = User.accessible_by(current_ability).order('email').select(UserAttrs::READABLE)
+  def list
+    include_fields(UserAttrs::READABLE)
+    @users = User.accessible_by(current_ability).order('email').select(@select_fields)
+    prepare_index(include_fields)
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render :index }
+    end
   end
 
   def show; end

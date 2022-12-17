@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
+  get 'users/list', to: 'users#list', as: 'users_list'
   resources :users, only: %i[index show edit update destroy]
 
   resources :versions, only: %i[index]
