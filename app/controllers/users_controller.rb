@@ -3,10 +3,23 @@
 class UsersController < ApplicationController
 
   load_and_authorize_resource
-  #before_action :set_user, only: %i[show edit update]
+  before_action :select_fields_index, only: %i[index ]
+  before_action :select_fields_single, only: %i[show edit update]
+
+  def select_fields_single
+      include_fields(UserAttrs::SHOW)
+  end
+
+  def select_fields_index
+      include_fields(UserAttrs::INDEX)
+  end
 
   def include_fields(include_fields)
-    @include_fields = include_fields
+    if can? :see_admin_fields, User
+      @include_fields = include_fields
+    else
+      @include_fields = include_fields & UserAttrs::READABLE
+    end
     @select_fields = @include_fields - UserAttrs::COMPUTED + %i[faculty_id]
     @fields = @include_fields - [:id]
   end
@@ -24,15 +37,6 @@ class UsersController < ApplicationController
                User.accessible_by(current_ability).order('approved', 'email').select(@select_fields)
              end
   end
-
-#  def list
-#    include_fields(UserAttrs::INDEX & UserAttrs::READABLE)
-#    @users = User.accessible_by(current_ability).order('email').select(@select_fields)
-#    respond_to do |format|
-#      format.html { render :index }
-#      format.json { render :index }
-#    end
-#  end
 
   def show; end
 

@@ -14,21 +14,17 @@
     <% @users.each do |user| %>
       <tr>
         <%  @fields.each do | field_name | %>
-          <%= render 'index_field', user: user, field_name: field_name %>
+          <%= render 'field_in_index', user: user, field_name: field_name %>
         <% end %>
 
+        <td><% if can? :destroy, user %>
+                <%= link_to 'Destroy', user, id: "destroy_user_#{user.id}", data: {turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+        <% end %></td>
 
         <td><% if can? :edit, user %>
             <%= link_to "Edit", edit_user_path(user) %>
         <% end %></td>
 
-        <td> <%= user.versions.count %></td>
-        <td>
-
-        <% if can? :destroy, user %>
-                <%= link_to 'Destroy', user, id: "destroy_user_#{user.id}", data: {turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
-        <% end %>
-        </td>
       </tr>
     <% end %>
 

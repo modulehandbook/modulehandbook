@@ -1,5 +1,10 @@
 
-
+<div class="container">
+  <div class="row ">
+    <div class="col-md-1">
+    &nbsp;
+    </div>
+    <div class="col-md-auto">
 
 
 
@@ -9,62 +14,36 @@ user = @user
 <table class="table table-sm">
 
   <thead>
+
     <tr>
-      <th scope="col" ><h3>Showing User: <%= @user.email %></h3></</th>
+      <th colspan="2" scope="col" ><h3>Showing User: <%= @user.email %></h3></</th>
+
+    <% if can? :edit, @user %>
       <th>
-        <% if can? :edit, @user %>
-            <button type="button" class="btn btn-warning btn-sm">
-                <%= link_to "Edit", edit_user_path(@user) %>
-            </button>
-        <% end %>
+        <button type="button" class="btn btn-warning btn-sm">
+            <%= link_to "Edit", edit_user_path(@user) %>
+        </button>
       </th>
-    </tr>
+
+    <% end %>
+      </tr>
   </thead>
 
   <tbody>
 
-    <%  ["readable", "approved"].each do | field | %>
-      <tr>
-        <th scope="row"><%= field.humanize %></th>
-        <td><input type="checkbox" <%= user.send(field) ? "checked":"" %> > </td>
-      </tr>
+    <%  @fields.each do | field_name | %>
+      <%= render 'field_in_show', user: user, field_name: field_name %>
     <% end %>
-  <%  ["full_name", "email", "role","sign_in_count","failed_attempts"].each do | field | %>
-    <tr>
-      <th scope="row"><%= field.humanize %></th>
-      <td><%= user.send(field) %></td>
-    </tr>
-  <% end %>
-
-  <tr>
-    <th scope="row">Current Sign in:</th>
-    <td><%= @user.current_sign_in_at %> from <%= @user.current_sign_in_ip %>  </td>
-  </tr>
-
-  <tr>
-    <th scope="row">Last Sign in:</th>
-    <td><%= @user.last_sign_in_at %> from <%= @user.last_sign_in_ip %>  </td>
-  </tr>
-
-
-  <tr>
-    <th scope="row">Confirmed At: </th>
-    <td> <%= @user.format_time(@user.confirmed_at) %>  </td>
-  </tr>
-
-  <tr>
-    <th scope="row"> Confirmation Sent: </th>
-    <td> <%= @user.format_time(@user.confirmation_sent_at) %>  </td>
-  </tr>
-
-  <tr>
-    <th scope="row">Unconfirmed email:</th>
-    <td> <%= @user.unconfirmed_email %>  </td>
-  </tr>
 
   </tbody>
 
 </table>
 
 
-</p>
+</div>
+<div class="col-md-3">
+&nbsp;
+</div>
+
+</div>
+</div>
