@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
+require 'test_helper'
 
-class CourseProgramWriterbilitiesTest < ApplicationSystemTestCase
+class CourseProgramWriterbilitiesTest <  ActiveSupport::TestCase
   setup do
     @course_program = course_programs(:one)
     @user = users(:writer)

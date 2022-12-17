@@ -1,6 +1,6 @@
-require 'application_system_test_case'
+require 'test_helper'
 
-class CommentsReaderAbilitiesTest < ApplicationSystemTestCase
+class CommentsReaderAbilitiesTest <  ActiveSupport::TestCase
   setup do
     @course = courses(:one)
     @user = users(:reader)

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
+require 'test_helper'
 
-class UserWriterAbilitiesTest < ApplicationSystemTestCase
+class UserWriterAbilitiesTest <  ActiveSupport::TestCase
   setup do
     @user = users(:writer)
     @user1 = users(:one)

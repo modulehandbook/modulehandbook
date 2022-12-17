@@ -1,6 +1,6 @@
-require 'application_system_test_case'
+require 'test_helper'
 
-class CommentsQaAbilitiesTest < ApplicationSystemTestCase
+class CommentsQaAbilitiesTest <  ActiveSupport::TestCase
   setup do
     @course = courses(:one)
     @user = users(:qa)

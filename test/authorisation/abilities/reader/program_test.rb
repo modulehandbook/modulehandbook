@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
+require 'test_helper'
 
-class ProgramReaderAbilitiesTest < ApplicationSystemTestCase
+class ProgramReaderAbilitiesTest <  ActiveSupport::TestCase
   setup do
     @program = programs(:one)
     @user = users(:reader)
