@@ -13,7 +13,7 @@ class CoursesController < ApplicationController
   end
 
   def versions
-    
+
     @versions = @course.versions.reorder('created_at DESC')
     @versions_authors = @versions.map{|v| [v, papertrail_author(v) ]}
     @programs = @course.programs.order(:name).pluck(:name, :id)
@@ -133,7 +133,7 @@ class CoursesController < ApplicationController
         format.html { redirect_to @course, notice: 'Course was successfully updated.' }
         format.json { render :show, status: :ok, location: @course }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity  }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end

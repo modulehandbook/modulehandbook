@@ -4,7 +4,11 @@
 <table class="table table-hover">
   <thead>
     <tr>
+
+      <th scope="col">Readable</th>
+      <th scope="col">Name</th>
       <th scope="col">Email</th>
+      <th scope="col">Faculty</th>
       <th scope="col">Role</th>
       <th scope="col">Approved</th>
       <th scope="col">Current Log in</th>
@@ -16,7 +20,10 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
+        <td> <input type="checkbox" <%= user.readable ? "checked":"" %>></td>
+        <td onclick = "location.href='<%= user_path(user) %>'" scope="row"><%= user.full_name %></td>
         <td onclick = "location.href='<%= user_path(user) %>'" scope="row"><%= user.email %></td>
+        <td onclick = "location.href='<%= user_path(user) %>'" scope="row"><%= user.faculty ? user.faculty.name : "---" %></td>
         <td><%= user.role.to_s.humanize %></td>
         <td> <input type="checkbox" <%= user.approved ? "checked":"" %>>
           <% if !user.approved && can?(:approve, user) %> | <%= link_to "Approve", approve_user_path(id: user.id) %><% end %>

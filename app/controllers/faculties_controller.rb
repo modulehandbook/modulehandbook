@@ -1,6 +1,6 @@
 class FacultiesController < ApplicationController
-  before_action :set_faculty, only: %i[ show edit update destroy ]
-
+  # before_action :set_faculty, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
   # GET /faculties or /faculties.json
   def index
     @faculties = Faculty.all

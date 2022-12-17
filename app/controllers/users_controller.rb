@@ -1,15 +1,20 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+
   load_and_authorize_resource
-  before_action :set_user, only: %i[show edit update]
+  #before_action :set_user, only: %i[show edit update]
 
   def index
     @users = if params[:approved] == 'false'
-               User.accessible_by(current_ability).where(approved: false).order('email')
+               User.accessible_by(current_ability).where(approved: false).order('email').select(UserAttrs::SHOW)
              else
-               User.accessible_by(current_ability).order('approved', 'email')
+               User.accessible_by(current_ability).order('approved', 'email').select(UserAttrs::SHOW)
              end
+  end
+
+  def public_index
+    @users = User.accessible_by(current_ability).order('email').select(UserAttrs::READABLE)
   end
 
   def show; end
@@ -31,6 +36,7 @@ class UsersController < ApplicationController
       end
 
     end
+
   end
 
   def approve
@@ -49,9 +55,10 @@ class UsersController < ApplicationController
         format.html { redirect_to users_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @program }
       else
-        format.html { render :edit }
+        flash.now[:alert] = "User could not be updated"
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @program.errors, status: :unprocessable_entity }
-      end
+        end
     end
   end
 
@@ -62,9 +69,9 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     if can? :manage_access, User
-        params.require(:user).permit(:email, :approved, :role)
+        params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email, :approved, :role)
     else
-        params.require(:user).permit(:email)
+        params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email)
     end
   end
 end

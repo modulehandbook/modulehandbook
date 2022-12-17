@@ -111,7 +111,7 @@ class ProgramsController < ApplicationController
         format.html { redirect_to @program, notice: 'Program was successfully updated.' }
         format.json { render :show, status: :ok, location: @program }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity  }
         format.json { render json: @program.errors, status: :unprocessable_entity }
       end
     end

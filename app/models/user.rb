@@ -6,6 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :trackable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  belongs_to :faculty, optional: true
   has_many :versions, foreign_key: "whodunnit"
 
   ROLES = %i[admin reader writer editor qa].freeze

@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name:
   url: MyString
   description: MyText
 
@@ -9,3 +9,37 @@ two:
   name: MyString
   url: MyString
   description: MyText
+
+eng:
+  name: "Faculty of Engineering"
+  url: "https://giu-uni.de/en/academic-specializations/engineering/"
+  description: ""
+
+inf:
+  name: "Faculty of Informatics and Computer Science"
+  url: "https://giu-uni.de/en/academic-specializations/informatics/"
+  description: ""
+bus:
+  name: "Faculty of Business Administration"
+  url: "https://giu-uni.de/en/academic-specializations/business-administration/"
+  description: ""
+
+des:
+  name: "Faculty of Design"
+  url: "https://giu-uni.de/en/academic-specializations/design/"
+  description: ""
+
+arc:
+  name: "Faculty of Architectural Engineering"
+  url: "https://giu-uni.de/en/academic-specializations/architectural-engineering/"
+  description: ""
+
+bio:
+  name: "Faculty of Biotechnology"
+  url: "https://giu-uni.de/en/academic-specializations/biotechnology/"
+  description: ""
+
+pha:
+  name: "Pharmaceutical Engineering and Technology"
+  url: "https://giu-uni.de/en/academic-specializations/pharmaceutical-engineering-program/"
+  description: ""

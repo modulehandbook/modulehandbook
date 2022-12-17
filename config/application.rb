@@ -20,7 +20,7 @@ module ModuleHandbook
     # the framework and any gems in your application.
 
     config.active_record.legacy_connection_handling=false
-
+    config.add_autoload_paths_to_load_path = false
     config.hosts << "module-handbook"
     config.hosts << "localhost"
     config.hosts << "module-handbook.f4.htw-berlin.de"
