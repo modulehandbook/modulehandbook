@@ -15,11 +15,13 @@ class UserAttrs
   versions_count].freeze
 
   EDITABLE = %i[
+  approved
   id
   full_name
   email
   readable
   faculty
+  faculty_name
   about].freeze
 
   EDITABLE_ADMIN = %i[
@@ -30,14 +32,14 @@ class UserAttrs
   id
   full_name
   email
-  role
   faculty_name
   about
+  readable
   approved
+  role
   unconfirmed_email].freeze
 
   ADMIN = %i[
-  readable
   versions_count
   created_at
   updated_at

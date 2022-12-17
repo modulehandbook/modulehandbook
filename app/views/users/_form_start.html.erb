@@ -1,12 +1,16 @@
 
-  <% if user.errors.any? %>
-    <div class="form-group" id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-      <ul>
-        <% user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+<% if user.errors.any? %>
+
+  <tr>
+    <th scope="row" colspan = "2">
+      <div class="alert alert-danger" role="alert">
+      <%= pluralize(user.errors.count, "error") %> prohibited this user from being saved: <br />
+
+          <% user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+    </div></th>
+  </tr>
+
   <% end %>

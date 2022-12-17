@@ -6,10 +6,10 @@
 <tr>
   <th scope="row"><%= field_name %></th>
   <td>
-    <%= if show_form && field_editable?(field_name)
+    <%= if show_form && field_editable?(field_name, user)
             render 'field_input', user: user, field_name: field_name, action: action, form: form
           else
-           render 'field_value', user: user, field_name: field_name, action: action
+           render 'field_value', user: user, field_name: field_name, action: action, append: (show_form ? "(not editable)" : "")
         end  %>
   </td>
 </tr>

@@ -1,18 +1,8 @@
 
-<% if can? :manage_access, user %>
-  <div class="form-group">
-    <%= form.label :role %>
-    <%= form.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
-  </div>
 
-  <%if user != current_user %>
-    <div class="form-group" >
-      <%= form.label :approved %>
-      <%= form.check_box :approved, class: "form-control" %>
-    </div>
-  <% end %>
-<% end %>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<tr>
+  <th scope="row"></th><td></td>
+  <td><%= form.submit  :class =>  "btn btn-warning" %>
+  </td>
+</tr>
