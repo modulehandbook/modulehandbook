@@ -8,7 +8,7 @@ module Abilities
 
     def initialize(user)
       can %i[read update], User, id: user.id
-      can %i[read], User, readable: true
+      can %i[read], User , readable: true
       can %i[read export_course], Course
       can %i[read export_program], Program
       can %i[read], Faculty

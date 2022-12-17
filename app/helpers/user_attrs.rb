@@ -3,6 +3,16 @@ class UserAttrs
   faculty_name
   versions_count].freeze
 
+  INDEX = %i[
+  id
+  full_name
+  email
+  role
+  faculty_name
+  approved
+  readable
+  versions_count].freeze
+
   READABLE = %i[
   id
   full_name

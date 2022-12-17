@@ -5,14 +5,19 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   #before_action :set_user, only: %i[show edit update]
 
-  def prepare_index(include_fields)
+  def include_fields(include_fields)
     @include_fields = include_fields
     @select_fields = @include_fields - UserAttrs::COMPUTED + %i[faculty_id]
     @fields = @include_fields - [:id]
   end
 
   def index
-    prepare_index(UserAttrs::READABLE + UserAttrs::ADMIN)
+    if can? :see_admin_fields, User
+      include_fields(UserAttrs::INDEX)
+    else
+      include_fields(UserAttrs::INDEX & UserAttrs::READABLE)
+    end
+
     @users = if params[:approved] == 'false'
                User.accessible_by(current_ability).where(approved: false).order('email').select(@select_fields)
              else
@@ -20,15 +25,14 @@ class UsersController < ApplicationController
              end
   end
 
-  def list
-    include_fields(UserAttrs::READABLE)
-    @users = User.accessible_by(current_ability).order('email').select(@select_fields)
-    prepare_index(include_fields)
-    respond_to do |format|
-      format.html { render :index }
-      format.json { render :index }
-    end
-  end
+#  def list
+#    include_fields(UserAttrs::INDEX & UserAttrs::READABLE)
+#    @users = User.accessible_by(current_ability).order('email').select(@select_fields)
+#    respond_to do |format|
+#      format.html { render :index }
+#      format.json { render :index }
+#    end
+#  end
 
   def show; end
 
