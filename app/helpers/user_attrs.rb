@@ -12,6 +12,8 @@ class UserAttrs
   faculty_name
   approved
   readable
+  current_sign_in_at
+  last_sign_in_at
   versions_count].freeze
 
   EDITABLE = %i[

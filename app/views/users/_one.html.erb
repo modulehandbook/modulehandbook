@@ -19,15 +19,13 @@ user = @user
   <tr>
   <th colspan="2" scope="col" ><h3><%= verb%> User: <%= @user.email %></h3></</th>
         <th>
-          <% if (action == :show ) && (can? :edit, @user) %>
-
-        <button type="button" class="btn btn-warning btn-sm">
-            <%= link_to "Edit", edit_user_path(@user) %>
-        </button>
-
-      <% else %>
-          <% if show_form %><%= form.submit  :class =>  "btn btn-warning" %><% end %>
-      <% end %></th>
+          <% if show_form %>
+              <%= form.submit  :class =>  "btn btn-warning" %>
+          <% elsif (can? :edit, @user) %>
+                  <button type="button" class="btn btn-warning btn-sm">
+                      <%= link_to "Edit", edit_user_path(@user) %>
+                  </button>
+       <% end %></th>
   </tr>
 
   </thead>
@@ -37,11 +35,11 @@ user = @user
 <% if show_form %>
 
         <%= render 'form_start', user: user, form: form %>
-        <%= render 'fields_in_one' , fields: @fields, user: user, action: action, form: form, show_form: show_form%>
+        <%= render 'fields_in_one' , fields: @fields, user: user, form: form, show_form: show_form%>
         <%= render 'form_end', user: user, form: form %>
 
 <% else %>
-    <%= render 'fields_in_one' , fields: @fields, user: user, action: action, form: nil, show_form: false %>
+    <%= render 'fields_in_one' , fields: @fields, user: user, form: nil, show_form: false %>
 
 <% end %>
 

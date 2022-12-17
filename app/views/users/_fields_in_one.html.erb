@@ -7,9 +7,9 @@
   <th scope="row"><%= field_name.to_s.humanize %></th>
   <td>
     <%= if show_form && field_editable?(field_name, user)
-            render 'field_input', user: user, field_name: field_name, action: action, form: form
+            render 'field_input', user: user, field_name: field_name, form: form
           else
-           render 'field_value', user: user, field_name: field_name, action: action, append: (show_form ? "(not editable)" : "")
+           render 'field_value', user: user, field_name: field_name, append: (show_form ? "(not editable)" : "")
         end  %>
   </td>
 </tr>
