@@ -13,8 +13,10 @@
       <% cps.each do | cp | %>
           <td colspan = "<%=cp.course.ects%>" class="bg-required-<%= cp.required %>">
             <p class="bg-<%= cp.course.aasm_state %>">&nbsp;</p></br>
-            <small><%= cp.course.code %></small><br/>
-            <b><%=link_to cp.course.name, cp %></b><br/>
+            <small><%= cp.course.code %> /
+              <%= link_to cp.course.course_programs.count, course_programs_url(course_id: cp.course) %>
+            </small><br/>
+            <b><%=link_to cp.course.name, cp.course %></b><br/>
             (<%= cp.course.ects %> ECTS)
 
           <% end %>

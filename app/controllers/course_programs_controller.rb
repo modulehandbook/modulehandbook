@@ -9,6 +9,10 @@ class CourseProgramsController < ApplicationController
                          CourseProgram.where(program_id: params[:program_id])
                                       .includes(:program, :course)
                                       .order('programs.name', 'semester', 'courses.name')
+                       elsif course_id = params[:course_id]
+                         CourseProgram.where(course_id: course_id)
+                                      .includes(:program, :course)
+                                      .order('programs.name', 'semester', 'courses.name')
                        else
                          CourseProgram.includes(:course, :program)
                                       .order('programs.name', 'semester', 'courses.name')
