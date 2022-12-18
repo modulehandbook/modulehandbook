@@ -8,7 +8,6 @@ module CommentsTestsHelper
     base_setup_helper
     @the_comment = "This is a comment, #{context(__method__)}"
     visit course_path(@course)
-    click_on 'Go to comments'
     fill_in 'comment_comment', with: @the_comment
     click_on 'Create Comment'
   end
