@@ -9,8 +9,8 @@ ENV NODE_ENV production
 WORKDIR /module-handbook
 COPY Gemfile Gemfile.lock ./
 
-ENV GEN_DEPS bash gcompat libpq tzdata nodejs
-ENV BUILD_DEPS git linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev
+ENV GEN_DEPS bash gcompat libpq tzdata nodejs mariadb-dev
+ENV BUILD_DEPS git linux-headers libpq libxml2-dev libxslt-dev build-base
 ENV NOKOGIRI_SYSTEM_LIBS build-base libxml2-dev libxslt-dev
 ENV AO --no-install-recommends --no-cache
 # general dependencies

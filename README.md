@@ -19,7 +19,7 @@ open http://localhost:3000
 ---
 
 This is a [Ruby on Rails](https://rubyonrails.org) application using a
-[Postgres Database](https://www.postgresql.org) and Devise for Authentication
+[MariaDB Database](https://mariadb.org/) and Devise for Authentication
 ([heartcombo/devise: Flexible authentication solution for Rails with Warden.](https://github.com/heartcombo/devise)).
 
 [Bootstrap](https://getbootstrap.com) is used for the frontend.
@@ -36,7 +36,7 @@ The [makefile](./makefile) contains useful commands; have a look at it.
 `make start` uses docker-compose up to start up the docker containers
   - module-handbook
   - module-handbook-exporter
-  - module-handbook-postgres
+  - module-handbook-mariadb
 It uses the Exporter specified in TAG_MODULE_HANDBOOK_EXPORTER set in the makefile.
 
 ## Set up Database
@@ -85,10 +85,10 @@ export SMTP_PASSWORD=
 bundle install
 rails server
 ```
-This needs an open local Postgres running.
-Start postgres in docker container:
+This needs an open local MariaDB running.
+Start mariaDB in docker container:
 ```bash
-docker-compose -f docker-compose.yml up -d module-handbook-postgres
+docker-compose -f docker-compose.yml up -d module-handbook-mariadb
 ```
 
 See the [makefile](./makefile) for more useful commands.

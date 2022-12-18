@@ -7,6 +7,10 @@ pg_transfer/*
 latest.dump
 dumps/**
 
+# Ignore Maria DB data mounted to containers
+mariadb_data/*
+
+
 # Ignore simplecov report
 coverage/**
 

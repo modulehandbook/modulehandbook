@@ -2,19 +2,16 @@
 # use .env file to differentiate between prod and dev
 version: '3.4'
 services:
-  module-handbook-postgres:
+  module-handbook-mariadb:
     container_name: modulehandbook-database
-    image: postgres:13.4-alpine
-    #    container_name: module-handbook-postgres
+    image: yobasystems/alpine-mariadb:10.6.11
     environment:
       - APPLICATION=module-handbook
-      - POSTGRES_PASSWORD=modhand
-      - POSTGRES_USER=modhand
-      - POSTGRES_DB=modhand-db-prod
-      # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
-      - POSTGRES_HOST_AUTH_METHOD=password
+      - MYSQL_PASSWORD=modhand
+      - MYSQL_USER=modhand
+      - MYSQL_DATABASE=modhand-db-prod
     volumes:
-      - ./pg_data:/var/lib/postgresql/data
+      - ./mariadb_data:/var/lib/mysql
   module-handbook-exporter:
     image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
     container_name: modulehandbook-exporter
@@ -24,16 +21,16 @@ services:
     environment:
       - TAG
       - RAILS_ENV=production
-      - RAILS_DB_HOST="module-handbook-postgres"
-      - POSTGRES_USER=modhand
-      - POSTGRES_PASSWORD=modhand
-      - POSTGRES_DB=modhand-db-prod
+      - RAILS_DB_HOST="module-handbook-mariadb"
+      - MARIADB_USER=modhand
+      - MARIADB_PASSWORD=modhand
+      - MARIADB_DB=modhand-db-prod
       - RAILS_SERVE_STATIC_FILES=true
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
     env_file:
       - ${SECRET_ENV_FILE}
     depends_on:
-      - module-handbook-postgres
+      - module-handbook-mariadb
       - module-handbook-exporter
     volumes:
       - ./container_logs:/module-handbook/log
