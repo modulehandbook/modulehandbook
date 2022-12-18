@@ -4,11 +4,11 @@ class UserWriterTest < ApplicationSystemTestCase
   def setup
     @user_writer = users(:writer)
     @user = @user_writer
-    sign_in @user
+    system_test_login(@user.email, 'geheim12')
   end
 
   def teardown
-    sign_out @user
+    system_test_logout
   end
 
   test 'writer is logged in' do

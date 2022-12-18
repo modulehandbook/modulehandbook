@@ -4,11 +4,11 @@ class UserEditorTest < ApplicationSystemTestCase
   def setup
     @user_editor = users(:editor)
     @user = @user_editor
-    sign_in @user
+    system_test_login(@user.email, 'geheim12')
   end
 
   def teardown
-    sign_out @user
+    system_test_logout
   end
 
   test 'editor is logged in' do

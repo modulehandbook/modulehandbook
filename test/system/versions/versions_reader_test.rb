@@ -5,7 +5,7 @@ class VersionsReaderTest < ApplicationSystemTestCase
     @course = courses(:one)
     @user = users(:reader)
     @user_other = users(:writer)
-    sign_in @user
+    system_test_login(@user.email, 'geheim12')
   end
 
   test 'logged in as reader' do

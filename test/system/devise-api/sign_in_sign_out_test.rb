@@ -5,11 +5,11 @@ class DeviseApiTest < ApplicationSystemTestCase
     @user_editor = users(:editor)
     @user_writer = users(:writer)
     @user = @user_writer
-    sign_in @user
+    system_test_login(@user.email, 'geheim12')
   end
 
   teardown do
-    sign_out @user
+    system_test_logout
     CourseProgram.all.delete_all
     Program.all.delete_all
     Course.all.delete_all
@@ -24,8 +24,8 @@ class DeviseApiTest < ApplicationSystemTestCase
 
   test 'switch user' do
     # Logged in as admin@mail.de
-    sign_out @user
-    sign_in @user_editor
+    system_test_logout
+    system_test_login(@user_editor.email, 'geheim12')
     visit root_path
 
     assert_text 'Logged in as '+@user_editor.email

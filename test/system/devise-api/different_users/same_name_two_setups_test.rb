@@ -41,7 +41,8 @@ require 'application_system_test_case'
 class OneNameTest < ApplicationSystemTestCase
   setup do
     @user_writer = users(:writer)
-    sign_in @user_writer
+    system_test_logout
+    system_test_login(@user_writer.email, 'geheim12')
   end
 
   test 'editor is logged in as both setups are called, also the one below!' do
@@ -54,7 +55,8 @@ end
 class OneNameTest < ApplicationSystemTestCase
   setup do
     @user_editor = users(:editor)
-    sign_in @user_editor
+    system_test_logout
+    system_test_login(@user_editor.email, 'geheim12')
   end
 
   test 'editor is logged in 2' do

@@ -5,7 +5,7 @@ class CommentsAdminTest < ApplicationSystemTestCase
     @course = courses(:one)
     @user = users(:one)
     @user_other = users(:writer)
-    sign_in @user
+    system_test_login(@user.email, 'geheim12')
   end
 
   test 'as admin i can create a comment on a course' do
@@ -72,7 +72,6 @@ class CommentsAdminTest < ApplicationSystemTestCase
   end
 
   test 'as admin i can delete and destroy others comment' do
-    skip
     @course.comments.create(author: @user_other, comment: 'The others comment')
     visit course_path(@course)
     assert_text 'The others comment'
