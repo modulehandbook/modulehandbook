@@ -39,6 +39,7 @@ class UserAttrs
   readable
   approved
   role
+  confirmed_at
   unconfirmed_email].freeze
 
   ADMIN = %i[

@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :select_fields_index, only: %i[index ]
   before_action :select_fields_single, only: %i[show edit update]
   #before_action :select_fields_edit, only: %i[]
-
+  def show_abilities; end
   def select_fields_single
       include_fields(UserAttrs::SHOW)
   end
