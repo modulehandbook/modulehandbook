@@ -9,7 +9,8 @@ class User < ApplicationRecord
   belongs_to :faculty, optional: true
   has_many :versions, foreign_key: "whodunnit"
 
-  ROLES = %i[admin reader writer editor qa].freeze
+  # ROLES = %i[admin reader writer editor qa].freeze
+  ROLES = %i[reader writer editor qa admin].freeze
 
   after_initialize :set_default_role, if: :new_record?
 

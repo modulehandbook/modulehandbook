@@ -270,3 +270,12 @@ docker stop module-handbook
 docker-compose exec module-handbook bash
 docker restart modulehandbook
 docker ps
+
+
+
+# Schema
+
+[https://dbdiagram.io/d/639efdd399cb1f3b55a213d3](https://dbdiagram.io/d/639efdd399cb1f3b55a213d3)
+
+![](https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3)
+<iframe width="560" height="315" src='https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3'> </iframe>
