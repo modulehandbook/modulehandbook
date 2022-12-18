@@ -3,9 +3,8 @@ name: test on docker
 on:
   push:
     branch:
-    #  - master
-      - user_info
-      - fix_tests
+      - master
+      - try_cuprite_driver
 
 env:
   REGISTRY: ghcr.io
