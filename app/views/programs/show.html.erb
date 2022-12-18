@@ -1,5 +1,4 @@
-
-<h3>Program: <%= @program.name %></h3>
+<h3><%= content_for(:title, "Program: #{@program.name}") %></h3>
 <p id="notice"><%= notice %><br>
   </p>
 <p>
