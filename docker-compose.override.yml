@@ -7,7 +7,7 @@
 # override precedence:
 # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
 
-version: '3.4'
+version: '3.9'
 services:
   module-handbook-postgres:
       environment:
@@ -33,4 +33,19 @@ services:
       - RAILS_ENV=development
       - RAILS_MASTER_KEY=
       # - EXPORTER_BASE_URL=
+      - CHROME_URL=http://chrome:3333
     restart: "no"
+    depends_on:
+      - chrome
+  # docker run -p 3003:3000 browserless/chrome:1.31-chrome-stable
+  chrome:
+    image: browserless/chrome:1.31-chrome-stable
+#     image: barrenechea/browserless:latest
+    ports:
+      - "3333:3333"
+    #volumes:
+    #  - .:/app:cached # change it for your rails' container directory
+    #  - .:/usr/src/app:cached
+    environment:
+      PORT: 3333
+      CONNECTION_TIMEOUT: 600000
