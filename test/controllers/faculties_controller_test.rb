@@ -3,9 +3,11 @@ require "test_helper"
 class FacultiesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @faculty = faculties(:one)
-    @admin = users(:one)
+    @admin = users(:faculty_tester)
     sign_in @admin
   end
+
+
 
   test "should get index" do
     get faculties_url

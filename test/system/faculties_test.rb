@@ -3,6 +3,8 @@ require "application_system_test_case"
 class FacultiesTest < ApplicationSystemTestCase
   setup do
     @faculty = faculties(:one)
+    @user = users(:one)
+    system_test_login(@user.email, 'geheim12')
   end
 
   test "visiting the index" do

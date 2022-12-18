@@ -100,6 +100,12 @@ reset_db_local:
 	rails db:create RAILS_ENV=development
 	rails db:migrate
 	rails db:seed
+
+reset_test_db:
+	docker restart modulehandbook-database
+	RAILS_ENV=test rails db:drop
+	RAILS_ENV=test rails db:create
+	RAILS_ENV=test rails db:migrate
 rails_test:
 	# common fixes on Lottes Laptop
 	# in test_helper.rb -> parallelize(workers: 1)

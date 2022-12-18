@@ -7,7 +7,7 @@ one:
   encrypted_password: <%= User.new.send(:password_digest, 'geheim12') %>
   role: :admin
   full_name: Edrice Amr Hemede Masudi
-  faculty: Faculty of Engineering
+  faculty: eng
   readable: true
   about: some more info
 
@@ -18,7 +18,7 @@ two:
   encrypted_password: <%= User.new.send(:password_digest, 'geheim12') %>
   role: :admin
   full_name: Edrice Amr Hemede Masudi
-  faculty: Faculty of Informatics & Computer Science
+  faculty: inf
   readable: false
   about: some more info
 
@@ -49,3 +49,14 @@ qa:
   approved: true
   encrypted_password: <%= User.new.send(:password_digest, 'geheim12') %>
   role: :qa
+
+faculty_tester:
+  email: faculty_tester@host.org
+  confirmed_at: <%= Date.yesterday %>
+  approved: true
+  encrypted_password: <%= User.new.send(:password_digest, 'geheim12') %>
+  role: :admin
+  full_name: Edrice Amr Hemede Masudi
+  faculty: bus
+  readable: true
+  about: some more info

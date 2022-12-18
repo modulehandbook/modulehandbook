@@ -29,4 +29,9 @@ class ActiveSupport::TestCase
     fill_in 'user_password', with: password
     click_on 'Log in'
   end
+
+  def system_test_logout
+    visit users_sign_out_path
+  end
+
 end
