@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
+require 'test_helper'
 
-class CourseQAAbilitiesTest < ApplicationSystemTestCase
+class CourseQAAbilitiesTest <  ActiveSupport::TestCase
   setup do
     @course = courses(:one)
     @user = users(:qa)
     @ability = Ability.new(@user)
-    system_test_login(@user.email, 'geheim12')
+    # system_test_login(@user.email, 'geheim12')
   end
 
   test 'as qa i can create a course' do

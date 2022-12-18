@@ -7,9 +7,11 @@ module Abilities
     include CanCan::Ability
 
     def initialize(user)
-      can :crud, User, id: user.id
+      can %i[read update], User, id: user.id
+      can %i[read], User , readable: true
       can %i[read export_course], Course
       can %i[read export_program], Program
+      can %i[read], Faculty
       can %i[read], CourseProgram
       can %i[read], Comment
       can %i[create], Comment

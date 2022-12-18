@@ -6,6 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :trackable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  belongs_to :faculty, optional: true
   has_many :versions, foreign_key: "whodunnit"
 
   ROLES = %i[admin reader writer editor qa].freeze
@@ -24,6 +25,14 @@ class User < ApplicationRecord
   def format_time(at)
     return "" if (at.nil? || at == "")
     at.strftime("%d/%m/%y (%H:%M)")
+  end
+
+  def faculty_name
+    @faculty_name ||= faculty ? faculty.name : "---"
+  end
+
+  def versions_count
+    @versions_count ||= versions.count
   end
 
   def set_default_role

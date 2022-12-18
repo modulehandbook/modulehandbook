@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
+require 'test_helper'
 
-class CourseProgramEditorAbilitiesTest < ApplicationSystemTestCase
+class CourseProgramEditorAbilitiesTest <  ActiveSupport::TestCase
   setup do
     @course_program = course_programs(:one)
     @user = users(:editor)
     @ability = Ability.new(@user)
-    system_test_login(@user.email, 'geheim12')
+    # system_test_login(@user.email, 'geheim12')
   end
 
   test 'as editor i can create a course_program' do

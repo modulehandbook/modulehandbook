@@ -4,39 +4,30 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Email</th>
-      <th scope="col">Role</th>
-      <th scope="col">Approved</th>
-      <th scope="col">Current Log in</th>
-      <th scope="col">Last Log in</th>
-      <th scope="col">Edit</th>
+      <%  @fields.each do | field_name | %>
+      <th scope="col"><%= field_name.to_s.humanize %></th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td onclick = "location.href='<%= user_path(user) %>'" scope="row"><%= user.email %></td>
-        <td><%= user.role.to_s.humanize %></td>
-        <td> <input type="checkbox" <%= user.approved ? "checked":"" %>>
-          <% if !user.approved && can?(:approve, user) %> | <%= link_to "Approve", approve_user_path(id: user.id) %><% end %>
-        </td>
-        <td><%= user.format_time(user.current_sign_in_at) %></td>
-        <td><%= user.format_time(user.last_sign_in_at) %></td>
-
-
-            <td>  <% if can? :edit, user %>
-                <%= link_to "Edit", edit_user_path(user) %>
-                <% end %>
-            </td>
-            <td> <%= user.versions.count %>
-            <td>
-        <% if can? :destroy, user %>
-                <%= link_to 'Destroy', user, id: "destroy_user_#{user.id}", data: {turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+        <%  @fields.each do | field_name | %>
+          <%= render 'field_in_index', user: user, field_name: field_name %>
         <% end %>
-            </td>
+
+        <td><% if can? :destroy, user %>
+                <%= link_to 'Destroy', user, id: "destroy_user_#{user.id}", data: {turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+        <% end %></td>
+
+        <td><% if can? :edit, user %>
+            <%= link_to "Edit", edit_user_path(user) %>
+        <% end %></td>
+
       </tr>
     <% end %>
+
   </tbody>
 </table>
 

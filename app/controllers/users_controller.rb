@@ -1,14 +1,47 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+
   load_and_authorize_resource
-  before_action :set_user, only: %i[show edit update]
+  before_action :select_fields_index, only: %i[index ]
+  before_action :select_fields_single, only: %i[show edit update]
+  #before_action :select_fields_edit, only: %i[]
+
+  def select_fields_single
+      include_fields(UserAttrs::SHOW)
+  end
+
+  def select_fields_edit
+      include_fields(UserAttrs::EDITABLE)
+  end
+
+  def select_fields_index
+      include_fields(UserAttrs::INDEX)
+  end
+
+  def include_fields(include_fields)
+    if can? :see_admin_fields, User
+      @include_fields = include_fields
+    elsif @user && (current_user == @user)
+      @include_fields = include_fields & UserAttrs::OWN_READABLE_FIELDS
+    else
+      @include_fields = include_fields & UserAttrs::READABLE
+    end
+    @select_fields = @include_fields - UserAttrs::COMPUTED + %i[faculty_id]
+    @fields = @include_fields - [:id]
+  end
 
   def index
+    if can? :see_admin_fields, User
+      include_fields(UserAttrs::INDEX)
+    else
+      include_fields(UserAttrs::INDEX & UserAttrs::READABLE)
+    end
+
     @users = if params[:approved] == 'false'
-               User.accessible_by(current_ability).where(approved: false).order('email')
+               User.accessible_by(current_ability).where(approved: false).order('email').select(@select_fields)
              else
-               User.accessible_by(current_ability).order('approved', 'email')
+               User.accessible_by(current_ability).order('approved', 'email').select(@select_fields)
              end
   end
 
@@ -31,6 +64,7 @@ class UsersController < ApplicationController
       end
 
     end
+
   end
 
   def approve
@@ -49,9 +83,10 @@ class UsersController < ApplicationController
         format.html { redirect_to users_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @program }
       else
-        format.html { render :edit }
+        flash.now[:alert] = "User could not be updated"
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @program.errors, status: :unprocessable_entity }
-      end
+        end
     end
   end
 
@@ -62,9 +97,9 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     if can? :manage_access, User
-        params.require(:user).permit(:email, :approved, :role)
+        params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email, :approved, :role)
     else
-        params.require(:user).permit(:email)
+        params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email)
     end
   end
 end

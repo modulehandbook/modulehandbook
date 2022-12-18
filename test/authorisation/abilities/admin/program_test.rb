@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
+require 'test_helper'
 
-class ProgramAdminAbilitiesTest < ApplicationSystemTestCase
+class ProgramAdminAbilitiesTest <  ActiveSupport::TestCase
   setup do
     @program = programs(:one)
     @user = users(:one)
     @ability = Ability.new(@user)
-    system_test_login(@user.email, 'geheim12')
+    # system_test_login(@user.email, 'geheim12')
   end
 
   test 'as admin i can create a program' do

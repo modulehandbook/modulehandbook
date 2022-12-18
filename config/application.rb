@@ -20,6 +20,9 @@ module ModuleHandbook
     # the framework and any gems in your application.
 
     config.active_record.legacy_connection_handling=false
+    config.add_autoload_paths_to_load_path = false
+    # see https://guides.rubyonrails.org/i18n.html
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
 
     config.hosts << "module-handbook"
     config.hosts << "localhost"

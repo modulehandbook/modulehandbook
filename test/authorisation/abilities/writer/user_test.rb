@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
+require 'test_helper'
 
-class UserWriterAbilitiesTest < ApplicationSystemTestCase
+class UserWriterAbilitiesTest <  ActiveSupport::TestCase
   setup do
     @user = users(:writer)
+    @user1 = users(:one)
     @user2 = users(:two)
     @ability = Ability.new(@user)
-    system_test_login(@user.email, 'geheim12')
+    # system_test_login(@user.email, 'geheim12')
   end
 
   test 'as writer i cant create a user' do
@@ -15,10 +16,10 @@ class UserWriterAbilitiesTest < ApplicationSystemTestCase
     assert @ability.cannot?(:new, @user2)
   end
 
-  test 'as writer i can read a user' do
-    assert @ability.can?(:read, @user2)
-    assert @ability.can?(:show, @user2)
-    assert @ability.can?(:index, @user2)
+  test 'as writer i can read a readable user' do
+    assert @ability.can?(:read, @user1)
+    assert @ability.can?(:show, @user1)
+    assert @ability.can?(:index, @user1)
   end
 
   test 'as writer i cant edit and update a user' do
