@@ -1,13 +1,22 @@
 require 'test_helper'
-# require 'capybara/poltergeist'
-# require 'phantomjs'
+
+# https://github.com/rubycdp/cuprite
+require "capybara/cuprite"
+#Capybara.javascript_driver = :cuprite
+#Capybara.register_driver(:cuprite) do |app|
+#  Capybara::Cuprite::Driver.new(app, window_size: [1200, 800])
+## if you use Docker don't forget to pass no-sandbox option:
+#  Capybara::Cuprite::Driver.new(app, browser_options: { 'no-sandbox': nil })
+# end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :selenium_headless #firefox
-  # the comments tests dont work with chrome headless or poltergeist
-  # driven_by :selenium_chrome_headless
 
-  # Add more helper methods to be used by all tests here...
+  #driven_by :selenium_headless #firefox
+  driven_by :selenium_headless, using: :firefox
+  # driven_by :cuprite
+  # driven_by :cuprite, window_size: [1400, 1400], options:
+  #  { js_errors: true }, browser_options: { 'no-sandbox': nil }
+
   def system_test_login(email, password)
     visit new_user_session_path
     fill_in 'user_email', with: email
@@ -18,7 +27,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def system_test_logout
     visit users_sign_out_path
   end
+
   def assert_logged_in
   end
-  # assert_text 'Logged in as '+@user_writer.email
+
 end
