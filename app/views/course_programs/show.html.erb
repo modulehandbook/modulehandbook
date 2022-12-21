@@ -21,12 +21,12 @@
 
 <p>
   <strong>Course:</strong>
-  <%= link_to @course_program.course.name, @course_program.course %>
+  <%= link_to "#{@course_program.course.name} - #{get_semester_name(@course_program.course.valid_end)}", @course_program.course %>
 </p>
 
 <p>
   <strong>Program:</strong>
-  <%= link_to @course_program.program.name, @course_program.program %>
+  <%= link_to  "#{@course_program.program.name} - #{get_semester_name(@course_program.program.valid_end)}", @course_program.program %>
 </p>
 
 <p>
