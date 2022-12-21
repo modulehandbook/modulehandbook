@@ -26,7 +26,7 @@ class CoursesController < ApplicationController
 
   def versions
     @versions = @course.versions
-    @programs = @course.programs.order(:name).pluck(:name, :id)
+    @programs = @course.programs.order(:name)
   end
 
   # GET /courses/1

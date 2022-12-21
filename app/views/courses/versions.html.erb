@@ -9,8 +9,8 @@
 
 Part of Programs:
 <% if @programs.size > 0 %>
-  <% @programs.each do |program_name, program_id| %>
-  <%= link_to program_name, program_path(program_id)  %>,
+  <% @programs.each do |program| %>
+    <%= link_to "#{program.name} - #{get_semester_name(program.valid_end)}", program_path(program)  %>,
   <% end %>
 <% else %>
   none
