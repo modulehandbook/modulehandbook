@@ -3,7 +3,7 @@ class Course < ApplicationRecord
   include CombinedVersioning
   include SemesterDataAdder
 
-  has_many :comments, as: :commentable
+  has_many :comments, :foreign_key => [:course_id, :course_valid_end]
 
   aasm whiny_transitions: :false do
     state :in_progress, initial: true

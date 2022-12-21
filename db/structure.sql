@@ -27,13 +27,16 @@ CREATE TABLE `comments` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `author_id` bigint(20) NOT NULL,
   `comment` text DEFAULT NULL,
-  `commentable_type` varchar(255) NOT NULL,
-  `commentable_id` bigint(20) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `course_id` bigint(20) NOT NULL,
+  `course_valid_end` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_comments_on_author_id` (`author_id`),
-  KEY `index_comments_on_commentable_type_and_commentable_id` (`commentable_type`,`commentable_id`)
+  KEY `fk_rails_d0f578074a` (`course_id`),
+  KEY `fk_rails_224c6870e0` (`course_valid_end`),
+  CONSTRAINT `fk_rails_224c6870e0` FOREIGN KEY (`course_valid_end`) REFERENCES `courses` (`valid_end`),
+  CONSTRAINT `fk_rails_d0f578074a` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `course_programs`;
@@ -225,6 +228,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20221209104330'),
 ('20221213142950'),
 ('20221217080356'),
-('20221217083615');
+('20221217083615'),
+('20221221114112');
 
 
