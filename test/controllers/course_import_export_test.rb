@@ -8,14 +8,14 @@ class CoursesControllerImportTest < ActionDispatch::IntegrationTest
   end
 
   test 'should export a course as json' do
-    get export_course_json_url(id: @course.id)
+    get export_course_json_url(id: @course.id.to_s)
     assert_response :success
     assert_includes response.body, @course.code
     assert_includes response.body, @course.name
   end
 
   test 'should export all courses as json' do
-    get export_courses_json_url
+    get export_courses_json_url(:current_semester_season => "Winter", :current_semester_year => 2021)
     assert_response :success
     assert_includes response.body, @course.code
     assert_includes response.body, @course.name

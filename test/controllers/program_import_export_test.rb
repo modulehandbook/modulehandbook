@@ -8,14 +8,14 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
   end
 
   test 'should export a program as json' do
-    get export_program_json_url(id: @program.id)
+    get export_program_json_url(id: @program.id.to_s)
     assert_response :success
     assert_includes response.body, @program.code
     assert_includes response.body, @program.name
   end
 
   test 'should export all programs as json' do
-    get export_programs_json_url
+    get export_programs_json_url(:current_semester_season => "Winter", :current_semester_year => 2021)
     assert_response :success
     assert_includes response.body, @program.code
     assert_includes response.body, @program.name
