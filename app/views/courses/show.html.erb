@@ -25,7 +25,7 @@
 <p id="notice"><%= notice %><br>
    </p>
 <p>
-Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> | <%= link_to 'DOCX', export_course_docx_url(id: @course.id) %> <br>
+Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id.to_s) %> | <%= link_to 'DOCX', export_course_docx_url(id: @course.id.to_s) %> <br>
 <% if can?(:edit, @course) && is_latest_version %><%= link_to 'Edit', edit_course_path(@course) %>, <% end %><%= link_to 'Back to Index', courses_path %>
 </p>
 

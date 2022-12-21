@@ -8,7 +8,7 @@ class ProgramsController < ApplicationController
 
   before_action :set_program, only: %i[edit update destroy export_program_json]
   before_action :set_current_as_of_time, :set_existing_semesters, only: %i[index show]
-  before_action :set_current_semester, only: %i[index]
+  before_action :set_current_semester, only: %i[index export_programs_json]
   before_action :set_current_semester_in_show, only: %i[show]
   helper_method :is_deleted_program?
 
@@ -88,22 +88,22 @@ class ProgramsController < ApplicationController
   def export_program_json
     data = @program.gather_data_for_json_export
     data = JSON.pretty_generate(data)
-    filename = helpers.generate_filename(@program)
+    filename = "#{helpers.generate_filename(@program)}_#{get_semester_name(@program.valid_end)}"
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}.json"
   end
 
   def export_programs_json
     programs = Program.all
-    data = [].as_json
-    data = JSON.pretty_generate(data)
+    data = []
     programs.each do |program|
-      data << program.gather_data_for_json_export.to_json
+      data << program.gather_data_for_json_export
     end
+    data = JSON.pretty_generate(data)
     data = data.as_json
-    filename = Date.today.to_s + '_all_programs'
+    filename = "#{Date.today}_all-programs_#{get_semester_name(@current_semester)}"
     send_data data, type: 'application/json; header=present',
-                    disposition: "attachment; filename=#{filename}_all-programs.json"
+                    disposition: "attachment; filename=#{filename}.json"
   end
 
   def export_program_docx
@@ -116,7 +116,7 @@ class ProgramsController < ApplicationController
     begin
       resp = Faraday.post(post_url, program_json, 'Content-Type' => 'application/json')
       logger.debug resp
-      filename = helpers.generate_filename(program)
+      filename = "#{helpers.generate_filename(program)}_#{get_semester_name(program.valid_end)}"
       send_data resp.body, filename: filename + '.docx'
     rescue Faraday::ConnectionFailed => e
       redirect_to programs_path, alert: 'Error: Program could not be exported as DOCX because the connection to the external export service failed!' + post_url

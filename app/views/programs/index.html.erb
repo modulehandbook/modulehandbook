@@ -7,7 +7,7 @@
 
 
 <% if can? :edit, @programs %><%= link_to 'New Program', new_program_path %><br><% end %>
-JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
+JSON: <%= link_to 'Export all Programs', export_programs_json_url(:current_semester_season => get_semester_season(@current_semester), :current_semester_year => get_semester_year(@current_semester)) %>
 <!-- Button trigger modal -->
 <% if can? :edit, @programs %>| <a href="#" data-toggle="modal" data-target="#jsonModal">
   Import Program(s)

@@ -93,8 +93,13 @@ class Course < ApplicationRecord
   end
 
   def gather_data_for_json_export
-    data = as_json
-    programs = self.programs.order(:name).as_json
+    exclude_attributes = [:transaction_start, :transaction_end, :valid_end, :valid_start, :change_list, :author_id]
+
+    data = as_json(except: exclude_attributes)
+    data["semester_season"] = get_semester_season(valid_end)
+    data["semester_year"] = get_semester_year(valid_end)
+
+    programs = self.programs.order(:name).as_json(except: exclude_attributes)
     cp_links = course_programs
     programs.each do |program|
       cp_link = cp_links.where(program_id: program['id'])

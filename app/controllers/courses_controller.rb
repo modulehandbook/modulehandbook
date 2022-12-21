@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
   
   before_action :set_course, only: %i[edit update destroy export_course_json revert_to]
   before_action :set_current_as_of_time, :set_existing_semesters, only: %i[index show]
-  before_action :set_current_semester, only: %i[index]
+  before_action :set_current_semester, only: %i[index export_courses_json]
   before_action :set_current_semester_in_show, only: %i[show]
   helper_method :is_deleted_course?
 
@@ -88,24 +88,22 @@ class CoursesController < ApplicationController
   def export_course_json
     data = @course.gather_data_for_json_export.as_json
     data = JSON.pretty_generate(data)
-    code = @course.try(:code) ? @course.code.gsub(' ', '') : 'XX'
-    name = @course.try(:name) ? @course.name.gsub(' ', '') : 'xxx'
-    filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
+    filename = "#{helpers.generate_filename(@course)}_#{get_semester_name(@course.valid_end)}"
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}.json"
   end
 
   def export_courses_json
-    courses = Course.all
-    data = [].as_json
-    data = JSON.pretty_generate(data)
+    courses = Course.where(valid_end: @current_semester)
+    data = []
     courses.each do |course|
-      data << course.gather_data_for_json_export.to_json
+      data << course.gather_data_for_json_export
     end
+    data = JSON.pretty_generate(data)
     data = data.as_json
-    filename = Date.today.to_s
+    filename = "#{Date.today}_all-courses_#{get_semester_name(@current_semester)}"
     send_data data, type: 'application/json; header=present',
-                    disposition: "attachment; filename=#{filename}_all-courses.json"
+                    disposition: "attachment; filename=#{filename}.json"
   end
 
   def export_course_docx
@@ -118,7 +116,7 @@ class CoursesController < ApplicationController
     begin
       resp = Faraday.post(post_url, course_json, 'Content-Type' => 'application/json')
       logger.debug resp
-      filename = helpers.generate_filename(course)
+      filename = "#{helpers.generate_filename(course)}_#{get_semester_name(course.valid_end)}"
       send_data resp.body, filename: filename + '.docx'
     rescue Faraday::ConnectionFailed => e
       redirect_to courses_path, alert: 'Error: Course could not be exported as DOCX because the connection to the external export service failed!'
