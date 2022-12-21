@@ -19,7 +19,12 @@ class CourseProgramsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create course_program' do
     assert_difference('CourseProgram.count') do
-      post course_programs_url, params: { course_program: { course_id: @course_program.course_id, program_id: @course_program.program_id, required: @course_program.required, semester: @course_program.semester } }
+      post course_programs_url, params: { course_program: { course_id: @course_program.course_id,
+                                                            course_valid_end: '2022-06-30', #different valid_end since duplicates are not allowed
+                                                            program_id: @course_program.program_id,
+                                                            program_valid_end: '2022-06-30',
+                                                            required: @course_program.required,
+                                                            semester: @course_program.semester } }
     end
 
     assert_redirected_to course_program_url(CourseProgram.last)
@@ -36,7 +41,12 @@ class CourseProgramsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update course_program' do
-    patch course_program_url(@course_program), params: { course_program: { course_id: @course_program.course_id, program_id: @course_program.program_id, required: @course_program.required, semester: @course_program.semester } }
+    patch course_program_url(@course_program), params: { course_program: { course_id: @course_program.course_id,
+                                                                           course_valid_end: @course_program.course_valid_end,
+                                                                           program_id: @course_program.program_id,
+                                                                           program_valid_end: @course_program.program_valid_end,
+                                                                           required: @course_program.required,
+                                                                           semester: @course_program.semester } }
     assert_redirected_to course_program_url(@course_program)
   end
 
