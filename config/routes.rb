@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   get 'abilities', to: 'users#show_abilities', as: 'abilities'
   resources :users, only: %i[index show edit update destroy]
 
-  resources :versions, only: %i[index]
   resources :course_programs
   resources :courses
   resources :programs
