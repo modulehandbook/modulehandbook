@@ -66,7 +66,7 @@ JSON: <%= link_to 'Export all Programs', export_programs_json_url(:current_semes
       </div>
       <div class="modal-body">
         <p>
-          Here you can upload a JSON-File including an entire Program. If the JSON-File also includes Courses, they will be created as well and linked to the Program. If the Program or a Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. The Course-Program-Link will also be created.
+          Here you can upload a JSON-File including an entire Program. If the JSON-File also includes Courses, they will be created as well and linked to the Program. If the Program or a Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. The Course-Program-Link will also be created. Attributes semester_season and semester_year are required to determine semester to import to.
         </p>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
       </div>

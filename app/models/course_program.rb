@@ -7,11 +7,13 @@ class CourseProgram < ApplicationRecord
   validate :course_and_program_linkable
   validate :unique_course_program_combination, on: :create
 
-  def self.find_or_create_from_json(data, course_id, program_id)
-    cpl = CourseProgram.find_by(course_id: course_id, program_id: program_id)
+  def self.find_or_create_from_json(data, course_id, program_id, course_valid_end, program_valid_end)
+    cpl = CourseProgram.find_by(course_id: course_id, program_id: program_id, course_valid_end: course_valid_end, program_valid_end: program_valid_end )
     if cpl.nil?
       cpl = CourseProgram.new(course_id: course_id,
                               program_id: program_id,
+                              course_valid_end: course_valid_end,
+                              program_valid_end: program_valid_end,
                               semester: data['semester'],
                               required: data['required'])
     end

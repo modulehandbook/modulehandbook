@@ -70,7 +70,7 @@
       </div>
       <div class="modal-body">
         <p>
-          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. Any Course-Program-Links will also be created.
+          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. Any Course-Program-Links will also be created. Attributes semester_season and semester_year are required to determine semester to import to.
         </p>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
         <%= hidden_field_tag :program_id, @program.id, :style => 'display:inline; margin-top:-10px' %>

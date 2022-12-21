@@ -13,8 +13,8 @@ class Program < ApplicationRecord
     "#{name} (#{code}) - #{get_semester_name(self[:valid_end])}"
   end
 
-  def self.find_or_create_from_json(data)
-    existing_program = Program.find_by(code: data['code'])
+  def self.find_or_create_from_json(data, valid_start, valid_end)
+    existing_program = Program.find_by(code: data['code'], valid_end:valid_end)
     program = if !existing_program.nil?
                 existing_program
               else
@@ -25,12 +25,25 @@ class Program < ApplicationRecord
     program.mission = data['mission']
     program.degree = data['degree']
     program.ects = data['ects']
+    program.valid_start = valid_start
+    program.valid_end = valid_end
     program.save
     program
   end
 
   def self.json_import_from_file(file)
     data = JSON.parse(file.read)
+    program_instance = Program.new #required to use methods of VersioningHelper
+    semester_season = data["semester_season"]
+    semester_year = data["semester_year"]
+
+    if !semester_season.nil? && !semester_year.nil?
+      data["valid_end"] = program_instance.get_valid_end_from_season_and_year(semester_season, semester_year)
+      data["valid_start"] = program_instance.get_valid_start_from_valid_end(data["valid_end"])
+    else
+      raise "Missing semester_season and/or semester_year"
+    end
+
     ProgramFactory.create(data)
   end
 
@@ -57,11 +70,11 @@ end
 
 class ProgramFactory
   def self.create(data)
-    program = Program.find_or_create_from_json(data)
+    program = Program.find_or_create_from_json(data, data['valid_start'], data['valid_end'])
     courses = data['courses']
     courses.each do |course_data|
-      course = Course.find_or_create_from_json(course_data)
-      cpl = CourseProgram.find_or_create_from_json(course_data, course.id, program.id)
+      course = Course.find_or_create_from_json(course_data, data['valid_start'], data['valid_end'])
+      cpl = CourseProgram.find_or_create_from_json(course_data, course[:id], program[:id], data['valid_end'], data["valid_end"])
       course.save
     end
     program

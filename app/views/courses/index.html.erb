@@ -90,7 +90,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url(:current_semeste
       </div>
       <div class="modal-body">
         <p>
-          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File.
+          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. Attributes semester_season and semester_year are required to determine semester to import to.
         </p>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
       </div>
