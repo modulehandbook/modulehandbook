@@ -52,7 +52,6 @@ coverage/**
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
-.env
 
 config/credentials/**
 container_logs/**
@@ -66,6 +65,7 @@ secrets.env
 /config/credentials/development.key
 
 container_logs/**
+.idea/**
 
 # Ignore enviroment variables file
 config/local_env.yml

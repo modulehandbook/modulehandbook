@@ -2,16 +2,21 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
 
+# SimpleCov.start - this is done centrally in .simplecov
 puts "require simplecov from test_helper"
 require 'simplecov'
 
-# SimpleCov.start - this is done centrally in .simplecov
+
+class ActionController::TestCase
+  include Devise::Test::IntegrationHelpers
+end
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
   # parallelize(workers: 1)
   # parallelize(workers: ENV.fetch("PARALLEL_WORKERS", :number_of_processors))
 
+  # todo: still needed?
   include Devise::Test::IntegrationHelpers
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
@@ -24,4 +29,9 @@ class ActiveSupport::TestCase
     fill_in 'user_password', with: password
     click_on 'Log in'
   end
+
+  def system_test_logout
+    visit users_sign_out_path
+  end
+
 end

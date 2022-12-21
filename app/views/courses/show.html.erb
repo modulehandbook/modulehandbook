@@ -1,4 +1,5 @@
 <h3>Course: <%= @course.name %> </h3>
+<h3><%= content_for(:title, "Course: #{@course.name}") %></h3>
 
 <%= render 'layouts/semester_and_date_selectors', path: course_path(@course)%>
 
@@ -43,7 +44,7 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
         <%= form.hidden_field :course_valid_end %>
         <%= hidden_field_tag 'next_view','edit' %>
   <div class="field">
-    <%= form.label :program_id %>
+    <%= form.label 'add to another program:' %>
     <%= form.collection_select(:program_id, Program.where(:valid_end => @course.valid_end).order(:name), :id, :select_name_with_semester) %>
   </div>
 

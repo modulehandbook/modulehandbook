@@ -1,0 +1,39 @@
+<h1>Abilities</h1>
+
+<%
+   # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/README.md
+   models  = [Course, Program , CourseProgram, Comment,  Faculty, Version, User]
+   roles = User::ROLES
+   actions = [:index, :show, :create, :update, :delete]
+   product = models.product(actions)
+   abilities = roles.map{ | r | [r, Ability.new(User.new(role: r)) ] }.to_h
+%>
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Model / Action</th>
+      <% roles.each do | role | %>
+        <th scope="col"><%= role %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% product.each do | model, action | %>
+    <tr>
+      <th scope="row"><%= "#{model} / #{action}"%></th>
+
+      <% roles.each do | role | %>
+        <td>
+          <% can_do = abilities[role].can? action, model %>
+        <div class="alert alert-<%= can_do ? 'success' : 'danger' %>" role="alert">
+          <%= can_do %>
+          <!-- <p class="fs-6"><%= "#{role} #{action} #{model}" %></p>-->
+
+        </div>
+        </td>
+      <% end %>
+    </tr>
+    <% end %>
+
+  </tbody>
+</table>

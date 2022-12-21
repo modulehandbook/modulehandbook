@@ -1,0 +1,12 @@
+
+<li class="nav-item">
+
+<% if can?(:approve, User) && (User.where(approved: false).count > 0) %>
+     <button type="button" class="btn btn-warning btn-sm">
+       <%= link_to('Approve new Users', users_path, approved: 'false', class: "nav-link") %>
+     </button>
+<% else %>
+  <%= link_to('Users', users_path, class: "nav-link") %>
+<% end %>
+
+</li>

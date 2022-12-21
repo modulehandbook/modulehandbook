@@ -1,0 +1,28 @@
+# -------------------------------------------------------------------
+# Test CI - self-contained image for test in ci environment
+#
+# depends on local image modhand-prod-no-assets
+# docker build --target  modhand-prod-no-assets --tag modhand-prod-no-assets:latest .
+# docker build --file Dockerfile.testci  . --tag modhand-testci:latest
+
+# docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
+# docker run -ti --entrypoint="" modhand-testci:latest rails test
+
+# -------------------------------------------------------------------
+
+FROM modhand-prod-no-assets AS modhand-testci
+ENV MODHAND_IMAGE=modhand-testci
+
+ENV RAILS_ENV test
+ENV NODE_ENV test
+
+
+ENTRYPOINT ["./entrypoints/rails-test.sh"]
+
+RUN set -ex && \
+    mkdir -p test  && \
+    bundle config unset without  && \
+    bundle install  && \
+    apk add $AO  firefox
+
+COPY ./test ./test

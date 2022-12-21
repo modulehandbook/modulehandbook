@@ -21,6 +21,10 @@ class CourseProgramsController < ApplicationController
                            CourseProgram.where(program_id: params[:program_id], program_valid_end: @current_semester)
                                         .includes(:program, :course)
                                         .order('programs.name', 'semester', 'courses.name')
+                         elsif params[:course_id]
+                           CourseProgram.where(course_id: params[:course_id], course_valid_end: @current_semester)
+                                        .includes(:program, :course)
+                                        .order('programs.name', 'semester', 'courses.name')
                          else
                            CourseProgram.where(program_valid_end: @current_semester)
                                         .includes(:course, :program)
@@ -30,6 +34,10 @@ class CourseProgramsController < ApplicationController
       @course_programs = if params[:program_id]
                            CourseProgram.includes(:program, :course)
                                         .where_as_of(@current_as_of_time,program_id: params[:program_id], program_valid_end: @current_semester)
+                                        .sort_by { |cp| cp.program.name + cp.semester.to_s + cp.course.name }
+                         elsif params[:course_id]
+                           CourseProgram.includes(:program, :course)
+                                        .where_as_of(@current_as_of_time,course_id: params[:course_id], course_valid_end: @current_semester)
                                         .sort_by { |cp| cp.program.name + cp.semester.to_s + cp.course.name }
                          else
                            CourseProgram.includes(:course, :program)

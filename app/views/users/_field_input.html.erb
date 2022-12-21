@@ -1,0 +1,41 @@
+<%
+    type = field_type(field_name)
+    value = user.send(field_name)
+ %>
+
+
+<% case field_name
+   when :role %>
+    <%= form.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
+  <% when :faculty_name %>
+  <div class="form-group">
+    <%= form.label :faculty %>
+    <%= form.collection_select(:faculty_id, Faculty.all, :id, :name, {:prompt => "Please select your faculty"})
+      %>
+  </div>
+  <% else
+
+  case type
+
+   when :datetime %>
+  <%= user.format_time(value) %>
+
+<% when :boolean %>
+<div class="form-check">
+   <%= form.check_box field_name, class: "form-check-input" %>
+  <label class="form-check-label" for="flexCheckDefault">
+
+  </label>
+</div>
+
+<% when :string %>
+    <%= form.text_field field_name, class: "form-control"  %>
+
+<% when :text %>
+    <%= form.text_area field_name, class: "form-control", rows: 1 %>
+
+<% else %>
+ <%= value %> (no type for input found: <%= type %>)
+<% end # second case %>
+
+<% end # first case %>

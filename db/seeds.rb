@@ -4,7 +4,7 @@
 # Examples:
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+#   Character.create(name: 'Luke', movie: movies)
 
 puts 'seeding database'
 
@@ -16,7 +16,7 @@ users = [
   ['qa@mail.de', :qa]
 ]
 
-defaultPW = ENV['SEED_USER_PW'] 
+defaultPW = ENV['SEED_USER_PW']
 defaultPW ||= 'geheim12'
 User.destroy_all
 users.each do |u|
@@ -26,6 +26,8 @@ end
 user = User.create(email: 'unapproved@mail.de', password: defaultPW, password_confirmation: defaultPW, approved: false)
 puts "created unapproved User #{user.email}"
 
+Program.destroy_all
+Course.destroy_all
 
 # Representation of dates per semester for Academic year 20xx - 20xy
 # Winter 20xx: September 1 20xx -> January 31 20xy
@@ -114,3 +116,28 @@ end
                             semester: courses[i][0],
                             required: courses[i][3].strip)
 end
+
+# add some versions
+
+writer = User.find_by(email: "writer@mail.de")
+puts writer.inspect
+Thread.current[:current_user] = writer
+
+b7 = Course.find_by(code: 'B7')
+b27 = Course.find_by(code: 'B27')
+wt2 = Course.find_by(code: 'WT2')
+
+b7.update contents: "first"
+b7.update contents: "second"
+b7.update contents: "third"
+
+wt2.update contents: "first"
+wt2.update contents: "second"
+wt2.update contents: "third"
+
+editor = User.find_by(email: "editor@mail.de")
+Thread.current[:current_user] = editor
+
+b27.update contents: "first"
+b27.update contents: "second"
+b27.update contents: "third"

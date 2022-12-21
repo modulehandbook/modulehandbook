@@ -60,15 +60,16 @@ reset_db:
 #
 # DB Import Tasks directly via postgres container
 #
-# DBNAME=modhand-db-dev
+DBNAME=modhand-db-dev
 # DBNAME=modhand-db-prod file=
 import_dump_complete: recreate_db import_dump
 # import from local file using cat:
 # call with  make file=x.pgdump import_dump
 import_dump_heroku: $(file)
 	cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
+# e.g. DBNAME=modhand-db-dev  file=../dumps-htw/modhand-2022-12-18--21-00-02.pgdump make import_dump
 import_dump: $(file)
-	cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}  -
+	cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
 dump:
 	docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d ${DBNAME} -U modhand > ../mh-dumps/local/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 
@@ -100,6 +101,12 @@ reset_db_local:
 	rails db:create RAILS_ENV=development
 	rails db:migrate
 	rails db:seed
+
+reset_test_db:
+	docker restart modulehandbook-database
+	RAILS_ENV=test rails db:drop
+	RAILS_ENV=test rails db:create
+	RAILS_ENV=test rails db:migrate
 rails_test:
 	# common fixes on Lottes Laptop
 	# in test_helper.rb -> parallelize(workers: 1)
@@ -155,6 +162,22 @@ open_staging:
 open_production:
 	open https://module-handbook.f4.htw-berlin.de
 
+build_testci_images:
+	docker build --target  modhand-prod-no-assets --tag modhand-prod-no-assets:latest .
+	docker build --file Dockerfile.testci . --tag modhand-testci:latest
+testci_local: build_testci_images testci
+testci:
+	docker-compose -f docker-compose.testci.yml up -d
+	docker ps
+	docker exec modulehandbook-testci rails db:drop RAILS_ENV=test
+	docker exec modulehandbook-testci rails db:create RAILS_ENV=test
+	docker exec modulehandbook-testci rails db:migrate RAILS_ENV=test
+	docker exec modulehandbook-testci rails test
+	docker exec modulehandbook-testci rails test:system
+
+
+testci_stop:
+	docker-compose -f docker-compose.testci.yml down
 
 start_production_local:
 	 docker-compose -f docker-compose.yml --env-file .env.production up
@@ -203,16 +226,16 @@ cert:
 # übernommen von der imimap
 
 
-DUMP_COMMAND_WDROP="pg_dump --create --clean --no-acl --no-owner -h localhost -U modhand modhand-db-prod"
-IMPORT_COMMAND="psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -"
-DUMP_COMMAND="docker exec modulehandbook-database pg_dump -h localhost -U modhand modhand-db-prod"
-
-
-prod_dump:
-	mkdir -p ../htw-dumps
-	ssh local@module-handbook.f4.htw-berlin.de "docker exec postgres pg_dump -h localhost -U modhand modhand-db-prod" > ../htw-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
-import: $(file)
-	cat $(file) | docker-compose exec -T module-handbook-postgres psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -
+#DUMP_COMMAND_WDROP="pg_dump --create --clean --no-acl --no-owner -h localhost -U modhand modhand-db-prod"
+#IMPORT_COMMAND="psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -"
+#DUMP_COMMAND="docker exec modulehandbook-database pg_dump -h localhost -U modhand modhand-db-prod"
+#
+#
+#prod_dump:
+#	mkdir -p ../htw-dumps
+#	ssh local@module-handbook.f4.htw-berlin.de "docker exec postgres pg_dump -h localhost -U modhand modhand-db-prod" > ../htw-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+#import: $(file)
+#	cat $(file) | docker-compose exec -T module-handbook-postgres psql --set ON_ERROR_STOP=on -h localhost -U modhand modhand-db-prod -f -
 
 
 
@@ -224,3 +247,10 @@ list_db:
 # call with make yaml yf=
 yaml:
 	python3 -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))' < $(yf)
+
+find_duplicates:
+	echo "OneNameTest ist die Demo, der name darf doppelt da sein"
+	find . -name "*.rb" | xargs grep "^\s*class" | sed -e "s/.*class//g" | sed -e "s/ <.*//g" |  sort | uniq -c| grep -v -e "1"
+
+rails_c_db_container:
+  POSTGRES_DB=modhand-db-dev  RAILS_ENV=development rails c

@@ -6,14 +6,18 @@ module Abilities
   class Reader
     include CanCan::Ability
 
-    def initialize(_user)
-      can :read, :all
+    def initialize(user)
+      can %i[read update], User, id: user.id
+      can %i[read], User , readable: true
       can %i[read export_course], Course
       can %i[read export_program], Program
+      can %i[read], Faculty
+      can %i[read], CourseProgram
+      can %i[read], Comment
       can %i[create], Comment
-      can %i[destroy], Comment, author_id: _user.id
+      can %i[destroy], Comment, author_id: user.id
       can %i[edit update], Comment, Comment do |comment|
-        comment.author_id == _user.id && comment.created_at >= 30.minutes.ago
+        comment.author_id == user.id && comment.created_at >= 30.minutes.ago
       end
     end
   end

@@ -1,5 +1,5 @@
 
-<h3>Program: <%= @program.name %></h3>
+<h3><%= content_for(:title, "Program: #{@program.name}") %></h3>
 
 <%= render 'layouts/semester_and_date_selectors', path: program_path(@program)%>
 

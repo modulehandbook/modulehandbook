@@ -1,0 +1,57 @@
+
+<div class="container">
+  <div class="row ">
+    <div class="col-md-1">
+    &nbsp;
+    </div>
+    <div class="col-md-auto">
+
+<%
+user = @user
+%>
+
+<%= form_with(model: user, local: true) do |form| %>
+
+<table class="table table-sm">
+  <thead>
+
+  <% verb =  show_form ? "Editing" : "Showing" %>
+  <tr>
+  <th colspan="2" scope="col" ><h3><%= verb%> User: <%= @user.email %></h3></</th>
+        <th>
+          <% if show_form %>
+              <%= form.submit  :class =>  "btn btn-warning" %>
+          <% elsif (can? :edit, @user) %>
+                  <button type="button" class="btn btn-warning btn-sm">
+                      <%= link_to "Edit", edit_user_path(@user) %>
+                  </button>
+       <% end %></th>
+  </tr>
+
+  </thead>
+
+  <tbody>
+
+<% if show_form %>
+
+        <%= render 'form_start', user: user, form: form %>
+        <%= render 'fields_in_one' , fields: @fields, user: user, form: form, show_form: show_form%>
+        <%= render 'form_end', user: user, form: form %>
+
+<% else %>
+    <%= render 'fields_in_one' , fields: @fields, user: user, form: nil, show_form: false %>
+
+<% end %>
+
+  </tbody>
+
+</table>
+  <% end %>
+
+</div>
+<div class="col-md-3">
+&nbsp;
+</div>
+
+</div>
+</div>

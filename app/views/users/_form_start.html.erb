@@ -1,0 +1,16 @@
+
+
+<% if user.errors.any? %>
+
+  <tr>
+    <th scope="row" colspan = "2">
+      <div class="alert alert-danger" role="alert">
+      <%= pluralize(user.errors.count, "error") %> prohibited this user from being saved: <br />
+
+          <% user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+    </div></th>
+  </tr>
+
+  <% end %>

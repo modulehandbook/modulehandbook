@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ModuleHandbook</title>
+    <% content_for(:title, "ModuleHandbook") %>
+    <title><%= yield(:title) %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -10,8 +11,7 @@
 
   <body>
     <%= render "layouts/navigation" %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render "layouts/flash" %>
     <div class ="container">
       <%= yield %>
     </div>

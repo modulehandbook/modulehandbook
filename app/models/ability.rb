@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# see https://github.com/CanCanCommunity/cancancan/blob/develop/docs/README.md
 class Ability
   include CanCan::Ability
 

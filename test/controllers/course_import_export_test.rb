@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CoursesControllerTest < ActionDispatch::IntegrationTest
+class CoursesControllerImportTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
     @course = courses(:one)

@@ -1,17 +1,2 @@
 
-<h3>User: <%= @user.email %></h3>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Role:</strong>
-  <%= @user.role.to_s.humanize %>
-</p>
-
-<p>
-  <strong>Approved:</strong>
-  <%= @user.approved %>
-</p>
+<%= render 'one', user: @user, show_form: false %>

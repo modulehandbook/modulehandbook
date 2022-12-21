@@ -8,13 +8,14 @@ default: &default
   # heroku first, then compose file value:
   password: <%= ENV['MYAPP_DATABASE_PASSWORD'] || ENV.fetch("MARIADB_PASSWORD") { 'modhand' } %>
   port: <%= ENV.fetch("MARIADB_PORT") { 3306 } %>
-  database: <%= ENV['MARIADB_DB'] || 'modhand-test' %>
+  database: <%= ENV['MARIADB_DB'] || 'modhand-default-db' %>
 
 development:
   <<: *default
 
 test:
   <<: *default
+  database: 'modhand-test'
 
 production:
   <<: *default

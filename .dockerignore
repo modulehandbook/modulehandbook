@@ -24,3 +24,6 @@ secrets.env
 
 # Ignore simplecov report
 /coverage*
+
+# ignore test files
+/test*
