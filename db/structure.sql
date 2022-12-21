@@ -35,8 +35,8 @@ CREATE TABLE `comments` (
   KEY `index_comments_on_author_id` (`author_id`),
   KEY `fk_rails_d0f578074a` (`course_id`),
   KEY `fk_rails_224c6870e0` (`course_valid_end`),
-  CONSTRAINT `fk_rails_224c6870e0` FOREIGN KEY (`course_valid_end`) REFERENCES `courses` (`valid_end`),
-  CONSTRAINT `fk_rails_d0f578074a` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`)
+  CONSTRAINT `fk_rails_224c6870e0` FOREIGN KEY (`course_valid_end`) REFERENCES `courses` (`valid_end`) ON DELETE CASCADE,
+  CONSTRAINT `fk_rails_d0f578074a` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `course_programs`;
