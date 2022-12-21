@@ -44,28 +44,28 @@ DROP TABLE IF EXISTS `course_programs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `course_programs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `course_id` bigint(20) NOT NULL,
-  `program_id` bigint(20) NOT NULL,
   `semester` int(11) DEFAULT NULL,
   `required` text DEFAULT NULL,
   `course_valid_end` date NOT NULL,
   `program_valid_end` date NOT NULL,
+  `course_id` bigint(20) NOT NULL,
+  `program_id` bigint(20) NOT NULL,
   `change_list` text DEFAULT NULL,
   `author_id` bigint(20) DEFAULT NULL,
   `transaction_start` timestamp(6) GENERATED ALWAYS AS ROW START,
   `transaction_end` timestamp(6) GENERATED ALWAYS AS ROW END,
   PRIMARY KEY (`id`,`transaction_end`),
-  KEY `index_course_programs_on_course_id` (`course_id`),
-  KEY `index_course_programs_on_program_id` (`program_id`),
   KEY `fk_rails_f83525775e` (`course_valid_end`),
   KEY `fk_rails_aed77cf7f2` (`program_valid_end`),
+  KEY `fk_rails_931b445d8c` (`course_id`),
+  KEY `fk_rails_6fe0a9b905` (`program_id`),
   KEY `fk_rails_3c473c8eda` (`author_id`),
   PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
   CONSTRAINT `fk_rails_3c473c8eda` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `fk_rails_6fe0a9b905` FOREIGN KEY (`program_id`) REFERENCES `programs` (`id`),
-  CONSTRAINT `fk_rails_931b445d8c` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
-  CONSTRAINT `fk_rails_aed77cf7f2` FOREIGN KEY (`program_valid_end`) REFERENCES `programs` (`valid_end`),
-  CONSTRAINT `fk_rails_f83525775e` FOREIGN KEY (`course_valid_end`) REFERENCES `courses` (`valid_end`)
+  CONSTRAINT `fk_rails_6fe0a9b905` FOREIGN KEY (`program_id`) REFERENCES `programs` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_rails_931b445d8c` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_rails_aed77cf7f2` FOREIGN KEY (`program_valid_end`) REFERENCES `programs` (`valid_end`) ON DELETE CASCADE,
+  CONSTRAINT `fk_rails_f83525775e` FOREIGN KEY (`course_valid_end`) REFERENCES `courses` (`valid_end`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `courses`;
