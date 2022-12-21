@@ -113,6 +113,11 @@ module SystemVersioning
       return find_by_sql([query, parsed_time])[0]
     end
 
+    def versions_count_for_author(author_id)
+      query = "SELECT COUNT(*) AS count FROM #{table_name} FOR SYSTEM_TIME ALL WHERE author_id=?"
+      find_by_sql([query, author_id])[0].count
+    end
+
 
     def parse_time(time)
       if time.is_a? Time

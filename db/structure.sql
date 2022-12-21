@@ -106,6 +106,19 @@ CREATE TABLE `courses` (
   CONSTRAINT `fk_rails_8419f1d78e` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `faculties`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `faculties` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `programs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -164,12 +177,18 @@ CREATE TABLE `users` (
   `updated_at` datetime(6) NOT NULL,
   `approved` tinyint(1) NOT NULL DEFAULT 0,
   `role` varchar(255) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
+  `faculty_id` bigint(20) DEFAULT NULL,
+  `readable` tinyint(1) DEFAULT NULL,
+  `about` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_email` (`email`),
   UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`),
   UNIQUE KEY `index_users_on_confirmation_token` (`confirmation_token`),
   UNIQUE KEY `index_users_on_unlock_token` (`unlock_token`),
-  KEY `index_users_on_approved` (`approved`)
+  KEY `index_users_on_approved` (`approved`),
+  KEY `index_users_on_faculty_id` (`faculty_id`),
+  CONSTRAINT `fk_rails_25393b3b56` FOREIGN KEY (`faculty_id`) REFERENCES `faculties` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -204,6 +223,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20221124100547'),
 ('20221126141328'),
 ('20221209104330'),
-('20221213142950');
+('20221213142950'),
+('20221217080356'),
+('20221217083615');
 
 
