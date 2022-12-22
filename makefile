@@ -117,6 +117,8 @@ rails_test:
 	rails test
 	rails test:system
 
+api_test:
+	rails test test/../test-api/
 #
 # server admin
 #
