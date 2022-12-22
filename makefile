@@ -96,6 +96,18 @@ test_app:
 	docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
 	docker-compose exec module-handbook rails test
 	docker-compose exec module-handbook rails test:system
+
+test_ci:
+  docker build -f Dockerfile --target modhand-prod-no-assets -t modhand-prod-no-assets:latest .
+  docker build -f Dockerfile.testci --target modhand-testci -t modhand-testci:latest .
+	docker-compose -f docker-compose.testci.yml up -d
+  docker ps
+  docker exec modulehandbook-testci rails db:drop RAILS_ENV=test
+  docker exec modulehandbook-testci rails db:create RAILS_ENV=test
+  docker exec modulehandbook-testci rails db:migrate RAILS_ENV=test
+  docker exec modulehandbook-testci rails test
+  docker exec modulehandbook-testci rails test:system
+
 reset_db_local:
 	rails db:drop RAILS_ENV=development
 	rails db:create RAILS_ENV=development
