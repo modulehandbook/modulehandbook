@@ -3,8 +3,9 @@ name: test on docker
 on:
   push:
     branch:
-      - master
+    #  - master
       - user_info
+      - fix_tests
 
 env:
   REGISTRY: ghcr.io

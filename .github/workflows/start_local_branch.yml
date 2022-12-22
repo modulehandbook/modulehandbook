@@ -1,3 +1,4 @@
+# this can be used to start the full pipeline from dev branches
 name: local-branch
 on:
   push:
@@ -11,6 +12,6 @@ jobs:
     uses: ./.github/workflows/pipeline.yml
     with:
       tags: type=sha
-      push: false
+      push: false # branches should not publish (push) docker images!
     secrets:
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
