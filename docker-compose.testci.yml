@@ -12,11 +12,11 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=password
 #     volumes:
 #       - ./pg_data:/var/lib/postgresql/data
-  module-handbook-exporter:
+  module-handbook-exporter-testci:
     image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
-    container_name: modulehandbook-exporter
+    container_name: modulehandbook-exporter-testci
 
-  module-handbook:
+  module-handbook-testci:
     image: modhand-testci:latest
     container_name: modulehandbook-testci
     environment:
@@ -35,7 +35,8 @@ services:
   #    - ${SECRET_ENV_FILE}
     depends_on:
       - module-handbook-postgres-testci
-      - module-handbook-exporter
+      - module-handbook-exporter-testci
     volumes:
       - ./container_logs:/module-handbook/log
+      - ./container_tmp:/module-handbook/tmp
     restart: "no"
