@@ -1,6 +1,6 @@
 require 'test_helper'
 require "minitest/autorun"
-require_relative ("global")
+require_relative ("../minitest/global")
 class TestOrderDevise < ActionDispatch::IntegrationTest
   def setup
     @admin = users(:one)
@@ -11,9 +11,7 @@ class TestOrderDevise < ActionDispatch::IntegrationTest
   end
 
   def teardown
-      puts TestLog.getlog.inspect
-      puts @controller.current_user.email
-      puts "----------------"
+    TestLog.printlog(@controller.current_user.email)
   end
 
   test 'should get index' do
@@ -39,7 +37,7 @@ class TestOrderDevise < ActionDispatch::IntegrationTest
     sign_in(users(:qa))
     get courses_path
     assert_response :success
-    puts "test signed in qa, #{@controller.current_user.email}"
+    TestLog.print("test signed in qa, #{@controller.current_user.email}")
   end
 
   def test_3_3rdpartyapi

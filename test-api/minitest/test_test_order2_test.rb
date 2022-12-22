@@ -9,7 +9,7 @@ class TestOrder2 < ActiveSupport::TestCase
   end
 
   def teardown
-      puts TestLog.getlog.inspect
+      TestLog.printlog(self.class.name)
   end
 
 
@@ -36,7 +36,7 @@ class TestOrder3 < ActiveSupport::TestCase
   end
 
   def teardown
-      puts TestLog.getlog.inspect
+      TestLog.printlog(self.class.name)
   end
 
 

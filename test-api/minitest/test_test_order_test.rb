@@ -6,7 +6,7 @@ class TestOrder < Minitest::Test
   end
 
   def teardown
-      puts TestLog.getlog.inspect
+      TestLog.printlog ""
   end
 
   def test_1

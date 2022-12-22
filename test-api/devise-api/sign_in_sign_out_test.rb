@@ -10,10 +10,10 @@ class DeviseApiTest < ApplicationSystemTestCase
 
   teardown do
     system_test_logout
-    CourseProgram.all.delete_all
-    Program.all.delete_all
-    Course.all.delete_all
-    User.all.delete_all
+    # CourseProgram.all.delete_all
+    # Program.all.delete_all
+    # Course.all.delete_all
+    # User.all.delete_all
   end
 
   test 'is logged in' do
