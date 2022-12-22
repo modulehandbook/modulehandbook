@@ -100,7 +100,7 @@ test_app:
 
 test_ci:
 - docker-compose down
-- docker build -f Dockerfile --target modhand-prod-no-assets -t modhand-prod-no-assets:latest .
+- docker build -f Dockerfile --target modhand-base -t modhand-base:latest .
 - docker build -f Dockerfile.testci --target modhand-testci -t modhand-testci:latest .
 - docker-compose -f docker-compose.testci.yml up -d
 - docker ps

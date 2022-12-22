@@ -25,9 +25,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          target: modhand-prod-no-assets
+          target: modhand-base
           push: false
-          tags: modhand-prod-no-assets:latest
+          tags: modhand-base:latest
       - name: Build Test Image
         uses: docker/build-push-action@v3
         with:
