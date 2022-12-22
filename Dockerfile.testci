@@ -1,5 +1,7 @@
 # -------------------------------------------------------------------
 # Test CI - self-contained image for test in ci environment
+# needs to be in own dockerfile to use Dockerfile.testci.dockerignore
+# as test subdir is generally ignored and needs to be included here
 #
 # depends on local image modhand-prod-no-assets
 # docker build --target  modhand-prod-no-assets --tag modhand-prod-no-assets:latest .
@@ -10,12 +12,11 @@
 
 # -------------------------------------------------------------------
 
-FROM modhand-prod-no-assets AS modhand-testci
-ENV MODHAND_IMAGE=modhand-testci
+FROM modhand-base AS modhand-testci-gems
+ENV MODHAND_IMAGE=modhand-testci-gems
 
 ENV RAILS_ENV test
 ENV NODE_ENV test
-
 
 ENTRYPOINT ["./entrypoints/rails-test.sh"]
 
@@ -25,4 +26,10 @@ RUN set -ex && \
     bundle install  && \
     apk add $AO  firefox
 
-COPY ./test ./test
+# -------------------------------------------------------------------
+FROM modhand-testci-gems AS modhand-testci
+ENV MODHAND_IMAGE=modhand-testci
+
+
+COPY . ./
+# COPY ./test ./test
