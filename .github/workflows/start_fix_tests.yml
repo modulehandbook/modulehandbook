@@ -10,6 +10,6 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     uses: ./.github/workflows/pipeline.yml
     with:
-      tags: type=ref,event=pr
+      tags: type=sha
       push: false
       target: modhand-prod-no-assets
