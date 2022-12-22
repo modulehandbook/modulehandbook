@@ -119,6 +119,7 @@ class CoursesTest < ApplicationSystemTestCase
 
   test 'updating a Course - comment' do
     visit edit_course_url(@course3)
+    assert_logged_in
     new_data = 'does need more editing'
     fill_in('course_comment', with: new_data)
     click_on 'Update Course'

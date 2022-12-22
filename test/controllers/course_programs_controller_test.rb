@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class CourseProgramsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
+
   setup do
     @course_program = course_programs(:one)
     sign_in users(:one)
