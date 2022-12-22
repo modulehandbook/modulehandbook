@@ -16,8 +16,12 @@ class TestOrderDevise < ActionDispatch::IntegrationTest
       puts "----------------"
   end
 
+  test 'should get index' do
+    get course_programs_url
+    assert_response :success
+  end
 
-  def test_1
+  def test_1_3rdpartyapi
 
 
 
@@ -29,7 +33,7 @@ class TestOrderDevise < ActionDispatch::IntegrationTest
 
   end
 
-  def test_2
+  def test_2_3rdpartyapi
     TestLog.log(12)
   #  sign_out :user
     sign_in(users(:qa))
@@ -38,7 +42,7 @@ class TestOrderDevise < ActionDispatch::IntegrationTest
     puts "test signed in qa, #{@controller.current_user.email}"
   end
 
-  def test_3
+  def test_3_3rdpartyapi
     TestLog.log(13)
   end
 

@@ -17,16 +17,16 @@ class TestOrderDevise2 < ActionDispatch::IntegrationTest
        puts "----------------"
   end
 
-  def test_1
+  def test_1_3rdpartyapi
     TestLog.log(21)
 
   end
 
-  def test_2
+  def test_2_3rdpartyapi
     TestLog.log(22)
   end
 
-  def test_3
+  def test_3_3rdpartyapi
     TestLog.log(23)
   end
 
@@ -50,16 +50,16 @@ class TestOrderDevise3 < ActionDispatch::IntegrationTest
   end
 
 
-  def test_1
+  def test_1_3rdpartyapi
     TestLog.log(31)
 
   end
 
-  def test_2
+  def test_2_3rdpartyapi
     TestLog.log(32)
   end
 
-  def test_3
+  def test_3_3rdpartyapi
     TestLog.log(33)
   end
 

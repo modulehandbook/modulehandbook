@@ -9,7 +9,6 @@ class TestOrder < Minitest::Test
       puts TestLog.getlog.inspect
   end
 
-
   def test_1
     TestLog.log(1)
 
