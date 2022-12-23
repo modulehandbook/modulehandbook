@@ -145,10 +145,14 @@ module CommentsDsl
     id = "edit_#{comment_id(text)}"
   end
   def delete_button(text)
-    find_by_id(delete_id(text))
+    can_delete = find_by_id(delete_id(text))
+    assert_not_nil can_delete
+    return can_delete
   end
   def edit_button(text)
-    find_by_id(edit_id(text))
+    can_edit = find_by_id(edit_id(text))
+    assert_not_nil can_edit
+    return can_edit
   end
   def refute_delete(text)
     assert_no_selector(delete_id(text))
