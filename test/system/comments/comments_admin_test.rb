@@ -7,7 +7,6 @@ class CommentsAdminTest < CommentsSystemTest
     @user = users(:one)
      system_test_login(@user.email, 'geheim12')
     @user_other = users(:writer)
-
   end
 
   test 'one of two' do

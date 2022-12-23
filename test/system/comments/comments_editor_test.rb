@@ -1,6 +1,6 @@
 require 'application_system_test_case'
-
-class CommentsEditorTest < ApplicationSystemTestCase
+require 'system/comments/comments_dsl'
+class CommentsEditorTest < CommentsSystemTest
   def setup
     @course = courses(:one)
     @user = users(:editor)
@@ -9,64 +9,30 @@ class CommentsEditorTest < ApplicationSystemTestCase
   end
 
   test 'as editor i can create a comment on a course' do
-    visit course_path(@course)
-    fill_in 'comment_comment', with: 'This is a comment'
-    click_on 'Create Comment'
-    assert_text 'Comment saved successfully'
+    comments_course
   end
 
   test 'as editor i can read own comment' do
-    visit course_path(@course)
-    fill_in 'comment_comment', with: 'This is a comment'
-    click_on 'Create Comment'
-    assert_text 'This is a comment'
+    read_own_comment
   end
 
   test 'as editor i can read others comment' do
-    @course.comments.create(author: @user_other, comment: 'The other users comment')
-    visit course_path(@course)
-    assert_text 'The other users comment'
+    read_others_comment
   end
 
   test 'as editor i can edit and update own comment' do
-    visit course_path(@course)
-    fill_in 'comment_comment', with: 'This is a comment'
-    click_on 'Create Comment'
-    assert_text 'This is a comment'
-    within '.table' do
-      click_on 'Edit'
-    end
-    fill_in 'comment_comment', with: 'This is an edited comment'
-    click_on 'Update Comment'
-    click_on 'Go to comments'
-    assert_text 'This is an edited comment'
-    assert_text '(edited)'
+    edit_and_update_own_comment
   end
 
   test 'as editor i cant edit and update others comment' do
-    @course.comments.create(author: @user_other, comment: 'The other users comment')
-    visit course_path(@course)
-    assert_text 'The other users comment'
-    within '.table' do
-      refute_text 'Edit'
-    end
+    cannot_edit_and_update_others_comment
   end
 
   test 'as editor i can delete and destroy own comment' do
-    visit course_path(@course)
-    fill_in 'comment_comment', with: 'This is a comment'
-    click_on 'Create Comment'
-    assert_text 'This is a comment'
-    accept_alert do
-      click_on 'Delete'
-    end
-    refute_text 'This is a comment'
+    delete_and_destroy_own_comment
   end
 
   test 'as editor i cant delete and destroy others comment' do
-    @course.comments.create(author: @user_other, comment: 'The other users comment')
-    visit course_path(@course)
-    assert_text 'The other users comment'
-    refute_text 'Delete'
+    cannot_delete_and_destroy_others_comment
   end
 end
