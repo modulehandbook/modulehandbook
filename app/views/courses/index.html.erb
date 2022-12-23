@@ -69,8 +69,8 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url(:current_semeste
         <td><%= link_to 'Edit', edit_course_path(course) %></td>
         <td><%= link_to 'Destroy', course, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>
-        <td><%= link_to 'JSON', export_course_json_url(id: course.id) %></td>
-        <td><%= link_to 'DOCX', export_course_docx_url(id: course.id) %></td>
+        <td><%= link_to 'JSON', export_course_json_url(id: course.id.to_s) %></td>
+        <td><%= link_to 'DOCX', export_course_docx_url(id: course.id.to_s) %></td>
       </tr>
     <% end %>
   </tbody>

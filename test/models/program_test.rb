@@ -20,7 +20,7 @@ class ProgramTest < ActiveSupport::TestCase
         "courses": []
       }'.gsub('nil', 'null'))
     assert_difference('Program.count', 1) do
-      program = Program.find_or_create_from_json(program_json)
+      program = Program.find_or_create_from_json(program_json, "2022-02-01", "2022-06-30")
       assert_equal program_json['code'], program.code
     end
   end
@@ -31,7 +31,7 @@ class ProgramTest < ActiveSupport::TestCase
         "code": "IMI-B"
       }')
     assert_difference('Program.count', 1) do
-      program = Program.find_or_create_from_json(program_json)
+      program = Program.find_or_create_from_json(program_json, "2022-02-01", "2022-06-30")
       assert_equal program_json['code'], program.code
     end
   end
