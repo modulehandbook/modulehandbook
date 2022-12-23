@@ -29,10 +29,10 @@ class CourseTest < ActiveSupport::TestCase
         "labHrs": nil,
         "tutorialHrs": nil,
         "equipment": nil,
-        "room": nil
+        "room": nil,
         }'.gsub('nil', 'null'))
     assert_difference('Course.count', 1) do
-      course = Course.find_or_create_from_json(course_json)
+      course = Course.find_or_create_from_json(course_json, "2022-02-01", "2022-06-30")
       assert_equal course.code, course_json['code']
     end
   end
@@ -43,7 +43,7 @@ class CourseTest < ActiveSupport::TestCase
           "code": "B3"
           }')
     assert_difference('Course.count', 1) do
-      course = Course.find_or_create_from_json(course_json)
+      course = Course.find_or_create_from_json(course_json, "2022-02-01", "2022-06-30")
       assert_equal course.code, course_json['code']
     end
   end
