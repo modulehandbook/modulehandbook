@@ -1,12 +1,11 @@
 require 'application_system_test_case'
-require 'system/comments/comments_dsl'
-class CommentsAdminTest < CommentsSystemTest
+require 'system/comments/comments_system_test/comments_system_test'
+class CommentsAdminOwnTest < CommentsSystemTest
 
   def setup
-    @course = courses(:one)
     @user = users(:one)
-     system_test_login(@user.email, 'geheim12')
-    @user_other = users(:writer)
+    @course = courses(:one)
+    own_comments_setup_helper
   end
 
   test 'delete one of three' do
@@ -20,23 +19,12 @@ class CommentsAdminTest < CommentsSystemTest
     read_own_comment
   end
 
-  test 'as admin i can read others comment' do
-    read_others_comment
-  end
-
   test 'as admin i can edit and update own comment' do
     edit_and_update_own_comment
-  end
-
-  test 'as admin i can edit and update others comment' do
-    edit_and_update_others_comment
   end
 
   test 'as admin i can delete and destroy own comment' do
     delete_and_destroy_own_comment
   end
 
-  test 'as admin i can delete and destroy others comment' do
-    delete_and_destroy_others_comment
-  end
 end
