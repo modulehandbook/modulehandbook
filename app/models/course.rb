@@ -62,7 +62,8 @@ class Course < ApplicationRecord
     course = if !existing_course.nil?
                existing_course
              else
-               Course.new
+               existing_course_no_semester = Course.find_by(code: data['code']) # Find existing disregarding semester
+               Course.new(:id => existing_course_no_semester[:id])
              end
     course.name = data['name']
     course.code = data['code']

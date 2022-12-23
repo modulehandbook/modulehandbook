@@ -18,7 +18,8 @@ class Program < ApplicationRecord
     program = if !existing_program.nil?
                 existing_program
               else
-                Program.new
+                existing_program_no_semester = Program.find_by(code: data['code']) # Find existing disregarding semester
+                Program.new(:id => existing_program_no_semester[:id])
               end
     program.name = data['name']
     program.code = data['code']
