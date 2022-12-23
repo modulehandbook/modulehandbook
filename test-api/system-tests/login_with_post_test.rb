@@ -2,7 +2,7 @@ require "test_helper"
 
 class UserFlowsIntegrationTest < ActionDispatch::IntegrationTest
   def setup
-
+  #  puts self.class.ancestors
   end
   test 'should login' do
     @admin = u = users(:one)

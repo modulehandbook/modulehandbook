@@ -1,6 +1,6 @@
 <h1 id='comments' class="mt-5 pt-5">Comments:</h1>
 
-<table class="table">
+<table class="table" id ="comments_table">
   <tbody>
     <% @comments.each do |comment| %>
     <% if !comment.comment.nil? %>
@@ -10,12 +10,12 @@
           <em><% if comment.created_at != comment.updated_at %> (edited)<% end %></em>
         </td>
         <td class="text-right">
-          <% if can? :edit, comment %><%= link_to 'Edit', edit_comment_path(comment) %> | <% end %>
-          <% if can? :destroy, comment %><%= link_to 'Delete', comment, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %><% end %>
+          <% if can? :edit, comment %><%= link_to 'Edit', edit_comment_path(comment), id: "edit_comment_#{comment.id}" %> | <% end %>
+          <% if can? :destroy, comment %><%= link_to 'Delete', comment, id: "delete_comment_#{comment.id}", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %><% end %>
         </td>
       </tr>
       <tr>
-        <td colspan="2" style="border-top: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=md2html(comment.comment)%></td>
+        <td  id="comment_<%=comment.id%>" colspan="2" style="border-top: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=md2html(comment.comment)%></td>
       </tr>
       <% end %>
     <% end %>
