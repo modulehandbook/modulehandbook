@@ -1,86 +1,30 @@
 require 'application_system_test_case'
+require 'system/comments/comments_system_test/comments_system_test'
+class CommentsAdminOwnTest < CommentsSystemTest
 
-class CommentsAdminTest < ApplicationSystemTestCase
   def setup
-    @course = courses(:one)
     @user = users(:one)
-    @user_other = users(:writer)
-    system_test_login(@user.email, 'geheim12')
+    @course = courses(:one)
+    own_comments_setup_helper
   end
 
-  test 'as admin i can create a comment on a course' do
-    visit course_path(@course)
-    fill_in 'comment_comment', with: 'This is a comment'
-    click_on 'Create Comment'
-    assert_text 'Comment saved successfully'
+  test 'delete one of three' do
+    delete_one_out_of_three_comments
   end
+  test ('as admin i can create a comment on a course') do
+     comments_course
+   end
 
   test 'as admin i can read own comment' do
-    visit course_path(@course)
-    fill_in 'comment_comment', with: 'This is a comment'
-    click_on 'Create Comment'
-    assert_text 'This is a comment'
-  end
-
-  test 'as admin i can read others comment' do
-    @course.comments.create(author: @user_other, comment: 'The other users comment')
-    visit course_path(@course)
-    assert_text 'The other users comment'
+    read_own_comment
   end
 
   test 'as admin i can edit and update own comment' do
-    visit course_path(@course)
-    fill_in 'comment_comment', with: 'This is a comment'
-    click_on 'Create Comment'
-    assert_text 'This is a comment'
-    within '.table' do
-      click_on 'Edit'
-    end
-    fill_in 'comment_comment', with: 'This is an edited comment'
-    click_on 'Update Comment'
-    click_on 'Go to comments'
-    assert_text 'This is an edited comment'
-    assert_text '(edited)'
-  end
-
-  test 'as admin i can edit and update others comment' do
-    @course.comments.create(author: @user_other, comment: 'The others comment')
-    visit course_path(@course)
-    assert_text 'The others comment'
-    within '.table' do
-      assert_text 'Edit'
-      click_on 'Edit'
-    end
-    fill_in 'comment_comment', with: 'This is an edited comment'
-    click_on 'Update Comment'
-    click_on 'Go to comments'
-    assert_text 'This is an edited comment'
-    assert_text '(edited)'
+    edit_and_update_own_comment
   end
 
   test 'as admin i can delete and destroy own comment' do
-    visit course_path(@course)
-    fill_in 'comment_comment', with: 'This is a comment'
-    click_on 'Create Comment'
-    assert_text 'This is a comment'
-    accept_alert do
-      within '.table' do
-        click_on 'Delete'
-      end
-    end
-    refute_text 'This is a comment'
+    delete_and_destroy_own_comment
   end
 
-  test 'as admin i can delete and destroy others comment' do
-    @course.comments.create(author: @user_other, comment: 'The others comment')
-    visit course_path(@course)
-    assert_text 'The others comment'
-    accept_alert do
-      within '.table' do
-        assert_text 'Delete'
-        click_on 'Delete'
-      end
-    end
-    refute_text 'The others comment'
-  end
 end

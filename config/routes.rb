@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :course_programs
   resources :courses
   resources :programs
-  resources :comments, only: %i[create edit update destroy]
+  resources :comments , only: %i[show create edit update destroy]
   resources :semesters, only: %i[index new]
   post 'semester_generate', to: 'semesters#generate'
 

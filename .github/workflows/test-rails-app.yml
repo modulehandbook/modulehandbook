@@ -3,8 +3,7 @@ name: Test App
 on:
   push:
     branches:
-      - master
-      - fix_tests
+      - try_cuprite_driver
   workflow_call:
 env:
   RAILS_DB_HOST: localhost
