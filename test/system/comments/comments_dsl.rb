@@ -126,6 +126,7 @@ module CommentsDsl
     end
     assert_text the_comment_1
     refute_text the_comment_2
+    assert_text the_comment_3
   end
 
   def context(method_name)
@@ -174,7 +175,7 @@ class CommentsSystemTest < ApplicationSystemTestCase
     click_on 'Go to comments'
     # take_screenshot
     take_failed_screenshot
-    if true || ! failures.empty?
+    if !failures.empty?
       #puts failures.inspect
       puts "-----#{name}----#{@user ? @user.role : '@user nil'}"
       puts "#{all_comments.size} comments on page (course #{@course.id}): \n #{all_comments.inspect}"
