@@ -6,7 +6,7 @@ class CommentsSystemTest < ApplicationSystemTestCase
 
   include OwnCommentsAssertions
   include OthersCommentsAssertions
-  
+
   def after_setup
     assert_on_course_page
   end
@@ -18,8 +18,12 @@ class CommentsSystemTest < ApplicationSystemTestCase
     take_failed_screenshot
     if !failures.empty?
       #puts failures.inspect
-      puts "-----#{name}----#{@user ? @user.role : '@user nil'}"
+      puts "-----#{name}----role: #{@user ? @user.role : '@user nil'}"
       puts "#{all_comments.size} comments on page (course #{@course.id}): \n #{all_comments.inspect}"
+      puts "------ start page ------------------------------------------------------"
+      puts page.body.inspect
+      puts "------ end page ------------------------------------------------------"
+
     end
   end
 end
