@@ -9,8 +9,8 @@ class CommentsAdminTest < CommentsSystemTest
     @user_other = users(:writer)
   end
 
-  test 'one of two' do
-    delete_one_out_of_two_comments
+  test 'delete one of three' do
+    delete_one_out_of_three_comments
   end
   test ('as admin i can create a comment on a course') do
      comments_course
