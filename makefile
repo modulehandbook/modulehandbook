@@ -98,7 +98,8 @@ test_app:
 - docker-compose exec module-handbook rails test
 - docker-compose exec module-handbook rails test:system
 
-test_ci:
+test_ci: test_ci_setup test_ci_just_the_tests
+test_ci_setup:
 - docker build -f Dockerfile --target modhand-base -t modhand-base:latest .
 - docker build -f Dockerfile.testci --target modhand-testci -t modhand-testci:latest .
 - docker-compose -f docker-compose.testci.yml --project-name module-handbook-citest up -d
@@ -106,6 +107,7 @@ test_ci:
 - docker exec modulehandbook-testci rails db:drop RAILS_ENV=test
 - docker exec modulehandbook-testci rails db:create RAILS_ENV=test
 - docker exec modulehandbook-testci rails db:migrate RAILS_ENV=test
+test_ci_just_the_tests:
 - docker exec modulehandbook-testci rails test
 - docker exec modulehandbook-testci rails test:system
 - docker-compose -f docker-compose.testci.yml down
