@@ -2,7 +2,9 @@ name: Test App
 
 on:
   push:
-    branches: [ '!master' ]
+    branches:
+      - master
+      - fix_tests
   workflow_call:
 env:
   RAILS_DB_HOST: localhost

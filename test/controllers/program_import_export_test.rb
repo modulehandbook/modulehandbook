@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
+   
   setup do
     @program = programs(:one)
     sign_in users(:one)
