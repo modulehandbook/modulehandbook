@@ -9,8 +9,11 @@ services:
       - APPLICATION=module-handbook
       - MYSQL_ROOT_PASSWORD=modhand
       - MYSQL_DATABASE=modhand-db-prod
+
+    # Need to use Docker volumes instead of mounts (https://github.com/MariaDB/mariadb-docker/issues/95)
+    # MariaDB issue that appears on Windows and Mac
     volumes:
-      - ./mariadb_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
   module-handbook-exporter:
     image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
     container_name: modulehandbook-exporter
@@ -58,3 +61,6 @@ services:
         - NGINX_ENTRYPOINT_QUIET_LOGS=1
      depends_on:
          - module-handbook
+volumes:
+  mariadb_data:
+    external: false
