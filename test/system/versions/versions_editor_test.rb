@@ -43,7 +43,7 @@ class VersionsEditorTest < ApplicationSystemTestCase
     create_version(responsible_person: 'Not Me', ects: '5')
     click_on 'See Course Versions'
     assert_text 'Version History of'
-    all("[value='Revert to this Version']")[-1].click
+    click_on 'Revert to this Version', match: :first
     refute_text 'Not Me'
     assert_text 'Me'
   end
