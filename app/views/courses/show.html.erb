@@ -24,17 +24,21 @@
 
 <p id="notice"><%= notice %><br>
    </p>
-<p>
-Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id.to_s) %> | <%= link_to 'DOCX', export_course_docx_url(id: @course.id.to_s) %> <br>
-<% if can?(:edit, @course) && is_latest_version %><%= link_to 'Edit', edit_course_path(@course) %>, <% end %><%= link_to 'Back to Index', courses_path %>
-</p>
+
+<% if is_latest_version %>
+  <p>
+  Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id.to_s) %> | <%= link_to 'DOCX', export_course_docx_url(id: @course.id.to_s) %> <br>
+  <% if can?(:edit, @course) %><%= link_to 'Edit', edit_course_path(@course) %>, <% end %><%= link_to 'Back to Index', courses_path %>
+  </p>
+<% end %>
+
 
 <div class = "container">
   <div class="row">
     <div class = "col">
       Already part of Programs: <br/>
 <% @programs.each do |program| %>
-  <%= link_to "#{program.name} - #{get_semester_name(program.valid_end)}", program_path(program)  %>,
+  <%= link_to "#{program.name} - #{get_semester_name(program.valid_end)}", program_path(program, :as_of_time => !is_latest_version ? @current_as_of_time: nil)  %>,
 <% end %>
     </div>
 <% if can?(:edit, @course) && is_latest_version %>

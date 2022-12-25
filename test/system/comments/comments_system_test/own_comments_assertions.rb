@@ -33,6 +33,7 @@ module OwnCommentsAssertions
   end
 
   def delete_and_destroy_own_comment
+    sleep(1)
     click_on 'Go to comments'
     assert_text @the_comment
     page.accept_confirm do

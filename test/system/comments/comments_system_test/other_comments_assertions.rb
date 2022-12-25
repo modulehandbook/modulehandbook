@@ -27,6 +27,7 @@ module OthersCommentsAssertions
 
 
     def delete_and_destroy_others_comment
+      sleep(1)
       click_on 'Go to comments'
       assert_text @the_comment
       page.accept_confirm do

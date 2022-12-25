@@ -43,8 +43,10 @@ JSON: <%= link_to 'Export all Programs', export_programs_json_url(:current_semes
         <td><%= link_to 'Edit', edit_program_path(program) %></td>
         <td><%= link_to 'Destroy', program, id: "destroy_program_#{program.id}", data: {turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>
-        <td><%= link_to 'JSON', export_program_json_url(id: program.id.to_s) %></td>
-        <td><%= link_to 'DOCX', export_program_docx_url(id: program.id.to_s) %></td>
+        <% if is_latest_version %>
+          <td><%= link_to 'JSON', export_program_json_url(id: program.id.to_s) %></td>
+          <td><%= link_to 'DOCX', export_program_docx_url(id: program.id.to_s) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
