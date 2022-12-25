@@ -17,9 +17,6 @@ jobs:
     services:
       postgres:
         image: mariadb
-        # Set health checks to wait until MariDB has started
-        healthcheck:
-          test: [ "CMD", "mysqladmin", "ping", "--silent" ]
         ports:
           - 3306:3306
         env:
