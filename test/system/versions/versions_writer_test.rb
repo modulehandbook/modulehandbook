@@ -21,18 +21,18 @@ class VersionsWriterTest < ApplicationSystemTestCase
     create_version(responsible_person: 'Me', ects: '2')
     click_on 'See Course Versions'
     assert_text 'Version History of'
-    assert_text 'Changed'
+    assert_text 'Updated ects: 1 -> 2'
   end
 
-  test 'as writer i can see versions of a comment' do
+  test 'as writer i can see versions of a course' do
     visit course_path(@course)
     create_version(responsible_person: 'Me', ects: '2')
     click_on 'See Course Versions'
     assert_text 'Version History of'
-    assert_text 'Changed'
+    assert_text 'Updated ects: 1 -> 2'
   end
 
-  test 'as writer i can not revert to a version of a comment' do
+  test 'as writer i can not revert to a version of a course' do
     visit course_path(@course)
     create_version(responsible_person: 'Me', ects: '2')
     create_version(responsible_person: 'Not Me', ects: '5')
