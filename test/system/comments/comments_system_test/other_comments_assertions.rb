@@ -12,6 +12,7 @@ module OthersCommentsAssertions
       the_comment_2 = "Edited comment by #{@user_other.email}, #{context(__method__)}"
       assert_text @the_comment
       edit_button(@the_comment).click
+      assert_text 'Edit comment'
       fill_in 'comment_comment', with: the_comment_2
       click_on 'Update Comment'
       click_on 'Go to comments'
@@ -26,9 +27,10 @@ module OthersCommentsAssertions
 
 
     def delete_and_destroy_others_comment
-
+      sleep(1)
+      click_on 'Go to comments'
       assert_text @the_comment
-      accept_alert do
+      page.accept_confirm do
         delete_button(@the_comment).click
       end
       refute_text @the_comment
