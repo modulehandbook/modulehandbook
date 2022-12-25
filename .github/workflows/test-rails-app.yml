@@ -7,29 +7,23 @@ on:
   workflow_call:
 env:
   RAILS_DB_HOST: localhost
-  POSTGRES_PORT: 5432
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
+  MARIADB_PORT: 3306
+  MARIADB_USER: root
+  MARIADB_PASSWORD: modhand
 jobs:
   test:
     name: rails
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        image: mariadb
+        # Set health checks to wait until MariDB has started
+        healthcheck:
+          test: [ "CMD", "mysqladmin", "ping", "--silent" ]
         ports:
-          - 5432:5432
+          - 3306:3306
         env:
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        # somehow can't access the global env
+          MARIADB_ROOT_PASSWORD: modhand
     steps:
       - name: Check out repo code
         uses: actions/checkout@v2

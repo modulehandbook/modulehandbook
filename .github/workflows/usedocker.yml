@@ -5,6 +5,7 @@ on:
     branch:
       - master
       - try_cuprite_driver
+      - maria_db_versioning
 
 env:
   REGISTRY: ghcr.io
