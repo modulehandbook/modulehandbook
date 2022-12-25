@@ -3,6 +3,8 @@ require 'application_system_test_case'
 class CourseProgramsTest < ApplicationSystemTestCase
   setup do
     @course_program = course_programs(:one)
+    @course_spring = courses(:one_spring)
+    @program_spring = programs(:one_spring)
     @user = users(:one)
     system_test_login(@user.email, 'geheim12')
   end
@@ -17,8 +19,8 @@ class CourseProgramsTest < ApplicationSystemTestCase
     visit course_programs_url
     click_on 'New Course Program'
 
-    select @course_program.course.name, from: 'Course'
-    select @course_program.program.name, from: 'Program'
+    find(:select, 'Course').find("[value='#{@course_spring.id.to_s}']").select_option
+    find(:select, 'Program').find("[value='#{@program_spring.id.to_s}']").select_option
     select @course_program.required, from: 'Required'
     fill_in 'Semester', with: @course_program.semester
     click_on 'Create Course program'
@@ -30,8 +32,8 @@ class CourseProgramsTest < ApplicationSystemTestCase
     visit course_programs_url
     click_on 'Edit', match: :first
 
-    select @course_program.course.name, from: 'Course'
-    select @course_program.program.name, from: 'Program'
+    find(:select, 'Course').find("[value='#{@course_program.course.id.to_s}']").select_option
+    find(:select, 'Program').find("[value='#{@course_program.program.id.to_s}']").select_option
     select @course_program.required, from: 'Required'
     fill_in 'Semester', with: @course_program.semester
     click_on 'Update Course program'

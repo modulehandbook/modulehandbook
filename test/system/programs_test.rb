@@ -46,7 +46,7 @@ class ProgramsTest < ApplicationSystemTestCase
     visit programs_url
     sleep(1)
 
-    @program = programs(:one)
+    @program = programs(:one_spring)
     page.accept_confirm do
       click_on "destroy_program_#{@program.id}"
     end
