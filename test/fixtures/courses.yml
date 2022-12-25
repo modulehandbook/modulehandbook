@@ -57,6 +57,25 @@ two:
   valid_start: 2021-09-01
   valid_end: 2022-01-31
 
+two_spring:
+  id: 2
+  name: Informatik 2
+  code: B7
+  mission: MyText
+  ects: 1
+  examination: MyText
+  objectives: MyText
+  contents: MyText
+  prerequisites: MyText
+  literature: MyText
+  methods: MyText
+  skills_knowledge_understanding: MyText
+  skills_intellectual: MyText
+  skills_practical: MyText
+  skills_general: MyText
+  valid_start: 2022-02-01
+  valid_end: 2022-06-30
+
 three:
   id: 3
   name: Informatik 3
