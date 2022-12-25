@@ -37,7 +37,7 @@ CREATE TABLE `comments` (
   KEY `fk_rails_224c6870e0` (`course_valid_end`),
   CONSTRAINT `fk_rails_224c6870e0` FOREIGN KEY (`course_valid_end`) REFERENCES `courses` (`valid_end`) ON DELETE CASCADE,
   CONSTRAINT `fk_rails_d0f578074a` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `course_programs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -66,7 +66,7 @@ CREATE TABLE `course_programs` (
   CONSTRAINT `fk_rails_931b445d8c` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_rails_aed77cf7f2` FOREIGN KEY (`program_valid_end`) REFERENCES `programs` (`valid_end`) ON DELETE CASCADE,
   CONSTRAINT `fk_rails_f83525775e` FOREIGN KEY (`course_valid_end`) REFERENCES `courses` (`valid_end`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `courses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -87,9 +87,9 @@ CREATE TABLE `courses` (
   `skills_intellectual` text DEFAULT NULL,
   `skills_practical` text DEFAULT NULL,
   `skills_general` text DEFAULT NULL,
-  `lectureHrs` decimal(10,0) DEFAULT NULL,
-  `labHrs` decimal(10,0) DEFAULT NULL,
-  `tutorialHrs` decimal(10,0) DEFAULT NULL,
+  `lectureHrs` decimal(10,1) DEFAULT NULL,
+  `labHrs` decimal(10,1) DEFAULT NULL,
+  `tutorialHrs` decimal(10,1) DEFAULT NULL,
   `equipment` text DEFAULT NULL,
   `room` text DEFAULT NULL,
   `aasm_state` varchar(255) DEFAULT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE `courses` (
   KEY `index_courses_on_valid_end` (`valid_end`),
   PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
   CONSTRAINT `fk_rails_8419f1d78e` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `faculties`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -120,7 +120,7 @@ CREATE TABLE `faculties` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `programs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -144,7 +144,7 @@ CREATE TABLE `programs` (
   KEY `index_programs_on_valid_end` (`valid_end`),
   PERIOD FOR SYSTEM_TIME (`transaction_start`, `transaction_end`),
   CONSTRAINT `fk_rails_75ab144467` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci WITH SYSTEM VERSIONING;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -192,7 +192,7 @@ CREATE TABLE `users` (
   KEY `index_users_on_approved` (`approved`),
   KEY `index_users_on_faculty_id` (`faculty_id`),
   CONSTRAINT `fk_rails_25393b3b56` FOREIGN KEY (`faculty_id`) REFERENCES `faculties` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -222,6 +222,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20221117095500'),
 ('20221117095501'),
 ('20221117095504'),
+('20221117095505'),
 ('20221117095506'),
 ('20221124100158'),
 ('20221124100547'),
