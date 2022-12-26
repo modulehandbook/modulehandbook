@@ -1,17 +1,13 @@
 version: '3.9'
 services:
-  module-handbook-postgres-testci:
+  module-handbook-mariadb-testci:
     container_name: modulehandbook-database-testci
-    image: postgres:13.4-alpine
-    #    container_name: module-handbook-postgres
+    image: yobasystems/alpine-mariadb:10.6.11
     environment:
       - APPLICATION=module-handbook
-      - POSTGRES_PASSWORD=modhand
-      - POSTGRES_USER=modhand
-      - POSTGRES_DB=modhand-db-testci
-      - POSTGRES_HOST_AUTH_METHOD=password
-#     volumes:
-#       - ./pg_data:/var/lib/postgresql/data
+      - MYSQL_ROOT_PASSWORD=modhand
+      - MYSQL_DATABASE=modhand-db-testci
+
   module-handbook-exporter-testci:
     image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
     container_name: modulehandbook-exporter-testci
@@ -22,10 +18,10 @@ services:
     environment:
       - TAG
       - RAILS_ENV=test
-      - RAILS_DB_HOST="module-handbook-postgres-testci"
-      - POSTGRES_USER=modhand
-      - POSTGRES_PASSWORD=modhand
-      - POSTGRES_DB=modhand-db-testci
+      - RAILS_DB_HOST="module-handbook-mariadb-testci"
+      - MARIADB_USER=root
+      - MARIADB_PASSWORD=modhand
+      - MARIADB_DB=modhand-db-testci
       - RAILS_SERVE_STATIC_FILES=true
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
       - DEVISE_EMAIL_HOSTNAME=${DEVISE_EMAIL_HOSTNAME}
@@ -34,7 +30,7 @@ services:
   #  env_file:
   #    - ${SECRET_ENV_FILE}
     depends_on:
-      - module-handbook-postgres-testci
+      - module-handbook-mariadb-testci
       - module-handbook-exporter-testci
     volumes:
       - ./container_logs:/module-handbook/log

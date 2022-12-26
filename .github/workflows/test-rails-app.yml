@@ -6,7 +6,7 @@ on:
       - try_cuprite_driver
   workflow_call:
 env:
-  RAILS_DB_HOST: localhost
+  RAILS_DB_HOST: 127.0.0.1
   MARIADB_PORT: 3306
   MARIADB_USER: root
   MARIADB_PASSWORD: modhand
@@ -15,7 +15,7 @@ jobs:
     name: rails
     runs-on: ubuntu-latest
     services:
-      postgres:
+      mariadb:
         image: mariadb
         ports:
           - 3306:3306
