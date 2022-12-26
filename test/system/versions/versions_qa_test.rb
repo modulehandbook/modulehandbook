@@ -9,6 +9,7 @@ class VersionsQATest < ApplicationSystemTestCase
   end
 
   def create_version(responsible_person:, ects:)
+    assert_text "Course:"
     click_on 'Edit'
     fill_in 'course_responsible_person', with: responsible_person
     fill_in 'course_ects', with: ects
