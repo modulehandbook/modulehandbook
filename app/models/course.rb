@@ -1,6 +1,6 @@
 class Course < ApplicationRecord
   include AASM
-  include CombinedVersioning
+  include MariaDBTemporalTables::CombinedVersioning
   include SemesterDataAdder
 
   has_many :comments, :foreign_key => [:course_id, :course_valid_end]

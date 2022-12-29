@@ -22,7 +22,7 @@
   <% end %>
 
   As of Date/Time:
-  <%= datetime_field_tag :as_of_time, @current_as_of_time%>
+  <%= datetime_field_tag :as_of_time, Time.parse(@current_as_of_time).to_formatted_s(:db)%>
   <%= submit_tag "Show" %>
 
   <br><br>

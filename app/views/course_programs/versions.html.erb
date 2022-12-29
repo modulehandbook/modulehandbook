@@ -15,9 +15,9 @@
 
 <% @versions.each_with_index do |version, index| %>
   <tr>
-    <td><%= link_to index, course_program_path(version, :as_of_time => version.transaction_end) %></td>
+    <td><%= link_to index, course_program_path(version, :as_of_time => version.transaction_start.to_formatted_s(:default)) %></td>
     <td><%= version.author_id  ? User.find(version.author_id).email: "No user" %></td>
-    <td><%= version.transaction_start %></td>
+    <td><%= version.transaction_start.to_formatted_s(:default) %></td>
     <td>
       <% (version.change_list || "").split("\n").each do |change|%>
         <%= change %> <br/>
@@ -26,7 +26,7 @@
     <td>
       <% if can? :revert_to, @course_program %>
       <% if index != @versions.length - 1 %>
-        <%= button_to 'Revert to this Version', course_program_revert_to_url, params: { id: @course_program.id, transaction_end: version.transaction_end } %>
+        <%= button_to 'Revert to this Version', course_program_revert_to_url, params: { id: @course_program.id, transaction_start: version.transaction_start.to_formatted_s(:default) } %>
       <% else %>
         <small>>Current Version<</small>
       <% end %>

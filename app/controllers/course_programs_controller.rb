@@ -121,7 +121,7 @@ class CourseProgramsController < ApplicationController
   end
 
   def revert_to
-    if @course_program.revert(params[:id], params[:transaction_end])
+    if @course_program.revert(params[:id], params[:transaction_start])
       respond_to do |format|
         format.html { redirect_to @course_program, notice: 'Course-Program was successfully reverted.' }
         format.json { render :show, status: :ok, location: @course_program }

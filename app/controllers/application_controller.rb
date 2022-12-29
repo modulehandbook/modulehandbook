@@ -1,12 +1,11 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   check_authorization unless: :devise_controller?
-  before_action :set_current_user
+  before_action :set_author
 
-  # Sets the current user in a thread variable to be accessible by models
-  # Used to assign the 'author' of model changes
-  def set_current_user
-    Thread.current[:current_user] = current_user
+
+  def set_author
+    system_versioning_set_author(current_user)
   end
 
   rescue_from CanCan::AccessDenied do |exception|

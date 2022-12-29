@@ -162,7 +162,7 @@ class ProgramsController < ApplicationController
   end
 
   def revert_to
-    if @program.revert(params[:id], params[:transaction_end])
+    if @program.revert(params[:id], params[:transaction_start])
       respond_to do |format|
         format.html { redirect_to @program, notice: 'Program was successfully reverted.' }
         format.json { render :show, status: :ok, location: @program }

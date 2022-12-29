@@ -188,7 +188,7 @@ class CoursesController < ApplicationController
   def revert_to
     authorize! :update, @course
 
-    if @course.revert(params[:id], params[:transaction_end])
+    if @course.revert(params[:id], params[:transaction_start])
       respond_to do |format|
         format.html { redirect_to @course, notice: 'Course was successfully reverted.' }
         format.json { render :show, status: :ok, location: @course }
