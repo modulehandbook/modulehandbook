@@ -12,7 +12,7 @@ gem 'rails', '~> 7.0.4'
 
 gem 'mysql2'
 gem 'composite_primary_keys', '=14.0.4'
-gem "mariadb_temporal_tables", path: "../mariadb_temporal_tables"
+gem "mariadb_temporal_tables"
 
 # Use Puma as the app server
 gem 'puma', '~> 5.6'
