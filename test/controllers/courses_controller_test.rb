@@ -14,7 +14,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index when provided as of time before the current time' do
-    get courses_url(params: { as_of_time: (Time.now - 1.hour).to_s })
+    get courses_url(params: { as_of_time: (Time.zone.now - 1.hour).to_s })
     assert_response :success
   end
 
@@ -50,7 +50,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   # Sleeps for 2 seconds then sets as of time to 1 second ago
   test 'should show course when provided as of time before the current time' do
     sleep 2
-    get course_url(@course, params: { as_of_time: (Time.now - 1.second).to_s })
+    get course_url(@course, params: { as_of_time: (Time.zone.now - 1.second).to_s })
     assert_response :success
   end
 

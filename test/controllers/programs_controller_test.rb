@@ -14,7 +14,7 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index when provided as of time before the current time' do
-    get programs_url(params: { as_of_time: (Time.now - 1.hour).to_s })
+    get programs_url(params: { as_of_time: (Time.zone.now - 1.hour).to_s })
     assert_response :success
   end
 
@@ -49,7 +49,7 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
   # Sleeps for 2 seconds then sets as of time to 1 second ago
   test 'should show program when provided as of time before the current time' do
     sleep 2
-    get program_url(@program, params: { as_of_time: (Time.now - 1.second).to_s })
+    get program_url(@program, params: { as_of_time: (Time.zone.now - 1.second).to_s })
     assert_response :success
   end
 
