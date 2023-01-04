@@ -1,9 +1,10 @@
 ENV['RAILS_ENV'] ||= 'test'
-require_relative '../config/environment'
-require 'rails/test_help'
 
 # see .simplecov
 require 'simplecov'
+
+require_relative '../config/environment'
+require 'rails/test_help'
 
 
 class ActionDispatch::IntegrationTest
