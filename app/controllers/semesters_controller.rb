@@ -9,6 +9,11 @@ class SemestersController < ApplicationController
     authorize! :read, Program
   end
 
+  def new
+    authorize! :edit, Course
+    authorize! :edit, Program
+    authorize! :edit, CourseProgram
+  end
 
   def generate
     authorize! :edit, Course
