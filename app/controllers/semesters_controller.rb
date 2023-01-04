@@ -4,9 +4,16 @@ class SemestersController < ApplicationController
   skip_authorization_check
   before_action :set_semesters
 
+  def index
+    authorize! :read, Course
+    authorize! :read, Program
+  end
+
+
   def generate
     authorize! :edit, Course
     authorize! :edit, Program
+    authorize! :edit, CourseProgram
 
     generate_params = semester_params
 
