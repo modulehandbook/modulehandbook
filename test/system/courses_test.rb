@@ -150,4 +150,46 @@ class CoursesTest < ApplicationSystemTestCase
 
     assert_text 'Course was successfully destroyed'
   end
+
+  test 'selecting semester in index' do
+    visit courses_url
+    find(:select, 'current_semester_season').find("[value='Winter']").select_option
+    find(:select, 'current_semester_year').find("[value='2021']").select_option
+    click_on "Show", match: :first
+
+    assert_current_path "/courses?current_semester_season=Winter&current_semester_year=2021&commit=Show"
+  end
+
+  test 'showing correct semester based on params in index' do
+    visit courses_url(params: { current_semester_season: "Winter", current_semester_year: 2021 })
+    assert_equal "Winter", find(:select, 'current_semester_season').find('option[selected]').text
+    assert_equal "2021", find(:select, 'current_semester_year').find('option[selected]').text
+  end
+
+  test 'showing correct as of time based on params in index' do
+    time = (Time.zone.now + 1.second).strftime('%Y-%m-%dT%H:%M:%S')
+    visit courses_url(params: { as_of_time: time})
+    assert_equal time, find_field('as_of_time').value
+  end
+
+  test 'selecting semester in course' do
+    visit course_url(@course)
+    find(:select, 'current_semester_season').find("[value='Winter']").select_option
+    find(:select, 'current_semester_year').find("[value='2021']").select_option
+    click_on "Show", match: :first
+
+    assert_current_path "/courses/#{@course.id}?current_semester_season=Winter&current_semester_year=2021&commit=Show"
+  end
+
+  test 'showing correct semester based on params in course' do
+    visit course_url(@course, params: { current_semester_season: "Winter", current_semester_year: 2021 })
+    assert_equal "Winter", find(:select, 'current_semester_season').find('option[selected]').text
+    assert_equal "2021", find(:select, 'current_semester_year').find('option[selected]').text
+  end
+
+  test 'showing correct as of time based on params in course' do
+    time = (Time.zone.now + 1.second).strftime('%Y-%m-%dT%H:%M:%S')
+    visit course_url(@course, params: { as_of_time: time})
+    assert_equal time, find_field('as_of_time').value
+  end
 end

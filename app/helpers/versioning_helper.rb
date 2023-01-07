@@ -4,15 +4,15 @@ module VersioningHelper
       time = params[:as_of_time]
       @current_as_of_time = Time.parse(time).to_formatted_s(:default)
     else
-      @current_as_of_time = Time.now.to_formatted_s(:default)
+      @current_as_of_time = Time.zone.now.to_formatted_s(:default)
     end
   end
 
   def is_latest_version
-    current_time = Time.now
-    current_time_s = current_time.to_formatted_s(:db)
+    current_time = Time.zone.now
+    current_time_s = current_time.strftime("%Y-%m-%d %H:%M:%S")
 
-    current_as_of_time = Time.parse(@current_as_of_time).to_formatted_s(:db)
+    current_as_of_time = Time.parse(@current_as_of_time).strftime("%Y-%m-%d %H:%M:%S")
     parsed_current_as_of_time = Time.parse(@current_as_of_time)
 
     # Equality check done on string to ignore variations in milliseconds
