@@ -1,8 +1,8 @@
 class CourseProgramsController < ApplicationController
   include VersioningHelper
 
-  load_and_authorize_resource except: %i[show]
-  before_action :set_course_program, only: %i[edit update destroy]
+  load_and_authorize_resource except: %i[show revert_to]
+  before_action :set_course_program, only: %i[edit update destroy revert_to]
   before_action :set_current_as_of_time, only: %i[index show]
   before_action :set_existing_semesters, only: %i[index]
   before_action :set_current_semester, only: %i[index]
@@ -121,6 +121,8 @@ class CourseProgramsController < ApplicationController
   end
 
   def revert_to
+    authorize! :update, @course_program
+
     if @course_program.revert(params[:id], params[:transaction_start])
       respond_to do |format|
         format.html { redirect_to @course_program, notice: 'Course-Program was successfully reverted.' }

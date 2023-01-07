@@ -1,12 +1,12 @@
 class ProgramsController < ApplicationController
   include VersioningHelper
 
-  load_and_authorize_resource except: %i[export_courses_json show]
+  load_and_authorize_resource except: %i[export_courses_json show revert_to]
   skip_authorization_check only: :export_programs_json
   skip_before_action :authenticate_user!, only: :export_programs_json
 
 
-  before_action :set_program, only: %i[edit update destroy export_program_json]
+  before_action :set_program, only: %i[edit update destroy export_program_json revert_to]
   before_action :set_current_as_of_time, :set_existing_semesters, only: %i[index show]
   before_action :set_current_semester, only: %i[index export_programs_json]
   before_action :set_current_semester_in_show, only: %i[show]
@@ -162,6 +162,8 @@ class ProgramsController < ApplicationController
   end
 
   def revert_to
+    authorize! :update, @program
+
     if @program.revert(params[:id], params[:transaction_start])
       respond_to do |format|
         format.html { redirect_to @program, notice: 'Program was successfully reverted.' }
