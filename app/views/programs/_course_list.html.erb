@@ -9,7 +9,7 @@
       <th scope="col">required?</th>
       <th scope="col" colspan="2">State</th>
       <th scope="col" colspan="2"></th>
-      <% if can? :edit, @program %>
+      <% if can?(:edit, @program) && is_latest_version %>
       <th scope="col"></th>
       <% end %>
       <th scope="col" colspan="2">Export</th>
@@ -19,22 +19,24 @@
   <tbody>
     <% course_programs.each do |course_program| %>
       <tr>
-        <td scope="row" onclick = "location.href='<%= course_path(course_program.course) %>'"><%= course_program.course.name %></td>
-        <td onclick = "location.href='<%= course_path(course_program.course) %>'"><%= course_program.course.code %></td>
+        <td scope="row" onclick = "location.href='<%= course_path(course_program.course, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %>'"><%= course_program.course.name %></td>
+        <td onclick = "location.href='<%= course_path(course_program.course, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %>'"><%= course_program.course.code %></td>
         <td><%= course_program.course.ects %></td>
         <td><%= course_program.semester %></td>
         <td><%= course_program.required %></td>
         <td class="bg-<%= course_program.course.aasm_state %>">   </td>
         <td><%= course_program.course.aasm_state.humanize.titleize %></td>
-        <td><%= link_to 'Show Course', course_path(course_program.course) %></td>
-        <td><%= link_to 'Show Link', course_program_path(course_program) %></td>
-        <% if can? :edit, @program %>
+        <td><%= link_to 'Show Course', course_path(course_program.course, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %></td>
+        <td><%= link_to 'Show Link', course_program_path(course_program, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %></td>
+        <% if can?(:edit, @program) && is_latest_version %>
         <td><%= link_to 'Edit Link', edit_course_program_path(course_program) %></td>
         <td><%= link_to 'Delete Link', course_program, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>
-        <td><%= link_to 'JSON', export_course_json_url(id: course_program.course_id) %></td>
-        <td><%= link_to 'DOCX', export_course_docx_url(id: course_program.course_id) %></td>
-        </tr>
+        <% if is_latest_version %>
+          <td><%= link_to 'JSON', export_course_json_url(id: course_program.course_id) %></td>
+          <td><%= link_to 'DOCX', export_course_docx_url(id: course_program.course_id) %></td>
+        <% end %>
+      </tr>
     <% end %>
   </tbody>
 </table>

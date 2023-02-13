@@ -1,10 +1,21 @@
+
 <h3><%= content_for(:title, "Program: #{@program.name}") %></h3>
+
+<%= render 'layouts/semester_and_date_selectors', path: program_path(@program)%>
+
 <p id="notice"><%= notice %><br>
   </p>
-<p>
-  Export Program as <%= link_to 'JSON', export_program_json_url(id: @program.id) %> | <%= link_to 'DOCX', export_program_docx_url(id: @program.id) %> <br>
-<% if can? :edit, @program %><%= link_to 'Edit', edit_program_path(@program) %>, <% end %><%= link_to 'Back to Index', programs_path %>
-</p>
+<% if can?(:versions, @program) && !is_deleted_program?(@program.id) %>
+  <%= link_to "See Program Versions", program_versions_url(@program)  %>
+<% end %>
+
+<% if is_latest_version %>
+  <p>
+    Export Program as <%= link_to 'JSON', export_program_json_url(id: @program.id.to_s) %> | <%= link_to 'DOCX', export_program_docx_url(id: @program.id.to_s) %> <br>
+    <% if can?(:edit, @program)%><%= link_to 'Edit', edit_program_path(@program) %>, <% end %><%= link_to 'Back to Index', programs_path %>
+  </p>
+<% end %>
+
 <p>
   <strong>Name:</strong>
   <%= @program.name %>
@@ -34,7 +45,7 @@
 <hr/>
 <h3>Courses in Program</h3>
 
-<% if can? :edit, @program %><%= link_to 'New Course', new_course_path(program_id: @program) %>
+<% if can?(:edit, @program) && is_latest_version %><%= link_to 'New Course', new_course_path(program_id: @program) %>
 <!-- Button trigger modal -->
  | <a href="#" data-toggle="modal" data-target="#jsonModal">
    Import Course(s) from JSON
@@ -63,7 +74,7 @@
       </div>
       <div class="modal-body">
         <p>
-          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. Any Course-Program-Links will also be created.
+          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. Any Course-Program-Links will also be created. Attributes semester_season and semester_year are required to determine semester to import to.
         </p>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
         <%= hidden_field_tag :program_id, @program.id, :style => 'display:inline; margin-top:-10px' %>

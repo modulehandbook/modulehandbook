@@ -7,7 +7,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   belongs_to :faculty, optional: true
-  has_many :versions, foreign_key: "whodunnit"
 
   # ROLES = %i[admin reader writer editor qa].freeze
   ROLES = %i[reader writer editor qa admin].freeze
@@ -17,8 +16,8 @@ class User < ApplicationRecord
   before_destroy :check_for_versions
 
   def check_for_versions
-    if (versions.count > 0)
-      errors.add(:base, "User can't be Destroyed because there are Associated Versions")
+    if versions_count > 0
+      errors.add(:base, "User can't be Destroyed because there are Associated versions")
       throw :abort
     end
   end
@@ -33,7 +32,10 @@ class User < ApplicationRecord
   end
 
   def versions_count
-    @versions_count ||= versions.count
+    @versions_count ||=
+      Course.versions_count_for_author(id) +
+      Program.versions_count_for_author(id) +
+      CourseProgram.versions_count_for_author(id)
   end
 
   def set_default_role
@@ -41,6 +43,7 @@ class User < ApplicationRecord
   end
 
   after_create :send_admin_mail
+
   def send_admin_mail
     AdminMailer.new_user_waiting_for_approval(email).deliver
   end

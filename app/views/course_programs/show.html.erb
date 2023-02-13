@@ -1,19 +1,32 @@
 <h3>Link between Course and Program</h3>
+
+<%= form_tag course_program_path(@course_program), method: :get do %>
+
+  As of Date/Time:
+  <%= datetime_field_tag :as_of_time, Time.parse(@current_as_of_time).to_formatted_s(:db)%>
+  <%= submit_tag "Show" %>
+  <%= submit_tag "Reset" %>
+<% end %>
+
 <p id="notice"><%= notice %>
-  <% if can? :edit, @course_program %>
+  <% if can?(:versions, @course_program) && !is_deleted_course_program?(@course_program.id) %>
+    <%= link_to "See Course-Program Versions", course_program_versions_url(@course_program.id)  %>,
+  <% end %>
+
+  <% if can?(:edit, @course_program) && is_latest_version %>
   <%= link_to 'Edit', edit_course_program_path(@course_program) %>,
   <% end %>
-  <%= link_to 'Back to Program', program_path(@course_program.program) %>,
-  <%= link_to 'Back to Index', course_programs_path %></p>
+  <%= link_to 'Back to Program', program_path(@course_program.program, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %>,
+  <%= link_to 'Back to Index', course_programs_path(:as_of_time => !is_latest_version ? @current_as_of_time: nil) %></p>
 
 <p>
   <strong>Course:</strong>
-  <%= link_to @course_program.course.name, @course_program.course %>
+  <%= link_to "#{@course_program.course.name} - #{get_semester_name(@course_program.course.valid_end)}", course_path(@course_program.course, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %>
 </p>
 
 <p>
   <strong>Program:</strong>
-  <%= link_to @course_program.program.name, @course_program.program %>
+  <%= link_to  "#{@course_program.program.name} - #{get_semester_name(@course_program.program.valid_end)}", program_path(@course_program.program, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %>
 </p>
 
 <p>

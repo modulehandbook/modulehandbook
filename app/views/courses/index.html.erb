@@ -2,8 +2,11 @@
 
 <h3>Courses</h3>
 
+<%= render 'layouts/semester_and_date_selectors', path: courses_path%>
+<br />
+
 <% if can? :edit, @courses %><%= link_to 'New Course', new_course_path %><br><% end %>
-JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
+JSON: <%= link_to 'Export all Courses', export_courses_json_url(:current_semester_season => get_semester_season(@current_semester), :current_semester_year => get_semester_year(@current_semester)) %>
 <!-- Button trigger modal -->
 <% if can? :edit, @courses %>| <a href="#" data-toggle="modal" data-target="#jsonModal">
   Import Course(s)
@@ -32,7 +35,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
       <th scope="col">Skills general</th>
       <% end %>
       <th scope="col"></th>
-      <% if can? :edit, @courses %>
+      <% if can?(:edit, @courses) && is_latest_version %>
       <th scope="col" colspan="2"></th>
       <% end %>
       <th scope="col" colspan="2">Export</th>
@@ -42,8 +45,8 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
   <tbody>
     <% @courses.each do |course| %>
       <tr >
-        <td scope="row"><%= link_to course.name, course_path(course)%></td>
-        <td><%= link_to course.code, course_path(course) %></td>
+        <td scope="row"><%= link_to course.name, course_path(course, :as_of_time => !is_latest_version ? @current_as_of_time: nil)%></td>
+        <td><%= link_to course.code, course_path(course, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %></td>
         <td><%= course.ects %></td>
         <td class="bg-<%= course.aasm_state %>">   </td>
         <td><%= course.aasm_state.humanize.titleize %></td>
@@ -61,13 +64,15 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
         <td><%= course.skills_practical %></td>
         <td><%= course.skills_general %></td>
         <% end %>
-        <td><%= link_to 'Show', course %></td>
-        <% if can? :edit, course %>
+        <td><%= link_to 'Show', course_path(course, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %></td>
+        <% if can?(:edit, course) && is_latest_version %>
         <td><%= link_to 'Edit', edit_course_path(course) %></td>
         <td><%= link_to 'Destroy', course, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>
-        <td><%= link_to 'JSON', export_course_json_url(id: course.id) %></td>
-        <td><%= link_to 'DOCX', export_course_docx_url(id: course.id) %></td>
+        <% if is_latest_version %>
+          <td><%= link_to 'JSON', export_course_json_url(id: course.id.to_s) %></td>
+          <td><%= link_to 'DOCX', export_course_docx_url(id: course.id.to_s) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -87,7 +92,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
       </div>
       <div class="modal-body">
         <p>
-          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File.
+          Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. Attributes semester_season and semester_year are required to determine semester to import to.
         </p>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
       </div>

@@ -15,8 +15,7 @@ Edit comment:
 
   <%= form.hidden_field :author_id, value: @comment.author_id %>
 
-  <%= form.hidden_field :commentable_id, value: @comment.commentable_id %>
-  <%= form.hidden_field :commentable_type, value: @comment.commentable_type %>
+  <%= form.hidden_field :course_id, value: @comment.course.id %>
 
 
   <div class="form-group">

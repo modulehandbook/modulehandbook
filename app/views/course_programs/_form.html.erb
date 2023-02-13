@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :course_id %>
-    <%= form.collection_select(:course_id, Course.all, :id, :select_name) %>
+    <%= form.collection_select(:course_id, Course.all, :id, :select_name_with_semester, { :selected =>  course_program.course ? course_program.course.id.to_s : nil }) %>
   </div>
 
   <div class="field">
     <%= form.label :program_id %>
-    <%= form.collection_select(:program_id, Program.all, :id, :select_name) %>
+    <%= form.collection_select(:program_id, Program.all, :id, :select_name_with_semester, { :selected =>  course_program.program ? course_program.program.id.to_s : nil }) %>
 
   </div>
 

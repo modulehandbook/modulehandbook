@@ -13,13 +13,15 @@
 
   <% unless program.nil? %>
   <h4>
-  for Program: <%= program.select_name %>
+  for Program: <%= program.select_name %> - <%= get_semester_name(program.valid_end) %>
   </h4>
-  <%= hidden_field_tag(:program_id, program.id) %>
+    <%= hidden_field_tag(:program_id, program.id) %>
+    <%= form.hidden_field(:semester_season, :value => get_semester_season(program.valid_end)) %>
+    <%= form.hidden_field(:semester_year, :value => get_semester_year(program.valid_end)) %>
   <% end %>
 
 
-  <%= render 'course_template', course: @course, editing: true, form: form %>
+  <%= render 'course_template', course: @course, program: program, editing: true, form: form, is_create: is_create %>
 
 
   <div class="actions">

@@ -1,0 +1,39 @@
+{
+  "id": 7,
+  "name": "Informatik 2",
+  "code": "B7",
+  "mission": null,
+  "ects": 4,
+  "examination": null,
+  "objectives": null,
+  "contents": null,
+  "prerequisites": null,
+  "literature": null,
+  "methods": "P SL/Ü",
+  "skills_knowledge_understanding": null,
+  "skills_intellectual": null,
+  "skills_practical": null,
+  "skills_general": null,
+  "lectureHrs": null,
+  "labHrs": null,
+  "tutorialHrs": null,
+  "equipment": null,
+  "room": null,
+  "aasm_state": "in_progress",
+  "responsible_person": null,
+  "comment": null,
+  "semester_season": "Spring",
+  "semester_year": 2022,
+  "programs": [
+    {
+      "id": 2,
+      "name": "Internationale Medieninformatik",
+      "code": "IMI-B",
+      "mission": null,
+      "degree": "Bachelor",
+      "ects": 180,
+      "semester": 2,
+      "required": "required"
+    }
+  ]
+}

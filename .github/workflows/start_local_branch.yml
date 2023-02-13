@@ -2,7 +2,9 @@
 name: local-branch
 on:
   push:
-    branches: [ fix_tests ]
+    branches:
+      - fix_tests
+      - maria_db_versioning
     tags-ignore: [ '*' ]
 
 jobs:

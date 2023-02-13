@@ -29,7 +29,13 @@ puts "created unapproved User #{user.email}"
 Program.destroy_all
 Course.destroy_all
 
-imib = Program.create(name: 'Internationale Medieninformatik', code: 'IMI-B', degree: 'Bachelor', ects: 180)
+# Representation of dates per semester for Academic year 20xx - 20xy
+# Winter 20xx: September 1 20xx -> January 31 20xy
+# Spring 20xy: February 1 20xy -> June 30 20xy
+# Seeds data in Winter 2021 and Spring 2022 semester
+
+imibWinter = Program.create(name: 'Internationale Medieninformatik', code: 'IMI-B', degree: 'Bachelor', ects: 180,  valid_start: '2021-09-01', valid_end: '2022-01-31')
+imibSpring = Program.create(name: 'Internationale Medieninformatik', code: 'IMI-B', degree: 'Bachelor', ects: 180,  valid_start: '2022-02-01', valid_end: '2022-06-30')
 
 # [1,"Nr","Modulbezeichnung                  ","Art","Form",","SWS","L",P
 courses = [
@@ -77,24 +83,45 @@ courses = [
   [0, 'WTAT2 ', ' Web  Technology – Aktuelle Themen2                               ', 'elective', 'SL/Ü', ' 2/2      ', ' 5']
 ]
 
+
+
+# Winter semester
+winterCourses = []
 courses.each do |a|
-  puts "handling #{a}"
+  puts "handling #{a} - Winter"
 
   c = Course.create(code: a[1].strip,
                     name: a[2].strip,
                     methods: "#{a[4].strip} #{a[5].strip}",
-                    ects: a[6].strip.to_i)
-  cp = CourseProgram.create(course: c, program: imib,
+                    ects: a[6].strip.to_i,
+                    valid_start: '2021-09-01',
+                    valid_end: '2022-01-31')
+  winterCourses.append(c)
+  cp = CourseProgram.create(course: c, program: imibWinter,
                             semester: a[0],
                             required: a[3].strip)
 end
 
+
+# Spring semester
+(0...winterCourses.length).each do |i|
+  course = winterCourses[i]
+  puts "handling #{courses[i]} - Spring"
+
+  attributes = course.attributes.except("valid_start", "valid_end", "transaction_end", "transaction_start")
+  attributes = attributes.merge(valid_start: '2022-02-01', valid_end: '2022-06-30')
+
+  c = Course.create(attributes)
+  cp = CourseProgram.create(course: c, program: imibSpring,
+                            semester: courses[i][0],
+                            required: courses[i][3].strip)
+end
+
 # add some versions
-Version.destroy_all
 
 writer = User.find_by(email: "writer@mail.de")
 puts writer.inspect
-PaperTrail.request.whodunnit= writer.id
+Thread.current[:current_user] = writer
 
 b7 = Course.find_by(code: 'B7')
 b27 = Course.find_by(code: 'B27')
@@ -109,7 +136,7 @@ wt2.update contents: "second"
 wt2.update contents: "third"
 
 editor = User.find_by(email: "editor@mail.de")
-PaperTrail.request.whodunnit= editor.id
+Thread.current[:current_user] = editor
 
 b27.update contents: "first"
 b27.update contents: "second"

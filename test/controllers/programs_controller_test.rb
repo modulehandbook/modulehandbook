@@ -4,11 +4,27 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
    
   setup do
     @program = programs(:one)
+    @program_spring = programs(:one_spring)
     sign_in users(:one)
   end
 
   test 'should get index' do
     get programs_url
+    assert_response :success
+  end
+
+  test 'should get index when provided as of time before the current time' do
+    get programs_url(params: { as_of_time: (Time.zone.now - 1.hour).to_s })
+    assert_response :success
+  end
+
+  test 'should redirect to programs when "Reset" parameter' do
+    get programs_url(params: { commit: "Reset" })
+    assert_redirected_to programs_url
+  end
+
+  test 'should get versions' do
+    get program_versions_url(@program)
     assert_response :success
   end
 
@@ -28,6 +44,28 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
   test 'should show program' do
     get program_url(@program)
     assert_response :success
+  end
+
+  # Sleeps for 2 seconds then sets as of time to 1 second ago
+  test 'should show program when provided as of time before the current time' do
+    sleep 2
+    get program_url(@program, params: { as_of_time: (Time.zone.now - 1.second).to_s })
+    assert_response :success
+  end
+
+  test 'should redirect without as of time when program does not exist at provided as of time' do
+    get program_url(@program, params: { as_of_time: (Time.now - 40.year).to_s })
+    assert_redirected_to program_url(@program)
+  end
+
+  test 'should redirect to correct semester path to match parameters' do
+    get program_url(@program, params: { current_semester_season: "Spring", current_semester_year: 2022 })
+    assert_redirected_to program_url(@program_spring)
+  end
+
+  test 'should redirect to program when "Reset" parameter' do
+    get program_url(@program, params: { commit: "Reset" })
+    assert_redirected_to program_url(@program)
   end
 
   test 'should get edit' do

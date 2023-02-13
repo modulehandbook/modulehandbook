@@ -1,13 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  course: one
-  program: one
+  course_id: 1
+  course_valid_end: 2022-01-31
+  program_id: 1
+  program_valid_end: 2022-01-31
   semester: 1
   required: mandatory
 
 two:
-  course: two
-  program: two
+  course_id: 2
+  course_valid_end: 2022-01-31
+  program_id: 2
+  program_valid_end: 2022-01-31
   semester: 1
-  required: MyText
+  required: mandatory
+
+two_spring:
+  course_id: 2
+  course_valid_end: 2022-06-30
+  program_id: 2
+  program_valid_end: 2022-06-30
+  semester: 1
+  required: mandatory

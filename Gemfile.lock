@@ -93,12 +93,10 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     cliver (0.3.2)
+    composite_primary_keys (14.0.4)
+      activerecord (~> 7.0.2)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
-    cuprite (0.14.3)
-      capybara (~> 3.0)
-      ferrum (~> 0.13.0)
-    date (3.3.2)
     devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -112,12 +110,9 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
-    ferrum (0.13)
-      addressable (~> 2.5)
-      concurrent-ruby (~> 1.1)
-      webrick (~> 1.7)
-      websocket-driver (>= 0.6, < 0.8)
     ffi (1.15.5)
+    ffi (1.15.5-x64-mingw-ucrt)
+    ffi (1.15.5-x64-mingw32)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
@@ -146,14 +141,15 @@ GEM
       net-pop
       net-smtp
     marcel (1.0.2)
+    mariadb_temporal_tables (0.2)
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.16.3)
     msgpack (1.6.0)
-    net-imap (0.3.2)
-      date
+    mysql2 (0.5.4)
+    net-imap (0.3.1)
       net-protocol
     net-pop (0.1.2)
       net-protocol
@@ -165,13 +161,7 @@ GEM
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    nokogiri (1.13.10-x86_64-darwin)
-      racc (~> 1.4)
     orm_adapter (0.5.0)
-    paper_trail (14.0.0)
-      activerecord (>= 6.0)
-      request_store (~> 1.4)
-    pg (1.4.5)
     phantomjs (2.1.1.0)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
@@ -218,8 +208,6 @@ GEM
     redcarpet (3.5.1)
     redis (4.8.0)
     regexp_parser (2.6.1)
-    request_store (1.5.1)
-      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -229,6 +217,8 @@ GEM
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc (2.4.0-x64-mingw32)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
       railties (>= 4.0.0)
@@ -263,8 +253,11 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2022.6)
+      tzinfo (>= 1.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)
+    wdm (0.1.1)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -274,7 +267,6 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (~> 4.0)
-    webrick (1.7.0)
     websocket (1.2.9)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
@@ -285,6 +277,8 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw-ucrt
+  x64-mingw32
   x86_64-darwin-20
 
 DEPENDENCIES
@@ -295,7 +289,7 @@ DEPENDENCIES
   byebug
   cancancan
   capybara (>= 3.38)
-  cuprite
+  composite_primary_keys (= 14.0.4)
   devise
   faraday
   importmap-rails (~> 1.1)
@@ -303,8 +297,8 @@ DEPENDENCIES
   jquery-rails
   launchy
   listen (>= 3.0.5, < 3.2)
-  paper_trail
-  pg
+  mariadb_temporal_tables (~> 0.2)
+  mysql2
   phantomjs
   poltergeist (~> 1.18, >= 1.18.1)
   puma (~> 5.6)
@@ -316,6 +310,8 @@ DEPENDENCIES
   simplecov
   spring
   turbo-rails
+  tzinfo-data
+  wdm (>= 0.1.0)
   web-console (>= 3.3.0)
   webdrivers
 

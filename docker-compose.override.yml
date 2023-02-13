@@ -9,13 +9,11 @@
 
 version: '3.9'
 services:
-  module-handbook-postgres:
+  module-handbook-mariadb:
       environment:
-        - POSTGRES_DB=modhand-db-dev
-#      volumes:
-#        - ./pg_transfer:/var/lib/postgresql/pg_transfer
+        - MYSQL_DATABASE=modhand-db-dev # test?
       ports:
-       - "5432:5432" # don't do this on production!make
+      - "3306:3306" # don't do this on production!
   module-handbook:
     platform: linux/amd64
     build:
@@ -29,7 +27,7 @@ services:
       - .:/module-handbook  # use app files from host
       - /module-handbook/node_modules # but not the node_modules
     environment:
-      - POSTGRES_DB=modhand-db-dev
+      - MARIADB_DB=modhand-db-dev
       - RAILS_ENV=development
       - RAILS_MASTER_KEY=
       # - EXPORTER_BASE_URL=

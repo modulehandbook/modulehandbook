@@ -3,8 +3,11 @@
 
 <h3>Programs</h3>
 
+<%= render 'layouts/semester_and_date_selectors', path: programs_path%>
+
+
 <% if can? :edit, @programs %><%= link_to 'New Program', new_program_path %><br><% end %>
-JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
+JSON: <%= link_to 'Export all Programs', export_programs_json_url(:current_semester_season => get_semester_season(@current_semester), :current_semester_year => get_semester_year(@current_semester)) %>
 <!-- Button trigger modal -->
 <% if can? :edit, @programs %>| <a href="#" data-toggle="modal" data-target="#jsonModal">
   Import Program(s)
@@ -30,18 +33,20 @@ JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
   <tbody>
     <% @programs.each do |program| %>
       <tr >
-        <td scope="row"><%= link_to program.name, program_path(program) %></td>
-        <td><%= link_to program.code, program_path(program) %></td>
+        <td scope="row"><%= link_to program.name, program_path(program , :as_of_time => !is_latest_version ? @current_as_of_time: nil) %></td>
+        <td><%= link_to program.code, program_path(program, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %></td>
         <td><%= program.mission %></td>
         <td><%= program.degree %></td>
         <td><%= program.ects %></td>
-        <td><%= link_to 'Show', program %></td>
-        <% if can? :edit, program %>
+        <td><%= link_to 'Show', program_path(program, :as_of_time => !is_latest_version ? @current_as_of_time: nil) %></td>
+        <% if can?(:edit, program) && is_latest_version %>
         <td><%= link_to 'Edit', edit_program_path(program) %></td>
         <td><%= link_to 'Destroy', program, id: "destroy_program_#{program.id}", data: {turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         <% end %>
-        <td><%= link_to 'JSON', export_program_json_url(id: program.id) %></td>
-        <td><%= link_to 'DOCX', export_program_docx_url(id: program.id) %></td>
+        <% if is_latest_version %>
+          <td><%= link_to 'JSON', export_program_json_url(id: program.id.to_s) %></td>
+          <td><%= link_to 'DOCX', export_program_docx_url(id: program.id.to_s) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -63,7 +68,7 @@ JSON: <%= link_to 'Export all Programs', export_programs_json_url %>
       </div>
       <div class="modal-body">
         <p>
-          Here you can upload a JSON-File including an entire Program. If the JSON-File also includes Courses, they will be created as well and linked to the Program. If the Program or a Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. The Course-Program-Link will also be created.
+          Here you can upload a JSON-File including an entire Program. If the JSON-File also includes Courses, they will be created as well and linked to the Program. If the Program or a Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File. The Course-Program-Link will also be created. Attributes semester_season and semester_year are required to determine semester to import to.
         </p>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
       </div>

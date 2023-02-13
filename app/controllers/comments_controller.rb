@@ -1,8 +1,11 @@
 class CommentsController < ApplicationController
+  include VersioningHelper
+
   load_and_authorize_resource
 
   def show; end
   def create
+
     @comment = Comment.new(comment_params)
 
     if @comment.save
@@ -16,15 +19,11 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_to controller: @comment.commentable_type.downcase.pluralize,
-                  action: :show,
-                  id: @comment.commentable_id,
+      redirect_to course_path(@comment.course),
                   anchor: 'comments',
                   notice: 'Comment was successfully updated.'
     else
-      redirect_to controller: @comment.commentable_type.downcase.pluralize,
-                  action: :show,
-                  id: @comment.commentable_id,
+      redirect_to course_path(@comment.course),
                   anchor: 'comments',
                   notice: 'Error updating comment'
     end
@@ -49,6 +48,12 @@ class CommentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def comment_params
-    params.require(:comment).permit(:author_id, :comment, :commentable_id, :commentable_type)
+    formatted_params = params.require(:comment).permit(:author_id, :comment, :course_id)
+
+    split = split_to_id_and_valid_end(formatted_params[:course_id])
+
+    formatted_params[:course_id] = split[0]
+    formatted_params[:course_valid_end] = split[1]
+    formatted_params
   end
 end

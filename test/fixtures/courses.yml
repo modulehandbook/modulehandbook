@@ -1,6 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   name: Informatik 1
   code: B1
   mission: MyText
@@ -15,8 +16,30 @@ one:
   skills_intellectual: MyText
   skills_practical: MyText
   skills_general: MyText
+  valid_start: 2021-09-01
+  valid_end: 2022-01-31
+
+one_spring:
+  id: 1
+  name: Informatik 1
+  code: B1
+  mission: MyText
+  ects: 1
+  examination: MyText
+  objectives: MyText
+  contents: MyText
+  prerequisites: MyText
+  literature: MyText
+  methods: MyText
+  skills_knowledge_understanding: MyText
+  skills_intellectual: MyText
+  skills_practical: MyText
+  skills_general: MyText
+  valid_start: 2022-02-01
+  valid_end: 2022-06-30
 
 two:
+  id: 2
   name: Informatik 2
   code: B7
   mission: MyText
@@ -31,8 +54,30 @@ two:
   skills_intellectual: MyText
   skills_practical: MyText
   skills_general: MyText
+  valid_start: 2021-09-01
+  valid_end: 2022-01-31
+
+two_spring:
+  id: 2
+  name: Informatik 2
+  code: B7
+  mission: MyText
+  ects: 1
+  examination: MyText
+  objectives: MyText
+  contents: MyText
+  prerequisites: MyText
+  literature: MyText
+  methods: MyText
+  skills_knowledge_understanding: MyText
+  skills_intellectual: MyText
+  skills_practical: MyText
+  skills_general: MyText
+  valid_start: 2022-02-01
+  valid_end: 2022-06-30
 
 three:
+  id: 3
   name: Informatik 3
   code: B15
   mission: MyText
@@ -49,3 +94,5 @@ three:
   skills_general: MyText
   responsible_person: Barne Kleinen
   comment: "this module might be redundant"
+  valid_start: 2021-09-01
+  valid_end: 2022-01-31

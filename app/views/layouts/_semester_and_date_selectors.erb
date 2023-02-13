@@ -1,0 +1,30 @@
+
+<%= form_tag path, method: :get do %>
+
+  <!--Prevents overwrite of as_of_time param when submitting-->
+  <% params.slice(:as_of_time).each do |key, value| %>
+    <%= hidden_field_tag key, value %>
+  <% end %>
+
+  Semester:
+  <%= select_tag :current_semester_season, options_for_select(get_existing_semester_seasons, get_semester_season(@current_semester)) %>
+  <%= select_tag :current_semester_year, options_for_select(get_existing_semester_years, get_semester_year(@current_semester)) %>
+  <%= submit_tag "Show" %>
+<% end %>
+
+<br>
+
+<%= form_tag path, method: :get do %>
+
+  <!--Prevents overwrite of semesters params when submitting-->
+  <% params.slice(:current_semester_season, :current_semester_year).each do |key, value| %>
+    <%= hidden_field_tag key, value %>
+  <% end %>
+
+  As of Date/Time:
+  <%= datetime_field_tag :as_of_time, Time.parse(@current_as_of_time).to_formatted_s(:db)%>
+  <%= submit_tag "Show" %>
+
+  <br><br>
+  <%= submit_tag "Reset" %>
+<% end %>

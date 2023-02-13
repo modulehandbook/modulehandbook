@@ -1,5 +1,5 @@
 <h3>Version History of Course: <%= @course.name %></h3>
-<%= link_to "Back to Course", course_path(@course.id)  %>
+<%= link_to "Back to Course", course_path(@course)  %>
 
 <p class="bg-<%= @course.aasm_state %>">
   <strong>State:</strong>
@@ -9,8 +9,8 @@
 
 Part of Programs:
 <% if @programs.size > 0 %>
-  <% @programs.each do |program_name, program_id| %>
-  <%= link_to program_name, program_path(program_id)  %>,
+  <% @programs.each do |program| %>
+    <%= link_to "#{program.name} - #{get_semester_name(program.valid_end)}", program_path(program)  %>,
   <% end %>
 <% else %>
   none
@@ -22,30 +22,25 @@ Part of Programs:
     <th>Nr.</th>
     <th>Author</th>
     <th>Date</th>
-    <th>Event</th>
     <th>Changeset</th>
     <th></th>
   </thead>
   <tbody>
 
-<% @versions_authors.each do |version, author| %>
+<% @versions.each_with_index do |version, index| %>
   <tr>
-    <td><%= version.index %></td>
-    <td><%= author %></td>
-    <td><%= version.created_at %></td>
-    <td><%= version.event %></td>
+    <td><%= link_to index, course_path(version, :as_of_time => version.transaction_start.to_formatted_s(:default)) %></td>
+    <td><%= version.author_id  ? User.find(version.author_id).email: "No user" %></td>
+    <td><%= version.transaction_start.to_formatted_s(:default) %></td>
     <td>
-      <% version.changeset.each do |change| %>
-        <% if change[0]!='updated_at' %>
-          Changed "<%= change[0] %>" from <%= change[1][0]? '"' + change[1][0].to_s + '"' : 'no value'%> to "<%= change[1][1]? change[1][1].to_s : 'no_value' %>" <br/>
-        <% end %>
-      <% end %>
-
+      <% (version.change_list || "").split("\n").each do |change|%>
+        <%= change %> <br/>
+    <% end %>
     </td>
     <td>
       <% if can? :revert_to, @course %>
-      <% if version.next %>
-        <%= button_to 'Revert to this Version', revert_to_url, params: { id: @course.id, to_version: version.next } %><small>* revert to "changed to" value</small>
+      <% if index != @versions.length - 1 %>
+        <%= button_to 'Revert to this Version', course_revert_to_url, params: { id: @course.id, transaction_start: version.transaction_start.to_formatted_s(:default) } %>
       <% else %>
         <small>>Current Version<</small>
       <% end %>

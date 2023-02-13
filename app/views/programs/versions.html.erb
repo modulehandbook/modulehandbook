@@ -1,0 +1,42 @@
+<h3>Version History of Program: <%= @program.name %></h3>
+<%= link_to "Back to Program", program_path(@program)  %>
+
+<br/><br/>
+
+<table class="table table-hover">
+  <thead>
+    <th>Nr.</th>
+    <th>Author</th>
+    <th>Date</th>
+    <th>Changeset</th>
+    <th></th>
+  </thead>
+  <tbody>
+
+<% @versions.each_with_index do |version, index| %>
+  <tr>
+    <td><%= link_to index, program_path(version, :as_of_time => version.transaction_start.to_formatted_s(:default)) %></td>
+    <td><%= version.author_id  ? User.find(version.author_id).email: "No user" %></td>
+    <td><%= version.transaction_start.to_formatted_s(:default) %></td>
+    <td>
+      <% (version.change_list || "").split("\n").each do |change|%>
+        <%= change %> <br/>
+    <% end %>
+    </td>
+    <td>
+      <% if can? :revert_to, @program %>
+      <% if index != @versions.length - 1 %>
+        <%= button_to 'Revert to this Version', program_revert_to_url, params: { id: @program.id, transaction_start: version.transaction_start.to_formatted_s(:default) } %>
+      <% else %>
+        <small>>Current Version<</small>
+      <% end %>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+  <tr>
+    <td colspan="4"></td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>

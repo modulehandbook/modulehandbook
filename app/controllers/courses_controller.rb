@@ -1,30 +1,66 @@
 class CoursesController < ApplicationController
-  load_and_authorize_resource except: :export_courses_json
+  include VersioningHelper
+
+  load_and_authorize_resource except: %i[export_courses_json show revert_to]
   skip_authorization_check only: :export_courses_json
   skip_before_action :authenticate_user!, only: :export_courses_json
+  
+  before_action :set_course, only: %i[edit update destroy export_course_json revert_to]
+  before_action :set_current_as_of_time, :set_existing_semesters, only: %i[index show]
+  before_action :set_current_semester, only: %i[index export_courses_json]
+  before_action :set_current_semester_in_show, only: %i[show]
+  helper_method :is_deleted_course?
 
-  before_action :set_course, only: %i[show edit update destroy export_course_json revert_to]
-  before_action :set_paper_trail_whodunnit
-  include VersionsHelper
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.order(:name)
+    if params[:commit] == "Reset"
+      redirect_to courses_path
+    end
+    if is_latest_version
+      @courses = Course.order_valid_at(@current_semester, :name)
+    else
+      @courses = Course.order_valid_at_as_of(@current_semester, @current_as_of_time, :name)
+    end
   end
 
   def versions
-
-    @versions = @course.versions.reorder('created_at DESC')
-    @versions_authors = @versions.map{|v| [v, papertrail_author(v) ]}
-    @programs = @course.programs.order(:name).pluck(:name, :id)
+    @versions = @course.versions
+    @programs = @course.programs.order(:name)
   end
-
-
 
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @programs = @course.programs.order(:name).pluck(:name, :id)
+    # Authorize needs to be done here to be able to show deleted courses,
+    # which cancancan wont be able to find automatically using just the id in 'load_and_authorize_resource'
+    authorize! :show, Course
+
+    id = params[:id]
+    split = split_to_id_and_valid_end(id)
+
+    if is_selected_different_semester(split[1])
+      return redirect_to course_path("#{split[0]},#{@current_semester}",:as_of_time => params[:as_of_time])
+    end
+
+
+    if is_latest_version && !is_deleted_course?(id)
+      set_course
+    else
+      unless set_course_for_as_of_time
+        if is_deleted_course?(id)
+          return redirect_to courses_path, notice: "Course does not exist at that time"
+        else # not deleted, can show current version instead
+          return redirect_to course_path(id), notice: "Course does not exist at that time"
+        end
+      end
+    end
+
+    if params[:commit] == "Reset"
+      return redirect_to course_path(@course)
+    end
+
+    @programs = @course.programs.order(:name)
     @course_program = CourseProgram.new(course: @course)
     @comments_size = @course.comments.size
     @comments = @course.comments
@@ -52,24 +88,22 @@ class CoursesController < ApplicationController
   def export_course_json
     data = @course.gather_data_for_json_export.as_json
     data = JSON.pretty_generate(data)
-    code = @course.try(:code) ? @course.code.gsub(' ', '') : 'XX'
-    name = @course.try(:name) ? @course.name.gsub(' ', '') : 'xxx'
-    filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
+    filename = "#{helpers.generate_filename(@course)}_#{get_semester_name(@course.valid_end)}"
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}.json"
   end
 
   def export_courses_json
-    courses = Course.all
-    data = [].as_json
-    data = JSON.pretty_generate(data)
+    courses = Course.where(valid_end: @current_semester)
+    data = []
     courses.each do |course|
-      data << course.gather_data_for_json_export.to_json
+      data << course.gather_data_for_json_export
     end
+    data = JSON.pretty_generate(data)
     data = data.as_json
-    filename = Date.today.to_s
+    filename = "#{Date.today}_all-courses_#{get_semester_name(@current_semester)}"
     send_data data, type: 'application/json; header=present',
-                    disposition: "attachment; filename=#{filename}_all-courses.json"
+                    disposition: "attachment; filename=#{filename}.json"
   end
 
   def export_course_docx
@@ -82,7 +116,7 @@ class CoursesController < ApplicationController
     begin
       resp = Faraday.post(post_url, course_json, 'Content-Type' => 'application/json')
       logger.debug resp
-      filename = helpers.generate_filename(course)
+      filename = "#{helpers.generate_filename(course)}_#{get_semester_name(course.valid_end)}"
       send_data resp.body, filename: filename + '.docx'
     rescue Faraday::ConnectionFailed => e
       redirect_to courses_path, alert: 'Error: Course could not be exported as DOCX because the connection to the external export service failed!'
@@ -109,20 +143,32 @@ class CoursesController < ApplicationController
   # POST /courses.json
   def create
     @course = Course.new(course_params)
+
+    unless @course.save # Save first to generate id of course, to be used when creating link
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @course.errors, status: :unprocessable_entity }
+    end
+
     create_course_program_link(@course, params[:program_id])
+
     respond_to do |format|
       if @course.save
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
         format.json { render :show, status: :created, location: @course }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def create_course_program_link(_course, program_id)
-    @course_program = @course.course_programs.build(program_id: program_id) unless program_id.nil?
+    if program_id.nil?
+      @course_program = nil
+      return
+    end
+    split = split_to_id_and_valid_end(program_id)
+    @course_program = @course.course_programs.build(program_id: split[0], program_valid_end: split[1])
   end
 
   # PATCH/PUT /courses/1
@@ -133,22 +179,23 @@ class CoursesController < ApplicationController
         format.html { redirect_to @course, notice: 'Course was successfully updated.' }
         format.json { render :show, status: :ok, location: @course }
       else
-        format.html { render :edit, status: :unprocessable_entity  }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def revert_to
-    @course = @course.versions.find(params[:to_version]).reify
-    if @course.save!
+    authorize! :update, @course
+
+    if @course.revert(params[:id], params[:transaction_start])
       respond_to do |format|
         format.html { redirect_to @course, notice: 'Course was successfully reverted.' }
         format.json { render :show, status: :ok, location: @course }
       end
     else
       respond_to do |format|
-        format.html { render versions(@course) }
+        format.html { render versions }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
@@ -171,11 +218,33 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
+  def set_course_for_as_of_time
+    @course = Course.find_as_of(@current_as_of_time, params[:id])
+    !@course.nil?
+  end
+
+  def is_deleted_course?(id)
+    split = split_to_id_and_valid_end(id)
+    !Course.exists?(id: split[0], valid_end: split[1])
+  end
+
+  def set_existing_semesters
+    id = params[:id]
+    if !id
+      @existing_semesters = Course.order(:valid_end).distinct.pluck(:valid_end)
+    else
+      split = split_to_id_and_valid_end(id)
+      @existing_semesters = Course.where(id: split[0]).order(:valid_end).distinct.pluck(:valid_end)
+    end
+  end
+
+
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(:name, :code, :mission, :ects, :examination, :objectives, :contents,
                                    :prerequisites, :literature, :methods, :skills_knowledge_understanding,
                                    :skills_intellectual, :skills_practical, :skills_general,
-                                   :lectureHrs, :labHrs, :tutorialHrs, :equipment, :room, :responsible_person, :comment)
+                                   :lectureHrs, :labHrs, :tutorialHrs, :equipment, :room, :responsible_person, :comment,
+                                   :semester_season,  :semester_year)
   end
 end

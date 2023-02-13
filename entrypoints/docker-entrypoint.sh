@@ -13,4 +13,4 @@ bundle exec rails db:migrate
 bundle exec rake db:create_faculties
 bundle exec rails s -b 0.0.0.0
 
-# tail -f Gemfile
+#tail -f Gemfile

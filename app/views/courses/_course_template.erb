@@ -1,6 +1,17 @@
 
 
   <div class="form-group">
+
+    <% if is_create && program.nil? %>
+      <div class="form-row">
+        <div class="col">
+          <%= form.label "Semester"  %>
+          <%= form.select :semester_season, ["Winter", "Spring"], :selected => "Winter" %>
+          <%= form.select :semester_year, 2019..5.year.from_now.year, :selected => Time.current.year %>
+        </div>
+      </div>
+    <%  end %>
+
     <div class = "form-row">
       <div class = "col">
         <%= render 'course_field', course: @course,

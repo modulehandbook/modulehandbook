@@ -16,7 +16,7 @@ start:
 start_with_output:
 - docker-compose up
 startdb:
-- docker-compose up -d module-handbook-postgres
+	docker-compose up -d module-handbook-mariadb
 exec:
 - docker-compose exec module-handbook bash
 bash:

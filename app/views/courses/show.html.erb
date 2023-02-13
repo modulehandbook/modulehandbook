@@ -1,7 +1,11 @@
 <h3>Course: <%= @course.name %> </h3>
 <h3><%= content_for(:title, "Course: #{@course.name}") %></h3>
-<% if can? :versions, @course %>
-<%= link_to "See Course Versions", course_versions_url(@course.id)  %>
+
+<%= render 'layouts/semester_and_date_selectors', path: course_path(@course)%>
+
+
+<% if can?(:versions, @course) && !is_deleted_course?(@course.id) %>
+<%= link_to "See Course Versions", course_versions_url(@course)  %>
 <% end %>
 
 <p class="bg-<%= @course.aasm_state %>">
@@ -9,7 +13,7 @@
   <%= @course.aasm_state.humanize.titleize %>
 </p>
 
-<% if can? :change_state, @course %>
+<% if can?(:change_state, @course) && is_latest_version %>
   End current Phase and go to next State -
   <% @course.aasm.events.each do |event| %>
     <%= button_to event.name.to_s.humanize.titleize, change_state_path, params: { course_id: @course.id, event_name: event.name } %>
@@ -20,26 +24,32 @@
 
 <p id="notice"><%= notice %><br>
    </p>
-<p>
-Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> | <%= link_to 'DOCX', export_course_docx_url(id: @course.id) %> <br>
-<% if can? :edit, @course %><%= link_to 'Edit', edit_course_path(@course) %>, <% end %><%= link_to 'Back to Index', courses_path %>
-</p>
+
+<% if is_latest_version %>
+  <p>
+  Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id.to_s) %> | <%= link_to 'DOCX', export_course_docx_url(id: @course.id.to_s) %> <br>
+  <% if can?(:edit, @course) %><%= link_to 'Edit', edit_course_path(@course) %>, <% end %><%= link_to 'Back to Index', courses_path %>
+  </p>
+<% end %>
+
 
 <div class = "container">
   <div class="row">
     <div class = "col">
       Already part of Programs: <br/>
-<% @programs.each do |program_name, program_id| %>
-  <%= link_to program_name, program_path(program_id)  %>,
+<% @programs.each do |program| %>
+  <%= link_to "#{program.name} - #{get_semester_name(program.valid_end)}", program_path(program, :as_of_time => !is_latest_version ? @current_as_of_time: nil)  %>,
 <% end %>
     </div>
-<% if can? :edit, @course %>
+<% if can?(:edit, @course) && is_latest_version %>
     <div class = "col">
 <%= form_with(model: @course_program, local: true) do |form| %>
-    <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
+        <%= form.hidden_field :course_id %>
+        <%= form.hidden_field :course_valid_end %>
+        <%= hidden_field_tag 'next_view','edit' %>
   <div class="field">
     <%= form.label 'add to another program:' %>
-    <%= form.collection_select(:program_id, Program.order(:name), :id, :select_name) %>
+    <%= form.collection_select(:program_id, Program.where(:valid_end => @course.valid_end).order(:name), :id, :select_name_with_semester) %>
   </div>
 
   <div class="actions">
@@ -56,7 +66,7 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
 <hr/>
 
 <%= form_with(model: @course, local: true) do |form| %>
-<%= render 'course_template', course: @course, editing: false, form: form %>
+<%= render 'course_template', course: @course, editing: false, form: form, is_create: false %>
 <% end %>
 
 
