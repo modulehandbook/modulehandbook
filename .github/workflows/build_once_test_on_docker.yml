@@ -1,4 +1,6 @@
 name: test on docker
+# this is wip; container should be built only once / incrementally
+# for test and deployment.
 
 on:
   push:

@@ -8,7 +8,7 @@ jobs:
   staging:
     name: Staging
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
-    uses: ./.github/workflows/pipeline.yml
+    uses: ./.github/workflows/pl-pipeline-definition.yml
     with:
       tags: type=sha
       push: true

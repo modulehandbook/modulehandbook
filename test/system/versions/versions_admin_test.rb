@@ -7,6 +7,14 @@ class VersionsAdminTest < ApplicationSystemTestCase
     @user_other = users(:writer)
     system_test_login(@user.email, 'geheim12')
   end
+  
+  def create_version(responsible_person:, ects:)
+    click_on 'Edit'
+    fill_in 'course_responsible_person', with: responsible_person
+    fill_in 'course_ects', with: ects
+    click_on 'Update Course'
+    assert_text 'Course was successfully updated.'
+  end
 
   test 'as admin i can revert to a version of a comment' do
     visit course_path(@course)
