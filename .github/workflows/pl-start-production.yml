@@ -8,7 +8,7 @@ jobs:
      name: Release
      # this will not work as the ref is ref/tags/0...
      # if: github.ref == 'refs/heads/master'
-     uses: ./.github/workflows/pipeline.yml
+     uses: ./.github/workflows/pl-pipeline-definition.yml
      with:
        tags: type=ref,event=tag
        push: true

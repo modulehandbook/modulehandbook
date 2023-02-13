@@ -1,5 +1,8 @@
 name: build container
 
+# this is wip; container should be built only once / incrementally
+# for test and deployment.
+
 on:
   workflow_call:
 #  push:

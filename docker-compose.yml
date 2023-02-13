@@ -15,9 +15,11 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=password
     volumes:
       - ./pg_data:/var/lib/postgresql/data
+    restart: always
   module-handbook-exporter:
     image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
     container_name: modulehandbook-exporter
+    restart: always
   module-handbook:
     image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
     container_name: modulehandbook
@@ -62,3 +64,4 @@ services:
         - NGINX_ENTRYPOINT_QUIET_LOGS=1
      depends_on:
          - module-handbook
+     restart: always
