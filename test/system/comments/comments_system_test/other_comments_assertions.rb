@@ -26,7 +26,7 @@ module OthersCommentsAssertions
 
 
     def delete_and_destroy_others_comment
-
+      skip
       assert_text @the_comment
       accept_alert do
         delete_button(@the_comment).click

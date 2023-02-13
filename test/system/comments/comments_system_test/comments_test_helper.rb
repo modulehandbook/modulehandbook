@@ -21,7 +21,7 @@ module CommentsTestsHelper
 
     def context(method_name)
       context = "ROLE: #{@user.role} in TEST: #{name.to_s.gsub("_"," ")}"
-      puts "---- context: #{context}"
+      # puts "---- context: #{context}"
       context
     end
     def comment_id(text)

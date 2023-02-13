@@ -18,11 +18,13 @@ class CommentsSystemTest < ApplicationSystemTestCase
     take_failed_screenshot
     if !failures.empty?
       #puts failures.inspect
+      puts "------ output generated on failure in comments_system_test.rb#teardown -------------"
+
       puts "-----#{name}----role: #{@user ? @user.role : '@user nil'}"
       puts "#{all_comments.size} comments on page (course #{@course.id}): \n #{all_comments.inspect}"
-      puts "------ start page ------------------------------------------------------"
+      puts "------ start page -----------------------------------------------------------------"
       puts page.body.inspect
-      puts "------ end page ------------------------------------------------------"
+      puts "------ end page -----------------------------------------------------------------"
 
     end
   end

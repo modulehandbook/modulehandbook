@@ -25,6 +25,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   #driven_by :selenium_headless #firefox
   driven_by :selenium_headless, using: :firefox
+  # if cuprite is used, the chrome service needs to be available.
   # driven_by :cuprite
   # driven_by :cuprite, window_size: [1400, 1400], options:
   #  { js_errors: true }, browser_options: { 'no-sandbox': nil }
