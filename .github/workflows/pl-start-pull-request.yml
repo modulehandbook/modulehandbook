@@ -1,7 +1,8 @@
+# names are short as they are pre-pended on gh actions
 name: Pull Request
 on:
     pull_request:
-        branches: [ 'master' ]
+        branches: [ 'main' ]
 
 jobs:
   pull-request:

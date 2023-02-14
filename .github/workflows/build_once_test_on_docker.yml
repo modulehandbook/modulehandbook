@@ -5,7 +5,7 @@ name: test on docker
 on:
   push:
     branch:
-      - master
+      - main
       - try_cuprite_driver
 
 env:

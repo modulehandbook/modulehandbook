@@ -1,7 +1,8 @@
+# names are short as they are pre-pended on gh actions
 name: Staging
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     tags-ignore: [ '*' ]
 
 jobs:

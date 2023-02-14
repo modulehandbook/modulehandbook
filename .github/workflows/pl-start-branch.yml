@@ -1,5 +1,6 @@
 # this can be used to start the full pipeline from dev branches
-name: local-branch
+# names are short as they are pre-pended on gh actions
+name: Branch
 on:
   push:
     branches: [ fix_tests ]

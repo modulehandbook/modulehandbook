@@ -1,3 +1,8 @@
+
+# this is the general build and deploy pipeline definition.
+# it is called with different paramters from the
+# pl-start-* scripts.
+
 name: "Pipeline"
 on:
   workflow_call:
