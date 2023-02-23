@@ -1,6 +1,8 @@
 # use this to link a local exporter instance for development:
 # export EXPORTER_BASE_URL=http://host.docker.internal:3030/
 .RECIPEPREFIX = -
+# default sshid - overwrite with parameter if needed (eg.cronjob)
+sshid=
 restart: stop start
 clean_logs:
 - rm container_logs/nginx/*.*
@@ -225,7 +227,8 @@ import_dump_local:
 - cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
 
 dump_production:
-- 	ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+-   echo $(sshid)
+- 	ssh local@module-handbook.f4.htw-berlin.de $(sshid)  "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 cron_dump:
 - # ping -t 2 module-handbook.f4.htw-berlin.de; if [ $$? == 0 ]; then ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump ; fi
 - PING := $(ping -t 2 module-handbook.f4.htw-berlin.de)
