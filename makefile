@@ -220,7 +220,7 @@ reset_prod_db:
 import_dump_staging:
 - cat $(file) | ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
 
-import_dump_production:
+import_roduction:
 - cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
 
 import_dump_local:
@@ -228,7 +228,7 @@ import_dump_local:
 
 dump_production:
 -   echo $(sshid)
-- 	ssh local@module-handbook.f4.htw-berlin.de $(sshid)  "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+- 	ssh local@module-handbook.f4.htw-berlin.de $(sshid)  "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../modhand-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 cron_dump:
 - # ping -t 2 module-handbook.f4.htw-berlin.de; if [ $$? == 0 ]; then ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump ; fi
 - PING := $(ping -t 2 module-handbook.f4.htw-berlin.de)
