@@ -39,4 +39,13 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     assert_redirected_to programs_url
   end
+
+  test 'should import additional courses to program' do
+    program = programs(:imib)
+    file1 = fixture_file_upload("#{Rails.root}/test/fixtures/files/two_courses.json", 'application/json')
+    post program_add_courses_url(id: @program.id), params: { files: [file1] }
+    assert_response :redirect
+    assert_redirected_to programs_url
+    assert program.courses.size >= 2
+  end
 end
