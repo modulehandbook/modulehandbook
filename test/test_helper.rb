@@ -4,7 +4,7 @@ require 'rails/test_help'
 
 # see .simplecov
 require 'simplecov'
-
+SimpleCov.start 'rails'
 
 class ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers

@@ -41,6 +41,9 @@ class ProgramsController < ApplicationController
     end
   end
 
+  def import_courses_to_program_json
+
+  end
   def export_program_json
     data = @program.gather_data_for_json_export
     data = JSON.pretty_generate(data)
