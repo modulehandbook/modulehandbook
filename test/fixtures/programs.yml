@@ -27,3 +27,10 @@ imib2:
   mission: This is the mission
   degree: Bachelors
   ects: 180
+
+imi1c:
+  name: IMI-B with one course
+  code: 919
+  mission: This is the mission
+  degree: Bachelors
+  ects: 180

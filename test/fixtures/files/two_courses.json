@@ -3,7 +3,7 @@
       "id": 7,
       "name": "Informatik 2",
       "code": "B7",
-      "mission": null,
+      "mission": "Mission for Info2",
       "ects": 4,
       "examination": null,
       "objectives": null,
