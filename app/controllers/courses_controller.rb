@@ -174,7 +174,8 @@ class CoursesController < ApplicationController
   PERMITTED_PARAMS = [:name, :code, :mission, :ects, :examination, :objectives, :contents,
                         :prerequisites, :literature, :methods, :skills_knowledge_understanding,
                         :skills_intellectual, :skills_practical, :skills_general,
-                        :lectureHrs, :labHrs, :tutorialHrs, :equipment, :room, :responsible_person, :comment]
+                        :lectureHrs, :labHrs, :tutorialHrs, :equipment, :room, :responsible_person,
+                        :teacher, :comment]
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(PERMITTED_PARAMS)

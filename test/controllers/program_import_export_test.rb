@@ -60,6 +60,17 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
     assert_equal "Mission for Info2", updated_course.mission
   end
 
+  test 'allowed fields for import' do
+    program = programs(:imi1c)
+    file_name = "#{Rails.root}/test/fixtures/files/two_courses.json"
+    file1 = fixture_file_upload(file_name,'application/json')
+    post program_add_courses_url(id: program.id), params: { files: [file1] }
+    assert_response :redirect
+    assert_redirected_to program_url(id: program.id)
+    updated_course = program.courses.find_by(code: 'B7')
+    assert_equal "Barne Kleinen", updated_course.teacher
+  end
+
 
   test 'should import additional courses to program - codes only need to be unique for program' do
     program1 = programs(:imib)
