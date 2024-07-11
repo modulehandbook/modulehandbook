@@ -228,6 +228,54 @@ yarn add bootstrap jquery popper.js
 
 # Deployment to HTW server with Github actions
 
+## Architecture and Deployment Overview
+
+```mermaid
+flowchart TD
+    
+    
+    MHF --http--> MH
+    MH -- "html, css, json, docx" --> MHF
+
+    subgraph all["Module Handbook Architecture"]
+        subgraph front[Frontend]
+        MHF("Module Handbook Frontend\n(Browser)")
+        end
+        subgraph back["Backend: 3 Docker Containers on Server"]
+        MH("Module Handbook\n(Rails App)")
+
+
+        EX("Exporter\n(Javascript/Express App)")
+        DB[(Postgres)]
+        end
+    
+    end
+
+   
+ 
+    
+    MH -- json --> EX
+    EX -- docx --> MH
+    
+    
+    MH <-- SQL --> DB 
+```
+## NGINX
+
+
+
+    volumes:
+       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+       - ./nginx/templates:/etc/nginx/templates
+       - ./container_logs/nginx:/var/log/nginx
+       - ./secrets/nginx:/etc/ssl
+
+
+NGINX_CERT=/etc/ssl/production/module-handbook.f4.htw-berlin.de.cer
+NGINX_KEY=/etc/ssl/production/module-handbook.f4.htw-berlin.de.key
+NGINX_CERT=/etc/ssl/staging/module-handbook-staging.f4.htw-berlin.de.cer
+NGINX_KEY=/etc/ssl/staging/module-handbook-staging.f4.htw-berlin.de.key
+
 ## Docker and Docker Compose
 The Dockerfile contains three targets. modhand-dev contains dev and test
 dependencies which are not needed in production.
@@ -263,15 +311,15 @@ This can be done through several IDEs, or even through Notepad++(Edit -> EOL Con
 
 # Useful commands on the servers
 
-sudo docker-compose up
-sudo docker-compose down
+    sudo docker-compose up -d
+    sudo docker-compose down
+    
+    docker stop module-handbook
+    docker-compose exec module-handbook bash
+    docker restart modulehandbook
+    docker ps
 
-docker stop module-handbook
-docker-compose exec module-handbook bash
-docker restart modulehandbook
-docker ps
-
-
+ 
 
 # Schema
 

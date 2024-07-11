@@ -15,7 +15,7 @@ services:
 #      volumes:
 #        - ./pg_transfer:/var/lib/postgresql/pg_transfer
       ports:
-       - "5432:5432" # don't do this on production!make
+       - "5432:5432" # don't do this on production!
   module-handbook:
     platform: linux/amd64
     build:
