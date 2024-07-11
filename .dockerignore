@@ -27,3 +27,6 @@ secrets.env
 
 # ignore test files
 /test*
+
+# ignore dev override
+docker-compose.override.yml

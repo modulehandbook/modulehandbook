@@ -4,7 +4,7 @@
 # default sshid - overwrite with parameter if needed (eg.cronjob)
 sshid=
 restart: stop start
-clean_logs:
+clean_logs:bin
 - rm container_logs/nginx/*.*
 - rm container_logs/*.*
 start_prod_mode:
