@@ -76,4 +76,17 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
     b7_1.name = "changed"
     assert_not_equal b7_1.name, b7_2.name
   end
+
+  test 'adds semester to link on import' do
+    program = programs(:imib)
+    file_name = "#{Rails.root}/test/fixtures/files/with_semester.json"
+    file1 = fixture_file_upload(file_name,'application/json')
+    post program_add_courses_url(id: program.id), params: { files: [file1] }
+    assert_response :redirect
+    assert_redirected_to program_url(id: program.id)
+    updated_course = program.courses.find_by(code: 'WT2')
+    course_program = program.course_programs.find_by(course_id: updated_course.id)
+    assert_equal 5, course_program.semester
+    assert_equal 'elective', course_program.required
+  end
 end
