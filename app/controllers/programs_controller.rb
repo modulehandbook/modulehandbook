@@ -19,12 +19,22 @@ class ProgramsController < ApplicationController
     @course_programs = @program
                        .course_programs
                        .includes(:course)
-                       .order('required DESC', 'semester', 'courses.name')
+                       .order('semester',  'courses.code')
+    #.order('semester', 'required DESC', 'courses.code')
   end
 
   def overview
     @course_programs = @program.course_programs.includes(:course)
-    @rows = @program.course_programs.includes(:course).order('course_programs.semester', 'courses.code').group_by(&:semester)
+    @rows = @program.course_programs.study_plan.includes(:course)
+                    .order('course_programs.semester', 'courses.code')
+                    .group_by(&:semester)
+    @elective_rows = @program.course_programs.elective_options.includes(:course)
+                             .order('course_programs.semester', 'courses.code')
+                             .group_by(&:semester)
+    @elective_rows.each do |semester,cps|
+      @rows["electives #{semester}"] = cps
+    end
+    @options = @program.course_programs.where(required: "elective-option")
   end
 
   def import_program_json
