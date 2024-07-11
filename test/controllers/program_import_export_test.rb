@@ -43,9 +43,25 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
   test 'should import additional courses to program' do
     program = programs(:imib)
     file1 = fixture_file_upload("#{Rails.root}/test/fixtures/files/two_courses.json", 'application/json')
-    post program_add_courses_url(id: @program.id), params: { files: [file1] }
+    post program_add_courses_url(id: program.id), params: { files: [file1] }
     assert_response :redirect
-    assert_redirected_to programs_url
+    assert_redirected_to program_url(id: program.id)
     assert program.courses.size >= 2
+  end
+
+  test 'should import additional courses to program - codes only need to be unique for program' do
+    program1 = programs(:imib)
+    program2 = programs(:imib2)
+    file1 = fixture_file_upload("#{Rails.root}/test/fixtures/files/two_courses.json", 'application/json')
+    post program_add_courses_url(id: program1.id), params: { files: [file1] }
+    post program_add_courses_url(id: program2.id), params: { files: [file1] }
+    assert_response :redirect
+    assert_redirected_to program_url(id: program2.id)
+    assert program1.courses.size >= 2
+    assert program2.courses.size >= 2
+    b7_1 = program1.courses.where(code: 'B7').first
+    b7_2 = program2.courses.where(code: 'B7').first
+    b7_1.name = "changed"
+    assert_not_equal b7_1.name, b7_2.name
   end
 end

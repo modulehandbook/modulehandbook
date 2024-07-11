@@ -48,19 +48,20 @@ class ProgramsController < ApplicationController
       if json.is_a?(Array)
         json.each do |course_json |
           params = ActionController::Parameters.new(course_json).permit(CoursesController::PERMITTED_PARAMS)
-          link_params = ActionController::Parameters.new(course_json).permit(CourseProgramsController::PERMITTED_PARAMS)
-          course = @program.courses.find_by(code: params['code']).first
+          courses = @program.courses.find_by(code: params['code'])
 
-          if course
+          if courses and courses.any?
+            course = courses.first
             course.update(params)
           else
             course = @program.courses.create!(params)
           end
           course.save!
           @program.save if @program.changed?
-          course_program = @program.course_programs.find_by(course_id: course.id).first
-          course_program_params  ActionController::Parameters.new(course_json).permit(CourseProgramsController::PERMITTED_PARAMS)
-          course_program.update(params)
+          course_programs = @program.course_programs.where(course_id: course.id)
+          course_program = course_programs.first
+          course_program_params = ActionController::Parameters.new(course_json).permit(CourseProgramsController::PERMITTED_PARAMS)
+          course_program.update(course_program_params)
           course_program.save!
         end
       end
