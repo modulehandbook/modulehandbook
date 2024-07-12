@@ -15,7 +15,7 @@ env:
   POSTGRES_PASSWORD: postgres
 jobs:
   test:
-    name: rails
+    name: Test
     runs-on: ubuntu-latest
     services:
       postgres:

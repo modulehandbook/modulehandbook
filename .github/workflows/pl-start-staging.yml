@@ -1,4 +1,4 @@
-# names are short as they are pre-pended on gh actions
+# names are short as they are prepended on gh actions
 name: Staging
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   staging:
-    name: Staging
+    name: Stag
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
     uses: ./.github/workflows/pl-pipeline-definition.yml
     with:

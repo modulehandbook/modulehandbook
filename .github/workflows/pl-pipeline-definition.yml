@@ -29,7 +29,7 @@ jobs:
 
   build_and_push:
     needs: test_app   #### for now to get faster results on the builds
-    name: Build and Push Docker Image
+    name: Docker
     uses: ./.github/workflows/pl-build-and-push-image.yml
     with:
       tags: ${{ inputs.tags }}

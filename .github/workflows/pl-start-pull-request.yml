@@ -6,7 +6,7 @@ on:
 
 jobs:
   pull-request:
-    name: Pipeline
+    name: PR
     if: ${{ github.event_name == 'pull_request' }}
     uses: ./.github/workflows/pl-pipeline-definition.yml
     with:
