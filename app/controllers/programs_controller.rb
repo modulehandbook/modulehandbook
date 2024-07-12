@@ -20,6 +20,7 @@ class ProgramsController < ApplicationController
                        .course_programs
                        .includes(:course)
                        .order('semester',  'courses.code')
+    @show_objectives = params['objectives'] || false
     #.order('semester', 'required DESC', 'courses.code')
   end
 

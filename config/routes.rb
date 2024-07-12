@@ -21,6 +21,9 @@ Rails.application.routes.draw do
 
   get 'courses/:id/versions', to: 'courses#versions', as: 'course_versions'
 
+  # nudge
+  get 'nudge', to: 'nudge#nudge', as: 'nudge'
+  
   # JSON Exporte
   get 'export_course_json', to: 'courses#export_course_json'
   get 'export_courses_json', to: 'courses#export_courses_json'

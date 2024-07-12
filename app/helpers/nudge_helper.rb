@@ -1,0 +1,2 @@
+module NudgeHelper
+end
