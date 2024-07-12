@@ -1,4 +1,4 @@
-FROM ruby:3.1.2-alpine AS modhand-base
+FROM ruby:3.3.3-alpine AS modhand-base
 
 ENV MODHAND_IMAGE=modhand-base
 ENV BUNDLER_VERSION=2.3.24
