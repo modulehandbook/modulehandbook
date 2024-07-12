@@ -6,7 +6,7 @@
 
     <tr>  <td><%= semester %>. Semester:
       <% ects = cps.inject(0){|sum,cp| sum = sum + (cp.course.ects.nil? ?  0 : cp.course.ects ) }
-      ects_total += ects %>
+      ects_total += ects unless semester.to_s.starts_with? 'elective'%>
       <%= ects %> ECTS
       </td>
 

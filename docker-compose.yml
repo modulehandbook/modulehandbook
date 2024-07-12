@@ -42,6 +42,7 @@ services:
       - module-handbook-exporter
     volumes:
       - ./container_logs:/module-handbook/log
+      - ./container_nudge:/module-handbook/nudge
     restart: always
   nginx:
      image: nginx:latest

@@ -6,6 +6,9 @@
       <th scope="col">Code</th>
       <th scope="col">Ects</th>
       <th scope="col">Semester</th>
+      <% if @show_objectives %>
+      <th colspan="4" scope="col">Objectives</th>
+      <% end %>
       <th scope="col">required?</th>
       <th scope="col" colspan="2">State</th>
       <th scope="col" colspan="2"></th>
@@ -23,6 +26,12 @@
         <td onclick = "location.href='<%= course_path(course_program.course) %>'"><%= course_program.course.code %></td>
         <td><%= course_program.course.ects %></td>
         <td><%= course_program.semester %></td>
+        <% if @show_objectives %>
+          <td colspan="4" >
+          <%= md2html(course_program.course.objectives) %>
+            <%= link_to "edit", edit_course_path(course_program.course_id)  %>
+          </td>
+        <% end %>
         <td><%= course_program.required %></td>
         <td class="bg-<%= course_program.course.aasm_state %>">   </td>
         <td><%= course_program.course.aasm_state.humanize.titleize %></td>

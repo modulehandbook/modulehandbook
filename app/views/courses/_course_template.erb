@@ -8,10 +8,17 @@
         editing: editing, form: form, rows: 1 %>
       </div>
       <div class = "col">
+        <div class="form-group">
+          <%= render 'course_field', course: @course,
+                     field_name: :ects, markdown: false,
+                     editing: editing, form: form, rows: 1 %></div>
+      </div>
+      <div class = "col">
         <%= render 'course_field', course: @course,
         field_name: :responsible_person, markdown: false,
         editing: editing, form: form, rows: 1 %>
       </div>
+
     </div>
   </div>
 
@@ -25,11 +32,13 @@
  </div>
   <div class = "col">
 
-    <div class="form-group">
-      <%= render 'course_field', course: @course,
-      field_name: :ects, markdown: false,
-      editing: editing, form: form, rows: 1 %></div>
     </div>
+
+  <div class = "col">
+    <%= render 'course_field', course: @course,
+               field_name: :teacher, markdown: false,
+               editing: editing, form: form, rows: 1 %>
+  </div>
   </div>
 
 

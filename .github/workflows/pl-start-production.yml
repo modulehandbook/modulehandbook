@@ -6,7 +6,7 @@ on:
 
 jobs:
   production:
-     name: Release
+     name: Prod
      # this will not work as the ref is ref/tags/0...
      # if: github.ref == 'refs/heads/master'
      uses: ./.github/workflows/pl-pipeline-definition.yml

@@ -11,3 +11,9 @@ two:
   program: two
   semester: 1
   required: MyText
+
+three:
+  course: b7
+  program: imi1c
+  semester: 2
+  required: MyText

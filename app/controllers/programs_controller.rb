@@ -4,7 +4,7 @@ class ProgramsController < ApplicationController
   skip_before_action :authenticate_user!, only: :export_programs_json
 
 
-  before_action :set_program, only: %i[show edit update destroy export_program_json]
+  before_action :set_program, only: %i[show edit update destroy export_program_json import_courses_json]
   before_action :set_paper_trail_whodunnit
 
   # GET /programs
@@ -19,12 +19,23 @@ class ProgramsController < ApplicationController
     @course_programs = @program
                        .course_programs
                        .includes(:course)
-                       .order('required DESC', 'semester', 'courses.name')
+                       .order('semester',  'courses.code')
+    @show_objectives = params['objectives'] || false
+    #.order('semester', 'required DESC', 'courses.code')
   end
 
   def overview
     @course_programs = @program.course_programs.includes(:course)
-    @rows = @program.course_programs.includes(:course).order('course_programs.semester', 'courses.code').group_by(&:semester)
+    @rows = @program.course_programs.study_plan.includes(:course)
+                    .order('course_programs.semester', 'courses.code')
+                    .group_by(&:semester)
+    @elective_rows = @program.course_programs.elective_options.includes(:course)
+                             .order('course_programs.semester', 'courses.code')
+                             .group_by(&:semester)
+    @elective_rows.each do |semester,cps|
+      @rows["electives #{semester}"] = cps
+    end
+    @options = @program.course_programs.where(required: "elective-option")
   end
 
   def import_program_json
@@ -41,6 +52,37 @@ class ProgramsController < ApplicationController
     end
   end
 
+  def import_courses_json
+    files = params[:files] || []
+    files.each do |file|
+      json = JSON.parse(file.read)
+      if json.is_a?(Array)
+        json.each do |course_json |
+          params = ActionController::Parameters.new(course_json).permit(CoursesController::PERMITTED_PARAMS)
+          course = @program.courses.find_by(code: params['code'])
+
+          if course
+            course.update(params)
+          else
+            course = @program.courses.create!(params)
+          end
+          course.save!
+          @program.save if @program.changed?
+          course_programs = @program.course_programs.where(course_id: course.id)
+          course_program = course_programs.first
+          course_program_params = ActionController::Parameters.new(course_json).permit(CourseProgramsController::PERMITTED_PARAMS)
+          course_program.update(course_program_params)
+          course_program.save!
+        end
+      end
+    end
+    respond_to do |format|
+      if files.count < 1
+        format.html { redirect_to program_path(@program), notice: 'No files selected to import Courses(s) from' }
+      end
+      format.html { redirect_to program_path(@program), notice: 'Courses successfully imported' }
+    end
+  end
   def export_program_json
     data = @program.gather_data_for_json_export
     data = JSON.pretty_generate(data)
@@ -135,7 +177,8 @@ class ProgramsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
+  PERMITTED_PARAMS = [:name, :code, :mission, :degree, :ects]
   def program_params
-    params.require(:program).permit(:name, :code, :mission, :degree, :ects)
+    params.require(:program).permit(PERMITTED_PARAMS)
   end
 end

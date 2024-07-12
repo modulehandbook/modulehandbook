@@ -3,6 +3,9 @@ class Program < ApplicationRecord
   has_many :courses, through: :course_programs
   has_paper_trail
 
+  scope :study_plan, -> { where.not(required: "elective-option") }
+  scope :elective_options, -> { where(required: "elective-option") }
+
   def select_name
     "#{name} (#{code})"
   end

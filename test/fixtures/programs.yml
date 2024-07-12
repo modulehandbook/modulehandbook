@@ -13,3 +13,24 @@ two:
   mission: MyText
   degree: MyText
   ects: 1
+
+imib:
+  name: IMI-B
+  code: 919
+  mission: This is the mission
+  degree: Bachelors
+  ects: 180
+
+imib2:
+  name: IMI-B 2
+  code: 919
+  mission: This is the mission
+  degree: Bachelors
+  ects: 180
+
+imi1c:
+  name: IMI-B with one course
+  code: 919
+  mission: This is the mission
+  degree: Bachelors
+  ects: 180

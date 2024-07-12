@@ -41,7 +41,11 @@
  </a>
  |
  <% end %>
- <%= link_to 'Overview',program_overview_path(@program) %>
+ <% params =  @show_objectives ? {} : { objectives: true } %>
+ <%= link_to 'Toggle Objectives', program_path(@program, params) %>
+  |  <%= link_to 'Overview', program_overview_path(@program) %>
+ 
+ 
  <br><br>
 <%= render 'course_list', course_programs: @course_programs %>
 
@@ -54,7 +58,7 @@
 <div class="modal fade" id="jsonModal" tabindex="-1" role="dialog" aria-labelledby="jsonModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <%= form_tag import_course_json_path, multipart: true do %>
+      <%= form_tag program_add_courses_path, multipart: true do %>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Import a Course from an existing JSON-File</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

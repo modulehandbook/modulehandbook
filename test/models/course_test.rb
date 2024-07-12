@@ -5,9 +5,8 @@ class CourseTest < ActiveSupport::TestCase
   #   assert true
   # end
 
-  # describe "find_or_create_from_json creates valid course" do
-  test 'find_or_create_from_json creates valid course with all details provided' do
-    course_json = JSON.parse('{
+  setup do
+    @course_json = JSON.parse('{
         "id": 1,
         "name": "Informatik  1",
         "code": "B2",
@@ -31,9 +30,21 @@ class CourseTest < ActiveSupport::TestCase
         "equipment": nil,
         "room": nil
         }'.gsub('nil', 'null'))
+  end
+
+  test 'create from json' do
+    assert_equal'B2', @course_json['code']
+    course = Course.new( @course_json)
+    assert_equal 'B2', course.code
+    course.save!
+    assert_equal @course_json['name'], course.name
+
+  end
+  # describe "find_or_create_from_json creates valid course" do
+  test 'find_or_create_from_json creates valid course with all details provided' do
     assert_difference('Course.count', 1) do
-      course = Course.find_or_create_from_json(course_json)
-      assert_equal course.code, course_json['code']
+      course = Course.find_or_create_from_json(@course_json)
+      assert_equal @course_json['code'], course.code
     end
   end
 
@@ -47,5 +58,4 @@ class CourseTest < ActiveSupport::TestCase
       assert_equal course.code, course_json['code']
     end
   end
-    # end
   end
