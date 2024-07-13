@@ -7,7 +7,7 @@ sshid=
 
 local:
 - open http://localhost:3000/
-- bin/rails s
+- export POSTGRES_DB=modhand-db-dev && bin/rails s
 
 restart: stop start
 clean_logs:bin
