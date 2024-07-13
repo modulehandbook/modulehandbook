@@ -1,6 +1,8 @@
 
 class NudgeController < ApplicationController
-    authorize_resource :class => false
+    skip_authorization_check
+    # authorize_resource :class => false
+    skip_before_action :authenticate_user!
     def nudge
         begin
           file_name = DateTime.now.strftime("nudge/nudge-%Y-%m-%d---%H-%M-%S")

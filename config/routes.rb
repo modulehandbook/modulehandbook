@@ -2,11 +2,19 @@ Rails.application.routes.draw do
   resources :faculties
 
   root 'welcome#index'
+  # nudge
+  get 'nudge', to: 'nudge#nudge', as: 'nudge'
 
   devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
+  
+  authenticated :user do
+    root to: 'welcome#index', as: :authenticated_root
+    get 'nudge', to: 'nudge#nudge', as: 'authenticated_nudge'
+  end
+  
   get 'abilities', to: 'users#show_abilities', as: 'abilities'
   resources :users, only: %i[index show edit update destroy]
 
@@ -21,8 +29,7 @@ Rails.application.routes.draw do
 
   get 'courses/:id/versions', to: 'courses#versions', as: 'course_versions'
 
-  # nudge
-  get 'nudge', to: 'nudge#nudge', as: 'nudge'
+
   
   # JSON Exporte
   get 'export_course_json', to: 'courses#export_course_json'
