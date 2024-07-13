@@ -1,5 +1,5 @@
 
-# build and (maybe) push docker image workflow called by pl-pipeline-definition.yml
+# build and (maybe) push docker image workflow called by  pipeline_02_structure.yml
 
 name: Build and Push Image
 

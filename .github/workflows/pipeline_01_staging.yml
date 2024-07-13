@@ -9,7 +9,7 @@ jobs:
   staging:
     name: Stag
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
-    uses: ./.github/workflows/pl-pipeline-definition.yml
+    uses: ./.github/workflows/pipeline_02_structure.yml
     with:
       tags: type=sha
       push: true

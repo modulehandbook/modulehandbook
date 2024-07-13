@@ -1,5 +1,5 @@
 
-# called by pl-pipeline-definition.yml
+# called by  pipeline_02_structure.yml
 
 name: Test App
 
