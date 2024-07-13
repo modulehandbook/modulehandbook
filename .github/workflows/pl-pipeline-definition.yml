@@ -20,7 +20,10 @@ on:
         required: false
         type: string
         default: modhand-prod
-
+      server:
+        required: false
+        type: string
+        default: staging
 
 jobs:
   test_app:
@@ -35,12 +38,13 @@ jobs:
       tags: ${{ inputs.tags }}
       push: ${{ inputs.push }}
       target: ${{ inputs.target }}
+      server: ${{ inputs.server }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
 
 
   info:
-    name: Info on Parameter
+    name: List Parameter
     runs-on: ubuntu-latest
     steps:
       - run: |
@@ -51,3 +55,4 @@ jobs:
           echo "tags: ${{ inputs.tags }}"
           echo "push: ${{ inputs.push }}"
           echo "target: ${{ inputs.target }}"
+          echo "target: ${{ inputs.server }}"

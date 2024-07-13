@@ -15,6 +15,7 @@ class Ability
     alias_action :import_course_json, to: :import_course
     alias_action :import_program_json, to: :import_program
 
+    merge Abilities::All.new(user)
     return unless user.present?
 
     merge Abilities::Reader.new(user)
