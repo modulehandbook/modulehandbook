@@ -15,7 +15,15 @@ bash_exp:
 rails-c:
 - docker exec -it modulehandbook bin/rails c
 
+deploy:
+- sudo secrets/ln.sh  && ls -lart container_nudge/ && cat container_nudge/sha
+- bin_deploy/check.sh
 
+mk:
+- echo $RAILS_MASTER_KEY
+
+n:
+- ls -lart container_nudge/
 
 clean_logs:
 - sudo rm container_logs/nginx/error.log container_logs/nginx/access.log container_logs/production.log

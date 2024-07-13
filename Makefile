@@ -299,6 +299,12 @@ rails_c_db_container:
 quick-push:
 - git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
 - git rev-parse HEAD > secrets/last-sha
+- echo secrets/last-sha
+
+stn:
+- echo secrets/last-sha
+- ./secrets/staging_nudge.sh
+
 
 # https://depot.dev/blog/docker-clear-cache
 docker-df:

@@ -33,9 +33,9 @@ module ModuleHandbook
     config.hosts << "module-handbook"
     config.hosts << "localhost"
     config.hosts << "module-handbook.f4.htw-berlin.de"
-    config.hosts << "141.45.146.125"
     config.hosts << "module-handbook-staging.f4.htw-berlin.de"
-    config.hosts << "141.45.146.126"
+    config.hosts << "141.45.191.40"
+    config.hosts << "141.45.191.41"
 
     # im nginx als schlichter 403 zu sehen:
     # [ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: localhost
@@ -43,6 +43,10 @@ module ModuleHandbook
     # rails_upgrade_71: may be necessary
     # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#sqlite3adapter-now-configured-to-be-used-in-a-strict-strings-mode
     # config.active_record.sqlite3_adapter_strict_strings_by_default = false
-
+    begin
+      config.version=File.read("nudge/VERSION").strip
+    rescue
+      config.version="unknown"
+    end
   end
 end
