@@ -10,6 +10,6 @@ class LoginTest < ApplicationSystemTestCase
     visit root_path
     assert_text :all, 'Logout'
     find(:link, 'Logout', visible: false).click
-    assert_text 'You need to sign in or sign up before continuing.'
+    assert_text 'Signed out successfully.'
   end
 end
