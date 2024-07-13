@@ -6,27 +6,27 @@ name: Build and Push Image
 on:
   push:
     branches: update_rails_71
-  workflow_call:
-    secrets:
-      rails_master_key:
-        required: false
-      nudge:
-        required: false
-    inputs:
-      tags:
-        required: true
-        type: string
-      push:
-        required: true
-        type: boolean
-      target:
-        required: false
-        type: string
-        default: modhand-prod
-      environment:
-        required: false
-        type: string
-        default: staging
+  #workflow_call:
+  #  secrets:
+  #    rails_master_key:
+  #      required: false
+  #    nudge:
+  #      required: false
+  #  inputs:
+  #    tags:
+  #      required: true
+  #      type: string
+  #    push:
+  #      required: true
+  #      type: boolean
+  #    target:
+  #      required: false
+  #      type: string
+  #      default: modhand-prod
+  #    environment:
+  #      required: false
+  #      type: string
+  #      default: staging
 
 
 env:
