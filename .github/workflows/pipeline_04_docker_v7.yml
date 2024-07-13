@@ -1,7 +1,7 @@
 
 # build and (maybe) push docker image workflow called by  pipeline_02_structure.yml
 
-name: Build and Push Image
+name: dpb-action-v7
 
 on:
   push:

@@ -290,3 +290,9 @@ rails_c_db_container:
 quick-push:
 - git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
 
+# https://depot.dev/blog/docker-clear-cache
+docker-df:
+- docker system df
+docker-cleanup:
+- docker image prune -a -f
+- docker buildx prune -f
