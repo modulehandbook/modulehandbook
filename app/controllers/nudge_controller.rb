@@ -8,8 +8,12 @@ class NudgeController < ApplicationController
           file_name = DateTime.now.strftime("nudge/nudge-%Y-%m-%d---%H-%M-%S")
           tag = params['tag']
           sha = params['sha']
+          
+          message = "tag: #{tag}\nsha: #{sha}"
 
-          File.open(file_name, 'w') { |file| file.write("tag: #{tag}\nsha: #{sha}) }
+          File.open("nudge/tag", 'w') { |file| file.write(tag) }
+          File.open("nudge/sha", 'w') { |file| file.write(sha) }
+          
           @nudge_result = "ok - #{@tag}/#{@sha} - #{file_name}"
         rescue Exception => e
             @nudge_result = e
