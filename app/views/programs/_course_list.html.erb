@@ -11,20 +11,19 @@
       <% end %>
       <th scope="col">required?</th>
       <th scope="col" colspan="2">State</th>
-      <th scope="col" colspan="2"></th>
-      <% if can? :edit, @program %>
-      <th scope="col"></th>
-      <% end %>
-      <th scope="col" colspan="2">Export</th>
+      <th scope="col">Course</th>
+      <th scope="col">Link</th>
+      <th scope="col">Export</th>
     </tr>
   </thead>
 
   <tbody>
-    <% course_programs.each do |course_program| %>
+    <% course_programs.each do |course_program| 
+      course = course_program.course %>
       <tr>
-        <td scope="row" onclick = "location.href='<%= course_path(course_program.course) %>'"><%= course_program.course.name %></td>
-        <td onclick = "location.href='<%= course_path(course_program.course) %>'"><%= course_program.course.code %></td>
-        <td><%= course_program.course.ects %></td>
+        <td scope="row" onclick = "location.href='<%= course_path(course) %>'"><%= course_program.course.name %></td>
+        <td onclick = "location.href='<%= course_path(course) %>'"><%= course_program.course.code %></td>
+        <td onclick = "location.href='<%= course_path(course) %>'"><%= course_program.course.ects %></td>
         <td><%= course_program.semester %></td>
         <% if @show_objectives %>
           <td colspan="4" >
@@ -35,14 +34,20 @@
         <td><%= course_program.required %></td>
         <td class="bg-<%= course_program.course.aasm_state %>">   </td>
         <td><%= course_program.course.aasm_state.humanize.titleize %></td>
-        <td><%= link_to 'Show Course', course_path(course_program.course) %></td>
-        <td><%= link_to 'Show Link', course_program_path(course_program) %></td>
-        <% if can? :edit, @program %>
-        <td><%= link_to 'Edit Link', edit_course_program_path(course_program) %></td>
-        <td><%= link_to 'Delete Link', course_program, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
-        <% end %>
-        <td><%= link_to 'JSON', export_course_json_url(id: course_program.course_id) %></td>
-        <td><%= link_to 'DOCX', export_course_docx_url(id: course_program.course_id) %></td>
+        <td> 
+              <%= link_to 'Show', course_path(course) %>
+              <% if can? :edit, course %>
+              <%= link_to 'Edit', edit_course_path(course) %></td>
+              <% end %>
+        </td>
+        <td><%= link_to 'Show', course_program_path(course_program) %>
+            <% if can? :edit, @program %>
+            <%= link_to 'Edit', edit_course_program_path(course_program) %>
+            <%= link_to 'Delete', course_program, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+            <% end %>
+        </td>
+        <td><%= link_to 'JSON', export_course_json_url(id: course_program.course_id) %>
+        <%= link_to 'DOCX', export_course_docx_url(id: course_program.course_id) %></td>
         </tr>
     <% end %>
   </tbody>
