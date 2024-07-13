@@ -9,6 +9,8 @@ on:
     secrets:
       rails_master_key:
         required: false
+      nudge:
+        required: false
     inputs:
       tags:
         required: true
@@ -20,7 +22,7 @@ on:
         required: false
         type: string
         default: modhand-prod
-      server:
+      environment:
         required: false
         type: string
         default: staging
@@ -38,9 +40,10 @@ jobs:
       tags: ${{ inputs.tags }}
       push: ${{ inputs.push }}
       target: ${{ inputs.target }}
-      server: ${{ inputs.server }}
+      environment: ${{ inputs.environment }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
+      nudge: ${{ secrets.nudge }}
 
 
   info:
@@ -55,4 +58,4 @@ jobs:
           echo "tags: ${{ inputs.tags }}"
           echo "push: ${{ inputs.push }}"
           echo "target: ${{ inputs.target }}"
-          echo "target: ${{ inputs.server }}"
+          echo "environment: ${{ inputs.environment }}"

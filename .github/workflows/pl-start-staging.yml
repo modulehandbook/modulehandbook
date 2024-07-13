@@ -13,6 +13,7 @@ jobs:
     with:
       tags: type=sha
       push: true
-      server: staging
+      environment: staging
     secrets:
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
+      nudge: ${{ secrets.NUDGE_STAGING }}

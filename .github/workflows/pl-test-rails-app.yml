@@ -32,7 +32,7 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        # somehow can't access the global env
+
     steps:
       - name: Check out repo code
         uses: actions/checkout@v4
@@ -54,7 +54,7 @@ jobs:
         id: test-system
         run: bin/rails test:system
 
-      - name: Echo Log
+      - name: Echo Log on Failure
         if: ${{ failure() }}
         run: cat "log/test.log"
 
