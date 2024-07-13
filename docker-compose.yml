@@ -34,6 +34,7 @@ services:
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
       - DEVISE_EMAIL_HOSTNAME=${DEVISE_EMAIL_HOSTNAME}
       - DEVISE_EMAIL=${DEVISE_EMAIL}
+      - TZ=Europe/Berlin
 
     env_file:
       - ${SECRET_ENV_FILE}
