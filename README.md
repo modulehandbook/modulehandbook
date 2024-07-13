@@ -327,3 +327,16 @@ This can be done through several IDEs, or even through Notepad++(Edit -> EOL Con
 
 ![](https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3)
 <iframe width="560" height="315" src='https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3'> </iframe>
+
+
+# Rails 7.1. upgrade - rails_upgrade_71
+
+## Tests
+[] 2.8 bin/rails test now runs test:prepare task
+https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#bin-rails-test-now-runs-test-prepare-task
+[] https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#actionview-testcase-rendered-no-longer-returns-a-string
+
+[] https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#new-ways-to-handle-exceptions-in-controller-tests-integration-tests-and-system-tests
+
+
+[] remove comments with rails_upgrade_71:

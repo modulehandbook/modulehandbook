@@ -19,6 +19,7 @@ module ModuleHandbook
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    # rails_upgrade_71: may need to be set to true?
     config.active_record.legacy_connection_handling=false
     config.add_autoload_paths_to_load_path = false
     # see https://guides.rubyonrails.org/i18n.html
@@ -33,5 +34,10 @@ module ModuleHandbook
 
     # im nginx als schlichter 403 zu sehen:
     # [ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: localhost
+
+    # rails_upgrade_71: may be necessary
+    # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#sqlite3adapter-now-configured-to-be-used-in-a-strict-strings-mode
+    # config.active_record.sqlite3_adapter_strict_strings_by_default = false
+
   end
 end

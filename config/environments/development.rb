@@ -56,6 +56,8 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Raises error for missing translations.
+  # rails_upgrade_71: true is now default
+  # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#config-i18n-raise-on-missing-translations-true-now-raises-on-any-missing-translation
   # config.action_view.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
