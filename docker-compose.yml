@@ -1,6 +1,6 @@
 # default configuration for production
 # use .env file to differentiate between prod and dev
-version: '3.9'
+version: '3.4'
 services:
   module-handbook-postgres:
     container_name: modulehandbook-database
