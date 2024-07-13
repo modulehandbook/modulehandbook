@@ -312,3 +312,7 @@ docker-df:
 docker-cleanup:
 - docker image prune -a -f
 - docker buildx prune -f
+
+docker-rm:
+- docker rm $(docker ps -qa)
+- docker rmi $(docker images -qa)
