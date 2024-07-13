@@ -10,6 +10,8 @@ on:
         required: false
       nudge:
         required: false
+      nudge_key:
+        required: false
     inputs:
       tags:
         required: true
@@ -106,11 +108,12 @@ jobs:
           nudge: ${{ secrets.nudge }}
           sha: ${{ steps.tagsha.outputs.sha }}
           tag: ${{ steps.tagsha.outputs.tag }}
+          key: ${{ secrets.nudge_key }}
         if: ${{ env.nudge != '' }}
         #if: ${{ inputs.environment == 'staging' }}
         continue-on-error: true
         run: |
-          curl ${{ secrets.nudge }}${tag}&sha=${sha}
+          curl ${{ secrets.nudge }}${tag}&sha=${sha}&key=${key}
          
         
           
