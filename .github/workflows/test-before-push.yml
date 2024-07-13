@@ -32,7 +32,7 @@ jobs:
         with:
           load: true
           tags: ${{ env.TEST_TAG }}
-          target: modhand-dev
+          target: modhand-test
       
       - name: Test
         run: |
