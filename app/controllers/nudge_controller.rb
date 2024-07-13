@@ -8,11 +8,16 @@ class NudgeController < ApplicationController
         tag = params['tag']
         sha = params['sha']
         key = params['key']
-        logger.warn(key)
-        logger.warn(Rails.application.credentials.nudge_key )
+
+        if Rails.application.credentials.nudge_key.nil? or Rails.application.credentials.nudge_key == ""
+            redirect_to root_path, :status => 301, alert: 'No Key in Credentials' 
+            return
+        end
         if key != Rails.application.credentials.nudge_key 
-          @nudge_result = "Not authorized --\n" + Rails.application.credentials.nudge_key+"--\n{key}"
-          redirect_to root_path, :status => 301, notice: 'Not authorized.'
+            @nudge_result = "Not authorized -- wrong key"
+            #render 'nudge', alert: "asdf"
+            redirect_to root_path, :status => 301, alert: @nudge_result
+            return
         end  
           
         begin
@@ -26,7 +31,7 @@ class NudgeController < ApplicationController
         
           nudge_result = "#{file_name}:  #{message}"
           flash[:notice] = nudge_result
-          #redirect_to root_path, :status => 301, notice: 'Not authorized.'
+          @nudge_result = ""
         rescue Exception => e
             @nudge_result = e
         end

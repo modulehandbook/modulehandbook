@@ -68,3 +68,5 @@ container_logs/**
 
 nudge/** 
 container_nudge/**
+
+/config/credentials/environment.key
