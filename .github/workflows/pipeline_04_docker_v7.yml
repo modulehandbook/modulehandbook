@@ -1,0 +1,113 @@
+
+# build and (maybe) push docker image workflow called by  pipeline_02_structure.yml
+
+name: Build and Push Image
+
+on:
+  workflow_call:
+    secrets:
+      rails_master_key:
+        required: false
+      nudge:
+        required: false
+    inputs:
+      tags:
+        required: true
+        type: string
+      push:
+        required: true
+        type: boolean
+      target:
+        required: false
+        type: string
+        default: modhand-prod
+      environment:
+        required: false
+        type: string
+        default: staging
+
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push-image:
+    name: Docker Build and Push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Workflow Info
+        run: |
+          echo event_name ${{ github.event_name }}
+          echo ref_type ${{ github.ref_type }}
+          echo ref ${{ github.ref }}
+          echo inputs tags ${{ inputs.tags }}
+          echo inputs push ${{ inputs.push }}
+      - name: Log in to the Container registry
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker - PR
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: ${{ inputs.tags}}
+      - name: Metadata Results
+        run: |
+           echo "---- tags:\n ${{ steps.meta.outputs.tags }}"
+           echo "---- labels:\n ${{ steps.meta.outputs.labels }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          target: ${{ inputs.target }}
+          build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
+          push: ${{ inputs.push }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: nudge-tag
+        continue-on-error: true
+        env: 
+          labels:  ${{ steps.meta.outputs.labels }}
+          inputs_tags: ${{ inputs.tags}}
+          tags: ${{ steps.meta.outputs.tags }}
+        run: |
+          echo "-----------------------------------------------------------------------------"
+          echo "inputs.tags: ${inputs_tags}"
+          mh_tag=$(echo $labels | tr ' ' '\n' | grep "org.opencontainers.image.version")
+          echo mh_tag: "${mh_tag}"
+          mh_tag=$(echo ${mh_tag} | sed -e "s/org.opencontainers.image.version=//g")
+          echo "mh_tag: ${mh_tag}"
+          
+          
+      - name: nudge-sha
+        continue-on-error: true
+        env: 
+          labels:  ${{ steps.meta.outputs.labels }}
+        run: |
+          sha=$(echo $labels | tr ' ' '\n'| grep "org.opencontainers.image.revision")
+          echo "sha: ${sha}"
+          sha=$(echo ${sha} | tr ' ' '\n'| sed -e "s/org.opencontainers.image.revision=//g")
+          echo "sha: ${sha}"
+          #curl "${NUDGE_STAGING}$mh_tag"
+
+      - name: nudge-staging
+        if: ${{ inputs.environment == 'staging' }}
+        continue-on-error: true
+        run: |
+          curl ${{ secrets.nudge }}xxx
+        
+          
