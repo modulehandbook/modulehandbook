@@ -174,11 +174,14 @@ ssh_production:
 - ssh local@module-handbook.f4.htw-berlin.de
 
 cp_staging:
+- scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
 - scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 - scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
 - scp -r nginx local@module-handbook-staging.f4.htw-berlin.de:~
-- scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
+- scp bin_deploy/check.sh local@module-handbook-staging.f4.htw-berlin.de:~
+- scp bin_deploy/staging.sh local@module-handbook-staging.f4.htw-berlin.de:~
+
 cp_production:
 - scp Makefile.prod local@module-handbook.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@module-handbook.f4.htw-berlin.de:~
