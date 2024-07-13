@@ -1,10 +1,12 @@
 <h3>Link between Course and Program</h3>
 <p id="notice"><%= notice %>
-  <% if can? :edit, @course_program %>
-  <%= link_to 'Edit', edit_course_program_path(@course_program) %>,
-  <% end %>
-  <%= link_to 'Back to Program', program_path(@course_program.program) %>,
-  <%= link_to 'Back to Index', course_programs_path %></p>
+ Back to:
+  <%= link_to 'Course', course_path(@course_program.course) %>,
+  <%= link_to 'Program', program_path(@course_program.program) %>,
+  <%= link_to 'Index', course_programs_path %>
+   <% if can? :edit, @course_program %>
+  , <%= link_to 'Edit', edit_course_program_path(@course_program) %>
+  <% end %></p>
 
 <p>
   <strong>Course:</strong>

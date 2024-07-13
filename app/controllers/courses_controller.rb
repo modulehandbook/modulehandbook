@@ -20,13 +20,14 @@ class CoursesController < ApplicationController
   end
 
 
-  LinkMemo = Data.define(:program, :link)
+  LinkMemo = Data.define(:program, :link, :text)
     
   # GET /courses/1
   # GET /courses/1.json
   def show
     @links = @course.course_programs.includes(:program)
-    @link_memos = @links.map { |l| LinkMemo.new(l.program, l ) }
+    @link_memos = @links.map { |l| LinkMemo.new(l.program, l ,
+        "#{l.semester}. Sem. / #{l.required}") }
     @link_memos = @link_memos.sort { |a, b| a.program.name <=> b.program.name }
     @programs = @course.programs.order(:name).pluck(:name, :id)
     
