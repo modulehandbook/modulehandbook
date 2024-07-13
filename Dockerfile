@@ -51,6 +51,26 @@ RUN set -ex  \
   && rails assets:precompile
 
 # -------------------------------------------------------------------
+# Test
+# -------------------------------------------------------------------
+
+FROM modhand-prod-no-assets AS modhand-test
+ENV MODHAND_IMAGE=modhand-test
+
+ENV RAILS_ENV test
+ENV NODE_ENV test
+
+RUN bundle config unset without \
+    && bundle config set without 'development' \
+    && bundle config \
+    && bundle install
+
+RUN set -ex  \
+  && apk add $AO  firefox
+
+ENTRYPOINT ["./entrypoints/test.sh"]
+
+# -------------------------------------------------------------------
 # Development
 # -------------------------------------------------------------------
 

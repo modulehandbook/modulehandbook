@@ -1,0 +1,49 @@
+# default configuration for production
+# use .env file to differentiate between prod and dev
+version: '3.9'
+services:
+  module-handbook-postgres:
+    container_name: modulehandbook-database
+    image: postgres:13.4-alpine
+    #    container_name: module-handbook-postgres
+    environment:
+      - APPLICATION=module-handbook
+      - POSTGRES_PASSWORD=modhand
+      - POSTGRES_USER=modhand
+      - POSTGRES_DB=modhand-db-test
+      # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+      - POSTGRES_HOST_AUTH_METHOD=password
+    volumes:
+      - ./pg_data_test:/var/lib/postgresql/data
+    restart: always
+
+  module-handbook:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: modhand-test
+    image: mh-local-test
+    ports:
+      - "3000:3000"
+    #image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
+    #container_name: modulehandbook
+    environment:
+      - POSTGRES_DB=modhand-db-test
+      - RAILS_ENV=test
+      - RAILS_MASTER_KEY=
+      - RAILS_DB_HOST="module-handbook-postgres"
+      - POSTGRES_USER=modhand
+      - POSTGRES_PASSWORD=modhand
+      - RAILS_SERVE_STATIC_FILES=true
+      - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
+
+    env_file:
+      - ${SECRET_ENV_FILE}
+    depends_on:
+      - module-handbook-postgres
+    volumes:
+      - ./container_logs:/module-handbook/log
+      - ./container_nudge:/module-handbook/nudge
+    restart: always
+  

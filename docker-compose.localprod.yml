@@ -1,6 +1,6 @@
 # to run prod image locally, e.g. with
 # docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.localprod.yml up
-version: '3.4'
+version: '3.9'
 services:
   module-handbook:
     image: mh-local-prod

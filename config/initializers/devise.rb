@@ -4,19 +4,20 @@
 # Turbo does not work Devise out of the box
 # Issue on GitHub: https://github.com/heartcombo/devise/issues/5446
 # Workaround/fix: https://gorails.com/episodes/devise-hotwire-turbo & https://betterprogramming.pub/devise-auth-setup-in-rails-7-44240aaed4be
-class TurboFailureApp < Devise::FailureApp
-  def respond
-    if request_format == :turbo_stream
-      redirect
-    else
-      super
-    end
-  end
-
-  def skip_format?
-    %w(html turbo_stream */*).include? request_format.to_s
-  end
-end
+# rails_upgrade_71: turbo has been removed
+# class TurboFailureApp < Devise::FailureApp
+#   def respond
+#     if request_format == :turbo_stream
+#       redirects
+#     else
+#       super
+#     end
+#   end
+# 
+#   def skip_format?
+#     %w(html turbo_stream */*).include? request_format.to_s
+#   end
+# end
 
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
@@ -30,8 +31,9 @@ Devise.setup do |config|
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
+  # rails_upgrade_71: turbo ausbauen
   # config.parent_controller = 'DeviseController'
-  config.parent_controller = 'TurboDeviseController'
+  # config.parent_controller = 'TurboDeviseController'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -150,7 +152,7 @@ Devise.setup do |config|
   # without confirming their account.
   # Default is 0.days, meaning the user cannot access the website without
   # confirming their account.
-  config.allow_unconfirmed_access_for = 0.days
+  config.allow_unconfirmed_access_for = 1.days
 
   # A period that the user is allowed to confirm their account before their
   # token becomes invalid. For example, if set to 3.days, the user can confirm
@@ -289,9 +291,9 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
   # end
-  config.warden do |manager|
-    manager.failure_app = TurboFailureApp
-  end
+  # config.warden do |manager|
+  #   manager.failure_app = TurboFailureApp
+  # end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
@@ -307,12 +309,16 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  # ==> Turbolinks configuration
-  # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
-  #
-  # ActiveSupport.on_load(:devise_failure_app) do
-  #   include Turbolinks::Controller
-  # end
+
+  # ==> Hotwire/Turbo configuration
+  # When using Devise with Hotwire/Turbo, the http status for error responses
+  # and some redirects must match the following. The default in Devise for existing
+  # apps is `200 OK` and `302 Found` respectively, but new apps are generated with
+  # these new defaults that match Hotwire/Turbo behavior.
+  # Note: These might become the new default in future versions of Devise.
+  config.responder.error_status = :unprocessable_entity
+  config.responder.redirect_status = :see_other
+  
 
   # ==> Configuration for :registerable
 

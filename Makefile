@@ -3,6 +3,12 @@
 .RECIPEPREFIX = -
 # default sshid - overwrite with parameter if needed (eg.cronjob)
 sshid=
+
+
+local:
+- open http://localhost:3000/
+- bin/rails s
+
 restart: stop start
 clean_logs:bin
 - rm container_logs/nginx/*.*
@@ -13,6 +19,12 @@ start_prod_version:
 - docker-compose -f docker-compose.yml --env-file .env.prod up
 start_prod_local:
 - docker-compose -f docker-compose.yml -f docker-compose.localprod.yml up
+start_test:
+- docker-compose -f docker-compose.yml -f docker-compose.test.yml up
+start_test_complete:
+- docker-compose -f docker-compose-test-complete.yml up 
+stop_test_complete:
+- docker-compose -f docker-compose-test-complete.yml up 
 start:
 - docker-compose up -d
 start_with_output:
@@ -284,3 +296,9 @@ rails_c_db_container:
 quick-push:
 - git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
 
+# https://depot.dev/blog/docker-clear-cache
+docker-df:
+- docker system df
+docker-cleanup:
+- docker image prune -a -f
+- docker buildx prune -f

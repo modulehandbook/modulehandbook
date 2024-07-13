@@ -9,7 +9,7 @@ fi
 echo "----------  RAILS_ENV = ${RAILS_ENV} --------"
 echo "----------  MODHAND_IMAGE = ${MODHAND_IMAGE} --------"
 
-
-bundle exec rails s -b 0.0.0.0
-
-# tail -f Gemfile
+bin/rails db:create
+bin/rails db:migrate
+# bin/rails rake db:create_faculties
+bin/rails test
