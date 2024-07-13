@@ -3,8 +3,6 @@ tag=$1
 sha=$2
 
 base_url=https://raw.githubusercontent.com/modulehandbook/modulehandbook
-tag=sha-f153ba9
-sha=fe7208f942eee11973888b5687a455d8b65ce421
 
 mkdir -p nginx/templates
 mkdir -p bin_deploy
