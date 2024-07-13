@@ -96,16 +96,15 @@ jobs:
         env: 
           labels:  ${{ steps.meta.outputs.labels }}
         run: |
-          sha=$(echo $labels | tr ' ' '\n'| grep "label:org.opencontainers.image.revision")
+          sha=$(echo $labels | tr ' ' '\n'| grep "org.opencontainers.image.revision")
           echo "sha: ${sha}"
-          sha=$(echo ${mh_tag} | tr ' ' '\n'| sed -e "s/label:org.opencontainers.image.revision=//g")
+          sha=$(echo ${mh_tag} | tr ' ' '\n'| sed -e "s/org.opencontainers.image.revision=//g")
           echo "sha: ${sha}"
-          curl "${NUDGE_STAGING}xxx"
           #curl "${NUDGE_STAGING}$mh_tag"
 
       - name: nudge-nudge
         continue-on-error: true
         run: |
-          curl "${NUDGE_STAGING}xxx"
+          curl ${NUDGE_STAGING}xxx
         
           
