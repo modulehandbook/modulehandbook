@@ -11,9 +11,9 @@ version: '3.9'
 services:
   module-handbook-postgres:
       environment:
-        - POSTGRES_DB=modhand-db-dev
+        - POSTGRES_DB=modhand-db-test
       volumes:
-        - ./pg_data_dev:/var/lib/postgresql/data
+        - ./pg_data_test:/var/lib/postgresql/data
       ports:
        - "5432:5432" # don't do this on production!
   module-handbook:
@@ -21,16 +21,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: modhand-dev
-    image: mh-local-dev
+      target: modhand-test
+    image: mh-local-test
     ports:
       - "3000:3000"
     volumes:
       - .:/module-handbook  # use app files from host
       - /module-handbook/node_modules # but not the node_modules
     environment:
-      - POSTGRES_DB=modhand-db-dev
-      - RAILS_ENV=development
+      - POSTGRES_DB=modhand-db-test
+      - RAILS_ENV=test
       - RAILS_MASTER_KEY=
       # - EXPORTER_BASE_URL=
       - CHROME_URL=http://chrome:3333

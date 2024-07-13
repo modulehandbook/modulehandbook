@@ -19,6 +19,12 @@ start_prod_version:
 - docker-compose -f docker-compose.yml --env-file .env.prod up
 start_prod_local:
 - docker-compose -f docker-compose.yml -f docker-compose.localprod.yml up
+start_test:
+- docker-compose -f docker-compose.yml -f docker-compose.test.yml up
+start_test_complete:
+- docker-compose -f docker-compose-test-complete.yml up 
+stop_test_complete:
+- docker-compose -f docker-compose-test-complete.yml up 
 start:
 - docker-compose up -d
 start_with_output:
