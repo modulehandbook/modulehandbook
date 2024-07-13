@@ -9,7 +9,12 @@ Bundler.require(*Rails.groups)
 module ModuleHandbook
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    
+    # rails_upgrade_71: try with # config/application.rb
+    # config.load_defaults 7.0
+
     config.load_defaults 6.1
+    config.active_support.cache_format_version = 7.0
 
     config.x.mh_hostname = ENV.fetch("DEVISE_EMAIL_HOSTNAME") { 'module-handbook.f4.htw-berlin.de' }
     config.x.mh_devise_email = ENV.fetch("DEVISE_EMAIL") { 'module-handbook@infrastructure.de' }
@@ -19,8 +24,8 @@ module ModuleHandbook
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    # rails_upgrade_71: may need to be set to true?
-    config.active_record.legacy_connection_handling=false
+    # rails_upgrade_71: may need to be set to true? -> needs to be removed.
+    # config.active_record.legacy_connection_handling=true
     config.add_autoload_paths_to_load_path = false
     # see https://guides.rubyonrails.org/i18n.html
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
