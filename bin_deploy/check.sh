@@ -12,7 +12,7 @@ then
     sha=$(cat $f_sha)
     echo $tag
     echo $sha
-    mv $f_tag ${f_tag}_done
-    mv $f_sha ${f_sha}_done
+    sudo mv $f_tag ${f_tag}_done
+    sudo mv $f_sha ${f_sha}_done
     ${SCRIPT_DIR}/bin_deploy/staging.sh $tag $sha
 fi

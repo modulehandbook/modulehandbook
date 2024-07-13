@@ -175,6 +175,7 @@ ssh_production:
 
 cp_staging:
 - scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
+- scp secrets/ln.sh local@module-handbook-staging.f4.htw-berlin.de:~/secrets
 - scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 - scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
@@ -297,6 +298,7 @@ rails_c_db_container:
 
 quick-push:
 - git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
+- git rev-parse HEAD > secrets/last-sha
 
 # https://depot.dev/blog/docker-clear-cache
 docker-df:

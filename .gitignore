@@ -70,3 +70,5 @@ nudge/**
 container_nudge/**
 
 /config/credentials/environment.key
+
+/config/credentials/production.key
