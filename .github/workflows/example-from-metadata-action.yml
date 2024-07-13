@@ -1,15 +1,16 @@
 name: example-from-metadata-action
 
 on:
-  push:
-    branches:
-      - 'main'
-      - 'update_rails_71'
-    tags:
-      - 'v*'
-  pull_request:
-    branches:
-      - 'main'
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #    - 'main'
+  #    - 'update_rails_71'
+  #  tags:
+  #    - 'v*'
+  # pull_request:
+  #   branches:
+  #     - 'main'
 
 jobs:
   docker:

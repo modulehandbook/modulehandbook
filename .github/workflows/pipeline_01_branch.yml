@@ -3,7 +3,7 @@
 name: Branch
 on:
   push:
-    branches: [ gem_updates ]
+    branches: [ imi_edit_improvements ]
     tags-ignore: [ '*' ]
 
 jobs:

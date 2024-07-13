@@ -4,6 +4,7 @@
 name: dpb-action-v7
 
 on:
+  workflow_dispatch:
   push:
     branches: update_rails_71
   #workflow_call:
