@@ -67,3 +67,4 @@ container_logs/**
 .idea/**
 
 nudge/** 
+container_nudge/**

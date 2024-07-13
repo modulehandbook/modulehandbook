@@ -2,7 +2,8 @@ name: test-before-push
 # https://docs.docker.com/build/ci/github-actions/test-before-push/
 
 on:
-  push:
+  workflow_dispatch:
+  #push:
 
 env:
   TEST_TAG: user/app:test

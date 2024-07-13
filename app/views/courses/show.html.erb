@@ -29,9 +29,13 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
   <div class="row">
     <div class = "col">
       Already part of Programs: <br/>
-<% @programs.each do |program_name, program_id| %>
-  <%= link_to program_name, program_path(program_id)  %>,
+<% @link_memos.each do | link_memo |
+  
+  %>
+    <%= link_to link_memo.program.name, program_path(link_memo.program)  %>
+    (<%= link_to link_memo.text, course_program_path(link_memo.link)  %> ),<br/>
 <% end %>
+
     </div>
 <% if can? :edit, @course %>
     <div class = "col">

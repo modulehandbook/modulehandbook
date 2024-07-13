@@ -7,7 +7,7 @@ sshid=
 
 local:
 - open http://localhost:3000/
-- bin/rails s
+- export POSTGRES_DB=modhand-db-dev && bin/rails s
 
 restart: stop start
 clean_logs:bin
@@ -174,11 +174,13 @@ ssh_production:
 - ssh local@module-handbook.f4.htw-berlin.de
 
 cp_staging:
+- scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
 - scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 - scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
 - scp -r nginx local@module-handbook-staging.f4.htw-berlin.de:~
-- scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
+- scp -r bin_deploy local@module-handbook-staging.f4.htw-berlin.de:~
+
 cp_production:
 - scp Makefile.prod local@module-handbook.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@module-handbook.f4.htw-berlin.de:~

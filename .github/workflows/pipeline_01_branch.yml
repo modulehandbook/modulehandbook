@@ -3,7 +3,7 @@
 name: Branch
 on:
   push:
-    branches: [ gem_updates ]
+    branches: [ imi_edit_improvements ]
     tags-ignore: [ '*' ]
 
 jobs:
@@ -17,3 +17,4 @@ jobs:
       target: modhand-dev
     secrets:
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
+      nudge: ${{ secrets.NUDGE_STAGING }}

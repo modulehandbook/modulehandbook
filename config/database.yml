@@ -8,7 +8,7 @@ default: &default
   # heroku first, then compose file value:
   password: <%= ENV['MYAPP_DATABASE_PASSWORD'] || ENV.fetch("POSTGRES_PASSWORD") { 'modhand' } %>
   port: <%= ENV.fetch("POSTGRES_PORT") { 5432 } %>
-  database: <%= ENV['POSTGRES_DB'] || 'modhand-default-db' %>
+  database: <%= ENV['POSTGRES_DB'] || 'modhand-db-dev' %>
 
 development:
   <<: *default

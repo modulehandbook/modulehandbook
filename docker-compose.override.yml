@@ -10,6 +10,7 @@
 version: '3.9'
 services:
   module-handbook-postgres:
+      container_name: module-handbook-postgres
       environment:
         - POSTGRES_DB=modhand-db-dev
       volumes:
