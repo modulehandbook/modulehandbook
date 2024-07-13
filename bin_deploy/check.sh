@@ -1,7 +1,11 @@
 #!/bin/bash
 
-f_tag=nudge/tag
-f_sha=nudge/sha
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && cd .. && pwd )
+
+
+f_tag=${SCRIPT_DIR}/container_nudge/tag
+f_sha=${SCRIPT_DIR}/container_nudge/sha
 if test -f $f_tag && test -f $f_sha
 then 
     tag=$(cat $f_tag)
@@ -10,5 +14,5 @@ then
     echo $sha
     mv $f_tag ${f_tag}_done
     mv $f_sha ${f_sha}_done
-    ./bin_deploy/staging.sh $tag $sha
+    ${SCRIPT_DIR}/bin_deploy/staging.sh $tag $sha
 fi

@@ -179,8 +179,7 @@ cp_staging:
 - scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 - scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
 - scp -r nginx local@module-handbook-staging.f4.htw-berlin.de:~
-- scp bin_deploy/check.sh local@module-handbook-staging.f4.htw-berlin.de:~
-- scp bin_deploy/staging.sh local@module-handbook-staging.f4.htw-berlin.de:~
+- scp -r bin_deploy local@module-handbook-staging.f4.htw-berlin.de:~
 
 cp_production:
 - scp Makefile.prod local@module-handbook.f4.htw-berlin.de:~/Makefile
