@@ -9,6 +9,8 @@ on:
     secrets:
       rails_master_key:
         required: false
+      nudge:
+        required: false
     inputs:
       tags:
         required: true
@@ -20,27 +22,32 @@ on:
         required: false
         type: string
         default: modhand-prod
-
+      environment:
+        required: false
+        type: string
+        default: staging
 
 jobs:
   test_app:
     name: Test
-    uses: ./.github/workflows/pl-test-rails-app.yml
+    uses: ./.github/workflows/pipeline_03_test_rails_app.yml
 
   build_and_push:
     needs: test_app   #### for now to get faster results on the builds
     name: Docker
-    uses: ./.github/workflows/pl-build-and-push-image.yml
+    uses: ./.github/workflows/pipeline_04_docker_build_and_push.yml
     with:
       tags: ${{ inputs.tags }}
       push: ${{ inputs.push }}
       target: ${{ inputs.target }}
+      environment: ${{ inputs.environment }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
+      nudge: ${{ secrets.nudge }}
 
 
   info:
-    name: Info on Parameter
+    name: List Parameter
     runs-on: ubuntu-latest
     steps:
       - run: |
@@ -51,3 +58,4 @@ jobs:
           echo "tags: ${{ inputs.tags }}"
           echo "push: ${{ inputs.push }}"
           echo "target: ${{ inputs.target }}"
+          echo "environment: ${{ inputs.environment }}"

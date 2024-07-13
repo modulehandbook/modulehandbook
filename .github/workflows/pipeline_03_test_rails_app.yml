@@ -1,5 +1,5 @@
 
-# called by pl-pipeline-definition.yml
+# called by  pipeline_02_structure.yml
 
 name: Test App
 
@@ -32,29 +32,29 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        # somehow can't access the global env
+
     steps:
       - name: Check out repo code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.3.3
       - name: Install dependencies
-        run: bundle install
+        run: bin/bundle install
 
       - name: create test db
-        run: rails db:create RAILS_ENV=test
+        run: bin/rails db:create RAILS_ENV=test
 
       - name: Run Tests
         id: run-tests
-        run: rails test
+        run: bin/rails test
 
       - name: Run System Tests
         id: test-system
-        run: rails test:system
+        run: bin/rails test:system
 
-      - name: Echo Log
+      - name: Echo Log on Failure
         if: ${{ failure() }}
         run: cat "log/test.log"
 

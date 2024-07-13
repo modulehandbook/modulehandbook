@@ -12,7 +12,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not be signed in' do
-    get root_path
+    get programs_path
     assert_redirected_to new_user_session_path
     follow_redirect!
     assert_response :success

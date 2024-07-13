@@ -8,7 +8,7 @@ jobs:
   pull-request:
     name: PR
     if: ${{ github.event_name == 'pull_request' }}
-    uses: ./.github/workflows/pl-pipeline-definition.yml
+    uses: ./.github/workflows/pipeline_02_structure.yml
     with:
       tags: type=ref,event=pr
       push: false

@@ -21,7 +21,7 @@ class DeviseHelperTest < ActionDispatch::IntegrationTest
      assert_equal @admin, @controller.current_user
 
      sign_out @admin
-     get root_url
+     get courses_url
      assert_redirected_to new_user_session_path
      follow_redirect!
 

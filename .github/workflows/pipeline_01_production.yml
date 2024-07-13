@@ -9,9 +9,12 @@ jobs:
      name: Prod
      # this will not work as the ref is ref/tags/0...
      # if: github.ref == 'refs/heads/master'
-     uses: ./.github/workflows/pl-pipeline-definition.yml
+     uses: ./.github/workflows/pipeline_02_structure.yml
      with:
        tags: type=ref,event=tag
        push: true
+       environment: production
      secrets:
        rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
+       nudge: ${{ secrets.NUDGE_PRODUCTION }}
+
