@@ -22,5 +22,8 @@ deploy:
 mk:
 - echo $RAILS_MASTER_KEY
 
+n:
+- ls -lart container_nudge/
+
 clean_logs:
 - sudo rm container_logs/nginx/error.log container_logs/nginx/access.log container_logs/production.log
