@@ -3,6 +3,12 @@
 .RECIPEPREFIX = -
 # default sshid - overwrite with parameter if needed (eg.cronjob)
 sshid=
+
+
+local:
+- open http://localhost:3000/
+- bin/rails s
+
 restart: stop start
 clean_logs:bin
 - rm container_logs/nginx/*.*
