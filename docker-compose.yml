@@ -35,6 +35,7 @@ services:
       - DEVISE_EMAIL_HOSTNAME=${DEVISE_EMAIL_HOSTNAME}
       - DEVISE_EMAIL=${DEVISE_EMAIL}
       - TZ=Europe/Berlin
+      - EDITOR=vi
 
     env_file:
       - ${SECRET_ENV_FILE}

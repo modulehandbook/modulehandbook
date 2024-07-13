@@ -113,6 +113,9 @@ jobs:
         #if: ${{ inputs.environment == 'staging' }}
         continue-on-error: true
         run: |
+          echo "----- nudge ----"
+          echo "sha=${sha}"
+          echo "tag=${tag}"
           curl ${{ secrets.nudge }}${tag}&sha=${sha}&key=${key}
          
         
