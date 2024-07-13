@@ -26,3 +26,4 @@ sudo docker-compose up -d
 
 date_tag=$(date +%Y-%m-%d--%H-%M-%S)
 touch container_nudge/deployment_done_${tag}_${date_tag}
+echo $tag > container_nudge/deployed_tag

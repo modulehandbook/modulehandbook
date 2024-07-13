@@ -14,11 +14,15 @@
     <%= render "layouts/flash" %>
     <div class ="container">
       <%= yield %>
+      
     </div>
     
+    <div class ="container">
+    <hr/>
+      <small><a href="https://home.htw-berlin.de/~kleinen/software_projects/modulehandbook/">ModuleHandbook</a> Version <a href="https://github.com/modulehandbook/modulehandbook"><%=Rails.application.config.version%></a> </small>
     <% if Rails.env == "development" %>
-    <hr />
-    <p> <%= params.inspect %></p>
+    <pre> Dev Env: <%= params.inspect %></pre>
     <% end %>
+    </div>
   </body>
 </html>
