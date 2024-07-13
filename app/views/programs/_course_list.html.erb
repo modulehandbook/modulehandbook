@@ -21,19 +21,19 @@
     <% course_programs.each do |course_program| 
       course = course_program.course %>
       <tr>
-        <td scope="row" onclick = "location.href='<%= course_path(course) %>'"><%= course_program.course.name %></td>
-        <td onclick = "location.href='<%= course_path(course) %>'"><%= course_program.course.code %></td>
-        <td onclick = "location.href='<%= course_path(course) %>'"><%= course_program.course.ects %></td>
+        <td scope="row" onclick = "location.href='<%= course_path(course) %>'"><%= course.name %></td>
+        <td onclick = "location.href='<%= course_path(course) %>'"><%= course.code %></td>
+        <td onclick = "location.href='<%= course_path(course) %>'"><%= course.ects %></td>
         <td><%= course_program.semester %></td>
         <% if @show_objectives %>
           <td colspan="4" >
-          <%= md2html(course_program.course.objectives) %>
+          <%= md2html(course.objectives) %>
             <%= link_to "edit", edit_course_path(course_program.course_id)  %>
           </td>
         <% end %>
         <td><%= course_program.required %></td>
-        <td class="bg-<%= course_program.course.aasm_state %>">   </td>
-        <td><%= course_program.course.aasm_state.humanize.titleize %></td>
+        <td class="bg-<%= course.aasm_state %>">   </td>
+        <td><%= course.aasm_state.humanize.titleize %></td>
         <td> 
               <%= link_to 'Show', course_path(course) %>
               <% if can? :edit, course %>
