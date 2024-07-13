@@ -17,3 +17,4 @@ jobs:
       target: modhand-dev
     secrets:
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
+      nudge: ${{ secrets.NUDGE_STAGING }}

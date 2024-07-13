@@ -80,6 +80,7 @@ jobs:
 
       - name: nudge-tag
         continue-on-error: true
+        id: tagsha
         env: 
           labels:  ${{ steps.meta.outputs.labels }}
           inputs_tags: ${{ inputs.tags}}
@@ -91,23 +92,25 @@ jobs:
           echo mh_tag: "${mh_tag}"
           mh_tag=$(echo ${mh_tag} | sed -e "s/org.opencontainers.image.version=//g")
           echo "mh_tag: ${mh_tag}"
-          
-          
-      - name: nudge-sha
-        continue-on-error: true
-        env: 
-          labels:  ${{ steps.meta.outputs.labels }}
-        run: |
+  
           sha=$(echo $labels | tr ' ' '\n'| grep "org.opencontainers.image.revision")
           echo "sha: ${sha}"
           sha=$(echo ${sha} | tr ' ' '\n'| sed -e "s/org.opencontainers.image.revision=//g")
           echo "sha: ${sha}"
-          #curl "${NUDGE_STAGING}$mh_tag"
+          echo "sha=${sha}" >> $GITHUB_OUTPUT
+          echo "tag=${mh_tag}" >> $GITHUB_OUTPUT
+          
 
       - name: nudge-staging
-        if: ${{ inputs.environment == 'staging' }}
+        env:
+          nudge: ${{ secrets.nudge }}
+          sha: ${{ steps.tagsha.outputs.sha }}
+          tag: ${{ steps.tagsha.outputs.tag }}
+        if: ${{ env.nudge != '' }}
+        #if: ${{ inputs.environment == 'staging' }}
         continue-on-error: true
         run: |
-          curl ${{ secrets.nudge }}xxx
+          curl ${{ secrets.nudge }}${tag}&sha=${sha}
+         
         
           
