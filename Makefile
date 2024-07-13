@@ -175,6 +175,7 @@ ssh_production:
 
 cp_staging:
 - scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
+- scp secrets/ln.sh local@module-handbook-staging.f4.htw-berlin.de:~/secrets
 - scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 - scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
