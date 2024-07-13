@@ -5,12 +5,14 @@ class NudgeController < ApplicationController
     skip_before_action :authenticate_user!
     def nudge
         begin
-          file_name = DateTime.now.strftime("nudge/nudge-%Y-%m-%d---%H-%M-%S")
           tag = params['tag']
           sha = params['sha']
           
           message = "tag: #{tag}\nsha: #{sha}"
-
+          
+          file_name = DateTime.now.strftime("nudge/nudge-%Y-%m-%d---%H-%M-%S")
+        
+          File.open(file_name, 'w') { |file| file.write(message) }
           File.open("nudge/tag", 'w') { |file| file.write(tag) }
           File.open("nudge/sha", 'w') { |file| file.write(sha) }
           
