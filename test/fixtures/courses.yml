@@ -65,3 +65,23 @@ b7:
   skills_intellectual: MyText
   skills_practical: MyText
   skills_general: MyText
+
+
+copy_test_01:
+  name: Course 01
+  code: CC01
+  ects: 5
+  objectives: Course 01 Objectives
+
+copy_test_02:
+  name: Course 02
+  code: CC02
+  ects: 5
+  objectives: Course 02 Objectives
+
+copy_test_03:
+  name: Course 03
+  code: CC03
+  ects: 5
+  objectives: Course 03 Objectives
+

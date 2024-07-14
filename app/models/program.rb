@@ -6,6 +6,7 @@ class Program < ApplicationRecord
   scope :study_plan, -> { where.not(required: "elective-option") }
   scope :elective_options, -> { where(required: "elective-option") }
 
+  EDITABLE_ATTRIBUTES = [:name, :code, :mission, :degree, :ects]
   def select_name
     "#{name} (#{code})"
   end
@@ -26,6 +27,8 @@ class Program < ApplicationRecord
     program
   end
 
+
+
   def self.json_import_from_file(file)
     data = JSON.parse(file.read)
     ProgramFactory.create(data)
@@ -45,6 +48,16 @@ class Program < ApplicationRecord
     data['courses'] = courses
     data = data.as_json
     data
+  end
+
+  def shallow_copy
+    json_01 = as_json
+    # json_02 = gather_data_for_json_export
+    params = json_01.slice(*EDITABLE_ATTRIBUTES.map(&:to_s))
+    program_copy =Program.create!(params)
+    course_programs.each do |course_program|
+      program_copy.course_programs.create!(course_program: course_program)
+    end
   end
 end
 
