@@ -13,7 +13,7 @@ services:
       environment:
         - POSTGRES_DB=modhand-db-test
       volumes:
-        - ./pg_data_test:/var/lib/postgresql/data
+        - ./pg_data:/var/lib/postgresql/data
       ports:
        - "5432:5432" # don't do this on production!
   module-handbook:

@@ -4,13 +4,42 @@
 # default sshid - overwrite with parameter if needed (eg.cronjob)
 sshid=
 
+# The app runs on docker in production and staging.
+# to maintain dev-prod parity, it should at least be tested locally (on the dev machine)
+# in docker, as well.
+# it is also possible to run the app locally on the dev host.
+# naming convention for the make tasks:
+# bin/rails db:setup RAILS_ENV=test
+# simple names: local host
+# tasks starting with d_: local docker
 
-local:
-- open http://localhost:3000/
-- export POSTGRES_DB=modhand-db-dev && bin/rails s
+# server suffixes for tasks:
+# (_staging and _production will execute scripts on the remote machines,
+#  _local in the local docker containers)
 
-restart: stop start
-clean_logs:bin
+# - _local
+# - _staging
+# - _production
+# without suffix: start on developer machine
+
+
+start: open
+- bin/rails s
+#- export POSTGRES_DB=modhand-db-dev && bin/rails s
+
+open:
+- open http://localhost:3000
+
+list_targets:
+- grep "^\w*:"  Makefile | sort
+
+start_local:
+- docker-compose up -d
+start_local_with_output:
+- docker-compose up
+
+restart_local: stop start
+clean_logs_local:bin
 - rm container_logs/nginx/*.*
 - rm container_logs/*.*
 start_prod_mode:
@@ -25,12 +54,10 @@ start_test_complete:
 - docker-compose -f docker-compose-test-complete.yml up 
 stop_test_complete:
 - docker-compose -f docker-compose-test-complete.yml up 
-start:
-- docker-compose up -d
-start_with_output:
-- docker-compose up
-startdb:
+
+db_start_local:
 - docker-compose up -d module-handbook-postgres
+
 exec:
 - docker-compose exec module-handbook bash
 bash:
@@ -41,30 +68,29 @@ bash_nginx:
 - docker-compose exec nginx bash
 rebuild:
 - docker-compose up -d --build --force-recreate module-handbook
-stop: down
-down:
+stop_local: down_local
+down_local:
 - docker-compose down
-clean:
+docker_clean:
 - rm -rf gem_cache
 - docker-compose down --rmi all -v --remove-orphans
-open:
-- open http://localhost:3000
+
 
 #
 # DB Tasks via rails
 #
-init: new_db import_dump
-new_db:
+init_local: new_db import_dump
+new_db_local:
 - docker-compose exec module-handbook rails db:create
 - docker-compose exec module-handbook rails db:migrate
 
-seed:
+seed_local:
 - docker-compose exec module-handbook rails db:seed
 recreate_db:
 - docker-compose exec module-handbook rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
 - docker-compose exec module-handbook rails db:create RAILS_ENV=development
 - docker-compose exec module-handbook rails db:migrate RAILS_ENV=development
-migrate:
+migrate_local:
 - docker-compose exec -T module-handbook rails db:migrate
 reset_db:
 - docker-compose exec module-handbook rails db:drop  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
@@ -175,7 +201,7 @@ ssh_production:
 
 cp_staging:
 - scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
-- scp secrets/ln.sh local@module-handbook-staging.f4.htw-berlin.de:~/secrets
+- scp secrets/bin/ln.sh local@module-handbook-staging.f4.htw-berlin.de:~
 - scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 - scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
