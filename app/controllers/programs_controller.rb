@@ -1,4 +1,6 @@
 class ProgramsController < ApplicationController
+  include ApplicationHelper
+  
   load_and_authorize_resource except: :export_programs_json
   skip_authorization_check only: :export_programs_json
   skip_before_action :authenticate_user!, only: :export_programs_json
@@ -19,7 +21,10 @@ class ProgramsController < ApplicationController
     @course_programs = @program
                        .course_programs
                        .includes(:course)
-                       .order('semester',  'courses.code')
+            #.order('semester',  'courses.code')
+    @course_programs = @course_programs.sort do | cp1, cp2 |
+      compare_course_codes(cp1.course.code, cp2.course.code)
+    end
     @show_objectives = params['objectives'] || false
     #.order('semester', 'required DESC', 'courses.code')
   end

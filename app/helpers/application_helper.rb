@@ -19,4 +19,13 @@ module ApplicationHelper
   def to_clean_string(string)
     string.gsub(' ', '').to_s
   end
+
+  def compare_course_codes(code1,code2)
+    re = /([A-Z]+)(\d+)/
+    match1 = code1.match(re)
+    match2 = code2.match(re)
+    return -1 if match1[1] < match2[1]
+    return 1 if match1[1] > match2[1]
+    match1[2].to_i <=> match2[2].to_i
+  end
 end
