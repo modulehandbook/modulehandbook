@@ -1,0 +1,11 @@
+.no_print2 {
+    display: none
+}
+
+@media print {
+    .no_print {
+        display: none
+    }
+
+
+}
