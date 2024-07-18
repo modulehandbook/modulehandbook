@@ -1,12 +1,26 @@
 
 
-
-<% if editing %>
-  <%= form.label field_name %><%= markdown ? "(Markdown)" : "" %>
-  <%= form.text_area field_name, class: "form-control", rows: rows %>
-<% else %>
-  <b><%= form.label field_name %>:</b>
-  <div class: "form-control">
-    <%=  markdown ? md2html(@course.send(field_name)) : @course.send(field_name) %>
+<div class="card">
+  <div class="card-header">
+    <b><%= form.label field_name %><%= markdown && editing ? " (Markdown)" : "" %>:</b>
+    <% unless markdown %>
+      <% if editing %><%= form.text_area field_name, class: "form-control", rows: rows %>
+      <% else %><%=  @course.send(field_name) %><% end %>
+    <% end %>
   </div>
-<% end %>
+  <% if markdown %>
+
+
+  <div class="card-body">
+    <% if editing %>
+      <%= form.text_area field_name, class: "form-control", rows: rows %>
+    <% else %>
+      <div class: "form-control">
+      <%=  markdown ? md2html(@course.send(field_name)) : @course.send(field_name) %>
+      </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+
