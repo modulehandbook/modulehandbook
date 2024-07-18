@@ -90,79 +90,17 @@
         editing: editing, form: form, rows: 1 %>
       </div>
     </div>
-
-
   </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :mission, markdown: true,
-    editing: editing, form: form, rows: 3 %>
-  </div>
-
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :examination, markdown: true,
-    editing: editing, form: form, rows: 3 %>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :objectives, markdown: true,
-    editing: editing, form: form, rows: 7 %>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :contents, markdown: true,
-    editing: editing, form: form, rows: 7 %>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :prerequisites, markdown: true,
-    editing: editing, form: form, rows: 3 %>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :literature, markdown: true,
-    editing: editing, form: form, rows: 7%>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :methods, markdown: true,
-    editing: editing, form: form, rows: 7 %>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :skills_knowledge_understanding, markdown: true,
-    editing: editing, form: form, rows: 3 %>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :skills_intellectual, markdown: true,
-    editing: editing, form: form, rows: 3 %>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :skills_practical, markdown: true,
-    editing: editing, form: form, rows: 3 %>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :skills_general, markdown: true,
-    editing: editing, form: form, rows: 3 %>
-  </div>
-
-  <div class="form-group">
-    <%= render 'course_field', course: @course,
-    field_name: :comment, markdown: true,
-    editing: editing, form: form, rows: 3 %>
-  </div>
+  <% fields = [[:mission, 3],[:examination, 3],
+                [:objectives, 7],[:contents, 7],
+               [:prerequisites, 3],[:literature, 7],
+               [:methods, 7],[:skills_knowledge_understanding, 7],
+               [:skills_intellectual, 3],[:skills_practical, 3],
+               [:skills_general, 3], [:comment, 3] ] %>
+  <% fields.each do | field_name, rows |  %>
+    <div class="form-group">
+      <%= render 'course_field', course: @course,
+                 field_name: field_name, markdown: true,
+                 editing: editing, form: form, rows: rows %>
+    </div>
+  <% end %>

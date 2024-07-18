@@ -5,7 +5,7 @@ module ApplicationHelper
 
   def md2html(md)
     md = @@markdown.render(html_escape(md))
-    raw("<div class = 'markdown'>#{md}</div>'")
+    raw("<div class = 'markdown'>#{md}</div>")
   end
 
   def generate_filename(program)
