@@ -4,7 +4,8 @@ module ApplicationHelper
   @@markdown = Redcarpet::Markdown.new(@@html_renderer, extensions = {})
 
   def md2html(md)
-    raw(@@markdown.render(html_escape(md)))
+    md = @@markdown.render(html_escape(md))
+    raw("<div class = 'markdown'>#{md}</div>'")
   end
 
   def generate_filename(program)

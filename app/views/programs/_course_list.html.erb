@@ -4,6 +4,7 @@
     <tr>
       <th scope="col">Code</th>
       <th scope="col">Name</th>
+      <th scope="col">Modulverantwortlicher</th>
       <th scope="col">Ects</th>
       <th scope="col">Semester</th>
       <% if @show_objectives %>
@@ -21,8 +22,9 @@
     <% course_programs.each do |course_program| 
       course = course_program.course %>
       <tr>
-        <td scope="row" onclick = "location.href='<%= course_path(course) %>'"><%= course.code %></td>
+        <td onclick = "location.href='<%= course_path(course) %>'"><%= course.code %></td>
         <td onclick = "location.href='<%= course_path(course) %>'"><%= course.name %></td>
+        <td onclick = "location.href='<%= course_path(course) %>'"><%= course.responsible_person %></td>
         <td onclick = "location.href='<%= course_path(course) %>'"><%= course.ects %></td>
         <td><%= course_program.semester %></td>
         <% if @show_objectives %>
