@@ -20,7 +20,7 @@ user = @user
   <th colspan="2" scope="col" ><h3><%= verb%> User: <%= @user.email %></h3></</th>
         <th>
           <% if show_form %>
-              <%= form.submit  :class =>  "btn btn-warning" %>
+              <%= form.submit class: "btn btn-success btn-sm" %>
           <% elsif (can? :edit, @user) %>
                   <button type="button" class="btn btn-warning btn-sm">
                       <%= link_to "Edit", edit_user_path(@user) %>
