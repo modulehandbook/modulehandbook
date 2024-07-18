@@ -1,11 +1,17 @@
 .no_print_test {
     display: none
 }
+.no_print_imi {
+    display: none
+}
+
 
 @media print {
     .no_print {
         display: none
     }
-
+    .no_print_imi {
+        display: none
+    }
 
 }

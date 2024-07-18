@@ -75,7 +75,7 @@
 
   <div class = "form-row border">
 
-    <div class = "col no_print">
+    <div class = "col no_print_imi">
       <div class="form-group">
         <%= render 'course_field', course: @course,
         field_name: :room, markdown: true,
@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <div class = "col no_print">
+    <div class = "col no_print_imi">
       <div class="form-group">
         <%= render 'course_field', course: @course,
         field_name: :equipment, markdown: true,
@@ -91,12 +91,12 @@
       </div>
     </div>
   </div>
-  <% fields = [[:mission, 3, "no_print"],[:examination, 3, "no_print"],
+  <% fields = [[:mission, 3, "no_print_imi"],[:examination, 3, "no_print_imi"],
                 [:objectives, 7],[:contents, 7],
                [:prerequisites, 3],[:literature, 7],
-               [:methods, 7, "no_print"],[:skills_knowledge_understanding, 7, "no_print"],
-               [:skills_intellectual, 3, "no_print"],[:skills_practical, 3, "no_print"],
-               [:skills_general, 3, "no_print"], [:comment, 3] ] %>
+               [:methods, 7, "no_print_imi"],[:skills_knowledge_understanding, 7, "no_print_imi"],
+               [:skills_intellectual, 3, "no_print_imi"],[:skills_practical, 3, "no_print_imi"],
+               [:skills_general, 3, "no_print_imi"], [:comment, 3] ] %>
   <% fields.each do | field_name, rows, css_classes |  %>
     <div class="form-group <%= css_classes || "" %> %>">
       <%= render 'course_field', course: @course,
