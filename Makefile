@@ -87,6 +87,7 @@ import_dump_complete: recreate_db import_dump
 file=$(shell cat tmp/DUMPFILENAME)
 import_dump: $(file)
 - cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
+- rm tmp/DUMPFILENAME
 dump:
 - docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d ${DBNAME} -U modhand > ../mh-dumps/local/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 
