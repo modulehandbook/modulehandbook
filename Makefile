@@ -72,6 +72,7 @@ reset_db:
 - docker-compose exec module-handbook rails db:migrate
 - docker-compose exec module-handbook rails db:seed
 
+db_staging_to_dev: dump_staging import_dump
 #
 # DB Import Tasks directly via postgres container
 #
@@ -82,6 +83,8 @@ import_dump_complete: recreate_db import_dump
 # call with  make file=x.pgdump import_dump
 
 # e.g. DBNAME=modhand-db-dev  file=../dumps-htw/modhand-2022-12-18--21-00-02.pgdump make import_dump
+
+file=$(shell cat tmp/DUMPFILENAME)
 import_dump: $(file)
 - cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
 dump:
@@ -231,18 +234,23 @@ start_local_build_prod:
 reset_prod_db:
 - docker-compose exec module-handbook rails db:create RAILS_ENV=production
 - docker-compose exec module-handbook rails db:migrate
+
 import_dump_staging:
-- cat $(file) | ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+- echo "disabled"
+- # cat $(file) | ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
 
 import_dump_production:
-- cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+- echo "disabled"
+- # cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
 
 import_dump_local:
 - cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
 
+staging_file=../modhand-dumps/modhand-stag-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 dump_staging:
 -   echo $(sshid)
-- 	ssh local@module-handbook-staging.f4.htw-berlin.de $(sshid)  "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../modhand-dumps/modhand-stag-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+-   echo ${staging_file} >> tmp/DUMPFILENAME
+- 	ssh local@module-handbook-staging.f4.htw-berlin.de $(sshid)  "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ${staging_file}
 
 dump_production:
 -   echo $(sshid)
