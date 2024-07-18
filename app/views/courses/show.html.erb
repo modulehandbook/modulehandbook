@@ -28,18 +28,17 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
 </div>
 <div class = "container">
   <div class="row">
+  
     <div class = "col">
       Already part of Programs: <br/>
-<% @link_memos.each do | link_memo |
-  
-  %>
+<% @link_memos.each do | link_memo | %>
     <%= link_to link_memo.program.name, program_path(link_memo.program)  %>
     (<%= link_to link_memo.text, course_program_path(link_memo.link)  %> ),<br/>
 <% end %>
 
     </div>
 <% if can? :edit, @course %>
-    <div class = "col">
+    <div class = "col no_print">
 <%= form_with(model: @course_program, local: true) do |form| %>
     <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
   <div class="field">
@@ -55,9 +54,9 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
     <% end %>
   </div>
 </div>
-
+<div class = "no_print">
 <%= render 'comments/comments_teaser'%>
-
+</div>
 <hr/>
 
 <%= form_with(model: @course, local: true) do |form| %>
