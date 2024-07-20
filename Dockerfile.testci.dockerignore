@@ -1,2 +1,0 @@
-# this is needed to overide .dockerignore
-# such that /test dir can be copied 
