@@ -3,6 +3,8 @@ name: docker-compose
 on:
     push:
         branches:
+          - main
+          - dev_prod_parity
 
 jobs:
   docker-compose:
@@ -11,16 +13,16 @@ jobs:
         - name: Check out repo code
           uses: actions/checkout@v4
 
-        - name: dc up
+        - name: start container
           run: |
             docker-compose up -d
             docker ps
 
         - name: test
           run: |
-            docker-compose exec module-handbook rails test
+            docker-compose exec -t module-handbook bin/rails test
 
-        - name: system etst
+        - name: system test
           run: |
-            docker-compose exec module-handbook rails test:system
+            docker-compose exec -tmodule-handbook bin/rails test:system
            

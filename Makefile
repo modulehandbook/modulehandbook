@@ -6,10 +6,10 @@ sshid=
 
 ### Running Rails on local Machine (with postgres in docker container)
 
-local: startdb open
+local: start_db open
 - export POSTGRES_DB=modhand-db-dev && bin/rails s
 
-startdb:
+start_db:
 - docker-compose up -d module-handbook-postgres
 
 open:
@@ -23,37 +23,32 @@ stop:
 - docker-compose down
 restart: stop start
 
-rebuild:
+rebuild_docker:
 - docker-compose up -d --build --force-recreate module-handbook
 
-clean_logs:bin
+
 list_targets:
 - grep "^\w*:"  Makefile | sort
 
-start_local:
-- docker-compose up -d
-start_local_with_output:
-- docker-compose up
-
-restart_local: stop start
-clean_logs_local:bin
+clean_logs_local: bin
 - rm container_logs/nginx/*.*
 - rm container_logs/*.*
 
 ### Running Tests in Docker
 
-test_all: test_create_db test test_system
+test_all: test_create_db test_migrate_db test_docker test_docker_system
 - docker-compose exec module-handbook rails test
 - docker-compose exec module-handbook rails test:system
 
-test:
-- docker-compose exec module-handbook rails test
+test_docker:
+- docker-compose exec module-handbook bin/rails test
 
-test_system:
+test_docker_system:
 - docker-compose exec module-handbook rails test:system
 
 test_create_db:
 - docker-compose exec module-handbook rails db:create RAILS_ENV=test
+test_migrate_db:
 - docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
 
 test_one:
