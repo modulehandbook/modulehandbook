@@ -24,5 +24,8 @@ jobs:
 
         - name: system test
           run: |
-            docker-compose exec -tmodule-handbook bin/rails test:system
+            docker-compose exec -t module-handbook bin/rails test:system
+
+        - name: docker exec test
+          run: docker exec -t modulehandbook bin/rails test
            
