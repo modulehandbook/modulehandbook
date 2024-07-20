@@ -13,3 +13,4 @@ bin/rails db:create
 bin/rails db:migrate
 # bin/rails rake db:create_faculties
 bin/rails test
+bin/rails test:system

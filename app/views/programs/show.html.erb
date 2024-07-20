@@ -44,11 +44,11 @@
  <% params =  @show_objectives ? {} : { objectives: true } %>
  <%= link_to 'Toggle Objectives', program_path(@program, params) %>
   |  <%= link_to 'Overview', program_overview_path(@program) %>
- 
- 
+
+<%= render 'comments/comments_teaser'%>
  <br><br>
 <%= render 'course_list', course_programs: @course_programs %>
-
+<%= render 'comments/comments'%>
 
 
 

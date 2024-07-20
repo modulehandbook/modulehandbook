@@ -20,11 +20,12 @@ start_prod_version:
 start_prod_local:
 - docker-compose -f docker-compose.yml -f docker-compose.localprod.yml up
 start_test:
-- docker-compose -f docker-compose.yml -f docker-compose.test.yml up
+- docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d
 start_test_complete:
 - docker-compose -f docker-compose-test-complete.yml up 
 stop_test_complete:
 - docker-compose -f docker-compose-test-complete.yml up 
+
 start:
 - docker-compose up -d
 start_with_output:
@@ -102,6 +103,7 @@ import_dump_via_transfer_dir:
 # to be able to have a target named test, it needs to be declared phony as a file with this name exists.
 .PHONY: test
 test: test_app
+
 test_all:
 - docker-compose exec module-handbook rails test
 - docker-compose exec module-handbook rails test:system

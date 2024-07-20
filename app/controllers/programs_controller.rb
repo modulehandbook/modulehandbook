@@ -27,6 +27,10 @@ class ProgramsController < ApplicationController
     end
     @show_objectives = params['objectives'] || false
     #.order('semester', 'required DESC', 'courses.code')
+    commentable = @program
+    @comments = commentable.comments
+    @comments_size = @comments.size
+    @comment = commentable.comments.build(author: current_user)
   end
 
   def overview
