@@ -1,34 +1,18 @@
 require 'test_helper'
 
-# https://github.com/rubycdp/cuprite
-# require "capybara/cuprite"
-
-#Capybara.javascript_driver = :cuprite
-#Capybara.register_driver(:cuprite) do |app|
-#  Capybara::Cuprite::Driver.new(app, window_size: [1200, 800])
-## if you use Docker don't forget to pass no-sandbox option:
-#  Capybara::Cuprite::Driver.new(app, browser_options: { 'no-sandbox': nil })
-# end
-
-
-# Capybara.register_driver(:cuprite) do |app|
-#   Capybara::Cuprite::Driver.new(
-#     app,
-#     window_size: [1200, 800],
-#     browser_options: { 'no-sandbox': nil },
-#     inspector: true,
-#     url: ENV['CHROME_URL']
-#   )
-# end
-
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
-  #driven_by :selenium_headless #firefox
-  driven_by :selenium_headless, using: :firefox
-  # if cuprite is used, the chrome service needs to be available.
-  # driven_by :cuprite
-  # driven_by :cuprite, window_size: [1400, 1400], options:
-  #  { js_errors: true }, browser_options: { 'no-sandbox': nil }
+  # https://nicolasiensen.github.io/2022-03-11-running-rails-system-tests-with-docker/
+
+  if ENV['CHROME_URL']
+    selenium_options = {
+      browser: :remote,
+      url: ENV['CHROME_URL'] }
+  else 
+    selenium_options = {}
+  end
+
+  driven_by :selenium_headless, using: :chrome, screen_size: [1400, 1400], options: selenium_options
 
   def system_test_login(email, password)
     visit new_user_session_path

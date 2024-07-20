@@ -4,51 +4,76 @@
 # default sshid - overwrite with parameter if needed (eg.cronjob)
 sshid=
 
+### Running Rails on local Machine (with postgres in docker container)
 
-local:
-- open http://localhost:3000/
+local: startdb open
 - export POSTGRES_DB=modhand-db-dev && bin/rails s
 
+startdb:
+- docker-compose up -d module-handbook-postgres
+
+open:
+- open http://localhost:3000
+
+### Running Rails in Docker 
+
+start:
+- docker-compose up -d
+stop: 
+- docker-compose down
 restart: stop start
+
+rebuild:
+- docker-compose up -d --build --force-recreate module-handbook
+
 clean_logs:bin
 - rm container_logs/nginx/*.*
 - rm container_logs/*.*
+
+### Running Tests in Docker
+
+test_all: test_create_db test test_system
+- docker-compose exec module-handbook rails test
+- docker-compose exec module-handbook rails test:system
+
+test:
+- docker-compose exec module-handbook rails test
+
+test_system:
+- docker-compose exec module-handbook rails test:system
+
+test_create_db:
+- docker-compose exec module-handbook rails db:create RAILS_ENV=test
+- docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
+
+test_one:
+- docker-compose exec module-handbook rails test test/system/comments/comments_editor_test.rb:55
+
+### Run Rails with Production Configuration
+
 start_prod_mode:
 - docker-compose -f docker-compose.yml up -d # ommits override
 start_prod_version:
 - docker-compose -f docker-compose.yml --env-file .env.prod up
 start_prod_local:
 - docker-compose -f docker-compose.yml -f docker-compose.localprod.yml up
-start_test:
-- docker-compose -f docker-compose.yml -f docker-compose.test.yml up
-start_test_complete:
-- docker-compose -f docker-compose-test-complete.yml up 
-stop_test_complete:
-- docker-compose -f docker-compose-test-complete.yml up 
-start:
-- docker-compose up -d
-start_with_output:
-- docker-compose up
-startdb:
-- docker-compose up -d module-handbook-postgres
-exec:
-- docker-compose exec module-handbook bash
+
+
+### Access Docker Container
+
 bash:
-- docker-compose exec module-handbook bash
+- docker-compose exec -ti module-handbook bash
 bash_db:
-- docker-compose exec module-handbook-postgres bash
+- docker-compose exec -ti module-handbook-postgres bash
 bash_nginx:
-- docker-compose exec nginx bash
-rebuild:
-- docker-compose up -d --build --force-recreate module-handbook
-stop: down
-down:
-- docker-compose down
+- docker-compose exec -ti nginx bash
+
+
+### Clean Gemcache, docker
 clean:
 - rm -rf gem_cache
 - docker-compose down --rmi all -v --remove-orphans
-open:
-- open http://localhost:3000
+
 
 #
 # DB Tasks via rails
@@ -72,6 +97,7 @@ reset_db:
 - docker-compose exec module-handbook rails db:migrate
 - docker-compose exec module-handbook rails db:seed
 
+db_staging_to_dev: dump_staging import_dump
 #
 # DB Import Tasks directly via postgres container
 #
@@ -80,11 +106,14 @@ DBNAME=modhand-db-dev
 import_dump_complete: recreate_db import_dump
 # import from local file using cat:
 # call with  make file=x.pgdump import_dump
-import_dump_heroku: $(file)
-- cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
+
 # e.g. DBNAME=modhand-db-dev  file=../dumps-htw/modhand-2022-12-18--21-00-02.pgdump make import_dump
+
+file=$(shell cat tmp/DUMPFILENAME)
 import_dump: $(file)
 - cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
+- echo "" > tmp/DUMPFILENAME
+
 dump:
 - docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d ${DBNAME} -U modhand > ../mh-dumps/local/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 
@@ -98,19 +127,6 @@ import_dump_via_transfer_dir:
 #
 # to be able to have a target named test, it needs to be declared phony as a file with this name exists.
 .PHONY: test
-test: test_app
-test_all:
-- docker-compose exec module-handbook rails test
-- docker-compose exec module-handbook rails test:system
-test_system:
-- docker-compose exec module-handbook rails test:system
-test_one:
-- docker-compose exec module-handbook rails test test/system/comments/comments_editor_test.rb:55
-test_app:
-- docker-compose exec module-handbook rails db:create RAILS_ENV=test
-- docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
-- docker-compose exec module-handbook rails test
-- docker-compose exec module-handbook rails test:system
 
 test_ci: test_ci_setup test_ci_just_the_tests
 test_ci_setup:
@@ -129,7 +145,7 @@ test_ci_just_the_tests:
 reset_db_local:
 - rails db:drop RAILS_ENV=development
 - rails db:create RAILS_ENV=development
-- rails db:migrate
+- rails db:migrate  RAILS_ENV=development
 - rails db:seed
 
 reset_test_db:
@@ -137,6 +153,7 @@ reset_test_db:
 - RAILS_ENV=test rails db:drop
 - RAILS_ENV=test rails db:create
 - RAILS_ENV=test rails db:migrate
+
 rails_test:
 - # common fixes on Lottes Laptop
 - # in test_helper.rb -> parallelize(workers: 1)
@@ -232,18 +249,23 @@ start_local_build_prod:
 reset_prod_db:
 - docker-compose exec module-handbook rails db:create RAILS_ENV=production
 - docker-compose exec module-handbook rails db:migrate
+
 import_dump_staging:
-- cat $(file) | ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+- echo "disabled"
+- # cat $(file) | ssh local@module-handbook-staging.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
 
 import_dump_production:
-- cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+- echo "disabled"
+- # cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
 
 import_dump_local:
 - cat $(file) | docker-compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
 
+staging_file=../modhand-dumps/modhand-stag-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 dump_staging:
 -   echo $(sshid)
-- 	ssh local@module-handbook-staging.f4.htw-berlin.de $(sshid)  "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../modhand-dumps/modhand-stag-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+-   echo ${staging_file} >> tmp/DUMPFILENAME
+- 	ssh local@module-handbook-staging.f4.htw-berlin.de $(sshid)  "docker-compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ${staging_file}
 
 dump_production:
 -   echo $(sshid)
@@ -316,3 +338,10 @@ docker-cleanup:
 docker-rm:
 - docker rm $(docker ps -qa)
 - docker rmi $(docker images -qa)
+
+
+
+#### Deployment and Production/Staging Access
+
+#### Database Maintenance
+

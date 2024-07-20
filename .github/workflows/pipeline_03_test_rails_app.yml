@@ -32,8 +32,11 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-
+      
     steps:
+      - name: chrome
+        uses: browser-actions/setup-chrome@latest
+        
       - name: Check out repo code
         uses: actions/checkout@v4
       - name: Set up Ruby
@@ -53,7 +56,9 @@ jobs:
 
       - name: Run System Tests
         id: test-system
-        run: bin/rails test:system
+        run: |
+          chrome --version
+          bin/rails test:system
 
       - name: Echo Log on Failure
         if: ${{ failure() }}

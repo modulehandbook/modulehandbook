@@ -1,3 +1,5 @@
+
+<div <% unless @comments.size > 1 %>class = 'no_print'<% end %> />
 <h1 id='comments' class="mt-5 pt-5">Comments:</h1>
 
 <table class="table" id ="comments_table">
@@ -21,7 +23,8 @@
     <% end %>
   </tbody>
 </table>
-
+</div>
+<div class = "no_print">
 <h3 class="mt-4">Add a comment:</h3>
 <p>* You can insert Markdown formating here if you wish.<br>
   * You can edit your comment for 30 minutes after you create it.<br>
@@ -50,8 +53,10 @@
     <%= form.text_area :comment, class: "form-control"  %>
   </div>
 
+
   <div class="actions mb-5 pb-5">
-    <%= form.submit %>
+    <%= form.submit  class: "btn btn-success btn-sm" %>
   </div>
 
 <% end %>
+  </div>

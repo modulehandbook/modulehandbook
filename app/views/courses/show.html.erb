@@ -1,7 +1,7 @@
 <h3>Course: <%= @course.name %> </h3>
 <h3><%= content_for(:title, "Course: #{@course.name}") %></h3>
 <% if can? :versions, @course %>
-<%= link_to "See Course Versions", course_versions_url(@course.id)  %>
+<%= link_to "See Course Versions", course_versions_url(@course.id), class: "no_print"  %>
 <% end %>
 
 <p class="bg-<%= @course.aasm_state %>">
@@ -9,6 +9,7 @@
   <%= @course.aasm_state.humanize.titleize %>
 </p>
 
+<div class = "no_print">
 <% if can? :change_state, @course %>
   End current Phase and go to next State -
   <% @course.aasm.events.each do |event| %>
@@ -24,21 +25,20 @@
 Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> | <%= link_to 'DOCX', export_course_docx_url(id: @course.id) %> <br>
 <% if can? :edit, @course %><%= link_to 'Edit', edit_course_path(@course) %>, <% end %><%= link_to 'Back to Index', courses_path %>
 </p>
-
+</div>
 <div class = "container">
   <div class="row">
+  
     <div class = "col">
       Already part of Programs: <br/>
-<% @link_memos.each do | link_memo |
-  
-  %>
+<% @link_memos.each do | link_memo | %>
     <%= link_to link_memo.program.name, program_path(link_memo.program)  %>
     (<%= link_to link_memo.text, course_program_path(link_memo.link)  %> ),<br/>
 <% end %>
 
     </div>
 <% if can? :edit, @course %>
-    <div class = "col">
+    <div class = "col no_print">
 <%= form_with(model: @course_program, local: true) do |form| %>
     <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
   <div class="field">
@@ -47,16 +47,16 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
   </div>
 
   <div class="actions">
-    <%= form.submit 'Add to Program'%>
+    <%= form.submit 'Add to Program', class: "btn btn-success btn-sm"%>
   </div>
 <% end %>
     </div>
     <% end %>
   </div>
 </div>
-
+<div class = "no_print">
 <%= render 'comments/comments_teaser'%>
-
+</div>
 <hr/>
 
 <%= form_with(model: @course, local: true) do |form| %>

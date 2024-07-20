@@ -3,8 +3,14 @@
 
 while true; do
     clear
-    
-    bin/rails test 
+
+    if [ "$1" == "system" ]
+    then
+      bin/rails test:system
+    else
+      bin/rails test
+    fi
+
     fswatch **/*.rb -1
     
 done

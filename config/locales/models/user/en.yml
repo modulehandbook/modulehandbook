@@ -4,5 +4,5 @@ en:
       user: User
     attributes:
       user:
-        email: "Email Adress"
+        email: "Email Address"
       
