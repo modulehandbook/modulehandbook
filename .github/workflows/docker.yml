@@ -1,0 +1,26 @@
+name: docker-compose
+
+on:
+    push:
+        branches:
+
+jobs:
+  docker-compose:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Check out repo code
+          uses: actions/checkout@v4
+
+        - name: dc up
+          run: |
+            docker-compose up -d
+            docker ps
+
+        - name: test
+          run: |
+            docker-compose exec module-handbook rails test
+
+        - name: system etst
+          run: |
+            docker-compose exec module-handbook rails test:system
+           
