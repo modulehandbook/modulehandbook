@@ -3,7 +3,7 @@ require 'test_helper'
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   # https://nicolasiensen.github.io/2022-03-11-running-rails-system-tests-with-docker/
-
+  Capybara::save_path="./tmp"
   if ENV['CHROME_URL']
     selenium_options = {
       browser: :remote,

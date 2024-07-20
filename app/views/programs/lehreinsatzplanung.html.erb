@@ -1,0 +1,78 @@
+<h1>Lehreinsatzplanung SoSe 21</h1>
+</br>
+
+<table class="table">
+<h2>Bachelor </h2>
+</br>
+  <thead>
+    <tr>
+      <th scope="col">S</th>
+      <th scope="col">Code</th>
+      <th scope="col">Name</th>
+      <th scope="col">Teacher</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @LEP.each do |key, value| %>
+      <% if value["bm"] == "B" %>       
+      <tr >
+        <td><%= value["semester"] %></td>
+        <td><%= key %></td>
+        <td><%= value["name"] %></td>
+        <td><%= value["teacher"]["firstName"]%> <%= value["teacher"]["lastName"]%></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+</br> </br> 
+
+
+<h2>Master</h2>
+</br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Code</th>
+      <th scope="col">Name</th>
+      <th scope="col">Teacher</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @LEP.each do |key, value| %>
+      <% if value["bm"] == "M" %>       
+      <tr >
+        <td><%= key %></td>
+        <td><%= value["name"] %></td>
+        <td><%= value["teacher"]["firstName"]%> <%= value["teacher"]["lastName"]%></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+</br>
+</br>
+
+<style>
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  color: #76B900;
+  font-size: 1.75rem;
+}
+td, th {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+thead {
+  background-color: #76B900;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:hover {background-color: #ddd;}
+
+</style>

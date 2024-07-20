@@ -67,3 +67,5 @@ gem 'jquery-rails'
 gem 'redcarpet'
 
 gem "importmap-rails", "~> 1.1"
+gem 'rubyXL', '~> 3.4.16'
+gem 'rubyzip', '>= 1.1.6'

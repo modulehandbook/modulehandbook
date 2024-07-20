@@ -138,6 +138,22 @@ class ProgramsController < ApplicationController
   # GET /programs/1/edit
   def edit; end
 
+   
+  # GET /course_programs/lehreinsatzplanung
+  def lehreinsatzplanung
+    base_url = ENV['EXPORTER_BASE_URL'] || 'http://localhost:3030/'
+    get_url = base_url + 'excel/program'
+    begin
+      resp = Faraday.get(get_url)
+      logger.debug resp
+      @LEP = JSON.parse resp.body
+      
+    rescue Faraday::ConnectionFailed => e
+      redirect_to programs_path, alert: 'Error: Plan could not be imported as JSON because the connection to the external export service failed!'
+    end
+  end
+
+
   # POST /programs
   # POST /programs.json
   def create
