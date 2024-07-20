@@ -2,7 +2,7 @@ class CourseProgram < ApplicationRecord
   belongs_to :course
   belongs_to :program
 
-  validates :course_id, uniqueness: { scope: %i[program_id] }
+  #validates :course_id, uniqueness: { scope: %i[program_id] }
 
   scope :study_plan, -> { where.not(required: "elective-option") }
   scope :elective_options, -> { where(required: "elective-option") }

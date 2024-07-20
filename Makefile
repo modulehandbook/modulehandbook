@@ -23,7 +23,7 @@ stop:
 - docker-compose down
 restart: stop start
 
-rebuild_docker:
+rebuild:
 - docker-compose up -d --build --force-recreate module-handbook
 
 
