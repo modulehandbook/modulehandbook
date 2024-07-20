@@ -3,7 +3,7 @@ require "test_helper"
 class UserLoginTest < ActionDispatch::IntegrationTest
   test "can see the welcome page" do
     get "/"
-    assert_select "h1", "Welcome to the Module Handbook"
+    assert_select "h1", "Welcome to the Module Handbook!"
   end
 
   def assert_status(expected_status)

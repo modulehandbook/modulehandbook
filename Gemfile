@@ -48,15 +48,10 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.38'
-  # gem 'cuprite'
+  gem 'capybara', '>= 3.40'
   gem 'launchy'
   gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
-  gem 'phantomjs'
-  gem 'poltergeist', '~> 1.18', '>= 1.18.1'
   gem 'simplecov', require: false
-  gem 'webdrivers'
 end
 gem 'cancancan'
 gem 'devise'

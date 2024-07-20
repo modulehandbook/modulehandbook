@@ -53,8 +53,8 @@ module CommentsTestsHelper
 
     def assert_on_course_page()
       return if page.has_content?(@course.name)
-      puts "Not on course page!"
-      puts page.body.inspect
+      # puts "Not on course page!"
+      # puts page.body.inspect
       # save_and_open_page
     end
 

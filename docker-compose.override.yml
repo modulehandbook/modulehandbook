@@ -10,13 +10,14 @@
 version: '3.4'
 services:
   module-handbook-postgres:
-      container_name: module-handbook-postgres
-      environment:
-        - POSTGRES_DB=modhand-db-dev
-      volumes:
-        - ./pg_data_dev:/var/lib/postgresql/data
-      ports:
-       - "5432:5432" # don't do this on production!
+    platform: linux/arm64/v8
+    container_name: module-handbook-postgres
+    environment:
+      - POSTGRES_DB=modhand-db-dev
+    volumes:
+      - ./pg_data_dev:/var/lib/postgresql/data
+    ports:
+     - "5432:5432" # don't do this on production!
   module-handbook:
     platform: linux/amd64
     build:
@@ -34,19 +35,8 @@ services:
       - RAILS_ENV=development
       - RAILS_MASTER_KEY=
       # - EXPORTER_BASE_URL=
-      - CHROME_URL=http://chrome:3333
+      - CHROME_URL=http://chrome-server:4444
     restart: "no"
-#    depends_on:
-#      - chrome
-#  # docker run -p 3003:3000 browserless/chrome:1.31-chrome-stable
-#   chrome:
-#     image: browserless/chrome:1.31-chrome-stable
-# #     image: barrenechea/browserless:latest
-#     ports:
-#       - "3333:3333"
-#     #volumes:
-#     #  - .:/app:cached # change it for your rails' container directory
-#     #  - .:/usr/src/app:cached
-#     environment:
-#       PORT: 3333
-#       CONNECTION_TIMEOUT: 600000
+  chrome-server:
+    platform: linux/x86_64
+    image: selenium/standalone-chrome:126.0

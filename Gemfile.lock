@@ -104,7 +104,6 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     childprocess (5.0.0)
-    cliver (0.3.2)
     concurrent-ruby (1.3.3)
     connection_pool (2.4.1)
     crass (1.0.6)
@@ -188,11 +187,6 @@ GEM
       activerecord (>= 6.1)
       request_store (~> 1.4)
     pg (1.5.6)
-    phantomjs (2.1.1.0)
-    poltergeist (1.18.1)
-      capybara (>= 2.1, < 4)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     popper_js (1.16.1)
     psych (5.1.2)
       stringio
@@ -253,7 +247,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.1)
+    rexml (3.3.2)
       strscan
     rubyzip (2.3.2)
     sass-rails (6.0.0)
@@ -303,10 +297,6 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webdrivers (5.3.1)
-      nokogiri (~> 1.6)
-      rubyzip (>= 1.3.0)
-      selenium-webdriver (~> 4.0, < 4.11)
     webrick (1.8.1)
     websocket (1.2.11)
     websocket-driver (0.7.6)
@@ -327,7 +317,7 @@ DEPENDENCIES
   bundler
   byebug
   cancancan
-  capybara (>= 3.38)
+  capybara (>= 3.40)
   devise
   faraday
   importmap-rails (~> 1.1)
@@ -337,8 +327,6 @@ DEPENDENCIES
   listen (~> 3.9)
   paper_trail
   pg
-  phantomjs
-  poltergeist (~> 1.18, >= 1.18.1)
   puma (~> 6.4)
   rails (~> 7.1.3)
   redcarpet
@@ -349,7 +337,6 @@ DEPENDENCIES
   spring
   turbo-rails
   web-console (>= 3.3.0)
-  webdrivers
 
 RUBY VERSION
    ruby 3.3.3p89
