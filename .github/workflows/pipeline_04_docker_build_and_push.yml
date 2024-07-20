@@ -116,7 +116,7 @@ jobs:
           echo "----- nudge ----"
           echo "sha=${sha}"
           echo "tag=${tag}"
-          curl ${{ secrets.nudge }}${tag}&sha=${sha}&key=${key}
+          curl ${nudge}${tag}&sha=${sha}&key=${key}
          
         
           

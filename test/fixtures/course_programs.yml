@@ -17,3 +17,15 @@ three:
   program: imi1c
   semester: 2
   required: MyText
+
+copy_test_01:
+  program: copy_test
+  course: copy_test_01
+
+copy_test_02:
+  program: copy_test
+  course: copy_test_02
+
+copy_test_03:
+  program: copy_test
+  course: copy_test_03

@@ -27,6 +27,16 @@ rebuild:
 - docker-compose up -d --build --force-recreate module-handbook
 
 clean_logs:bin
+list_targets:
+- grep "^\w*:"  Makefile | sort
+
+start_local:
+- docker-compose up -d
+start_local_with_output:
+- docker-compose up
+
+restart_local: stop start
+clean_logs_local:bin
 - rm container_logs/nginx/*.*
 - rm container_logs/*.*
 
@@ -78,18 +88,18 @@ clean:
 #
 # DB Tasks via rails
 #
-init: new_db import_dump
-new_db:
+init_local: new_db import_dump
+new_db_local:
 - docker-compose exec module-handbook rails db:create
 - docker-compose exec module-handbook rails db:migrate
 
-seed:
+seed_local:
 - docker-compose exec module-handbook rails db:seed
 recreate_db:
 - docker-compose exec module-handbook rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
 - docker-compose exec module-handbook rails db:create RAILS_ENV=development
 - docker-compose exec module-handbook rails db:migrate RAILS_ENV=development
-migrate:
+migrate_local:
 - docker-compose exec -T module-handbook rails db:migrate
 reset_db:
 - docker-compose exec module-handbook rails db:drop  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
@@ -192,7 +202,7 @@ ssh_production:
 
 cp_staging:
 - scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
-- scp secrets/ln.sh local@module-handbook-staging.f4.htw-berlin.de:~/secrets
+- scp secrets/bin/ln.sh local@module-handbook-staging.f4.htw-berlin.de:~
 - scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 - scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env

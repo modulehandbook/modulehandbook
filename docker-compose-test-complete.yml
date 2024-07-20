@@ -14,7 +14,7 @@ services:
       # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
       - POSTGRES_HOST_AUTH_METHOD=password
     volumes:
-      - ./pg_data_test:/var/lib/postgresql/data
+      - ./pg_data:/var/lib/postgresql/data
     restart: always
 
   module-handbook:

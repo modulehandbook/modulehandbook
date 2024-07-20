@@ -17,9 +17,25 @@ class CourseProgramsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should create course_program' do
-    assert_difference('CourseProgram.count') do
+  test 'should not create second link between the same course/program' do
+
+    assert_difference('CourseProgram.count', 0, 'link already exists') do
       post course_programs_url, params: { course_program: { course_id: @course_program.course_id, program_id: @course_program.program_id, required: @course_program.required, semester: @course_program.semester } }
+    end
+    assert_response :success
+    #tbd: error should be shown!
+  end
+
+  test 'should create course_program' do
+    course = courses(:one)
+    program = programs(:two)
+    assert_not_includes program.courses, course, "no prior link may exist"
+    params = { course: course,
+               program: program,
+               required: @course_program.required,
+               semester: @course_program.semester }
+    assert_difference('CourseProgram.count') do
+      post course_programs_url, params: { course_program: params }
     end
 
     assert_redirected_to course_program_url(CourseProgram.last)
