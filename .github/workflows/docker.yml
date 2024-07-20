@@ -20,9 +20,9 @@ jobs:
 
         - name: test db setup
           run: |
-              docker exec modulehandbook-testci rails db:drop RAILS_ENV=test
-              docker exec modulehandbook-testci rails db:create RAILS_ENV=test
-              docker exec modulehandbook-testci rails db:migrate RAILS_ENV=test
+              docker exec module-handbook rails db:drop RAILS_ENV=test
+              docker exec module-handbook rails db:create RAILS_ENV=test
+              docker exec module-handbook rails db:migrate RAILS_ENV=test
       
         - name: run tests with docker-compose
           run: |
