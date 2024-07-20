@@ -30,8 +30,8 @@ class CourseProgramsControllerTest < ActionDispatch::IntegrationTest
     course = courses(:one)
     program = programs(:two)
     assert_not_includes program.courses, course, "no prior link may exist"
-    params = { course: course,
-               program: program,
+    params = { course_id: course.id,
+               program_id: program.id,
                required: @course_program.required,
                semester: @course_program.semester }
     assert_difference('CourseProgram.count') do

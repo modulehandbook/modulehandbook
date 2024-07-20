@@ -56,9 +56,14 @@ class Program < ApplicationRecord
     # json_02 = gather_data_for_json_export
     params = json_01.slice(*EDITABLE_ATTRIBUTES.map(&:to_s))
     program_copy =Program.create!(params)
-    course_programs.each do |course_program|
-      program_copy.course_programs.create!(course_program: course_program)
+    course_programs.each do | cp |
+      program_copy.course_programs.create(
+        course: cp.course,
+        required: cp.required,
+        semester: cp.semester)
+
     end
+    program_copy
   end
 end
 
