@@ -30,3 +30,4 @@ secrets.env
 
 # ignore dev override
 docker-compose.override.yml
+docker-compose.test.override.yml

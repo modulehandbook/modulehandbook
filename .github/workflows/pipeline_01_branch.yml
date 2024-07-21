@@ -3,7 +3,7 @@
 name: Branch
 on:
   push:
-    branches: [ imi_edit_improvements ]
+    branches: [ '*' ]
     tags-ignore: [ '*' ]
 
 jobs:

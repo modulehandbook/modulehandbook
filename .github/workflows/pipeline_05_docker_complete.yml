@@ -1,7 +1,7 @@
 
 # build and (maybe) push docker image workflow called by  pipeline_02_structure.yml
 
-name: Build and Push Image
+name: Docker Complete
 
 on:
   workflow_call:
@@ -70,13 +70,35 @@ jobs:
            echo "---- tags:\n ${{ steps.meta.outputs.tags }}"
            echo "---- labels:\n ${{ steps.meta.outputs.labels }}"
 
+      - name: start container
+        run: |
+             docker-compose up -d
+             
+      - name: docker ps
+        run: docker ps
+            
+      - name: test db setup docker-compose
+        continue-on-error: true
+        run: |
+            docker-compose exec -t module-handbook bin/rails db:drop RAILS_ENV=test
+            docker-compose exec -t module-handbook bin/rails db:create RAILS_ENV=test
+            docker-compose exec -t module-handbook bin/rails db:migrate RAILS_ENV=test
+         
+      - name: run tests with docker-compose
+        run: |
+          docker-compose exec -t module-handbook bin/rails test
+          docker-compose exec -t module-handbook bin/rails test:system
+ 
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
+          #target: modhand-prod # needs master key for asset precompile
           target: ${{ inputs.target }}
           build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
-          push: ${{ inputs.push }}
+          #push: ${{ inputs.push }}
+          push: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
@@ -104,13 +126,14 @@ jobs:
           
 
       - name: nudge-staging
+        if: false
         env:
           nudge: ${{ secrets.nudge }}
           sha: ${{ steps.tagsha.outputs.sha }}
           tag: ${{ steps.tagsha.outputs.tag }}
           key: ${{ secrets.nudge_key }}
-        if: ${{ env.nudge != '' }}
-        #if: ${{ inputs.environment == 'staging' }}
+        # if: ${{ env.nudge != '' }}
+        # if: ${{ inputs.environment == 'staging' }}
         continue-on-error: true
         run: |
           echo "----- nudge ----"

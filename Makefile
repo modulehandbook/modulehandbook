@@ -6,10 +6,10 @@ sshid=
 
 ### Running Rails on local Machine (with postgres in docker container)
 
-local: startdb open
+local: start_db open
 - export POSTGRES_DB=modhand-db-dev && bin/rails s
 
-startdb:
+start_db:
 - docker-compose up -d module-handbook-postgres
 
 open:
@@ -26,24 +26,29 @@ restart: stop start
 rebuild:
 - docker-compose up -d --build --force-recreate module-handbook
 
-clean_logs:bin
+
+list_targets:
+- grep "^\w*:"  Makefile | sort
+
+clean_logs_local: bin
 - rm container_logs/nginx/*.*
 - rm container_logs/*.*
 
 ### Running Tests in Docker
 
-test_all: test_create_db test test_system
+test_all: test_create_db test_migrate_db test_docker test_docker_system
 - docker-compose exec module-handbook rails test
 - docker-compose exec module-handbook rails test:system
 
-test:
-- docker-compose exec module-handbook rails test
+test_docker:
+- docker-compose exec module-handbook bin/rails test
 
-test_system:
+test_docker_system:
 - docker-compose exec module-handbook rails test:system
 
 test_create_db:
 - docker-compose exec module-handbook rails db:create RAILS_ENV=test
+test_migrate_db:
 - docker-compose exec module-handbook rails db:migrate RAILS_ENV=test
 
 test_one:
@@ -78,18 +83,18 @@ clean:
 #
 # DB Tasks via rails
 #
-init: new_db import_dump
-new_db:
+init_local: new_db import_dump
+new_db_local:
 - docker-compose exec module-handbook rails db:create
 - docker-compose exec module-handbook rails db:migrate
 
-seed:
+seed_local:
 - docker-compose exec module-handbook rails db:seed
 recreate_db:
 - docker-compose exec module-handbook rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
 - docker-compose exec module-handbook rails db:create RAILS_ENV=development
 - docker-compose exec module-handbook rails db:migrate RAILS_ENV=development
-migrate:
+migrate_local:
 - docker-compose exec -T module-handbook rails db:migrate
 reset_db:
 - docker-compose exec module-handbook rails db:drop  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
@@ -192,7 +197,7 @@ ssh_production:
 
 cp_staging:
 - scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
-- scp secrets/ln.sh local@module-handbook-staging.f4.htw-berlin.de:~/secrets
+- scp secrets/bin/ln.sh local@module-handbook-staging.f4.htw-berlin.de:~
 - scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
 - scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
