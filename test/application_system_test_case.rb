@@ -2,7 +2,14 @@ require 'test_helper'
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
+
+  Capybara::save_path="./tmp" if Rails.configuration.feature['lehreinsatzplanung']
+
+  # the default driver needs chromedriver,
+  # which has to run in a separate container in docker
+  # this blog article helped:
   # https://nicolasiensen.github.io/2022-03-11-running-rails-system-tests-with-docker/
+  # thus, the CHROME_URL is set in docker-compose. 
 
   if ENV['CHROME_URL']
     selenium_options = {

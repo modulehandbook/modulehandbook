@@ -1,0 +1,13 @@
+# use this file for feature toggles.
+# see
+# https://martinfowler.com/articles/feature-toggles.html
+# maybe replace with flipper gem. https://github.com/flippercloud/flipper
+# this uses custom configuration
+# https://guides.rubyonrails.org/configuring.html#custom-configuration
+
+shared:
+  lehreinsatzplanung: false
+test:
+  lehreinsatzplanung: true
+development:
+  lehreinsatzplanung: true
