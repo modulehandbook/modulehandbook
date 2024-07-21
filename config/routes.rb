@@ -35,7 +35,6 @@ Rails.application.routes.draw do
 
   
 
-  get '/tests/find' => 'tests#find'
   # JSON Exporte
   get 'export_course_json', to: 'courses#export_course_json'
   get 'export_courses_json', to: 'courses#export_courses_json'

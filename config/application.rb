@@ -19,6 +19,7 @@ module ModuleHandbook
     config.x.mh_hostname = ENV.fetch("DEVISE_EMAIL_HOSTNAME") { 'module-handbook.f4.htw-berlin.de' }
     config.x.mh_devise_email = ENV.fetch("DEVISE_EMAIL") { 'module-handbook@infrastructure.de' }
     config.active_record.use_yaml_unsafe_load = true
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
@@ -43,6 +44,10 @@ module ModuleHandbook
     # rails_upgrade_71: may be necessary
     # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#sqlite3adapter-now-configured-to-be-used-in-a-strict-strings-mode
     # config.active_record.sqlite3_adapter_strict_strings_by_default = false
+
+    # Feature Toggles - see config/feature_toggles.yml
+    config.feature = config_for(:feature_toggles)
+
     begin
       config.version=File.read("nudge/VERSION").strip
     rescue
