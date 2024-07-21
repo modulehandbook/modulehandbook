@@ -94,8 +94,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          target: modhand-prod
-          #target: ${{ inputs.target }}
+          #target: modhand-prod # needs master key for asset precompile
+          target: ${{ inputs.target }}
           build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
           #push: ${{ inputs.push }}
           push: false
