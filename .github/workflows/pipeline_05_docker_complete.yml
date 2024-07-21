@@ -1,7 +1,7 @@
 
 # build and (maybe) push docker image workflow called by  pipeline_02_structure.yml
 
-name: Docker Build, Test and Push
+name: Docker Complete
 
 on:
   workflow_call:
@@ -73,14 +73,24 @@ jobs:
       - name: start container
         run: |
              docker-compose up -d
-             docker ps
- 
+             
+      - name: docker ps
+        run: docker ps
+      
       - name: test db setup
+        continue-on-error: true
         run: |
             docker exec -t modulehandbook bin/rails db:drop RAILS_ENV=test
             docker exec -t modulehandbook bin/rails db:create RAILS_ENV=test
             docker exec -t modulehandbook bin/rails db:migrate RAILS_ENV=test
-     
+      
+      - name: test db setup docker-compose
+        continue-on-error: true
+        run: |
+            docker-compose exec -t module-handbook bin/rails db:drop RAILS_ENV=test
+            docker-compose exec -t module-handbook bin/rails db:create RAILS_ENV=test
+            docker-compose exec -t module-handbook bin/rails db:migrate RAILS_ENV=test
+         
       - name: run tests with docker-compose
         run: |
           docker-compose exec -t module-handbook bin/rails test
