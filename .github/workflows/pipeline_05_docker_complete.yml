@@ -132,8 +132,8 @@ jobs:
           sha: ${{ steps.tagsha.outputs.sha }}
           tag: ${{ steps.tagsha.outputs.tag }}
           key: ${{ secrets.nudge_key }}
-        if: ${{ env.nudge != '' }}
-        #if: ${{ inputs.environment == 'staging' }}
+        # if: ${{ env.nudge != '' }}
+        # if: ${{ inputs.environment == 'staging' }}
         continue-on-error: true
         run: |
           echo "----- nudge ----"
