@@ -76,14 +76,7 @@ jobs:
              
       - name: docker ps
         run: docker ps
-      
-      - name: test db setup
-        continue-on-error: true
-        run: |
-            docker exec -t modulehandbook bin/rails db:drop RAILS_ENV=test
-            docker exec -t modulehandbook bin/rails db:create RAILS_ENV=test
-            docker exec -t modulehandbook bin/rails db:migrate RAILS_ENV=test
-      
+            
       - name: test db setup docker-compose
         continue-on-error: true
         run: |
@@ -96,13 +89,6 @@ jobs:
           docker-compose exec -t module-handbook bin/rails test
           docker-compose exec -t module-handbook bin/rails test:system
  
-      - name: run tests
-        run: docker exec -t modulehandbook bin/rails test
-         
-      - name: run system tests
-        run: |
-          run: docker exec -t modulehandbook bin/rails test:system
-          
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
@@ -111,7 +97,8 @@ jobs:
           target: modhand-prod
           #target: ${{ inputs.target }}
           build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
-          push: ${{ inputs.push }}
+          #push: ${{ inputs.push }}
+          push: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
@@ -139,6 +126,7 @@ jobs:
           
 
       - name: nudge-staging
+        if: false
         env:
           nudge: ${{ secrets.nudge }}
           sha: ${{ steps.tagsha.outputs.sha }}
