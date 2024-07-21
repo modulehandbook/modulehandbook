@@ -186,7 +186,7 @@ class ProgramsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  PERMITTED_PARAMS = [:name, :code, :mission, :degree, :ects]
+  PERMITTED_PARAMS = Program::EDITABLE_ATTRIBUTES
   def program_params
     params.require(:program).permit(PERMITTED_PARAMS)
   end

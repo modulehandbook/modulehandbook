@@ -2,6 +2,8 @@ class CourseProgram < ApplicationRecord
   belongs_to :course
   belongs_to :program
 
+  #validates :course_id, uniqueness: { scope: %i[program_id] }
+
   scope :study_plan, -> { where.not(required: "elective-option") }
   scope :elective_options, -> { where(required: "elective-option") }
   def self.find_or_create_from_json(data, course_id, program_id)
@@ -15,4 +17,9 @@ class CourseProgram < ApplicationRecord
     cpl.save
     cpl
   end
+
+  def copy
+    copy = CourseProgram.new(self.as_json)
+  end
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_11_201532) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_14_115034) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_201532) do
     t.text "required"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["course_id", "program_id"], name: "index_course_programs_on_course_id_and_program_id", unique: true
     t.index ["course_id"], name: "index_course_programs_on_course_id"
     t.index ["program_id"], name: "index_course_programs_on_program_id"
   end

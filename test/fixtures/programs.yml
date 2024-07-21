@@ -34,3 +34,10 @@ imi1c:
   mission: This is the mission
   degree: Bachelors
   ects: 180
+
+copy_test:
+  name: A Program that will be copied
+  code: 919-Original
+  mission: This is the mission of Original
+  degree: Bachelors
+  ects: 180
