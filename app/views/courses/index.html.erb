@@ -10,9 +10,11 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
 </a>
 <% end %>
 <br>
-<% if (can? :edit, Course) && (can? :edit, Program) && (can? :edit, CourseProgram) %>EXCEL: <a href="#" data-toggle="modal" data-target="#excelModal">
-Import Course(s)
-</a>
+<% if Rails.configuration.feature['lehreinsatzplanung'] %>
+    <% if (can? :edit, Course) && (can? :edit, Program) && (can? :edit, CourseProgram) %>EXCEL: <a href="#" data-toggle="modal" data-target="#excelModal">
+    Import Course(s)
+    </a>
+    <% end %>
 <% end %>
 
 <br><br>
@@ -94,7 +96,6 @@ Import Course(s)
         <p>
           Here you can upload a JSON-File including a Course. If the Course already exists (if the code is already taken), it will be updated and overwritten by the contents of the JSON-File.
         </p>
-       
         <label for="files">Upload a JSON file</label>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
       </div>

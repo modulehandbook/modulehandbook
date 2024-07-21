@@ -140,7 +140,11 @@ class ProgramsController < ApplicationController
 
    
   # GET /course_programs/lehreinsatzplanung
+  # Rails.configuration.feature['lehreinsatzplanung']
   def lehreinsatzplanung
+    unless Rails.configuration.feature['lehreinsatzplanung']
+      redirect_to programs_path, alert: 'Feature "lehreinsatzplanung" disabled!'
+    end
     base_url = ENV['EXPORTER_BASE_URL'] || 'http://localhost:3030/'
     get_url = base_url + 'excel/program'
     begin
