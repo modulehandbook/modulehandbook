@@ -171,6 +171,31 @@ rails_test:
 
 api_test:
 - rails test test/../test-api/
+
+#
+# makesign tryout
+#
+deploy_makesign: cp_makesign restart_makesign
+ssh_makesign:
+- ssh local@makesign.f4.htw-berlin.de
+
+cp_makesign:
+- scp secrets/secrets.env local@makesign.f4.htw-berlin.de:~/secrets/secrets.env
+- scp Makefile.prod local@makesign.f4.htw-berlin.de:~/Makefile
+- scp docker-compose.yml local@makesign.f4.htw-berlin.de:~
+- scp .env.makesign local@makesign.f4.htw-berlin.de:~/.env
+- scp -r nginx local@makesign.f4.htw-berlin.de:~
+- scp -r bin_deploy local@makesign.f4.htw-berlin.de:~
+
+restart_makesign:
+- ssh local@makesign.f4.htw-berlin.de "sudo docker compose down"
+- ssh local@makesign.f4.htw-berlin.de "sudo docker compose up -d"
+
+#
+# makesign tryout ende
+#
+
+
 #
 # server admin
 #
