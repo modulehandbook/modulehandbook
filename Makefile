@@ -190,7 +190,8 @@ cp_makesign:
 restart_makesign:
 - ssh local@makesign.f4.htw-berlin.de "sudo docker compose down"
 - ssh local@makesign.f4.htw-berlin.de "sudo docker compose up -d"
-
+check_makesign:
+- ssh local@makesign.f4.htw-berlin.de "docker ps; df -h"
 #
 # makesign tryout ende
 #
