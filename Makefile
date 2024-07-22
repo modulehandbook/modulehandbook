@@ -177,13 +177,13 @@ api_test:
 #
 deploy_makesign: cp_makesign restart_makesign
 ssh_makesign:
-- ssh local@module-handbook-makesign.f4.htw-berlin.de
+- ssh local@makesign.f4.htw-berlin.de
 
 cp_makesign:
 - scp secrets/secrets.env local@makesign.f4.htw-berlin.de:~/secrets/secrets.env
 - scp Makefile.prod local@makesign.f4.htw-berlin.de:~/Makefile
 - scp docker-compose.yml local@makesign.f4.htw-berlin.de:~
-- scp .env.staging local@makesign.f4.htw-berlin.de:~/.env
+- scp .env.makesign local@makesign.f4.htw-berlin.de:~/.env
 - scp -r nginx local@makesign.f4.htw-berlin.de:~
 - scp -r bin_deploy local@makesign.f4.htw-berlin.de:~
 
