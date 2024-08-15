@@ -14,8 +14,6 @@ services:
     container_name: module-handbook-postgres
     environment:
       - POSTGRES_DB=modhand-db-dev
-    volumes:
-      - ./pg_data_dev:/var/lib/postgresql/data
     ports:
      - "5432:5432" # don't do this on production!
   module-handbook:
