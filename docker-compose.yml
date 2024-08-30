@@ -1,6 +1,7 @@
 # default configuration for production
 # use .env file to differentiate between prod and dev
 version: '3.4'
+
 services:
   module-handbook-postgres:
     container_name: modulehandbook-database
@@ -17,12 +18,16 @@ services:
       - ./pg_data:/var/lib/postgresql/data
     restart: always
   module-handbook-exporter:
+    env_file: "secrets/env/production.env"
+    
     image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
     container_name: modulehandbook-exporter
     restart: always
   module-handbook:
     image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
     container_name: modulehandbook
+    env_file: "secrets/env/production.env"
+    
     environment:
       - TAG
       - RAILS_ENV=production
@@ -32,12 +37,8 @@ services:
       - POSTGRES_DB=modhand-db-prod
       - RAILS_SERVE_STATIC_FILES=true
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
-      - DEVISE_EMAIL_HOSTNAME=${DEVISE_EMAIL_HOSTNAME}
-      - DEVISE_EMAIL=${DEVISE_EMAIL}
       - TZ=Europe/Berlin
       - EDITOR=vi
-    env_file:
-      - ${SECRET_ENV_FILE}
     depends_on:
       - module-handbook-postgres
       - module-handbook-exporter
@@ -58,8 +59,8 @@ services:
          - "443:443"
      environment:
         - NGINX_HOST=${NGINX_HOST:-localhost}
-        - NGINX_CERT=${NGINX_CERT:-/etc/ssl/server.crt}
-        - NGINX_KEY=${NGINX_KEY:-/etc/ssl/server.key}
+        - NGINX_CERT=${NGINX_CERT:-/etc/ssl/development/server.crt}
+        - NGINX_KEY=${NGINX_KEY:-/etc/ssl/development/server.key}
         - NGINX_PORT=80
         - NGINX_SSL_PORT=443
         - NGINX_PROXY=http://module-handbook:3000
