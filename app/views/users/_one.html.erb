@@ -18,6 +18,7 @@ user = @user
   <% verb =  show_form ? "Editing" : "Showing" %>
   <tr>
   <% content_for(:title, "#{verb} the User") %>
+  <%=content_for(:headline_tag, 'h3')%>
   <th colspan="2" scope="col" ><h3><%=@user.email%></h3></th>
         <th>
           <% if show_form %>

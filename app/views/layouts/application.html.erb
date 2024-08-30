@@ -13,7 +13,11 @@
     <%= render "layouts/navigation" %>
     <%= render "layouts/flash" %>
     <div class ="container">
-    <h3><%= content_for(:title) %></h3>
+    
+    <% headline_tag = content_for(:headline_tag) || 'h1' %>
+    <% title_content = content_for(:title) || 'ModuleHandbook' %>
+    <%= tag.public_send(headline_tag, title_content) %>
+    
       <%= yield %>
       
     </div>

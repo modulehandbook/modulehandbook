@@ -1,5 +1,6 @@
 <% content_for(:title, "Program Overview") %>
-<h3><%= link_to @program.name, @program %></h3>
+<%= link_to @program.name, @program %>
+<%=content_for(:headline_tag, 'h3')%>
 
 <table class="table">
 

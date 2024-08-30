@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
 <p id="alert"><%= alert %></p>
 
-<h3><%= content_for(:title, "Programs") %></h3>
+<%= content_for(:title, "Programs") %>
+<%=content_for(:headline_tag, 'h3')%>
 
 <% if can? :edit, @programs %><%= link_to 'New Program', new_program_path %><br><% end %>
 JSON: <%= link_to 'Export all Programs', export_programs_json_url %>

@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h3><%= content_for(:title, "Course-Program Links") %></h3>
+<%= content_for(:title, "Course-Program Links") %>
+<%=content_for(:headline_tag, 'h3')%>
+
 <% if can? :edit, @course_program %>
 <%= link_to 'New Course Program', new_course_program_path %>
 <% end %>
