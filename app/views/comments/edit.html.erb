@@ -1,4 +1,4 @@
-Edit comment:
+<%=content_for(:title, "Edit Comment")%>
 
 <%= form_with(model: @comment, local: true) do |form| %>
   <% if @comment.errors.any? %>
