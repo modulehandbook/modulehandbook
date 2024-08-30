@@ -353,10 +353,6 @@ quick-push:
 - git rev-parse HEAD > secrets/last-sha
 - echo secrets/last-sha
 
-stn:
-- echo secrets/last-sha
-- ./secrets/staging_nudge.sh
-
 
 # https://depot.dev/blog/docker-clear-cache
 docker-df:

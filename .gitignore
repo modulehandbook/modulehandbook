@@ -66,9 +66,6 @@ secrets.env
 container_logs/**
 .idea/**
 
-nudge/** 
-container_nudge/**
-
 /config/credentials/environment.key
 
 /config/credentials/production.key

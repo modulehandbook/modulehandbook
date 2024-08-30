@@ -1,6 +1,6 @@
 
 # build and (maybe) push docker image workflow called by  pipeline_02_structure.yml
-
+# work in progress!
 name: dpb-action-v7
 
 on:
@@ -10,8 +10,6 @@ on:
   #workflow_call:
   #  secrets:
   #    rails_master_key:
-  #      required: false
-  #    nudge:
   #      required: false
   #  inputs:
   #    tags:

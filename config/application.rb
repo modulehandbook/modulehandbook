@@ -45,7 +45,7 @@ module ModuleHandbook
     # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#sqlite3adapter-now-configured-to-be-used-in-a-strict-strings-mode
     # config.active_record.sqlite3_adapter_strict_strings_by_default = false
     begin
-      config.version=File.read("nudge/VERSION").strip
+      config.version=File.read("./MH_VERSION").strip
     rescue
       config.version="unknown"
     end

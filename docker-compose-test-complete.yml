@@ -44,6 +44,5 @@ services:
       - module-handbook-postgres
     volumes:
       - ./container_logs:/module-handbook/log
-      - ./container_nudge:/module-handbook/nudge
     restart: always
   

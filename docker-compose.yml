@@ -43,7 +43,6 @@ services:
       - module-handbook-exporter
     volumes:
       - ./container_logs:/module-handbook/log
-      - ./container_nudge:/module-handbook/nudge
       - ./secrets:/module-handbook/secrets
     restart: always
   nginx:
