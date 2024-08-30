@@ -379,4 +379,4 @@ tags_origin:
 - git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' origin
 
 debug:
-- docker compose -f compose.yaml compose.debug.yaml up module-handbook
+- TAG_MODULE_HANDBOOK=sha-b76f4f5 docker compose -f compose.yaml -f compose.debug.yaml up module-handbook

@@ -1,4 +1,7 @@
 services:
   module-handbook:
-    platform: linux/amd64
     entrypoint: entrypoints/keep-open.sh
+    env_file: "secrets/env/staging.env"
+    environment:
+      - TAG_MODULE_HANDBOOK=sha-b76f4f5
+    platform: linux/amd64

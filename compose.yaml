@@ -1,5 +1,5 @@
-
 services:
+
   module-handbook-postgres:
     container_name: modulehandbook-database
     image: postgres:13.4-alpine
@@ -14,19 +14,19 @@ services:
     volumes:
       - ./pg_data:/var/lib/postgresql/data
     restart: always
+
   module-handbook-exporter:
     image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
     container_name: modulehandbook-exporter
     restart: always
+
   module-handbook:
-    env_file: "secrets/env/active.env"
+    env_file:
+      - path: ./secrets/env/active.env
     image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
     container_name: modulehandbook
 
     environment:
-      - TAG
-      - RAILS_MASTER_KEY
-      - RAILS_ENV
       - RAILS_DB_HOST="module-handbook-postgres"
       - POSTGRES_USER=modhand
       - POSTGRES_PASSWORD=modhand
@@ -43,6 +43,7 @@ services:
       - ./container_logs:/module-handbook/log
       - ./secrets:/module-handbook/secrets
     restart: always
+
   nginx:
      env_file: "secrets/env/active.env"
      image: nginx:latest

@@ -20,6 +20,12 @@ or any of the other targets in the Makefile
 
 - run "make local"
 
+## Debugging a staging or production image
+
+set the TAG_MODULE_HANDBOOK=in target debug
+
+- make debug
+- make bash
 
 
 # Old Stuff, needs review.
