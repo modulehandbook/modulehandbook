@@ -59,10 +59,11 @@ pg_transfer/**
 container_logs/**
 .idea/**
 
+# Keep secrets out of the repo
+secrets/**
+
 # Ignore Credentials
 /config/credentials/development.key
 /config/credentials/staging.key
 /config/credentials/production.key
-
-secrets/**
-secrets.env
+/config/credentials/test.key

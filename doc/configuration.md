@@ -27,6 +27,7 @@ EDITOR="code --wait" bin/rails credentials:edit -e staging
 
 EDITOR="code --wait" bin/rails credentials:edit -e production
 
+EDITOR="code --wait" bin/rails credentials:edit -e test
 
 bin/rails credentials:edit 
 (ohne environment) sollte nicht mehr verwendet werden. 

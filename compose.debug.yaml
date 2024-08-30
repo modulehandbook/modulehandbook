@@ -1,0 +1,4 @@
+services:
+  module-handbook:
+    platform: linux/amd64
+    entrypoint: entrypoints/keep-open.sh
