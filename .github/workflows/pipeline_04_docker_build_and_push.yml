@@ -8,10 +8,6 @@ on:
     secrets:
       rails_master_key:
         required: false
-      nudge:
-        required: false
-      nudge_key:
-        required: false
     inputs:
       tags:
         required: true

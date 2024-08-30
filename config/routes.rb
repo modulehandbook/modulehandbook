@@ -2,8 +2,6 @@ Rails.application.routes.draw do
   resources :faculties
 
   root 'welcome#index'
-  # nudge
-  get 'nudge', to: 'nudge#nudge', as: 'nudge'
 
   devise_for :users
   devise_scope :user do
@@ -12,7 +10,7 @@ Rails.application.routes.draw do
   
   authenticated :user do
     root to: 'welcome#index', as: :authenticated_root
-    get 'nudge', to: 'nudge#nudge', as: 'authenticated_nudge'
+
   end
   
   get 'abilities', to: 'users#show_abilities', as: 'abilities'
