@@ -1,6 +1,6 @@
 # this can be used to start the full pipeline from dev branches
 # names are short as they are pre-pended on gh actions
-name: Branch
+name: PL: Branch
 on:
   push:
     branches: [ '*' ]

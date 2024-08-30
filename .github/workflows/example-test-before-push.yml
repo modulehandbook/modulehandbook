@@ -1,4 +1,4 @@
-name: test-before-push
+name: "WIP: example-test-before-push"
 # https://docs.docker.com/build/ci/github-actions/test-before-push/
 
 on:

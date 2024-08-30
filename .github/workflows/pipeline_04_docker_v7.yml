@@ -1,7 +1,7 @@
 
 # build and (maybe) push docker image workflow called by  pipeline_02_structure.yml
 # work in progress!
-name: dpb-action-v7
+name: "WIP: pipeline_04_docker_v7"
 
 on:
   workflow_dispatch:

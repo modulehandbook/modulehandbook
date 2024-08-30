@@ -1,4 +1,4 @@
-name: example-from-metadata-action
+name: "WIP: example-from-metadata-action"
 
 on:
   workflow_dispatch:
