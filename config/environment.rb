@@ -7,10 +7,10 @@ ActionMailer::Base.raise_delivery_errors = true
 ActionMailer::Base.delivery_method = :smtp
 # Mailer configuration for MailGun on Heroku.
 ActionMailer::Base.smtp_settings = {
-  port: ENV['SMTP_PORT'],
-  address: ENV['SMTP_SERVER'],
-  user_name: ENV['SMTP_LOGIN'],
-  password: ENV['SMTP_PASSWORD'],
+  port: Rails.application.credentials.devise.smtp_port,
+  address: Rails.application.credentials.devise.smtp_server,
+  user_name: Rails.application.credentials.devise.smtp_login,
+  password: Rails.application.credentials.devise.smtp_password,
   authentication: :login,
   enable_starttls_auto: true
   #:domain         => 'module-handbook.heroku.com',

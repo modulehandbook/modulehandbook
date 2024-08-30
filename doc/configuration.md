@@ -5,24 +5,20 @@
 
 # bin/rails credentials:edit
 
-Rails.application.credentials.devise.secret_key
 
 EDITOR="code --wait" bin/rails credentials:edit -e production
+
 EDITOR="code --wait" bin/rails credentials:edit -e staging
 
+EDITOR="code --wait" bin/rails credentials:edit 
+
+
+# Documentation
 
 https://thoughtbot.com/blog/switching-from-env-files-to-rails-credentials
 
-config/credentials/development.yml.enc
-config/credentials.yml.enc
 
 
-RAILS_ENV=staging bin/rails credentials:edit
-RAILS_ENV=production bin/rails credentials:edit
-
-
-EDITOR="code --wait" bin/rails credentials:edit
-EDITOR="code --wait" bin/rails credentials:edit -e production
 
 -e 
 
