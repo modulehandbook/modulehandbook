@@ -9,10 +9,7 @@ on:
     secrets:
       rails_master_key:
         required: false
-      nudge:
-        required: false
-      nudge_key:
-        required: false
+
     inputs:
       tags:
         required: true
@@ -45,9 +42,6 @@ jobs:
       environment: ${{ inputs.environment }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
-      nudge: ${{ secrets.nudge }}
-      nudge_key: ${{ secrets.nudge_key }}
-
 
   info:
     name: List Parameter
