@@ -5,8 +5,14 @@
 sshid=
 
 ### Running Rails on local Machine (with postgres in docker container)
+local_setup:
+- mkdir -p secrets/env
+- touch secrets/env/active.env
+- bin/rails db:create
+- bin/rails db:migrate
+- bin/rails db:seed
 
-local: start_db open
+local: start_db open local_setup
 - export POSTGRES_DB=modhand-db-dev && bin/rails s
 
 start_db:
