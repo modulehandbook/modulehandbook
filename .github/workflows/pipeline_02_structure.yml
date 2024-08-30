@@ -48,19 +48,6 @@ jobs:
       nudge: ${{ secrets.nudge }}
       nudge_key: ${{ secrets.nudge_key }}
 
-  docker-complete:
-    name: Docker Complete
-    uses: ./.github/workflows/pipeline_05_docker_complete.yml
-    with:
-      tags: ${{ inputs.tags }}
-      push: ${{ inputs.push }}
-      target: ${{ inputs.target }}
-      environment: ${{ inputs.environment }}
-    secrets:
-      rails_master_key: ${{ secrets.rails_master_key }}
-      nudge: ${{ secrets.nudge }}
-      nudge_key: ${{ secrets.nudge_key }}
-  
 
   info:
     name: List Parameter
