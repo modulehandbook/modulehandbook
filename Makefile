@@ -23,9 +23,12 @@ stop:
 - docker-compose down
 restart: stop start
 
-rebuild:
+rebuild_old:
 - docker-compose up -d --build --force-recreate module-handbook
 
+rebuild:
+- docker compose build module-handbook
+- docker compose up --no-deps -d module-handbook
 
 list_targets:
 - grep "^\w*:"  Makefile | sort
@@ -172,20 +175,7 @@ rails_test:
 api_test:
 - rails test test/../test-api/
 
-#
-# makesign tryout
-#
-deploy_makesign: cp_makesign restart_makesign
-ssh_makesign:
-- ssh local@makesign.f4.htw-berlin.de
 
-cp_makesign:
-- scp secrets/secrets.env local@makesign.f4.htw-berlin.de:~/secrets/secrets.env
-- scp Makefile.prod local@makesign.f4.htw-berlin.de:~/Makefile
-- scp docker-compose.yml local@makesign.f4.htw-berlin.de:~
-- scp .env.makesign local@makesign.f4.htw-berlin.de:~/.env
-- scp -r nginx local@makesign.f4.htw-berlin.de:~
-- scp -r bin_deploy local@makesign.f4.htw-berlin.de:~
 
 restart_makesign:
 - ssh local@makesign.f4.htw-berlin.de "sudo docker compose down"
@@ -221,13 +211,12 @@ ssh_production:
 - ssh local@module-handbook.f4.htw-berlin.de
 
 cp_staging:
-- scp secrets/secrets.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets
-- scp secrets/bin/ln.sh local@module-handbook-staging.f4.htw-berlin.de:~
+- ssh local@module-handbook-staging.f4.htw-berlin.de "mkdir -p ~/secrets/env"
+- scp secrets/env/staging.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets/env/staging.env
 - scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
-- scp docker-compose.yml local@module-handbook-staging.f4.htw-berlin.de:~
-- scp .env.staging local@module-handbook-staging.f4.htw-berlin.de:~/.env
+- scp compose.yaml local@module-handbook-staging.f4.htw-berlin.de:~
+- scp compose.staging.yaml local@module-handbook-staging.f4.htw-berlin.de:~/compose.override.yaml
 - scp -r nginx local@module-handbook-staging.f4.htw-berlin.de:~
-- scp -r bin_deploy local@module-handbook-staging.f4.htw-berlin.de:~
 
 cp_production:
 - scp Makefile.prod local@module-handbook.f4.htw-berlin.de:~/Makefile
@@ -371,3 +360,11 @@ docker-rm:
 
 #### Database Maintenance
 
+
+
+## Tags
+# delete remote tag: git push --delete origin refs/tags/abgabe
+
+
+tags_origin:
+- git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' origin

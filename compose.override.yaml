@@ -7,7 +7,6 @@
 # override precedence:
 # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
 
-version: '3.4'
 services:
   module-handbook-postgres:
     platform: linux/arm64/v8
@@ -17,8 +16,6 @@ services:
     ports:
      - "5432:5432" # don't do this on production!
   module-handbook:
-    env_file: 
-      - path: ${ENV_FILE}
     platform: linux/amd64
     build:
       context: .

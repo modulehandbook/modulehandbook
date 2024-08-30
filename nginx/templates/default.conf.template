@@ -8,11 +8,11 @@ server {
 server {
         listen ${NGINX_SSL_PORT} ssl default_server;
         listen [::]:${NGINX_SSL_PORT} ssl default_server;
-        ssl_certificate      ${NGINX_CERT}  ;
-        ssl_certificate_key  ${NGINX_KEY};
+        ssl_certificate      ${NGINX_CERT_DIR}/${NGINX_CERT};
+        ssl_certificate_key  ${NGINX_CERT_DIR}/${NGINX_KEY};
 
 
-        server_name          ${NGINX_HOST}  ;
+        server_name             ${NGINX_HOST}  ;
         # upstream myapp {
         #   server              ${NGINX_PROXY};
         # }
