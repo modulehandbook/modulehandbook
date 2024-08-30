@@ -1,0 +1,5 @@
+services:
+  module-handbook:
+    entrypoint: entrypoints/keep-open.sh
+    env_file: "secrets/env/staging.env"
+

@@ -1,0 +1,3 @@
+echo $TAG_MODULE_HANDBOOK
+echo $RAILS_ENV
+echo $RAILS_DB_HOST

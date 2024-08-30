@@ -41,9 +41,6 @@ coverage/**
 /public/assets
 .byebug_history
 
-# Ignore master key for decrypting credentials and more.
-/config/master.key
-
 /public/packs
 /public/packs-test
 /node_modules
@@ -51,21 +48,22 @@ coverage/**
 yarn-debug.log*
 .yarn-integrity
 
-config/credentials/**
 container_logs/**
 container_tmp/**
 pg_transfer/**
 
 **/*.pgdump
 
-secrets/**
-secrets.env
 
-/config/credentials/development.key
 
 container_logs/**
 .idea/**
 
-/config/credentials/environment.key
+# Keep secrets out of the repo
+secrets/**
 
+# Ignore Credentials
+/config/credentials/development.key
+/config/credentials/staging.key
 /config/credentials/production.key
+/config/credentials/test.key

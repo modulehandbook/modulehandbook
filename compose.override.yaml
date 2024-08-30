@@ -7,7 +7,6 @@
 # override precedence:
 # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
 
-version: '3.4'
 services:
   module-handbook-postgres:
     platform: linux/arm64/v8
@@ -31,8 +30,6 @@ services:
     environment:
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
-      - RAILS_MASTER_KEY=
-      # - EXPORTER_BASE_URL=
       - CHROME_URL=http://chrome-server:4444
     restart: "no"
   chrome-server:
