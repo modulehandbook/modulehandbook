@@ -62,7 +62,7 @@ gem 'aasm'
 
 gem 'paper_trail'
 
-gem 'bootstrap', '~> 4.4.1'
+gem 'bootstrap', '~> 4.6'
 gem 'jquery-rails'
 gem 'redcarpet'
 
