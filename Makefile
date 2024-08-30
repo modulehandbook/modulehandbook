@@ -1,19 +1,22 @@
 # use this to link a local exporter instance for development:
 # export EXPORTER_BASE_URL=http://host.docker.internal:3030/
+
 .RECIPEPREFIX = -
 # default sshid - overwrite with parameter if needed (eg.cronjob)
 sshid=
 
-### Running Rails on local Machine (with postgres in docker container)
-local_setup:
+### Run this once after cloning the repo
+local_setup: start_db
 - mkdir -p secrets/env
 - touch secrets/env/active.env
 - bin/rails db:create
 - bin/rails db:migrate
 - bin/rails db:seed
 
-local: start_db open local_setup
-- export POSTGRES_DB=modhand-db-dev && bin/rails s
+### Running Rails on local Machine (with postgres in docker container)
+
+local: start_db open 
+- bin/rails s
 
 start_db:
 - docker compose up -d module-handbook-postgres
