@@ -3,7 +3,7 @@
 # it is called with different paramters from the
 # pl-start-* scripts.
 
-name: "Pipeline"
+name: "02: Pipeline Structure"
 on:
   workflow_call:
     secrets:

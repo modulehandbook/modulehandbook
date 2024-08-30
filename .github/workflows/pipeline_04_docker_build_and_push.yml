@@ -1,7 +1,7 @@
 
 # build and (maybe) push docker image workflow called by  pipeline_02_structure.yml
 
-name: Build and Push Image
+name: "04: Pipeline Step Build and Push Image"
 
 on:
   workflow_call:
