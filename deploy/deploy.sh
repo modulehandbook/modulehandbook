@@ -17,4 +17,4 @@ scp .env $HOST:~
 ssh $HOST "echo TAG_MODULE_HANDBOOK=$TAG >> .env"
 
 ssh $HOST "sudo docker compose down"
-# ssh $HOST "sudo docker compose up -d"
+ssh $HOST "sudo docker compose up -d"

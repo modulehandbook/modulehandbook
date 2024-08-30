@@ -45,7 +45,8 @@ services:
     restart: always
 
   nginx:
-     env_file: "secrets/env/active.env"
+     env_file:
+         - path: ./secrets/env/active.env
      image: nginx:latest
      container_name: reverse_proxy
      volumes:
@@ -57,9 +58,6 @@ services:
          - "80:80"
          - "443:443"
      environment:
-        - NGINX_HOST=${NGINX_HOST:-localhost}
-        - NGINX_CERT=${NGINX_CERT:-development/server.crt}
-        - NGINX_KEY=${NGINX_KEY:-development/server.key}
         - NGINX_CERT_DIR=/etc/ssl
         - NGINX_PORT=80
         - NGINX_SSL_PORT=443
