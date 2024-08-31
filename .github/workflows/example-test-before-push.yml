@@ -2,12 +2,16 @@ name: "WIP: example-test-before-push"
 # https://docs.docker.com/build/ci/github-actions/test-before-push/
 
 on:
-  workflow_dispatch:
-  #push:
+  workflow_call:
+  
+    inputs:
+      tags:
+        required: true
+        type: string
 
 env:
-  TEST_TAG: user/app:test
-  LATEST_TAG: user/app:latest
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   docker:
@@ -27,27 +31,43 @@ jobs:
             registry: ${{ env.REGISTRY }}
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
-      
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: ${{ inputs.tags}}
+          
+          
       - name: Build and export to Docker
         uses: docker/build-push-action@v6
         with:
           load: true
-          tags: ${{ env.TEST_TAG }}
-          target: modhand-test
+          tags: ${{ steps.meta.outputs.tags }}
+          target: modhand-dev
       
-      - name: Test
-        continue-on-error: true
+      - name: Start Container
         run: |
-          docker run --rm ${{ env.TEST_TAG }}          
-      - name: Test DC
-        continue-on-error: true
+          docker-compose up -d
+      - name: Set up DB
         run: |
-            docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d 
-            docker-compose down         
+          docker compose exec module-handbook bin/rails db:create RAILS_ENV=test
+          docker compose exec module-handbook bin/rails db:migrate RAILS_ENV=test
              
+      - name: Run Test
+        continue-on-error: true
+        run: |
+           docker compose exec module-handbook bin/rails test       
+  
+      - name: Run Test
+        continue-on-error: true
+        run: |
+           docker compose exec module-handbook bin/rails test:system      
+                
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ env.LATEST_TAG }}
+          push: false
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

@@ -1,17 +1,17 @@
 .RECIPEPREFIX = -
 start:
-- sudo docker-compose up -d
+- sudo docker compose up -d
 
 stop: down
 down:
-- sudo docker-compose down
+- sudo docker compose down
 
 bash:
--  docker-compose exec module-handbook bash
+-  docker compose exec module-handbook bash
 bash_db:
--  docker-compose exec module-handbook-postgres bash
+-  docker compose exec module-handbook-postgres bash
 bash_exp:
--  docker-compose exec module-handbook-exporter bash
+-  docker compose exec module-handbook-exporter bash
 
 rails-c:
 - docker exec -it modulehandbook bin/rails c
