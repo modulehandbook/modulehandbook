@@ -1,5 +1,11 @@
 require 'application_system_test_case'
 
+class SimpleApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  options = {}
+  driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: options do |driver_option|
+    driver_option.add_argument('--disable-search-engine-choice-screen')
+  end
+end
 class SmokeTest < SimpleApplicationSystemTestCase
   setup do
     @program = programs(:one)
@@ -7,7 +13,7 @@ class SmokeTest < SimpleApplicationSystemTestCase
     # system_test_login(@user.email, 'geheim12')
   end
 
-  test 'visiting the index' do
+  test 'just visit root' do
     visit root_url
     #assert false
     #assert_selector 'h1', text: 'Welcome to the Module Handbook!'

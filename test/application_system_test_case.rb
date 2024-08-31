@@ -1,27 +1,30 @@
 require "test_helper"
 
-class SimpleApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  options = {}
-  driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: options do |driver_option|
-    driver_option.add_argument('--disable-search-engine-choice-screen')
-  end
-end
+
+
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
-
+  HEADLESS=true
   url = ENV.fetch('CHROME_URL', nil)
   if url
+    # to test this locally, run CHROME_URL=http://localhost:4444/wd/hub bin/rails test:systems
     puts "--------------------  using remote chrome! #{url}"
+    options = { browser: :remote, url: url }
+    driven_by :selenium, using: :headless_chrome, options: options do |driver_option|
+      driver_option.add_argument('--disable-search-engine-choice-screen')
+    end
   else
     puts "--------------------  using local chrome!"
-  end
-  options = if url
-    { browser: :remote, url: url }
-  else
-    { browser: :chrome }
+    options =  {  }
+    headless_or_not = HEADLESS ? :headless_chrome : :chrome 
+    driven_by :selenium, using: headless_or_not, screen_size: [1400, 1400], options: options do |driver_option|
+      driver_option.add_argument('--disable-search-engine-choice-screen')
+    end
   end
 
-  driven_by :selenium, using: :headless_chrome, options: options
+   
+
+ 
 
     # https://nicolasiensen.github.io/2022-03-11-running-rails-system-tests-with-docker/
   #if ENV['CHROME_URL']
