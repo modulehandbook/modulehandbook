@@ -284,10 +284,7 @@ rails_c_db_container:
 - POSTGRES_DB=modhand-db-dev  RAILS_ENV=development rails c
 
 
-quick-push:
-- git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
-- git rev-parse HEAD > secrets/last-sha
-- echo secrets/last-sha
+
 
 
 # https://depot.dev/blog/docker-clear-cache
@@ -327,4 +324,4 @@ clean:
 - docker compose down --rmi all -v --remove-orphans
 
 quick-push:
-- git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/htw-imi-showtime/showtime-website/actions
+- git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions

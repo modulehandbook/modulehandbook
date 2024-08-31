@@ -38,14 +38,9 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: ${{ inputs.tags}}
           
-          
-      - name: Build and export to Docker
-        uses: docker/build-push-action@v6
-        with:
-          load: true
-          tags: ${{ steps.meta.outputs.tags }}
-          target: modhand-dev
-      
+      - name: Checkout repository
+        uses: actions/checkout@v4          
+
       - name: Start Container
         run: |
           docker compose up -d
