@@ -111,8 +111,10 @@ export SMTP_PASSWORD=
 ## Starting the app locally
 
 ```bash
-bundle install
-rails server
+bin/bundle install
+bin/rails db:create
+bin/rails db:migrate
+bin/rails db:seed
 ```
 This needs an open local Postgres running.
 Start postgres in docker container:

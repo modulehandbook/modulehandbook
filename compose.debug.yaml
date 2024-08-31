@@ -3,3 +3,8 @@ services:
     entrypoint: entrypoints/keep-open.sh
     env_file: "secrets/env/staging.env"
 
+  #  build:
+  #    context: .
+  #    target: "modhand-prod"
+  #    args:
+  #      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
