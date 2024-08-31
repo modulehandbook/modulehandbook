@@ -162,8 +162,11 @@ import_dump: $(file)
 - cat $(file) | docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
 - echo "" > tmp/DUMPFILENAME
 
+local_dump_file=../mh-dumps/local/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 dump_local:
-- docker compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d ${DBNAME} -U modhand > ../mh-dumps/local/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+- echo "dumping to ${local_dump_file}"
+- docker compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d ${DBNAME} -U modhand > ${local_dump_file}
+- echo ${local_dump_file} > tmp/DUMPFILENAME
 
 # this produces errors on a newly created db as rails already creates indices etc.
 # thus, this way is less preferable as errors are not shown:
