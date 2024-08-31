@@ -2,16 +2,19 @@ name: "WIP: example-test-before-push"
 # https://docs.docker.com/build/ci/github-actions/test-before-push/
 
 on:
-  workflow_call:
-  
-    inputs:
-      tags:
-        required: true
-        type: string
+  push:
+    branches: [ '*' ]
+    tags-ignore: [ '*' ]
+  #workflow_call:
+  #  inputs:
+  #    tags:
+  #      required: true
+  #      type: string
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+
 
 jobs:
   test-in-docker:
@@ -25,8 +28,7 @@ jobs:
       
       - name: Login to Docker Hub
         uses: docker/login-action@v3
-        env:
-            REGISTRY: ghcr.io
+
         with:
             registry: ${{ env.REGISTRY }}
             username: ${{ github.actor }}
@@ -36,7 +38,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: ${{ inputs.tags}}
+          #tags: ${{ inputs.tags}}
+          tags: type=sha
           
       - name: Checkout repository
         uses: actions/checkout@v4          
