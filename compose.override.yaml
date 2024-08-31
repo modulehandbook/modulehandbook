@@ -30,8 +30,11 @@ services:
     environment:
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
-      - CHROME_URL=http://chrome-server:4444
+      - CHROME_URL=http://localhost:4444/wd/hub
     restart: "no"
   chrome-server:
     platform: linux/x86_64
-    image: selenium/standalone-chrome:126.0
+    image: selenium/standalone-chrome:128.0
+    ports:
+      - 4444:4444
+      - 7900:7900
