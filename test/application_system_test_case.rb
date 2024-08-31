@@ -1,7 +1,9 @@
 require "test_helper"
 
 
+# export CHROME_URL=http://chrome-server:4444
 
+# CHROME_URL=http://localhost:4444
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   HEADLESS=true
@@ -10,11 +12,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     # to test this locally, run CHROME_URL=http://localhost:4444/wd/hub bin/rails test:systems
     puts "--------------------  using remote chrome! #{url}"
     options = { browser: :remote, url: url }
-    driven_by :selenium, using: :headless_chrome, options: options do |driver_option|
+    driven_by :selenium, using: :headless_firefox, screen_size: [1400, 1400], options: options do |driver_option|
       driver_option.add_argument('--disable-search-engine-choice-screen')
+      
     end
     Capybara.server_host = "0.0.0.0"
-    Capybara.app_host = "http://module-handbook:#{Capybara.server_port}"
+    Capybara.app_host = "http://0.0.0.0"
+    # Capybara.server_host = "chrome-server"
+    # Capybara.app_host = "http://module-handbook"
 
   else
     puts "--------------------  using local chrome!"
