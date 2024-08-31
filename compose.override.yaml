@@ -30,8 +30,17 @@ services:
     environment:
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
-      - CHROME_URL=http://chrome-server:4444
+      - CHROME_URL=http://localhost:4444
     restart: "no"
   chrome-server:
-    platform: linux/x86_64
-    image: selenium/standalone-chrome:126.0
+    platform: linux/arm64/v8
+    # image: selenium/standalone-chromium:latest
+    image: selenium/standalone-firefox:4.24.0-20240830
+    ports:
+      - 4444:4444
+      - 7900:7900
+    shm_size: 2g
+    ulimits:
+      nofile:
+        soft: 32768
+        hard: 32768

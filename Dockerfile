@@ -51,24 +51,7 @@ RUN set -ex  \
   && rails assets:precompile
 
 # -------------------------------------------------------------------
-# Test - use dev
-# -------------------------------------------------------------------
-
-# FROM modhand-prod-no-assets AS modhand-test
-# ENV MODHAND_IMAGE=modhand-test
-# 
-# ENV RAILS_ENV test
-# ENV NODE_ENV test
-# 
-# RUN bundle config unset without \
-#     && bundle config set without 'development' \
-#     && bundle config \
-#     && bundle install
-# 
-# ENTRYPOINT ["./entrypoints/test.sh"]
-
-# -------------------------------------------------------------------
-# Development
+# Development & Test
 # -------------------------------------------------------------------
 
 FROM modhand-base AS modhand-dev
@@ -76,6 +59,11 @@ ENV MODHAND_IMAGE=modhand-dev
 
 ENV RAILS_ENV development
 ENV NODE_ENV development
+
+ENV TEST_DEPS firefox-esr xvfb
+RUN apk update \
+  && set -ex \
+  && apk add $AO $TEST_DEPS
 
 RUN bundle config unset without \
     && bundle config \

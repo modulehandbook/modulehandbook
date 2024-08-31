@@ -126,7 +126,8 @@ bash_db:
 - docker compose exec -ti module-handbook-postgres bash
 bash_nginx:
 - docker compose exec -ti nginx bash
-
+bash_chrome:
+- docker compose exec -ti chrome-server bash
 
 #
 #
@@ -284,10 +285,7 @@ rails_c_db_container:
 - POSTGRES_DB=modhand-db-dev  RAILS_ENV=development rails c
 
 
-quick-push:
-- git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
-- git rev-parse HEAD > secrets/last-sha
-- echo secrets/last-sha
+
 
 
 # https://depot.dev/blog/docker-clear-cache
@@ -325,3 +323,6 @@ list_targets:
 clean:
 - rm -rf gem_cache
 - docker compose down --rmi all -v --remove-orphans
+
+quick-push:
+- git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions

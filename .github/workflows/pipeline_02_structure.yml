@@ -56,15 +56,3 @@ jobs:
           echo "push: ${{ inputs.push }}"
           echo "target: ${{ inputs.target }}"
           echo "environment: ${{ inputs.environment }}"
-
-  run_test_in_docker:
-    needs: test_app   #### for now to get faster results on the builds
-    name: "WIP: Test in Docker"
-    uses: ./.github/workflows/example-test-before-push.yml
-    with:
-      tags: ${{ inputs.tags }}
-      #push: ${{ inputs.push }}
-      #target: ${{ inputs.target }}
-     # environment: ${{ inputs.environment }}
-    #secrets:
-    #  rails_master_key: ${{ secrets.rails_master_key }}
