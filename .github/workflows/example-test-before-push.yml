@@ -14,7 +14,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  docker:
+  test-in-docker:
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -48,7 +48,7 @@ jobs:
       
       - name: Start Container
         run: |
-          docker-compose up -d
+          docker compose up -d
       - name: Set up DB
         run: |
           docker compose exec module-handbook bin/rails db:create RAILS_ENV=test

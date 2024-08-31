@@ -325,3 +325,6 @@ list_targets:
 clean:
 - rm -rf gem_cache
 - docker compose down --rmi all -v --remove-orphans
+
+quick-push:
+- git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/htw-imi-showtime/showtime-website/actions
