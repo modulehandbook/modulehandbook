@@ -6,7 +6,8 @@ class SimpleApplicationSystemTestCase < ActionDispatch::SystemTestCase
     driver_option.add_argument('--disable-search-engine-choice-screen')
   end
 end
-class SmokeTest < SimpleApplicationSystemTestCase
+#class SmokeTest < SimpleApplicationSystemTestCase
+class SmokeTest < ApplicationSystemTestCase
   setup do
     @program = programs(:one)
     @user = users(:one)

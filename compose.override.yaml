@@ -30,7 +30,7 @@ services:
     environment:
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
-      - CHROME_URL=http://localhost:4444/wd/hub
+      - CHROME_URL=http://localhost:4444
     restart: "no"
   chrome-server:
     platform: linux/x86_64
@@ -38,3 +38,4 @@ services:
     ports:
       - 4444:4444
       - 7900:7900
+    shm_size: 2g

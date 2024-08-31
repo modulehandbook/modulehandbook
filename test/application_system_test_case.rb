@@ -13,8 +13,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     driven_by :selenium, using: :headless_chrome, options: options do |driver_option|
       driver_option.add_argument('--disable-search-engine-choice-screen')
     end
+    Capybara.server_host = "0.0.0.0"
+    Capybara.app_host = "http://module-handbook:#{Capybara.server_port}"
+
   else
     puts "--------------------  using local chrome!"
+
     options =  {  }
     headless_or_not = HEADLESS ? :headless_chrome : :chrome 
     driven_by :selenium, using: headless_or_not, screen_size: [1400, 1400], options: options do |driver_option|
@@ -22,6 +26,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
+  puts "---- Capybara.server_host #{Capybara.server_host}"
+  puts "---- Capybara.app_host #{Capybara.app_host}"
    
 
  
