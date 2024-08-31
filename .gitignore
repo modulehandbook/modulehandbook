@@ -60,6 +60,8 @@ container_logs/**
 .idea/**
 
 # Keep secrets out of the repo
+
+!/secrets/env/.keep
 secrets/**
 
 # Ignore Credentials
