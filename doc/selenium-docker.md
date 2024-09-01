@@ -15,8 +15,8 @@ bin/rails test test/system/comments/comments_admin_test.rb:11
 ## Sunday, 01.September 2024 19:32
 ## Firefox
 ### local/local : tests and browser on local machine
-Finished in 198.206022s, 0.2624 runs/s, 0.7265 assertions/s.
-52 runs, 144 assertions, 2 failures, 2 errors, 4 skips
+Finished in 63.374802s, 0.8205 runs/s, 2.1775 assertions/s.
+52 runs, 138 assertions, 0 failures, 4 errors, 4 skips
 ### local/docker : tests on local machine, browser in docker
 Finished in 400.201054s, 0.1299 runs/s, 0.2974 assertions/s.
 52 runs, 119 assertions, 5 failures, 13 errors, 2 skips
@@ -26,15 +26,20 @@ Finished in 400.201054s, 0.1299 runs/s, 0.2974 assertions/s.
 
 ## Chrome
 ## local/local : everything on local machine
-Finished in 32.479443s, 1.6010 runs/s, 4.7107 assertions/s.
-52 runs, 153 assertions, 0 failures, 0 errors, 4 skips
+
+Finished in 39.416731s, 1.3192 runs/s, 3.5011 assertions/s.
+52 runs, 138 assertions, 0 failures, 4 errors, 4 skips
 
 ## local/docker : tests on local machine, app and browser in docker
+does not work.
 ## docker/docker : everything in docker
 
 ## switch driver
   - set image in compose.override.yaml
   - activate appropiate DRIVER in test/application_system_test_case.rb
+
+## chromium
+https://github.com/SeleniumHQ/docker-selenium
 
 # sort
  test/application_system_test_case.rb

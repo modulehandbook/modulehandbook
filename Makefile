@@ -69,6 +69,7 @@ start-test-environment:
 stop-test-environment:
 - docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down
 
+restart-selenium: stop-selenium start-selenium
 start-selenium:
 - docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d selenium-standalone
 stop-selenium:
