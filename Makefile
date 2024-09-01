@@ -64,6 +64,17 @@ start-docker:
 stop-docker: 
 - docker compose down
 
+start-test-environment:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d
+stop-test-environment:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down
+db_drop_test:
+- RAILS_ENV=test bin/rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 
+db_create_test:
+- RAILS_ENV=test bin/rails db:create
+db_start: start-db
+
+
 restart-docker: stop start
 
 rebuild-docker:

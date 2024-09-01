@@ -6,6 +6,9 @@ export SELENIUM_REMOTE_PORT=4445
 
 bin/rails test test/system/comments/comments_admin_test.rb:11
 
+
+
+
 ## switch driver
   - set image in compose.override.yaml
   - activate appropiate DRIVER in test/application_system_test_case.rb

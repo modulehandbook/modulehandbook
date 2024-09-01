@@ -1,20 +1,33 @@
 require "test_helper"
 
-# export SELENIUM_REMOTE_URL=http://selenium-standalone:4444
+# system tests are test that access the rails app via
+# the browser.
+# thus, for the tests to run, the following services/processes are needed:
+# - the process running the tests 
+# - the app (rails) server
+# - the browser & driver
 
-# SELENIUM_REMOTE_URL=http://localhost:4444
+# they can be executed using various configurations:
+
+# test: local | docker
+# app server: rack (started by capybara) | local | docker
+# browser & driver:
+#   - firefox or chrome
+#   - headless or not
+#   - local | docker
+
+
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
-  # used for local chrome
   HEADLESS = true
   # used for docker 
   DRIVER = :firefox # :chrome
 
-  host = ENV.fetch('SELENIUM_REMOTE_HOST', nil)
+  selenium_host = ENV.fetch('SELENIUM_REMOTE_HOST', nil)
 
-  if host
+  if selenium_host
     selenium_port = ENV.fetch('SELENIUM_REMOTE_PORT', 4444)
-    url = "http://#{host}:#{selenium_port}"
+    url = "http://#{selenium_host}:#{selenium_port}"
     # use chromium in docker container
     # to test this locally, run 
     #  SELENIUM_REMOTE_HOST=localhost SELENIUM_REMOTE_PORT=4445 bin/rails test:system
@@ -35,7 +48,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     if docker_image
       puts "--------- found docker image: #{docker_image}"
       # settings for docker
-      Capybara.server_host = host
+      Capybara.server_host = selenium_host
       Capybara.app_host = "http://module-handbook"
     else
       puts "--------- using localhost"
