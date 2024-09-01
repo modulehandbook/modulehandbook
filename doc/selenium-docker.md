@@ -14,10 +14,13 @@ bin/rails test test/system/comments/comments_admin_test.rb:11
 ## Test runs
 ## Sunday, 01.September 2024 19:32
 ## Firefox
-### local/local : everything on local machine
+### local/local : tests and browser on local machine
 Finished in 198.206022s, 0.2624 runs/s, 0.7265 assertions/s.
 52 runs, 144 assertions, 2 failures, 2 errors, 4 skips
-### local/docker : tests on local machine, app and browser in docker
+### local/docker : tests on local machine, browser in docker
+Finished in 400.201054s, 0.1299 runs/s, 0.2974 assertions/s.
+52 runs, 119 assertions, 5 failures, 13 errors, 2 skips
+
 ### docker/docker : everything in docker
 
 

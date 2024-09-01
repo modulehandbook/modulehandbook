@@ -62,12 +62,16 @@ class SystemTestConfig
     def detect_app_server
         if !capybara_run_server
             if host_running_test == :local
-                @capybara_server_host = "0.0.0.0"
-                @capybara_app_host = "http://0.0.0.0:3000"
+                @capybara_server_host = "0.0.0.0" 
             else
                 @capybara_server_host = selenium_host
-                @capybara_app_host = "http://module-handbook:3000"
             end
+            
+            if driver_loc == :local
+                @capybara_app_host = "http://0.0.0.0:3000"
+            else # :docker_selenium_standalone
+                @capybara_app_host = "http://module-handbook:3000"
+            end     
         end
     end
 

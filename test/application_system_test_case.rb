@@ -6,14 +6,15 @@ require "system_test_config"
     #  SELENIUM_REMOTE_HOST=localhost SELENIUM_REMOTE_PORT=4445 bin/rails test:system
     # or  
     #  SELENIUM_REMOTE_HOST=localhost SELENIUM_REMOTE_PORT=4445 bin/rails test test/system/smoke_test.rb
-   
+   ## export SELENIUM_REMOTE_HOST=module-handbook
+   ## export SELENIUM_REMOTE_HOST=localhost
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   # :chrome :headless_chrome 
   # :firefox :headless_firefox
      
-  config = SystemTestConfig.new :chrome
+  config = SystemTestConfig.new :firefox
 
   driven_by :selenium, using: config.driver, 
     screen_size: [1400, 1400],
