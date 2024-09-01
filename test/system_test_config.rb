@@ -14,6 +14,9 @@
 #   - headless or not
 #   - local | docker
 
+# local/local : everything on local machine
+# local/docker : tests on local machine, app and browser in docker
+# docker/docker : everything in docker
 
 class SystemTestConfig
     attr_accessor :driver, :driver_loc, 
@@ -42,7 +45,7 @@ class SystemTestConfig
             puts "--------------------  using local browser!"
         else
           @selenium_host = host
-          @driver_loc=:docker-selenium-standalone
+          @driver_loc = :docker_selenium_standalone
           @selenium_port = ENV.fetch('SELENIUM_REMOTE_PORT', 4444)
           url = "http://#{selenium_host}:#{selenium_port}"
           puts "--------------------  using remote browser! #{url}"
@@ -67,5 +70,33 @@ class SystemTestConfig
             end
         end
     end
+
+    def validate
+        return if capybara_run_server
+        browser_url = driver_options[:url]
+        unless check_host_availability(browser_url)
+            raise Error.new "Remote browser url cannot be reached: #{browser_url}"
+        end
+        unless check_host_availability(capybara_app_host)
+            raise Error.new "Rails app cannot be reached: #{capybara_app_host}"
+        end
+        
+    end
+
+    def check_host_availability(url)
+      begin
+        require "net/http"
+        url = URI.parse(url)
+        req = Net::HTTP.new(url.host, url.port)
+        res = req.request_head(url.path)
+      rescue
+        # error occured, return false
+        return false
+      end
+        # valid site
+         true
+      
+    end
+
 end
 

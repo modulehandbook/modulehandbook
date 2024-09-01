@@ -10,7 +10,10 @@ require "system_test_config"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
-  config = SystemTestConfig.new :firefox
+  # :chrome :headless_chrome 
+  # :firefox :headless_firefox
+     
+  config = SystemTestConfig.new :chrome
 
   driven_by :selenium, using: config.driver, 
     screen_size: [1400, 1400],
@@ -26,6 +29,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
         capybara_config.run_server = false
         capybara_config.app_host = config.capybara_app_host
         capybara_config.server_host = config.capybara_server_host
+        server_available = config.check_host_availability(config.capybara_app_host)
       end
     end
   
