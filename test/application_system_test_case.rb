@@ -38,7 +38,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   puts "---------- config "
   puts "#{config.inspect}"
   puts "---------- "
-
+  puts "---- Capybara.server_host #{Capybara.server_host}"
+  puts "---- Capybara.app_host #{Capybara.app_host}"
 
 
 
