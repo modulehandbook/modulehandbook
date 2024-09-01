@@ -16,6 +16,7 @@ services:
     restart: always
 
   module-handbook-exporter:
+    platform: linux/x86_64/v8
     image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
     container_name: modulehandbook-exporter
     restart: always

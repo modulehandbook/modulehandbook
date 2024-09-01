@@ -126,8 +126,8 @@ bash_db:
 - docker compose exec -ti module-handbook-postgres bash
 bash_nginx:
 - docker compose exec -ti nginx bash
-bash_chrome:
-- docker compose exec -ti chrome-server bash
+bash_selenium:
+- docker compose exec -ti selenium-standalone bash
 
 #
 #

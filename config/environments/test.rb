@@ -49,5 +49,7 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.log_level = :warn
   config.hosts << "127.0.0.1"
+  config.hosts << "0.0.0.0"
+  config.hosts << "0.0.0.0:61402"
   config.hosts << "www.example.com"
 end
