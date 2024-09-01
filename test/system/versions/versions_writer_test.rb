@@ -9,7 +9,7 @@ class VersionsWriterTest < ApplicationSystemTestCase
   end
 
   def create_version(responsible_person:, ects:)
-    click_on 'Edit'
+    click_on 'edit_course'
     fill_in 'course_responsible_person', with: responsible_person
     fill_in 'course_ects', with: ects
     click_on 'Update Course'

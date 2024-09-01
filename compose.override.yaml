@@ -10,7 +10,7 @@
 services:
   module-handbook-postgres:
     platform: linux/arm64/v8
-    container_name: module-handbook-postgres
+    container_name: modulehandbook-postgres
     environment:
       - POSTGRES_DB=modhand-db-dev
     ports:
@@ -21,7 +21,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: modhand-dev
-    image: mh-local-dev
+    image: mh-local-build
     ports:
       - "3000:3000"
     volumes:
@@ -30,17 +30,5 @@ services:
     environment:
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
-      - CHROME_URL=http://localhost:4444
+      - PARALLEL_WORKERS=1
     restart: "no"
-  chrome-server:
-    platform: linux/arm64/v8
-    # image: selenium/standalone-chromium:latest
-    image: selenium/standalone-firefox:4.24.0-20240830
-    ports:
-      - 4444:4444
-      - 7900:7900
-    shm_size: 2g
-    ulimits:
-      nofile:
-        soft: 32768
-        hard: 32768

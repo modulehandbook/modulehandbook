@@ -65,6 +65,16 @@ RUN apk update \
   && set -ex \
   && apk add $AO $TEST_DEPS
 
+  # https://gist.github.com/jackblk/daf6da984d572768784ba4f85afde7fc
+RUN apk add --no-cache --virtual .build-deps wget \
+  && GECKODRIVER_VERSION=$(wget -qO- https://api.github.com/repos/mozilla/geckodriver/releases/latest \
+  | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/') \
+  && wget -qO /tmp/geckodriver.tar.gz \
+  "https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz" \
+  && tar -xzf /tmp/geckodriver.tar.gz -C /usr/local/bin/ \
+  && rm /tmp/geckodriver.tar.gz \
+  && apk del .build-deps
+
 RUN bundle config unset without \
     && bundle config \
     && bundle install

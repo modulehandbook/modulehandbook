@@ -64,6 +64,25 @@ start-docker:
 stop-docker: 
 - docker compose down
 
+start-test-environment:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d --remove-orphans
+stop-test-environment:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down
+
+restart-selenium: stop-selenium start-selenium
+start-selenium:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d selenium-standalone
+stop-selenium:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down selenium-standalone
+
+
+db_drop_test:
+- RAILS_ENV=test bin/rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 
+db_create_test:
+- RAILS_ENV=test bin/rails db:create
+db_start: start-db
+
+
 restart-docker: stop start
 
 rebuild-docker:
@@ -126,8 +145,8 @@ bash_db:
 - docker compose exec -ti module-handbook-postgres bash
 bash_nginx:
 - docker compose exec -ti nginx bash
-bash_chrome:
-- docker compose exec -ti chrome-server bash
+bash_selenium:
+- docker compose exec -ti selenium-standalone bash
 
 #
 #
@@ -183,8 +202,12 @@ import_dump_via_transfer_dir:
 #
 
 CLEAN = "docker rmi $(docker images -f reference='*ghcr.io/modulehandbook/modulehandbook*' -q)"
-deploy_staging: cp_staging restart_staging
-deploy_production: cp_production restart_production
+
+deploy_staging:
+- ./deploy/staging.sh
+
+deploy_production:
+- ./deploy/production.sh
 
 check_staging:
 - ssh local@module-handbook-staging.f4.htw-berlin.de "docker ps; df -h"
@@ -203,23 +226,6 @@ ssh_staging:
 ssh_production:
 - ssh local@module-handbook.f4.htw-berlin.de
 
-cp_staging:
-- ssh local@module-handbook-staging.f4.htw-berlin.de "mkdir -p ~/secrets/env"
-- scp secrets/env/staging.env local@module-handbook-staging.f4.htw-berlin.de:~/secrets/env/staging.env
-- scp Makefile.prod local@module-handbook-staging.f4.htw-berlin.de:~/Makefile
-- scp compose.yaml local@module-handbook-staging.f4.htw-berlin.de:~
-- scp compose.staging.yaml local@module-handbook-staging.f4.htw-berlin.de:~/compose.override.yaml
-- scp -r nginx local@module-handbook-staging.f4.htw-berlin.de:~
-
-cp_production:
-- scp Makefile.prod local@module-handbook.f4.htw-berlin.de:~/Makefile
-- scp docker compose.yml local@module-handbook.f4.htw-berlin.de:~
-- scp .env.production local@module-handbook.f4.htw-berlin.de:~/.env
-- scp -r nginx local@module-handbook.f4.htw-berlin.de:~
-- ssh local@module-handbook.f4.htw-berlin.de "mkdir -p /home/local/secrets"
-- ssh local@module-handbook.f4.htw-berlin.de "mkdir -p secrets/nginx/production"
-- scp secrets/secrets.env local@module-handbook.f4.htw-berlin.de:~/secrets
-
 open_staging:
 - open https://module-handbook-staging.f4.htw-berlin.de
 
@@ -233,9 +239,9 @@ import_dump_staging:
 - # cat $(file) | ssh local@module-handbook-staging.f4.htw-berlin.de "docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
 
 import_dump_production:
-- echo "disabled"
+- echo "disabled - uncomment line below to temporarily enable it"
 - echo using file $(file)
-- cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+- # cat $(file) | ssh local@module-handbook.f4.htw-berlin.de "docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
 
 import_dump_local:
 - cat $(file) | docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
@@ -326,3 +332,6 @@ clean:
 
 quick-push:
 - git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
+
+selenium:
+- open http://localhost:7900/?autoconnect=1&resize=scale&password=secret
