@@ -65,9 +65,16 @@ stop-docker:
 - docker compose down
 
 start-test-environment:
-- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d --remove-orphans
 stop-test-environment:
 - docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down
+
+start-selenium:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d selenium-standalone
+stop-selenium:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down selenium-standalone
+
+
 db_drop_test:
 - RAILS_ENV=test bin/rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 
 db_create_test:

@@ -7,7 +7,7 @@
 # Running Selenium in Docker
 
 export SELENIUM_REMOTE_HOST=localhost
-export SELENIUM_REMOTE_PORT=4445
+export SELENIUM_REMOTE_PORT=4477
 
 bin/rails test test/system/comments/comments_admin_test.rb:11
 

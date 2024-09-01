@@ -52,4 +52,7 @@ Rails.application.configure do
   config.hosts << "0.0.0.0"
   config.hosts << "0.0.0.0:61402"
   config.hosts << "www.example.com"
+  config.hosts << "172.18.0.2"
+  config.hosts << "selenium-standalone"
+  config.hosts << "localhost"
 end
