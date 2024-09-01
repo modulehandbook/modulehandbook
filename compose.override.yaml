@@ -30,4 +30,5 @@ services:
     environment:
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
+      - PARALLEL_WORKERS=1
     restart: "no"

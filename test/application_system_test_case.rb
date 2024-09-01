@@ -14,7 +14,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   # :chrome :headless_chrome 
   # :firefox :headless_firefox
      
-  config = SystemTestConfig.new :firefox
+  config = SystemTestConfig.new :headless_firefox
 
   driven_by :selenium, using: config.driver, 
     screen_size: [1400, 1400],

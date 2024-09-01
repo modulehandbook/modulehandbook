@@ -4,6 +4,7 @@ services:
       - RAILS_ENV=test
       - SELENIUM_REMOTE_HOST=selenium-standalone
       - SELENIUM_REMOTE_PORT=4444
+      - PARALLEL_WORKERS=1
 # export SELENIUM_REMOTE_HOST=selenium-standalone
 # export SELENIUM_REMOTE_HOST=localhost
 # export SELENIUM_REMOTE_PORT=4444

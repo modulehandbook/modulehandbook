@@ -332,3 +332,6 @@ clean:
 
 quick-push:
 - git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
+
+selenium:
+- open http://localhost:7900/?autoconnect=1&resize=scale&password=secret
