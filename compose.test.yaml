@@ -1,0 +1,37 @@
+services:
+  module-handbook:
+    environment:
+      - RAILS_ENV=test
+      - SELENIUM_REMOTE_HOST=selenium-firefox
+      - SELENIUM_REMOTE_PORT=4445
+
+
+  selenium-standalone:
+    profiles: [donotstart]
+    platform: linux/x86_64/v8
+    # see https://hub.docker.com/r/selenium/standalone-chrome
+    #image: selenium/standalone-chrome:latest
+    #image: selenium/standalone-chromium:latest
+    image: selenium/standalone-firefox:4.24.0-20240830
+    ports:
+      - 4444:4445
+      - 7900:7900
+    shm_size: 2g
+    ulimits:
+      nofile:
+        soft: 32768
+        hard: 32768
+  selenium-firefox:
+    platform: linux/x86_64/v8
+    # see https://hub.docker.com/r/selenium/standalone-chrome
+    #image: selenium/standalone-chrome:latest
+    #image: selenium/standalone-chromium:latest
+    image: selenium/standalone-firefox:4.24.0-20240830
+    ports:
+      - 4444:4445
+      - 7900:7900
+    shm_size: 2g
+    ulimits:
+      nofile:
+        soft: 32768
+        hard: 32768
