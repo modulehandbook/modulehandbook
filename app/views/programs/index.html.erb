@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 <p id="alert"><%= alert %></p>
 
-<%= content_for(:title, "Programs") %>
+<% content_for(:title, "Programs") %>
 
 
 <% if can? :edit, @programs %><%= link_to 'New Program', new_program_path %><br><% end %>
