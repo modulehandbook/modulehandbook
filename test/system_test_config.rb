@@ -41,14 +41,11 @@ class SystemTestConfig
             @driver_loc=:local
             @driver_options = {}
             @capybara_run_server = true
-            
-            puts "--------------------  using local browser!"
         else
           @selenium_host = host
           @driver_loc = :docker_selenium_standalone
           @selenium_port = ENV.fetch('SELENIUM_REMOTE_PORT', 4444)
           url = "http://#{selenium_host}:#{selenium_port}"
-          puts "--------------------  using remote browser! #{url}"
           @driver_options = { browser: :remote, url: url }
           @capybara_run_server = false
         end
