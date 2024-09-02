@@ -62,6 +62,7 @@ container_logs/**
 # Keep secrets out of the repo
 
 !/secrets/env/.keep
+!/secrets/env/public.env
 secrets/**
 
 # Ignore Credentials

@@ -22,8 +22,9 @@ services:
     restart: always
 
   module-handbook:
-    env_file:
+    env_file: &env_file
       - path: ./secrets/env/active.env
+        required: false
     image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
     container_name: modulehandbook
 
@@ -39,15 +40,14 @@ services:
 
     depends_on:
       - module-handbook-postgres
-      - module-handbook-exporter
+#      - module-handbook-exporter
     volumes:
       - ./container_logs:/module-handbook/log
       - ./secrets:/module-handbook/secrets
     restart: always
 
   nginx:
-     env_file:
-         - path: ./secrets/env/active.env
+     env_file: *env_file
      image: nginx:latest
      container_name: reverse_proxy
      volumes:
