@@ -22,4 +22,13 @@ class ApplicationHelperTest < ActionView::TestCase
   test "test_compare_u" do
     assert_equal(-1, compare_course_codes("B7","WT1"))
   end
+  test "test_compare_empty1" do
+    assert_equal(-1, compare_course_codes("","WT1"))
+  end
+  test "test_compare_empty2" do
+    assert_equal(1, compare_course_codes("B11",""))
+  end
+  test "test_compare_empty3" do
+    assert_equal(-1, compare_course_codes("",""))
+  end
 end

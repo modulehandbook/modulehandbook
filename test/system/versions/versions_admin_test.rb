@@ -9,7 +9,7 @@ class VersionsAdminTest < ApplicationSystemTestCase
   end
   
   def create_version(responsible_person:, ects:)
-    click_on 'Edit'
+    click_on 'edit_course'
     fill_in 'course_responsible_person', with: responsible_person
     fill_in 'course_ects', with: ects
     click_on 'Update Course'
@@ -20,9 +20,9 @@ class VersionsAdminTest < ApplicationSystemTestCase
     visit course_path(@course)
     create_version(responsible_person: 'Me', ects: '2')
     create_version(responsible_person: 'Not Me', ects: '5')
-    click_on 'See Course Versions'
+    click_on 'course_versions'
     assert_text 'Version History of'
-    click_on 'Revert to this Version'
+    find('input[type="submit"]', match: :first).click
     refute_text 'Not Me'
     assert_text 'Me'
   end

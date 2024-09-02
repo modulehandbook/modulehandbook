@@ -1,5 +1,34 @@
-# README
+# Module Handbook
 
+## Contributing
+
+### tl;dr:
+
+To Start the MH Rails app locally:
+
+#### Initial setup
+- install docker: https://docs.docker.com/get-docker/
+- run "make local_setup"
+
+#### start in docker
+- run "make start" to stop all container
+- run "make stop" to start all container
+
+or any of the other targets in the Makefile
+
+#### start rails on local machine
+
+- run "make local"
+
+## Debugging a staging or production image
+
+set the TAG_MODULE_HANDBOOK=in target debug
+
+- make debug
+- make bash
+
+
+# Old Stuff, needs review.
 ## tl;dr: Quick start with an existing dump
 (other options below)
 
@@ -82,8 +111,10 @@ export SMTP_PASSWORD=
 ## Starting the app locally
 
 ```bash
-bundle install
-rails server
+bin/bundle install
+bin/rails db:create
+bin/rails db:migrate
+bin/rails db:seed
 ```
 This needs an open local Postgres running.
 Start postgres in docker container:

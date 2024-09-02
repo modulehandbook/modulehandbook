@@ -7,11 +7,10 @@
 # override precedence:
 # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
 
-version: '3.4'
 services:
   module-handbook-postgres:
     platform: linux/arm64/v8
-    container_name: module-handbook-postgres
+    container_name: modulehandbook-postgres
     environment:
       - POSTGRES_DB=modhand-db-dev
     ports:
@@ -22,7 +21,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: modhand-dev
-    image: mh-local-dev
+    image: mh-local-build
     ports:
       - "3000:3000"
     volumes:
@@ -31,10 +30,5 @@ services:
     environment:
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
-      - RAILS_MASTER_KEY=
-      # - EXPORTER_BASE_URL=
-      - CHROME_URL=http://chrome-server:4444
+      - PARALLEL_WORKERS=1
     restart: "no"
-  chrome-server:
-    platform: linux/x86_64
-    image: selenium/standalone-chrome:126.0

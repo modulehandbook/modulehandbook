@@ -17,6 +17,11 @@ test:
   <<: *default
   database: 'modhand-db-test'
 
+staging:
+  <<: *default
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
 production:
   <<: *default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
