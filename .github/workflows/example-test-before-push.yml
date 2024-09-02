@@ -2,14 +2,14 @@ name: "WIP: example-test-before-push"
 # https://docs.docker.com/build/ci/github-actions/test-before-push/
 
 on:
-  push:
-    branches: [ '*' ]
-    tags-ignore: [ '*' ]
-  #workflow_call:
-  #  inputs:
-  #    tags:
-  #      required: true
-  #      type: string
+  #push:
+  #  branches: [ '*' ]
+  #  tags-ignore: [ '*' ]
+  workflow_call:
+    inputs:
+      tags:
+        required: true
+        type: string
 
 env:
   REGISTRY: ghcr.io
