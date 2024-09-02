@@ -17,7 +17,7 @@
     <% headline_tag = content_for(:headline_tag) || 'h1' %>
     <% title_content = content_for(:title) || 'ModuleHandbook' %>
     <%= tag.public_send(headline_tag, title_content) %>
-      <h3><%= content_for(:title) %>
+      <h3><%= content_for(:title) %></h3>
       <%= yield %>
       
     </div>
