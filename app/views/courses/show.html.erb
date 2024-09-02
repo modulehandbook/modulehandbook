@@ -1,6 +1,6 @@
 
 <%= content_for(:title, "Course: #{@course.name}") %>
-<%=content_for(:headline_tag, 'h3')%>
+
 
 <% if can? :versions, @course %>
 <%= link_to "See Course Versions", course_versions_url(@course.id), class: "no_print", id: 'course_versions'  %>

@@ -1,5 +1,5 @@
 <%=content_for(:title, "Edit Comment")%>
-<%=content_for(:headline_tag, 'h3')%>
+
 
 <%= form_with(model: @comment, local: true) do |form| %>
   <% if @comment.errors.any? %>
