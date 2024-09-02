@@ -9,6 +9,13 @@ require "system_test_config"
    ## export SELENIUM_REMOTE_HOST=module-handbook
    ## export SELENIUM_REMOTE_HOST=localhost
 
+   module ActiveSupport
+    class TestCase
+      # no parallelization for selenium...
+      parallelize(workers: 1)
+    end
+  end
+  
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   # :chrome :headless_chrome 

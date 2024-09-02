@@ -8,6 +8,10 @@
 # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
 
 services:
+  nginx:
+    profiles: [ dontstart ]
+  module-handbook-exporter:
+    profiles: [ dontstart ]
   module-handbook-postgres:
     platform: linux/arm64/v8
     container_name: modulehandbook-postgres
