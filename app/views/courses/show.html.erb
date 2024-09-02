@@ -1,5 +1,7 @@
-<h3>Course: <%= @course.name %> </h3>
-<h3><%= content_for(:title, "Course: #{@course.name}") %></h3>
+
+<% content_for(:title, "Course: #{@course.name}") %>
+
+
 <% if can? :versions, @course %>
 <%= link_to "See Course Versions", course_versions_url(@course.id), class: "no_print", id: 'course_versions'  %>
 <% end %>

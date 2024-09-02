@@ -17,7 +17,9 @@ user = @user
 
   <% verb =  show_form ? "Editing" : "Showing" %>
   <tr>
-  <th colspan="2" scope="col" ><h3><%= verb%> User: <%= @user.email %></h3></</th>
+  <% content_for(:title, "#{verb} the User") %>
+  
+  <th colspan="2" scope="col" ><h3><%=@user.email%></h3></th>
         <th>
           <% if show_form %>
               <%= form.submit class: "btn btn-success btn-sm" %>

@@ -1,4 +1,7 @@
-<h1>Program Overview <%= link_to @program.name, @program %></h1>
+<% content_for(:title, "Program Overview") %>
+<%= link_to @program.name, @program %>
+
+
 <table class="table">
 
     <% ects_total = 0

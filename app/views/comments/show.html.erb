@@ -1,5 +1,6 @@
 
-<h3> Comment Debug View </h3>
+<% content_for(:title, "Comment Debug View")%>
+
 <% [:author_id, :comment, :commentable_id, :commentable_type].each do |f |
   field = f.to_s
 %>

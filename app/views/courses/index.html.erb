@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Courses</h3>
+<% content_for(:title, "Courses") %>
+
 
 <% if can? :edit, @courses %><%= link_to 'New Course', new_course_path %><br><% end %>
 JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
