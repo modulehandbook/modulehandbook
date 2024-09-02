@@ -9,7 +9,7 @@ class FacultiesTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit faculties_url
-    assert_selector "h1", text: "Faculties"
+    assert_selector "h3", text: "Faculties"
   end
 
   test "should create faculty" do
