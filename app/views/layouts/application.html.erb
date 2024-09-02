@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) %></title>
+    <title><%= content_for?(:title) ? content_for(:title) : "ModuleHandbook" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -14,9 +14,6 @@
     <%= render "layouts/flash" %>
     <div class ="container">
     
-    <% headline_tag = content_for(:headline_tag) || 'h1' %>
-    <% title_content = content_for(:title) || 'ModuleHandbook' %>
-    <%= tag.public_send(headline_tag, title_content) %>
       <h3><%= content_for(:title) %></h3>
       <%= yield %>
       
