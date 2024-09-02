@@ -1,5 +1,7 @@
-PATH
-  remote: ../capybara
+GIT
+  remote: https://github.com/modulehandbook/capybara.git
+  revision: be7f4b2179ad83dbf07f9912b07293aac02f722c
+  branch: clear_session_storage_warning_master
   specs:
     capybara (3.40.0)
       addressable
