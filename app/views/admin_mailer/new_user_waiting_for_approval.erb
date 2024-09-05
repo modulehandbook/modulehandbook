@@ -1,3 +1,18 @@
-<p><%= @email %> has registered to join your site!</p>
-  <p>An admin can approve this registration by visiting the website and editing the user</p>
-  <a href="<%= @host %>"><%= @host %></a>
+<p>Hello,</p> 
+
+<p><strong><%= @email %></strong> has successfully registered to join your site!</p> 
+<p>
+  To ensure that this registration is legitimate and to approve the new user, please follow these steps:<br>
+  <ol><li>Click on the link below to review the registration details.</li> 
+      <li>Enter your Login information.
+      <li>To approve the user, simply click on the "Approve" hyperlink under the "Approved" column</li> 
+  </ol> 
+</p>
+
+<p><%= link_to 'Approve Registration', "#{@host_with_protocol}/users" %></p> 
+<p>By approving the registration, you will grant the new user access to your site.</p>
+
+<p>
+  Please note that this email is related to the Module Handbook, 
+  for more information visit the project's website at <a href="https://modulehandbook.github.io/">https://modulehandbook.github.io/</a>
+</p>
