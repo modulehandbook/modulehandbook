@@ -114,6 +114,10 @@ GEM
       responders
       warden (~> 1.2.3)
     docile (1.4.0)
+    dotenv (3.1.2)
+    dotenv-rails (3.1.2)
+      dotenv (= 3.1.2)
+      railties (>= 6.1)
     drb (2.2.1)
     erubi (1.13.0)
     execjs (2.9.1)
@@ -320,6 +324,7 @@ DEPENDENCIES
   cancancan
   capybara (>= 3.40)
   devise
+  dotenv-rails
   faraday
   importmap-rails (~> 1.1)
   jbuilder (~> 2.7)
