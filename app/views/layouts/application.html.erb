@@ -21,18 +21,7 @@
     
     <div class ="container">
     <hr/>
-    
-    <% 
-      env_file_path = Rails.root.join('.env')
-      env_file_contents = File.read(env_file_path)
-      version_pattern = /TAG_MODULE_HANDBOOK=([^\s]*)/
-      if match = version_pattern.match(env_file_contents)
-       app_version = match[1]
-      else
-        app_version = 'unknown_version'
-      end
-    %>
-      <small><a href="https://home.htw-berlin.de/~kleinen/software_projects/modulehandbook/">ModuleHandbook</a> Version <a href="https://github.com/modulehandbook/modulehandbook"><%=app_version%></a> </small>
+      <small><a href="https://home.htw-berlin.de/~kleinen/software_projects/modulehandbook/">ModuleHandbook</a> Version <a href="https://github.com/modulehandbook/modulehandbook"><%=fetch_app_version%></a> </small>
     <% if Rails.env == "development" %>
     <pre> Dev Env: <%= params.inspect %></pre>
     <% end %>
