@@ -67,4 +67,3 @@ gem 'jquery-rails'
 gem 'redcarpet'
 
 gem "importmap-rails", "~> 1.1"
-gem 'dotenv-rails'
