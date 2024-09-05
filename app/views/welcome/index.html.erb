@@ -1,21 +1,44 @@
 <% content_for(:title, "Welcome to the Module Handbook!")%>
 
 
-See the [Website](https://modulehandbook.github.io/)
-[https://modulehandbook.github.io/](https://modulehandbook.github.io/)
-for more information.
+<p> 
+  This is the official page for the Modulehandbook. 
+  It is supposed to make it easier to develop and write module handbooks together, 
+  to get feedback, and to accompany the university policy process.
+</p>
 
-To use the Modulehandbook, you can sign up with any email Address,
-need to confirm the email address and then be approved by an admin
-on this site.
+<p>
+  See the <a href="https://modulehandbook.github.io/">Website (modulehandbook.github.io)</a> for more general information. 
+</p>
 
-<p>Introduction and Manual goes here</p>
-<p>also a link to kramdown</p>
+<% if !user_signed_in? %>
+    <p style="color:#76B900">
+      To use the Modulehandbook, you can <%= link_to 'sign up', "#{@host_with_protocol}/users/sign_up", style: 'color:#2E4701;' %> with any email address.
+      You will then receive a verification-email. 
+      After confirming your email-address an admin will need to approve your account.
+      Please note that this might take some time.
+      You will get notified as soon as your profile has been accepted.
+    </p>
+<% end %>
 
 <hr/>
+
+<h5>Short Guide</h5>
+
+<p>
+  If you have the appropriate authorizations (e.g. writer or higher), 
+  you will be able to create/ delete or update Programs and Courses on this site.
+</p>
+
+<p>
+  Some fields in the Courses will support markdown syntax for enhanced formatting.
+  You will recognize them by the enclosed "Markdown" when you edit the Course.
+  For more information use the following link: <a href="https://modulehandbook.github.io/documentation/markdown/"> How to use Markdown</a>.
+</p>
+
 <p> There are two ways to link Courses to Programs:</p>
 <ol>
-  <li>create Course from Program site OR</li>
-  <li>create CourseProgram link instance after Course and Program have been created</li>
-</ol>
+  <li>Create a Course from the Program site <strong>OR</strong></li>
+  <li>Create a Course-Program link instance after Course and Program have been seperately created.</li>
+</ol><br>
 
