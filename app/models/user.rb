@@ -50,7 +50,8 @@ class User < ApplicationRecord
   end
 
   def inactive_message
-    approved? ? super : :not_approved
+    #approved? ? super : :not_approved
+    !confirmed? ? :unconfirmed : super
   end
 
   def self.send_reset_password_instructions(attributes = {})
