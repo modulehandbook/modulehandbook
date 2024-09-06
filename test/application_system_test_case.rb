@@ -41,15 +41,16 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       end
     end
   
-
-  puts "---------- "
-  puts "---------- config "
-  puts "#{config.inspect}"
-  puts "---------- "
-  puts "---- Capybara.server_host #{Capybara.server_host}"
-  puts "---- Capybara.app_host #{Capybara.app_host}"
-
-
+    if false
+      selenium_loc = config.driver_loc == :local ? "local" : "remote"
+      puts "-------------------- "
+      puts "#{config.inspect}"
+      puts "-------------------- "
+      puts "---- Capybara.server_host #{Capybara.server_host}"
+      puts "---- Capybara.app_host #{Capybara.app_host}"
+      puts "-------------------- "
+      puts "--------------------  using #{selenium_loc} browser!"
+    end
 
   def system_test_login(email, password)
     visit new_user_session_path

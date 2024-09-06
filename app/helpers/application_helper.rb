@@ -30,4 +30,14 @@ module ApplicationHelper
     return 1 if match1[1] > match2[1]
     match1[2].to_i <=> match2[2].to_i
   end
+
+  def fetch_app_version
+    env_file_path = Rails.root.join('.env')
+    return 'unknown_version' unless File.exist?(env_file_path)
+
+    env_file_contents = File.read(env_file_path)
+    version_pattern = /TAG_MODULE_HANDBOOK=([^\s]*)/
+    match = version_pattern.match(env_file_contents)
+    match ? match[1] : 'unknown_version'
+  end
 end

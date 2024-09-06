@@ -48,7 +48,11 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.40'
+  # see https://bundler.io/guides/gemfile.html
+  # gem 'capybara', '>= 3.40'
+  # gem 'capybara', :path => '../capybara'
+  gem 'capybara', :git => 'https://github.com/modulehandbook/capybara.git', :branch => 'clear_session_storage_warning_master'
+
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
