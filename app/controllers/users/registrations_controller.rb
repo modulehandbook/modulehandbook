@@ -4,8 +4,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   
-  after_action :handle_unconfirmed_user, only: [:create]
-  
   # GET /resource/sign_up
   # def new
   #   super
@@ -61,17 +59,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-
-  private
-
-  def handle_unconfirmed_user
-    if resource.persisted? && !resource.confirmed?
-      set_flash_message :notice, :signed_up_but_unconfirmed
-    elsif resource.persisted? && !resource.approved?
-      set_flash_message :notice, :signed_up_but_not_approved
-    end
-    sign_out(resource)
-    return 
-  end
-
 end
