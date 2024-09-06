@@ -13,7 +13,7 @@
 
 <% if !user_signed_in? %>
     <p style="color:#76B900">
-      To use the Modulehandbook, you can <%= link_to 'sign up', "#{@host_with_protocol}/users/sign_up", style: 'color:#2E4701;' %> with any email address.
+      To use the Modulehandbook, you can <%= link_to 'sign up', "#{@host}/users/sign_up", style: 'color:#2E4701;' %> with any email address recognizable with this context.
       You will then receive a verification-email. 
       After confirming your email-address an admin will need to approve your account.
       Please note that this might take some time.
@@ -21,7 +21,7 @@
     </p>
 
     <p style="color:#76B900">
-      Or you can simply <%= link_to 'sign in', "#{@host_with_protocol}/users/sign_in", style: 'color:#2E4701;' %> if you already have an account.
+      Or you can simply <%= link_to 'sign in', "#{@host}/users/sign_in", style: 'color:#2E4701;' %> if you already have an account.
     </p>
 <% end %>
 
