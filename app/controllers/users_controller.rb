@@ -52,12 +52,12 @@ class UsersController < ApplicationController
   def destroy
     if can? :destroy, @user
         if current_user == @user
-            @user.errors.add(:base, "Logged in User can't be destroyed.")
+            @user.errors.add(:base, I18n.t('controllers.users.error_destroy'))
             result = false
         else
           result = @user.destroy
         end
-      messages = result ? {notice: "User was successfully destroyed."} : {alert: "User could not be destroyed: #{@user.errors.full_messages} "}
+      messages = result ? {notice: I18n.t('controllers.users.destroyed')} : {alert: "User could not be destroyed: #{@user.errors.full_messages} "}
       respond_to do |format|
         format.html { redirect_to users_url, messages }
         format.json { head :no_content }
@@ -71,9 +71,9 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     user.approved = true
     if user.save
-      redirect_to users_path, notice: 'User was successfully approved.'
+      redirect_to users_path, notice: I18n.t('controllers.users.approved')
     else
-      redirect_to users_path, notice: 'Error approving user.'
+      redirect_to users_path, notice: I18n.t('controllers.users.error_approve')
     end
     UserMailer.user_approved_mail(user.email).deliver_later
   end
@@ -81,10 +81,10 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+        format.html { redirect_to users_path, notice: I18n.t('controllers.users.updated') }
         format.json { render :show, status: :ok, location: @program }
       else
-        flash.now[:alert] = "User could not be updated"
+        flash.now[:alert] = I18n.t('controllers.users.error_update')
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @program.errors, status: :unprocessable_entity }
         end

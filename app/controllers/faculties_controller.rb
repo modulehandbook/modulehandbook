@@ -25,7 +25,7 @@ class FacultiesController < ApplicationController
 
     respond_to do |format|
       if @faculty.save
-        format.html { redirect_to faculty_url(@faculty), notice: "Faculty was successfully created." }
+        format.html { redirect_to faculty_url(@faculty), notice: I18n.t('controllers.faculties.created') }
         format.json { render :show, status: :created, location: @faculty }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class FacultiesController < ApplicationController
   def update
     respond_to do |format|
       if @faculty.update(faculty_params)
-        format.html { redirect_to faculty_url(@faculty), notice: "Faculty was successfully updated." }
+        format.html { redirect_to faculty_url(@faculty), notice: I18n.t('controllers.faculties.updated') }
         format.json { render :show, status: :ok, location: @faculty }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class FacultiesController < ApplicationController
     @faculty.destroy
 
     respond_to do |format|
-      format.html { redirect_to faculties_url, notice: "Faculty was successfully destroyed." }
+      format.html { redirect_to faculties_url, notice: I18n.t('controllers.faculties.destroyed') }
       format.json { head :no_content }
     end
   end

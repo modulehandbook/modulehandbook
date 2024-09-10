@@ -44,13 +44,13 @@ class CoursesController < ApplicationController
     end
     respond_to do |format|
       if files.count < 1
-        format.html { redirect_to courses_path, notice: 'No files selected to import Course(s) from' }
+        format.html { redirect_to courses_path, notice: I18n.t('controllers.courses.error_import') }
       elsif files.count > 1 && params[:program_id]
-        format.html { redirect_to program_path(params[:program_id]), notice: 'Course successfully imported into this Program' }
+        format.html { redirect_to program_path(params[:program_id]), notice: I18n.t('controllers.courses.imported_to_program') }
       elsif files.count > 1
-        format.html { redirect_to courses_path, notice: 'Courses successfully imported' }
+        format.html { redirect_to courses_path, notice: I18n.t('controllers.courses.many_imported') }
       else
-        format.html { redirect_to course_path(@course), notice: 'Course successfully imported' }
+        format.html { redirect_to course_path(@course), notice: I18n.t('controllers.courses.imported') }
       end
     end
   end
@@ -91,7 +91,7 @@ class CoursesController < ApplicationController
       filename = helpers.generate_filename(course)
       send_data resp.body, filename: filename + '.docx'
     rescue Faraday::ConnectionFailed => e
-      redirect_to courses_path, alert: 'Error: Course could not be exported as DOCX because the connection to the external export service failed!'
+      redirect_to courses_path, alert: I18n.t('controllers.courses.error_export')
     end
   end
 
@@ -118,7 +118,7 @@ class CoursesController < ApplicationController
     create_course_program_link(@course, params[:program_id])
     respond_to do |format|
       if @course.save
-        format.html { redirect_to @course, notice: 'Course was successfully created.' }
+        format.html { redirect_to @course, notice: I18n.t('controllers.courses.created') }
         format.json { render :show, status: :created, location: @course }
       else
         format.html { render :new }
@@ -136,7 +136,7 @@ class CoursesController < ApplicationController
   def update
     respond_to do |format|
       if @course.update(course_params)
-        format.html { redirect_to @course, notice: 'Course was successfully updated.' }
+        format.html { redirect_to @course, notice: I18n.t('controllers.courses.updated') }
         format.json { render :show, status: :ok, location: @course }
       else
         format.html { render :edit, status: :unprocessable_entity  }
@@ -149,7 +149,7 @@ class CoursesController < ApplicationController
     @course = @course.versions.find(params[:to_version]).reify
     if @course.save!
       respond_to do |format|
-        format.html { redirect_to @course, notice: 'Course was successfully reverted.' }
+        format.html { redirect_to @course, notice: I18n.t('controllers.courses.reverted') }
         format.json { render :show, status: :ok, location: @course }
       end
     else
@@ -165,7 +165,7 @@ class CoursesController < ApplicationController
   def destroy
     @course.destroy
     respond_to do |format|
-      format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
+      format.html { redirect_to courses_url, notice: I18n.t('controllers.courses.destroyed') }
       format.json { head :no_content }
     end
   end
