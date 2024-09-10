@@ -75,7 +75,7 @@ class UsersController < ApplicationController
     else
       redirect_to users_path, notice: 'Error approving user.'
     end
-    UserMailer.user_approved_mail(user.email).deliver_now
+    UserMailer.user_approved_mail(user.email).deliver_later
   end
 
   def update
