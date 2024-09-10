@@ -62,4 +62,7 @@ ENV NODE_ENV development
 
 RUN bundle config unset without \
     && bundle config \
+    && apk add git \
     && bundle install
+# git can and should be removed if 
+# capybara is switched back to regular version
