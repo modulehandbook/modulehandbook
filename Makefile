@@ -40,7 +40,7 @@ init-local: start_db
 - bin/rails db:migrate
 - bin/rails db:seed
 
-start-db:
+start_db:
 - docker compose up -d module-handbook-postgres
 
 open:
