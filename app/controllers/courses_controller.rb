@@ -108,7 +108,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:course_id])
     event = params[:event_name] + '!'
     @course.send(event.to_sym)
-    redirect_to course_path(@course), notice: 'State updated'
+    redirect_to course_path(@course), notice: I18n.t('controllers.courses.state_updated')
   end
 
   # POST /courses

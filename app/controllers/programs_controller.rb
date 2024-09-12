@@ -56,8 +56,8 @@ class ProgramsController < ApplicationController
       if files.count < 1
         format.html { redirect_to programs_path, notice: I18n.t('controllers.programs.program_error_import') }
       end
-      format.html { redirect_to programs_path, notice: I18n.t('controllers.programs.program_imported') } if files.count > 1
-      format.html { redirect_to program_path(@program), notice: 'Program successfully imported' } if files.count == 1
+      format.html { redirect_to programs_path, notice: I18n.t('controllers.programs.programs_imported') } if files.count > 1
+      format.html { redirect_to program_path(@program), notice: I18n.t('controllers.programs.program_imported') } if files.count == 1
     end
   end
 

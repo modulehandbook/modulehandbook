@@ -57,7 +57,7 @@ class UsersController < ApplicationController
         else
           result = @user.destroy
         end
-      messages = result ? {notice: I18n.t('controllers.users.destroyed')} : {alert: "User could not be destroyed: #{@user.errors.full_messages} "}
+      messages = result ? {notice: I18n.t('controllers.users.destroyed')} : {alert: "User could not be destroyed: #{@user.errors.full_messages}"}
       respond_to do |format|
         format.html { redirect_to users_url, messages }
         format.json { head :no_content }
