@@ -1,6 +1,6 @@
 <p>Welcome, <strong><%= @email %></strong>!</p> 
 <p>
-    Your account for the <%= fetch_instance_variable%> has been successfully created. To complete the registration process and confirm your email address, 
+    Your account has been successfully created. To complete the registration process and confirm your email address, 
     please click on the link below:
 </p> 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p> 

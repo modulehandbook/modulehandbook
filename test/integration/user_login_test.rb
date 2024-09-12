@@ -1,9 +1,11 @@
 require "test_helper"
 
 class UserLoginTest < ActionDispatch::IntegrationTest
+  include ApplicationHelper
+  
   test "can see the welcome page" do
     get "/"
-    assert_select "h3", "Welcome to the Module Handbook!"
+    assert_select "h3", "Welcome to the #{fetch_instance_variable}!"
   end
 
   def assert_status(expected_status)
