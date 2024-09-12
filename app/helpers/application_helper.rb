@@ -40,4 +40,14 @@ module ApplicationHelper
     match = version_pattern.match(env_file_contents)
     match ? match[1] : 'unknown_version'
   end
+
+  def fetch_instance_variable
+    env_file_path = Rails.root.join('.env')
+    return 'unknown' unless File.exist?(env_file_path)
+
+    env_file_contents = File.read(env_file_path)
+    version_pattern = /MODULE_HANDBOOK_INSTANCE=([\s\S]*)/
+    match = version_pattern.match(env_file_contents)
+    match ? match[1] : 'unknown'
+  end
 end
