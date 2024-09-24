@@ -1,30 +1,22 @@
 <% content_for(:title, "Abilities") %>
 
-<%
-  models = [Course, Program, CourseProgram, Comment, Faculty, Version, User]
-  roles = User::ROLES
-  actions_by_module = Ability.list_actions_by_module
-  abilities = roles.map { |r| [r, Ability.new(User.new(role: r))] }.to_h
-%>
-
 <table class="table table-sm table-striped">
   <thead>
     <tr>
       <th scope="col">Model / Action</th>
-      <% roles.each do |role| %>
+      <% @roles.each do |role| %>
         <th scope="col"><%= role %></th>
       <% end %>
     </tr>
   </thead>
   <tbody>
-    <% models.each do |model| %>
-      <% actions_for_model = actions_by_module[model.name] || [] %>
-      <% actions_for_model.each do |action| %>
+    <% @abilities_map.each do |model_name, actions| %>
+      <% actions.each do |action| %>
         <tr>
-          <th scope="row"><%= "#{model} / #{action}" %></th>
-          <% roles.each do |role| %>
+          <th scope="row"><%= "#{model_name} / #{action}" %></th>
+          <% @roles.each do |role| %>
             <td>
-              <% can_do = abilities[role].can? action, model %>
+              <% can_do = @abilities[role].can?(action.to_sym, model_name.constantize) %>
               <div class="alert alert-<%= can_do ? 'success' : 'danger' %>" role="alert">
                 <%= can_do %>
               </div>
