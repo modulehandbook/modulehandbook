@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action :set_app_info
   check_authorization unless: :devise_controller?
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -7,5 +8,12 @@ class ApplicationController < ActionController::Base
         format.json { head :forbidden }
         format.html { redirect_to root_path, alert: exception.message }
       end
-    end
+  end
+
+  private
+
+  def set_app_info
+    @mh_app_name = ENV['MODULE_HANDBOOK_INSTANCE'] || 'default ModuleHandbook'
+    @mh_app_version = ENV['TAG_MODULE_HANDBOOK'] || 'unknown'
+  end
 end

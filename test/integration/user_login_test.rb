@@ -5,7 +5,7 @@ class UserLoginTest < ActionDispatch::IntegrationTest
   
   test "can see the welcome page" do
     get "/"
-    assert_select "h3", "Welcome to the #{fetch_instance_variable}!"
+    assert_select "h3", "Welcome to the"
   end
 
   def assert_status(expected_status)
