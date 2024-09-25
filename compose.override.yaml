@@ -32,6 +32,7 @@ services:
       - .:/module-handbook  # use app files from host
       - /module-handbook/node_modules # but not the node_modules
     environment:
+      - MODULE_HANDBOOK_INSTANCE="Hallo aus compose.override"
       - POSTGRES_DB=modhand-db-dev
       - RAILS_ENV=development
       - PARALLEL_WORKERS=1

@@ -29,6 +29,7 @@ services:
     container_name: modulehandbook
 
     environment:
+      - MODULE_HANDBOOK_INSTANCE="Hallo aus compose.yaml"
       - RAILS_DB_HOST="module-handbook-postgres"
       - POSTGRES_USER=modhand
       - POSTGRES_PASSWORD=modhand
