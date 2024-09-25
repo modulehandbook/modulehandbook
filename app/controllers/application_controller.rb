@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_app_info
-    @mh_app_name = ENV['MODULE_HANDBOOK_INSTANCE'] || 'ModuleHandbook'
+    @mh_app_name = ENV['MODULE_HANDBOOK_INSTANCE'] || 'Module Handbook'
     @mh_app_version = ENV['TAG_MODULE_HANDBOOK'] || 'unknown'
   end
 end
