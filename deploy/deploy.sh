@@ -10,7 +10,8 @@ echo "-----------"
 ssh $HOST "mkdir -p ~/secrets/env"
 scp secrets/env/$ENV.env $HOST:~/secrets/env/active.env
 # ersetzen mit
-# ssh $HOST "ln -s deploy/environments/$ENV.env active-environment.sh"
+# ssh $HOST "ln -s deploy/environments/$ENV.env active-environment.env"
+# echo RAILS_MASTER_KEY=$(cat config/credentials/staging.key) | ssh local@module-handbook-staging.f4.htw-berlin.de "cat >> .env"
 secrets/env/$ENV.env $HOST:~/secrets/env/active.env
 scp Makefile.prod $HOST:~/Makefile
 scp compose.yaml $HOST:~
