@@ -9,6 +9,9 @@ set -x
 echo "-----------"
 ssh $HOST "mkdir -p ~/secrets/env"
 scp secrets/env/$ENV.env $HOST:~/secrets/env/active.env
+# ersetzen mit
+# ssh $HOST "ln -s deploy/environments/$ENV.env active-environment.sh"
+secrets/env/$ENV.env $HOST:~/secrets/env/active.env
 scp Makefile.prod $HOST:~/Makefile
 scp compose.yaml $HOST:~
 scp -r nginx $HOST:~

@@ -27,7 +27,10 @@ services:
         required: false
     image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
     container_name: modulehandbook
-
+    volumes:
+      - ./environments:/module-handbook/deploy/environments
+      - ./nginx:/nginx
+      - ./deploy/environments:/module-handbook/deploy/environments
     environment:
       - RAILS_DB_HOST="module-handbook-postgres"
       - POSTGRES_USER=modhand
