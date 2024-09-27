@@ -26,6 +26,8 @@ module UsersHelper
 
     actions_by_module = {}
     controllers_ignore = ["DeviseController", "WelcomeController", "ViewsController"]
+    # c.name.match("::") -> ignores Controllers in the Users and Devise modules (from Devise)
+    # TBD: maybe a Whitelist of Controllers that should be included is better/more readable?
     controllers = ApplicationController.descendants.reject{|c| c.name.match("::") || controllers_ignore.include?(c.name)}
 
     controllers.each do |controller|
