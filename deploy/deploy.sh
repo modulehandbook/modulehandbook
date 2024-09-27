@@ -7,11 +7,10 @@ echo "about to deploy commit $TAG to $ENV"
 
 set -x
 echo "-----------"
-ssh $HOST "mkdir -p ~/secrets/env"
-scp secrets/env/$ENV.env $HOST:~/secrets/env/active.env
+# scp secrets/env/$ENV.env $HOST:~/secrets/env/active.env
 # ersetzen mit
-# ssh $HOST "ln -s deploy/environments/$ENV.env active-environment.sh"
-secrets/env/$ENV.env $HOST:~/secrets/env/active.env
+ssh $HOST "ln -s deploy/environments/$ENV.env active-environment.env"
+echo RAILS_MASTER_KEY=$(cat config/credentials/$ENV.key) | ssh $HOST "cat >> .env"
 scp Makefile.prod $HOST:~/Makefile
 scp compose.yaml $HOST:~
 scp -r nginx $HOST:~

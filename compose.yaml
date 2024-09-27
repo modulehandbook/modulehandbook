@@ -23,14 +23,10 @@ services:
 
   module-handbook:
     env_file: &env_file
-      - path: ./secrets/env/active.env
+      - path: ./active-environment.env
         required: false
     image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
     container_name: modulehandbook
-    volumes:
-      - ./environments:/module-handbook/deploy/environments
-      - ./nginx:/nginx
-      - ./deploy/environments:/module-handbook/deploy/environments
     environment:
       - RAILS_DB_HOST="module-handbook-postgres"
       - POSTGRES_USER=modhand
@@ -40,13 +36,17 @@ services:
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
       - TZ=Europe/Berlin
       - EDITOR=vi
+      - TAG_MODULE_HANDBOOK=${TAG_MODULE_HANDBOOK}
 
     depends_on:
       - module-handbook-postgres
-#      - module-handbook-exporter
+#     - module-handbook-exporter
     volumes:
       - ./container_logs:/module-handbook/log
       - ./secrets:/module-handbook/secrets
+      - ./environments:/module-handbook/deploy/environments
+      - ./nginx:/nginx
+      - ./deploy/environments:/module-handbook/deploy/environments
     restart: always
 
   nginx:
