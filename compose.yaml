@@ -28,6 +28,7 @@ services:
     image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
     container_name: modulehandbook
     environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
       - RAILS_DB_HOST="module-handbook-postgres"
       - POSTGRES_USER=modhand
       - POSTGRES_PASSWORD=modhand
