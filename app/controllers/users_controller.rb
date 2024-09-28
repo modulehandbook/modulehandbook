@@ -1,12 +1,19 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  include UsersHelper
 
   load_and_authorize_resource
   before_action :select_fields_index, only: %i[index ]
   before_action :select_fields_single, only: %i[show edit update]
   #before_action :select_fields_edit, only: %i[]
-  def show_abilities; end
+
+  def show_abilities
+    @roles = User::ROLES
+    @abilities_map = get_actions_for_models
+    @abilities = @roles.map { |r| [r, Ability.new(User.new(role: r))] }.to_h
+  end
+
   def select_fields_single
       include_fields(UserAttrs::SHOW)
   end
