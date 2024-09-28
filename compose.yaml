@@ -37,6 +37,7 @@ services:
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
       - TZ=Europe/Berlin
       - EDITOR=vi
+      - TAG_MODULE_HANDBOOK=${TAG_MODULE_HANDBOOK}
 
     depends_on:
       - module-handbook-postgres
