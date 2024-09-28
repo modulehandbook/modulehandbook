@@ -6,9 +6,9 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      redirect_to request.referrer, notice: 'Comment saved successfully'
+      redirect_to request.referrer, notice: I18n.t('controllers.comments.saved')
     else
-      redirect_to request.referrer, error: 'Error saving comment'
+      redirect_to request.referrer, error: I18n.t('controllers.comments.error_save')
     end
   end
 
@@ -20,13 +20,13 @@ class CommentsController < ApplicationController
                   action: :show,
                   id: @comment.commentable_id,
                   anchor: 'comments',
-                  notice: 'Comment was successfully updated.'
+                  notice: I18n.t('controllers.comments.updated')
     else
       redirect_to controller: @comment.commentable_type.downcase.pluralize,
                   action: :show,
                   id: @comment.commentable_id,
                   anchor: 'comments',
-                  notice: 'Error updating comment'
+                  notice: I18n.t('controllers.comments.error_update')
     end
   end
 
@@ -34,12 +34,12 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if @comment.destroy
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: 'Comment was successfully destroyed.' }
+        format.html { redirect_to request.referrer, notice: I18n.t('controllers.comments.destroyed') }
         format.json { head :no_content }
       end
     else
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: 'Comment could not be destroyed.' }
+        format.html { redirect_to request.referrer, notice: I18n.t('controllers.comments.error_destroy') }
         format.json { head :no_content }
       end
     end

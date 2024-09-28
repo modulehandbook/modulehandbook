@@ -54,10 +54,10 @@ class ProgramsController < ApplicationController
     end
     respond_to do |format|
       if files.count < 1
-        format.html { redirect_to programs_path, notice: 'No files selected to import Program(s) from' }
+        format.html { redirect_to programs_path, notice: I18n.t('controllers.programs.program_error_import') }
       end
-      format.html { redirect_to programs_path, notice: 'Programs successfully imported' } if files.count > 1
-      format.html { redirect_to program_path(@program), notice: 'Program successfully imported' } if files.count == 1
+      format.html { redirect_to programs_path, notice: I18n.t('controllers.programs.programs_imported') } if files.count > 1
+      format.html { redirect_to program_path(@program), notice: I18n.t('controllers.programs.program_imported') } if files.count == 1
     end
   end
 
@@ -87,9 +87,9 @@ class ProgramsController < ApplicationController
     end
     respond_to do |format|
       if files.count < 1
-        format.html { redirect_to program_path(@program), notice: 'No files selected to import Courses(s) from' }
+        format.html { redirect_to program_path(@program), notice: I18n.t('controllers.programs.course_error_import') }
       end
-      format.html { redirect_to program_path(@program), notice: 'Courses successfully imported' }
+      format.html { redirect_to program_path(@program), notice: I18n.t('controllers.programs.course_imported') }
     end
   end
   def export_program_json
@@ -126,7 +126,7 @@ class ProgramsController < ApplicationController
       filename = helpers.generate_filename(program)
       send_data resp.body, filename: filename + '.docx'
     rescue Faraday::ConnectionFailed => e
-      redirect_to programs_path, alert: 'Error: Program could not be exported as DOCX because the connection to the external export service failed! '+post_url
+      redirect_to programs_path, alert: I18n.t('controllers.programs.error_export')+post_url
     end
   end
 
@@ -145,7 +145,7 @@ class ProgramsController < ApplicationController
 
     respond_to do |format|
       if @program.save
-        format.html { redirect_to @program, notice: 'Program was successfully created.' }
+        format.html { redirect_to @program, notice: I18n.t('controllers.programs.created') }
         format.json { render :show, status: :created, location: @program }
       else
         format.html { render :new }
@@ -159,7 +159,7 @@ class ProgramsController < ApplicationController
   def update
     respond_to do |format|
       if @program.update(program_params)
-        format.html { redirect_to @program, notice: 'Program was successfully updated.' }
+        format.html { redirect_to @program, notice: I18n.t('controllers.programs.updated') }
         format.json { render :show, status: :ok, location: @program }
       else
         format.html { render :edit, status: :unprocessable_entity  }
@@ -173,7 +173,7 @@ class ProgramsController < ApplicationController
   def destroy
     @program.destroy
     respond_to do |format|
-      format.html { redirect_to programs_url, notice: 'Program was successfully destroyed.' }
+      format.html { redirect_to programs_url, notice: I18n.t('controllers.programs.destroyed') }
       format.json { head :no_content }
     end
   end
