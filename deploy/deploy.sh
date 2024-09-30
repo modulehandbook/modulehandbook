@@ -9,11 +9,13 @@ set -x
 echo "-----------"
 # scp secrets/env/$ENV.env $HOST:~/secrets/env/active.env
 # ersetzen mit
-ssh $HOST "ln -s deploy/environments/$ENV.env active-environment.env"
-echo RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key) | ssh $HOST "cat >> .env"
 scp Makefile.prod $HOST:~/Makefile
 scp compose.yaml $HOST:~
 scp -r nginx $HOST:~
+scp -r deploy $HOST:~
+ssh $HOST "ln -s deploy/environments/$ENV.env active-environment.env"
+echo RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key) | ssh $HOST "cat >> .env"
+
 
 scp .env $HOST:~
 ssh $HOST "echo TAG_MODULE_HANDBOOK=$TAG >> .env"
