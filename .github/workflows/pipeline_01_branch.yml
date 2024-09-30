@@ -13,8 +13,10 @@ jobs:
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:
       tags: type=sha
-      push: true # branches should not publish (push) docker images!
+      push: false # branches should not publish (push) docker images!
       target: modhand-dev
+      
     secrets:
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
+
 
