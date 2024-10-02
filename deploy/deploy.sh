@@ -7,8 +7,7 @@ echo "about to deploy commit $TAG to $ENV"
 
 set -x
 echo "-----------"
-# scp secrets/env/$ENV.env $HOST:~/secrets/env/active.env
-# ersetzen mit
+
 scp Makefile.prod $HOST:~/Makefile
 scp compose.yaml $HOST:~
 scp -r nginx $HOST:~

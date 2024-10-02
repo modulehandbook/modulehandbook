@@ -2,7 +2,7 @@
 name: Staging
 on:
   push:
-    branches: [ main, new_deployment_scrapbook ]
+    branches: [ main ]
     tags-ignore: [ '*' ]
 
 jobs:
