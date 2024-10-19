@@ -3,7 +3,35 @@ require:
   - rubocop-capybara
 AllCops:
   NewCops: enable
+  StyleGuideBaseURL: https://rubystyle.guide
   Exclude:
     - 'db/schema.rb'
     - 'db/migrate/*.rb'
     - 'bin/**'
+    # incremental rubocop fixes: remove one by one
+    - 'app/**/*.rb'
+    - 'app/**/*.jbuilder'
+    - 'bin/**/*.rb'
+    - 'config/**/*.rb'
+    - 'container_logs/**/*.rb'
+    - 'container_tmp/**/*.rb'
+    - 'coverage/**/*.rb'
+    - 'db/**/*.rb'
+    - 'deploy/**/*.rb'
+    - 'doc/**/*.rb'
+    - 'entrypoints/**/*.rb'
+    - 'lib/**/*.rb'
+    - 'log/**/*.rb'
+    - 'nginx/**/*.rb'
+    - 'node_modules/**/*.rb'
+    - 'optimize-build-pipeline/**/*.rb'
+    - 'pg_data/**/*.rb'
+    - 'pg_transfer/**/*.rb'
+    - 'public/**/*.rb'
+    - 'secrets/**/*.rb'
+    - 'showtime-grading/**/*.rb'
+    - 'storage/**/*.rb'
+    - 'test/**/*.rb'
+    - 'test-api/**/*.rb'
+    - 'tmp/**/*.rb'
+    - 'vendor/**/*.rb'

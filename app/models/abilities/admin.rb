@@ -6,7 +6,7 @@ module Abilities
     include CanCan::Ability
 
     def initialize(user)
-      super(user)
+      super
       can :manage, :all
     end
   end
