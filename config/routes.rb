@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     root to: 'welcome#index', as: :authenticated_root
   end
 
-  get 'abilities', to: 'users#show_abilities', as: 'abilities'
+  get 'abilities', to: 'abilities#index', as: 'abilities'
   resources :users, only: %i[index show edit update destroy]
 
   resources :versions, only: %i[index]
