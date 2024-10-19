@@ -13,14 +13,17 @@ class AbilitiesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'collect controller' do
-
-    all_controller = controller.all_app_controllers
-    assert_includes all_controller, UsersController
+  test 'actions_by_controller'do
+    actions_by_controller = @controller.actions_by_controller
+    assert_equal actions_by_controller['abilities'], ['index']
+  end
+  test 'all_routes' do
+    all_routes  = @controller.all_routes
+    assert_includes all_routes, {:controller=>"faculties", :action=>"show"}
   end
 
-  test 'all_actions' do
-      all_actions = @controller.all_controller_actions
-      assert_includes all_actions, {:controller=>"faculties", :action=>"show"}
+  test 'all_controllers' do
+    all_controllers  = @controller.all_controllers
+    assert_includes all_controllers, 'faculties'
   end
 end

@@ -1,7 +1,7 @@
 <% content_for(:title, "Abilities") %>
 
 <%
-  models = @models =
+  models = @models
   roles = @roles
   actions_by_module = @actions_by_module
   abilities = @abilities
@@ -17,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <% models.each do |model| %>
+    <% @models.each do |model| %>
       <% actions_for_model = actions_by_module[model.name] || [] %>
       <% actions_for_model.each do |action| %>
         <tr>

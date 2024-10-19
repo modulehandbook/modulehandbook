@@ -1,46 +1,27 @@
 class AbilitiesController < ApplicationController
   def index
+      @controller = all_controllers
       @models = [Course, Program, CourseProgram, Comment, Faculty, Version, User]
       @roles = User::ROLES
-      @actions_by_module = list_actions_by_module
-      @abilities = roles.map { |r| [r, Ability.new(User.new(role: r))] }.to_h
+      @actions_by_controller = actions_by_controller
+      @abilities = @roles.map { |r| [r, Ability.new(User.new(role: r))] }.to_h
   end
-  def list_actions_by_module
+  def actions_by_controller
 
-    alias_expansion = { crud: %i[create read update delete destroy] }
+    actions_by_controller = Hash.new { |hash, key| hash[key] = [] }
 
-    # Default actions available for all models
-    default_actions = %i[create read update destroy delete]
-
-    actions_by_module = Hash.new { |hash, key| hash[key] = [] }
-
-    # Get possible actions for all modules based on roles
-    ability_classes.each do |ability_class|
-      instance = ability_class.new(User.new)
-      rules = instance.__send__(:rules)
-
-      rules.each do |rule|
-        actions = rule.actions.flat_map { |action| alias_expansion.fetch(action, [action]) }
-        rule.subjects.each do |subject|
-          actions_by_module[subject.name] += actions
-        end
-      end
+    all_controllers.each do |controller|
+      controller_routes = all_routes.select { |r| r[:controller] == controller }
+      actions = controller_routes.map { |r| r[:action] }.uniq.sort
+      actions_by_controller[controller] = actions
     end
-
-    actions_by_module.each do |module_name, actions|
-      actions_by_module[module_name] = default_actions + actions
-    end
-
-    # Remove duplicate actions
-    actions_by_module.transform_values(&:uniq)
+    actions_by_controller
   end
 
-  def all_app_controllers
-    Rails.application.eager_load!
-    ApplicationController.descendants.reject{|c|  (c.name.start_with? 'Devise::' or c.name.start_with? 'Users::') }
+  def all_controllers
+    controllers = all_routes.map { |r| r[:controller] }.uniq.sort
   end
-
-  def all_controller_actions
+  def all_routes
     routes = Rails.application.routes.routes.map(&:defaults)
     routes.reject! { |r| r[:controller].nil? }
     reject = ['action_mailbox', 'active_storage', 'devise', 'rails', 'turbo']
@@ -48,6 +29,6 @@ class AbilitiesController < ApplicationController
       routes.reject! { |r| r[:controller].starts_with? controller_prefix }
     end
     routes
-    #controllers = routes.map { |r| r[:controller] }.uniq.sort
+
   end
 end
