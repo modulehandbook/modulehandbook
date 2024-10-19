@@ -71,3 +71,9 @@ gem 'jquery-rails'
 gem 'redcarpet'
 
 gem "importmap-rails", "~> 1.1"
+
+gem "rubocop", "~> 1.67", :groups => [:development, :test]
+
+gem "rubocop-rails", "~> 2.26", :groups => [:development, :test]
+
+gem "rubocop-capybara", "~> 2.21", :groups => [:development, :test]
