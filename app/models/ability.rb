@@ -10,6 +10,10 @@ class Ability
     merge Abilities::All.new(user)
     return if user.blank?
 
+    unless User::ROLES.include?(user.role.to_sym)
+      raise("non-existent user role #{user.role}")
+    end
+    
     merge Abilities::Reader.new(user)
     return unless user.role == 'writer' || user.role == 'editor' || user.role == 'qa' || user.role == 'admin'
 
