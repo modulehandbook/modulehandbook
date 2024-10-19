@@ -7,6 +7,7 @@ module Abilities
     include CanCan::Ability
 
     def initialize(_user)
+      super(user)
       can %i[crud], CourseProgram
       can %i[create read update], Faculty
       can %i[crud export_course import_course change_state revert_to], Course
