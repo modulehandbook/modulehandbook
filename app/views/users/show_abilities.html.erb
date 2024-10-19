@@ -1,10 +1,10 @@
 <% content_for(:title, "Abilities") %>
 
 <%
-  models = [Course, Program, CourseProgram, Comment, Faculty, Version, User]
-  roles = User::ROLES
-  actions_by_module = Ability.list_actions_by_module
-  abilities = roles.map { |r| [r, Ability.new(User.new(role: r))] }.to_h
+  models = @models =
+  roles = @roles
+  actions_by_module = @actions_by_module
+  abilities = @abilities
 %>
 
 <table class="table table-sm table-striped">
