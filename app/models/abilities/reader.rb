@@ -3,7 +3,7 @@
 module Abilities
   # defines abilities for readers
   #
-  class Reader
+  class Reader < UserRole
     include CanCan::Ability
 
     def initialize(user)
