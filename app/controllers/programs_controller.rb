@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProgramsController < ApplicationController
   include ApplicationHelper
 
@@ -108,14 +110,14 @@ class ProgramsController < ApplicationController
       data << program.gather_data_for_json_export.to_json
     end
     data = data.as_json
-    filename = Date.today.to_s + '_all_programs'
+    filename = "#{Time.zone.today}_all_programs"
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}_all-programs.json"
   end
 
   def export_program_docx
     base_url = ENV['EXPORTER_BASE_URL'] || 'http://localhost:3030/'
-    post_url = base_url + 'docx/program'
+    post_url = "#{base_url}docx/program"
     program = Program.find_by(id: params[:id])
     program_json = program.gather_data_for_json_export.to_json
 
@@ -124,10 +126,10 @@ class ProgramsController < ApplicationController
       resp = Faraday.post(post_url, program_json, 'Content-Type' => 'application/json')
       logger.debug resp
       filename = helpers.generate_filename(program)
-      send_data resp.body, filename: filename + '.docx'
+      send_data resp.body, filename: "#{filename}.docx"
     rescue Faraday::ConnectionFailed
       redirect_to programs_path,
-                  alert: 'Error: Program could not be exported as DOCX because the connection to the external export service failed! ' + post_url
+                  alert: "Error: Program could not be exported as DOCX because the connection to the external export service failed! #{post_url}"
     end
   end
 

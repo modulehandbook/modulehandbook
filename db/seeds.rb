@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -6,7 +8,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies)
 
-puts 'seeding database'
+Rails.logger.debug 'seeding database'
 
 users = [
   ['admin@mail.de', :admin],
@@ -22,10 +24,10 @@ User.destroy_all
 users.each do |u|
   user = User.create(email: u[0], password: defaultPW, password_confirmation: defaultPW, approved: true,
                      confirmed_at: DateTime.now, role: u[1])
-  puts "created User #{user.email} as #{user.role}"
+  Rails.logger.debug { "created User #{user.email} as #{user.role}" }
 end
 user = User.create(email: 'unapproved@mail.de', password: defaultPW, password_confirmation: defaultPW, approved: false)
-puts "created unapproved User #{user.email}"
+Rails.logger.debug { "created unapproved User #{user.email}" }
 
 Program.destroy_all
 Course.destroy_all
@@ -92,7 +94,7 @@ courses = [
 ]
 
 courses.each do |a|
-  puts "handling #{a}"
+  Rails.logger.debug { "handling #{a}" }
 
   c = Course.create(code: a[1].strip,
                     name: a[2].strip,
@@ -107,7 +109,7 @@ end
 Version.destroy_all
 
 writer = User.find_by(email: 'writer@mail.de')
-puts writer.inspect
+Rails.logger.debug writer.inspect
 PaperTrail.request.whodunnit = writer.id
 
 b7 = Course.find_by(code: 'B7')

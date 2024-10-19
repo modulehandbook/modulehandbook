@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative('comments_test_helper')
 require_relative('own_comments_assertions')
 require_relative('other_comments_assertions')

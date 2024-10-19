@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   require 'redcarpet'
   @@html_renderer = Redcarpet::Render::HTML.new
@@ -13,7 +15,7 @@ module ApplicationHelper
     code = 'XX' if code.nil?
     name = program.try(:name) ? program.name.gsub(' ', '') : 'xxx'
     name = 'XX' if name.nil?
-    Date.today.to_s + '_' + to_clean_string(code) + '-' + to_clean_string(name)
+    "#{Time.zone.today}_#{to_clean_string(code)}-#{to_clean_string(name)}"
   end
 
   def to_clean_string(string)

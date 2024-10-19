@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 require 'system_test_config'
 
@@ -41,7 +43,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   if false
     selenium_loc = config.driver_loc == :local ? 'local' : 'remote'
     puts '-------------------- '
-    puts "#{config.inspect}"
+    puts config.inspect
     puts '-------------------- '
     puts "---- Capybara.server_host #{Capybara.server_host}"
     puts "---- Capybara.app_host #{Capybara.app_host}"

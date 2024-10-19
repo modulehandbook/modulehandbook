@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserAttrs
   COMPUTED = %i[
     faculty_name

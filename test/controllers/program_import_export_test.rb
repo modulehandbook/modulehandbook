@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
@@ -22,7 +24,7 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
 
   test 'should import a program from json' do
     file = fixture_file_upload(
-      "#{Rails.root.join('test/fixtures/files/2020-08-14_IMI-B-InternationaleMedieninformatik.json')}", 'application/json'
+      Rails.root.join('test/fixtures/files/2020-08-14_IMI-B-InternationaleMedieninformatik.json').to_s, 'application/json'
     )
     files_array = []
     files_array << file
@@ -33,10 +35,10 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
 
   test 'should import programs from multiple json' do
     file1 = fixture_file_upload(
-      "#{Rails.root.join('test/fixtures/files/2020-08-14_IMI-B-InternationaleMedieninformatik.json')}", 'application/json'
+      Rails.root.join('test/fixtures/files/2020-08-14_IMI-B-InternationaleMedieninformatik.json').to_s, 'application/json'
     )
     file2 = fixture_file_upload(
-      "#{Rails.root.join('test/fixtures/files/2020-08-14_IMI-B-InternationaleMedieninformatik2.json')}", 'application/json'
+      Rails.root.join('test/fixtures/files/2020-08-14_IMI-B-InternationaleMedieninformatik2.json').to_s, 'application/json'
     )
     files_array = []
     files_array << file1 << file2
@@ -47,7 +49,7 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
 
   test 'should import additional courses to program' do
     program = programs(:imib)
-    file1 = fixture_file_upload("#{Rails.root.join('test/fixtures/files/two_courses.json')}", 'application/json')
+    file1 = fixture_file_upload(Rails.root.join('test/fixtures/files/two_courses.json').to_s, 'application/json')
     post program_add_courses_url(id: program.id), params: { files: [file1] }
     assert_response :redirect
     assert_redirected_to program_url(id: program.id)
@@ -56,7 +58,7 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
 
   test 'updates existing course in program on import' do
     program = programs(:imi1c)
-    file_name = "#{Rails.root.join('test/fixtures/files/two_courses.json')}"
+    file_name = Rails.root.join('test/fixtures/files/two_courses.json').to_s
     file1 = fixture_file_upload(file_name, 'application/json')
     post program_add_courses_url(id: program.id), params: { files: [file1] }
     assert_response :redirect
@@ -67,7 +69,7 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
 
   test 'allowed fields for import' do
     program = programs(:imi1c)
-    file_name = "#{Rails.root.join('test/fixtures/files/two_courses.json')}"
+    file_name = Rails.root.join('test/fixtures/files/two_courses.json').to_s
     file1 = fixture_file_upload(file_name, 'application/json')
     post program_add_courses_url(id: program.id), params: { files: [file1] }
     assert_response :redirect
@@ -79,7 +81,7 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
   test 'should import additional courses to program - codes only need to be unique for program' do
     program1 = programs(:imib)
     program2 = programs(:imib2)
-    file1 = fixture_file_upload("#{Rails.root.join('test/fixtures/files/two_courses.json')}", 'application/json')
+    file1 = fixture_file_upload(Rails.root.join('test/fixtures/files/two_courses.json').to_s, 'application/json')
     post program_add_courses_url(id: program1.id), params: { files: [file1] }
     post program_add_courses_url(id: program2.id), params: { files: [file1] }
     assert_response :redirect
@@ -94,7 +96,7 @@ class ProgramsControllerImportExportTest < ActionDispatch::IntegrationTest
 
   test 'adds semester to link on import' do
     program = programs(:imib)
-    file_name = "#{Rails.root.join('test/fixtures/files/with_semester.json')}"
+    file_name = Rails.root.join('test/fixtures/files/with_semester.json').to_s
     file1 = fixture_file_upload(file_name, 'application/json')
     post program_add_courses_url(id: program.id), params: { files: [file1] }
     assert_response :redirect

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class CoursesControllerImportTest < ActionDispatch::IntegrationTest
@@ -21,7 +23,7 @@ class CoursesControllerImportTest < ActionDispatch::IntegrationTest
   end
 
   test 'should import a course from json' do
-    file = fixture_file_upload("#{Rails.root.join('test/fixtures/files/2020-08-14_B1-Informatik1.json')}",
+    file = fixture_file_upload(Rails.root.join('test/fixtures/files/2020-08-14_B1-Informatik1.json').to_s,
                                'application/json')
     files_array = []
     files_array << file
@@ -31,9 +33,9 @@ class CoursesControllerImportTest < ActionDispatch::IntegrationTest
   end
 
   test 'should import courses from multiple json' do
-    file1 = fixture_file_upload("#{Rails.root.join('test/fixtures/files/2020-08-14_B1-Informatik1.json')}",
+    file1 = fixture_file_upload(Rails.root.join('test/fixtures/files/2020-08-14_B1-Informatik1.json').to_s,
                                 'application/json')
-    file2 = fixture_file_upload("#{Rails.root.join('test/fixtures/files/2020-08-14_B7-Informatik2.json')}",
+    file2 = fixture_file_upload(Rails.root.join('test/fixtures/files/2020-08-14_B7-Informatik2.json').to_s,
                                 'application/json')
     files_array = []
     files_array << file1 << file2

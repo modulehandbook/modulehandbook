@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.extract! program, :id, :name, :code, :mission, :degree, :ects
 json.url program_url(program, format: :json)
 json.courses do

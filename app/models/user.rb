@@ -18,7 +18,7 @@ class User < ApplicationRecord
   before_destroy :check_for_versions
 
   def check_for_versions
-    return unless versions.count > 0
+    return unless versions.count.positive?
 
     errors.add(:base, "User can't be Destroyed because there are Associated Versions")
     throw :abort
@@ -58,7 +58,7 @@ class User < ApplicationRecord
   def self.send_reset_password_instructions(attributes = {})
     recoverable = find_or_initialize_with_errors(reset_password_keys, attributes, :not_found)
     if !recoverable.approved?
-      recoverable.errors[:base] << I18n.t('devise.failure.not_approved')
+      recoverable.errors.add(:base, I18n.t('devise.failure.not_approved'))
     elsif recoverable.persisted?
       recoverable.send_reset_password_instructions
     end

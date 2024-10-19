@@ -16,7 +16,7 @@ class Ability
     alias_action :import_program_json, to: :import_program
 
     merge Abilities::All.new(user)
-    return unless user.present?
+    return if user.blank?
 
     merge Abilities::Reader.new(user)
     return unless user.role == 'writer' || user.role == 'editor' || user.role == 'qa' || user.role == 'admin'
@@ -61,6 +61,6 @@ class Ability
     end
 
     # Remove duplicate actions
-    actions_by_module.transform_values { |actions| actions.uniq }
+    actions_by_module.transform_values(&:uniq)
   end
 end
