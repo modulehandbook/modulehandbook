@@ -7,7 +7,7 @@ class VersionsAdminTest < ApplicationSystemTestCase
     @user_other = users(:writer)
     system_test_login(@user.email, 'geheim12')
   end
-  
+
   def create_version(responsible_person:, ects:)
     click_on 'edit_course'
     fill_in 'course_responsible_person', with: responsible_person

@@ -52,6 +52,6 @@ class ProgramsTest < ApplicationSystemTestCase
     end
 
     assert_text 'Program was successfully destroyed'
-    assert !Program.exists?(@program.id)
+    assert_not Program.exists?(@program.id)
   end
 end

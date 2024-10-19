@@ -2,17 +2,18 @@ class CommentsController < ApplicationController
   load_and_authorize_resource
 
   def show; end
+
+  def edit; end
+
   def create
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      redirect_to request.referrer, notice: 'Comment saved successfully'
+      redirect_to request.referer, notice: 'Comment saved successfully'
     else
-      redirect_to request.referrer, error: 'Error saving comment'
+      redirect_to request.referer, error: 'Error saving comment'
     end
   end
-
-  def edit; end
 
   def update
     if @comment.update(comment_params)
@@ -34,12 +35,12 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if @comment.destroy
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: 'Comment was successfully destroyed.' }
+        format.html { redirect_to request.referer, notice: 'Comment was successfully destroyed.' }
         format.json { head :no_content }
       end
     else
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: 'Comment could not be destroyed.' }
+        format.html { redirect_to request.referer, notice: 'Comment could not be destroyed.' }
         format.json { head :no_content }
       end
     end

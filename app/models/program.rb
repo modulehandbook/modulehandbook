@@ -4,20 +4,20 @@ class Program < ApplicationRecord
   has_many :comments, as: :commentable
   has_paper_trail
 
-  scope :study_plan, -> { where.not(required: "elective-option") }
-  scope :elective_options, -> { where(required: "elective-option") }
+  scope :study_plan, -> { where.not(required: 'elective-option') }
+  scope :elective_options, -> { where(required: 'elective-option') }
 
-  EDITABLE_ATTRIBUTES = [:name, :code, :mission, :degree, :ects]
+  EDITABLE_ATTRIBUTES = %i[name code mission degree ects]
   def select_name
     "#{name} (#{code})"
   end
 
   def self.find_or_create_from_json(data)
     existing_program = Program.find_by(code: data['code'])
-    program = if !existing_program.nil?
-                existing_program
-              else
+    program = if existing_program.nil?
                 Program.new
+              else
+                existing_program
               end
     program.name = data['name']
     program.code = data['code']
@@ -27,8 +27,6 @@ class Program < ApplicationRecord
     program.save
     program
   end
-
-
 
   def self.json_import_from_file(file)
     data = JSON.parse(file.read)
@@ -47,21 +45,20 @@ class Program < ApplicationRecord
       end
     end
     data['courses'] = courses
-    data = data.as_json
-    data
+    data.as_json
   end
 
   def shallow_copy
     json_01 = as_json
     # json_02 = gather_data_for_json_export
     params = json_01.slice(*EDITABLE_ATTRIBUTES.map(&:to_s))
-    program_copy =Program.create!(params)
-    course_programs.each do | cp |
+    program_copy = Program.create!(params)
+    course_programs.each do |cp|
       program_copy.course_programs.create(
         course: cp.course,
         required: cp.required,
-        semester: cp.semester)
-
+        semester: cp.semester
+      )
     end
     program_copy
   end
@@ -73,7 +70,7 @@ class ProgramFactory
     courses = data['courses']
     courses.each do |course_data|
       course = Course.find_or_create_from_json(course_data)
-      cpl = CourseProgram.find_or_create_from_json(course_data, course.id, program.id)
+      CourseProgram.find_or_create_from_json(course_data, course.id, program.id)
       course.save
     end
     program

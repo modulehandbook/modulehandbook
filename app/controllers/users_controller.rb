@@ -1,32 +1,32 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-
   load_and_authorize_resource
-  before_action :select_fields_index, only: %i[index ]
+  before_action :select_fields_index, only: %i[index]
   before_action :select_fields_single, only: %i[show edit update]
-  #before_action :select_fields_edit, only: %i[]
+  # before_action :select_fields_edit, only: %i[]
   def show_abilities; end
+
   def select_fields_single
-      include_fields(UserAttrs::SHOW)
+    include_fields(UserAttrs::SHOW)
   end
 
   def select_fields_edit
-      include_fields(UserAttrs::EDITABLE)
+    include_fields(UserAttrs::EDITABLE)
   end
 
   def select_fields_index
-      include_fields(UserAttrs::INDEX)
+    include_fields(UserAttrs::INDEX)
   end
 
   def include_fields(include_fields)
-    if can? :see_admin_fields, User
-      @include_fields = include_fields
-    elsif @user && (current_user == @user)
-      @include_fields = include_fields & UserAttrs::OWN_READABLE_FIELDS
-    else
-      @include_fields = include_fields & UserAttrs::READABLE
-    end
+    @include_fields = if can? :see_admin_fields, User
+                        include_fields
+                      elsif @user && (current_user == @user)
+                        include_fields & UserAttrs::OWN_READABLE_FIELDS
+                      else
+                        include_fields & UserAttrs::READABLE
+                      end
     @select_fields = @include_fields - UserAttrs::COMPUTED + %i[faculty_id]
     @fields = @include_fields - [:id]
   end
@@ -49,22 +49,33 @@ class UsersController < ApplicationController
 
   def edit; end
 
-  def destroy
-    if can? :destroy, @user
-        if current_user == @user
-            @user.errors.add(:base, "Logged in User can't be destroyed.")
-            result = false
-        else
-          result = @user.destroy
-        end
-      messages = result ? {notice: "User was successfully destroyed."} : {alert: "User could not be destroyed: #{@user.errors.full_messages} "}
-      respond_to do |format|
-        format.html { redirect_to users_url, messages }
-        format.json { head :no_content }
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+        format.json { render :show, status: :ok, location: @program }
+      else
+        flash.now[:alert] = 'User could not be updated'
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @program.errors, status: :unprocessable_entity }
       end
-
     end
+  end
 
+  def destroy
+    return unless can? :destroy, @user
+
+    if current_user == @user
+      @user.errors.add(:base, "Logged in User can't be destroyed.")
+      result = false
+    else
+      result = @user.destroy
+    end
+    messages = result ? { notice: 'User was successfully destroyed.' } : { alert: "User could not be destroyed: #{@user.errors.full_messages} " }
+    respond_to do |format|
+      format.html { redirect_to users_url, messages }
+      format.json { head :no_content }
+    end
   end
 
   def approve
@@ -78,19 +89,6 @@ class UsersController < ApplicationController
     UserMailer.user_approved_mail(user.email).deliver_later
   end
 
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @program }
-      else
-        flash.now[:alert] = "User could not be updated"
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @program.errors, status: :unprocessable_entity }
-        end
-    end
-  end
-
   def set_user
     @user = User.find(params[:id])
   end
@@ -98,9 +96,9 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     if can? :manage_access, User
-        params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email, :approved, :role)
+      params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email, :approved, :role)
     else
-        params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email)
+      params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email)
     end
   end
 end

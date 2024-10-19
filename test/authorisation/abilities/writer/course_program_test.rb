@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class CourseProgramWriterbilitiesTest <  ActiveSupport::TestCase
+class CourseProgramWriterbilitiesTest < ActiveSupport::TestCase
   setup do
     @course_program = course_programs(:one)
     @user = users(:writer)

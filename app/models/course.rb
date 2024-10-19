@@ -53,10 +53,10 @@ class Course < ApplicationRecord
 
   def self.find_or_create_from_json(data)
     existing_course = Course.find_by(code: data['code'])
-    course = if !existing_course.nil?
-               existing_course
-             else
+    course = if existing_course.nil?
                Course.new
+             else
+               existing_course
              end
     course.name = data['name']
     course.code = data['code']
@@ -98,8 +98,7 @@ class Course < ApplicationRecord
       end
     end
     data['programs'] = programs
-    data = data.as_json
-    data
+    data.as_json
   end
 end
 

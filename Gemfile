@@ -39,7 +39,7 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'bundler'
-  gem "listen", "~> 3.9"
+  gem 'listen', '~> 3.9'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -51,7 +51,8 @@ group :test do
   # see https://bundler.io/guides/gemfile.html
   # gem 'capybara', '>= 3.40'
   # gem 'capybara', :path => '../capybara'
-  gem 'capybara', :git => 'https://github.com/modulehandbook/capybara.git', :branch => 'clear_session_storage_warning_master'
+  gem 'capybara', git: 'https://github.com/modulehandbook/capybara.git',
+                  branch: 'clear_session_storage_warning_master'
 
   gem 'launchy'
   gem 'selenium-webdriver'
@@ -70,10 +71,10 @@ gem 'bootstrap', '~> 4.6'
 gem 'jquery-rails'
 gem 'redcarpet'
 
-gem "importmap-rails", "~> 1.1"
+gem 'importmap-rails', '~> 1.1'
 
-gem "rubocop", "~> 1.67", :groups => [:development, :test]
+gem 'rubocop', '~> 1.67', groups: %i[development test]
 
-gem "rubocop-rails", "~> 2.26", :groups => [:development, :test]
+gem 'rubocop-rails', '~> 2.26', groups: %i[development test]
 
-gem "rubocop-capybara", "~> 2.21", :groups => [:development, :test]
+gem 'rubocop-capybara', '~> 2.21', groups: %i[development test]

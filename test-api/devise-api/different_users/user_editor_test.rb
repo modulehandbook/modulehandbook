@@ -14,7 +14,6 @@ class UserEditorTest < ApplicationSystemTestCase
   test 'editor is logged in' do
     # Logged in as admin@mail.de
     visit root_path
-    assert_text 'Logged in as '+@user.email
+    assert_text 'Logged in as ' + @user.email
   end
-
 end

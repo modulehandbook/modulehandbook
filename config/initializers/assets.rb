@@ -11,7 +11,6 @@ Rails.application.config.assets.version = '1.2'
 # note: node_modules are not present in the current configuration,
 # path does not need to be added.
 
-
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.

@@ -8,7 +8,6 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
 end
 
 class WelcomeControllerLoggedInTest < ActionDispatch::IntegrationTest
-   
   setup do
     sign_in users(:one)
   end

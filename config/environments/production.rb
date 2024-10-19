@@ -1,5 +1,5 @@
 Rails.application.configure do
-config.file_watcher = ActiveSupport::FileUpdateChecker
+  config.file_watcher = ActiveSupport::FileUpdateChecker
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.action_mailer.default_url_options = { host: config.x.mh_hostname }
@@ -76,7 +76,7 @@ config.file_watcher = ActiveSupport::FileUpdateChecker
   config.active_support.deprecation = :notify
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  config.log_formatter = Logger::Formatter.new
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'

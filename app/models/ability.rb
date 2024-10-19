@@ -33,13 +33,14 @@ class Ability
     merge Abilities::Admin.new(user)
   end
 
- def self.list_actions_by_module
-    ability_classes = [ Abilities::All, Abilities::Reader, Abilities::Writer, Abilities::Editor, Abilities::Qa, Abilities::Admin]
-    alias_expansion = { crud: %i[create read update delete destroy]}
+  def self.list_actions_by_module
+    ability_classes = [Abilities::All, Abilities::Reader, Abilities::Writer, Abilities::Editor, Abilities::Qa,
+                       Abilities::Admin]
+    alias_expansion = { crud: %i[create read update delete destroy] }
 
     # Default actions available for all models
     default_actions = %i[create read update destroy delete]
-    
+
     actions_by_module = Hash.new { |hash, key| hash[key] = [] }
 
     # Get possible actions for all modules based on roles
@@ -61,5 +62,5 @@ class Ability
 
     # Remove duplicate actions
     actions_by_module.transform_values { |actions| actions.uniq }
- end
+  end
 end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommentsAdminAbilitiesTest <  ActiveSupport::TestCase
+class CommentsAdminAbilitiesTest < ActiveSupport::TestCase
   setup do
     @course = courses(:one)
     @user = users(:one)
@@ -47,5 +47,4 @@ class CommentsAdminAbilitiesTest <  ActiveSupport::TestCase
     assert @ability.can?(:delete, @comment_other)
     assert @ability.can?(:destroy, @comment_other)
   end
-
 end

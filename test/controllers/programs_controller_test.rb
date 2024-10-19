@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ProgramsControllerTest < ActionDispatch::IntegrationTest
-   
   setup do
     @program = programs(:one)
     sign_in users(:one)
@@ -19,7 +18,9 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create program' do
     assert_difference('Program.count') do
-      post programs_url, params: { program: { code: @program.code, degree: @program.degree, ects: @program.ects, mission: @program.mission, name: @program.name } }
+      post programs_url,
+           params: { program: { code: @program.code, degree: @program.degree, ects: @program.ects, mission: @program.mission,
+                                name: @program.name } }
     end
 
     assert_redirected_to program_url(Program.last)
@@ -36,7 +37,9 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update program' do
-    patch program_url(@program), params: { program: { code: @program.code, degree: @program.degree, ects: @program.ects, mission: @program.mission, name: @program.name } }
+    patch program_url(@program),
+          params: { program: { code: @program.code, degree: @program.degree, ects: @program.ects, mission: @program.mission,
+                               name: @program.name } }
     assert_redirected_to program_url(@program)
   end
 
