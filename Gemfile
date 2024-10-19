@@ -36,6 +36,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rubocop', '~> 1.67'
+  gem 'rubocop-capybara', '~> 2.21'
+  gem 'rubocop-rails', '~> 2.26'
 end
 
 group :development do
@@ -74,9 +77,3 @@ gem 'jquery-rails'
 gem 'redcarpet'
 
 gem 'importmap-rails', '~> 1.1'
-
-gem 'rubocop', '~> 1.67', groups: %i[development test]
-
-gem 'rubocop-rails', '~> 2.26', groups: %i[development test]
-
-gem 'rubocop-capybara', '~> 2.21', groups: %i[development test]
