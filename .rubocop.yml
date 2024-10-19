@@ -9,8 +9,7 @@ AllCops:
     - 'db/migrate/*.rb'
     - 'bin/**'
     # incremental rubocop fixes: remove one by one
-    #- 'app/**/*.rb'
-    - 'app/models/*.rb'
+    #- 'app/models/*.rb'
     - 'app/mailers/**/*.rb'
     - 'app/helpers/**/*.rb'
     - 'app/controllers/**/*.rb'
