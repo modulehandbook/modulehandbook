@@ -13,8 +13,8 @@ class Ability
 
     raise("non-existent user role #{user.role}") unless User::ROLES.include?(user.role.to_sym)
 
-     method_name = "#{user.role}_abilities"
-    self.send(method_name, user)
+    method_name = "#{user.role}_abilities"
+    send(method_name, user)
   end
 
   def aliases
@@ -29,7 +29,8 @@ class Ability
     alias_action :import_program_json, to: :import_program
   end
 
-  def not_logged_in_abilities(user);end
+  def not_logged_in_abilities(user); end
+
   def reader_abilities(user)
     not_logged_in_abilities(user)
     can %i[read update], User, id: user.id
@@ -41,7 +42,6 @@ class Ability
     reader_comment_abilities(user)
   end
 
-
   def reader_comment_abilities(user)
     can %i[read], Comment
     can %i[create], Comment
@@ -50,7 +50,6 @@ class Ability
       comment.author_id == user.id && comment.created_at >= 30.minutes.ago
     end
   end
-
 
   def writer_abilities(user)
     reader_abilities(user)
@@ -67,6 +66,7 @@ class Ability
     can %i[crud export_program import_program], Program
     can %i[read approve], User
   end
+
   def qa_abilities(user)
     editor_abilities(user)
   end

@@ -3,14 +3,13 @@
 module Abilities
   include CanCan::Ability
 
-  def editor_abilities(user)
+  def editor_abilities(_user)
     can %i[crud], CourseProgram
     can %i[create read update], Faculty
     can %i[crud export_course import_course change_state revert_to], Course
     can %i[crud export_program import_program], Program
     can %i[read approve], User
   end
-
 
   def reader_abilities(user)
     can %i[read update], User, id: user.id
@@ -31,16 +30,12 @@ module Abilities
     end
   end
 
-
-  def writer_abilities(user)
+  def writer_abilities(_user)
     can %i[crud], CourseProgram
     can %i[crud export_course import_course versions], Course
     can %i[crud export_program import_program], Program
   end
-  def not_logged_in_abilities(user)
 
-  end
+  def not_logged_in_abilities(user); end
 end
 # defines abilities without login
-
-
