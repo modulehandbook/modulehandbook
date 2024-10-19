@@ -19,17 +19,7 @@ class UsersController < ApplicationController
     include_fields(UserAttrs::INDEX)
   end
 
-  def include_fields(include_fields)
-    @include_fields = if can? :see_admin_fields, User
-                        include_fields
-                      elsif @user && (current_user == @user)
-                        include_fields & UserAttrs::OWN_READABLE_FIELDS
-                      else
-                        include_fields & UserAttrs::READABLE
-                      end
-    @select_fields = @include_fields - UserAttrs::COMPUTED + %i[faculty_id]
-    @fields = @include_fields - [:id]
-  end
+
 
   def index
     if can? :see_admin_fields, User
@@ -100,5 +90,18 @@ class UsersController < ApplicationController
     else
       params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email)
     end
+  end
+
+  private
+  def include_fields(include_fields)
+    @include_fields = if can? :see_admin_fields, User
+                        include_fields
+                      elsif @user && (current_user == @user)
+                        include_fields & UserAttrs::OWN_READABLE_FIELDS
+                      else
+                        include_fields & UserAttrs::READABLE
+                      end
+    @select_fields = @include_fields - UserAttrs::COMPUTED + %i[faculty_id]
+    @fields = @include_fields - [:id]
   end
 end

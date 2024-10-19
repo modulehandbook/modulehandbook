@@ -6,8 +6,7 @@ class AbilitiesController < ApplicationController
       @abilities = roles.map { |r| [r, Ability.new(User.new(role: r))] }.to_h
   end
   def list_actions_by_module
-    ability_classes = [Abilities::All, Abilities::Reader, Abilities::Writer, Abilities::Editor, Abilities::Qa,
-                       Abilities::Admin]
+
     alias_expansion = { crud: %i[create read update delete destroy] }
 
     # Default actions available for all models
@@ -34,5 +33,21 @@ class AbilitiesController < ApplicationController
 
     # Remove duplicate actions
     actions_by_module.transform_values(&:uniq)
+  end
+
+  def all_app_controllers
+    Rails.application.eager_load!
+    ApplicationController.descendants.reject{|c|  (c.name.start_with? 'Devise::' or c.name.start_with? 'Users::') }
+  end
+
+  def all_controller_actions
+    routes = Rails.application.routes.routes.map(&:defaults)
+    routes.reject! { |r| r[:controller].nil? }
+    reject = ['action_mailbox', 'active_storage', 'devise', 'rails', 'turbo']
+    reject.each do |controller_prefix |
+      routes.reject! { |r| r[:controller].starts_with? controller_prefix }
+    end
+    routes
+    #controllers = routes.map { |r| r[:controller] }.uniq.sort
   end
 end
