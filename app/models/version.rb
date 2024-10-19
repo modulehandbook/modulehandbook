@@ -8,6 +8,6 @@
 # as long as this only reads, there should be no problem.
 
 class Version < PaperTrail::Version
-  belongs_to :author, class_name: "User",
-                    foreign_key: "whodunnit"
+  belongs_to :author, class_name: 'User',
+                      foreign_key: 'whodunnit'
 end

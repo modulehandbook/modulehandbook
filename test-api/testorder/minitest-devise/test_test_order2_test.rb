@@ -1,6 +1,6 @@
-require "minitest/autorun"
+require 'minitest/autorun'
 require 'test_helper'
-require_relative ("../minitest/global")
+require_relative('../minitest/global')
 
 class TestOrderDevise2 < ActionDispatch::IntegrationTest
   def setup
@@ -17,7 +17,6 @@ class TestOrderDevise2 < ActionDispatch::IntegrationTest
 
   def test_1_3rdpartyapi
     TestLog.log(21)
-
   end
 
   def test_2_3rdpartyapi
@@ -27,12 +26,9 @@ class TestOrderDevise2 < ActionDispatch::IntegrationTest
   def test_3_3rdpartyapi
     TestLog.log(23)
   end
-
 end
 
-
 class TestOrderDevise3 < ActionDispatch::IntegrationTest
-
   def setup
     @admin = users(:one)
     @user2 = users(:reader)
@@ -42,13 +38,11 @@ class TestOrderDevise3 < ActionDispatch::IntegrationTest
   end
 
   def teardown
-      TestLog.printlog(@controller.current_user.email)
+    TestLog.printlog(@controller.current_user.email)
   end
-
 
   def test_1_3rdpartyapi
     TestLog.log(31)
-
   end
 
   def test_2_3rdpartyapi
@@ -58,5 +52,4 @@ class TestOrderDevise3 < ActionDispatch::IntegrationTest
   def test_3_3rdpartyapi
     TestLog.log(33)
   end
-
 end

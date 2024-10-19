@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class ProgramReaderAbilitiesTest <  ActiveSupport::TestCase
+class ProgramReaderAbilitiesTest < ActiveSupport::TestCase
   setup do
     @program = programs(:one)
     @user = users(:reader)

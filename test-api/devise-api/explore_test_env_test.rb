@@ -12,10 +12,8 @@ class ExploreTestEnvironmentTest < ApplicationSystemTestCase
     system_test_logout
   end
 
-#  test 'test_order' do
-#    puts "ActiveSupport::TestCase.test_order #{ActiveSupport::TestCase.test_order}"
-#    puts page
-#  end
-
-
+  #  test 'test_order' do
+  #    puts "ActiveSupport::TestCase.test_order #{ActiveSupport::TestCase.test_order}"
+  #    puts page
+  #  end
 end

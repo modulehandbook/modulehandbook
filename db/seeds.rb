@@ -20,7 +20,8 @@ defaultPW = ENV['SEED_USER_PW']
 defaultPW ||= 'geheim12'
 User.destroy_all
 users.each do |u|
-  user = User.create(email: u[0], password: defaultPW, password_confirmation: defaultPW, approved: true, confirmed_at: DateTime.now, role: u[1])
+  user = User.create(email: u[0], password: defaultPW, password_confirmation: defaultPW, approved: true,
+                     confirmed_at: DateTime.now, role: u[1])
   puts "created User #{user.email} as #{user.role}"
 end
 user = User.create(email: 'unapproved@mail.de', password: defaultPW, password_confirmation: defaultPW, approved: false)
@@ -51,10 +52,14 @@ courses = [
   [3, 'B16 ', ' 2. Fremdsprache                      ', 'required', ' WP  ', ' Ü    ', ' 4   ', ' 4'],
   [3, 'B17 ', ' Computergrafik                       ', 'required', ' P   ', ' SL/Ü ', ' 2/2 ', ' 5'],
   [3, 'B18 ', ' 3D-Design                            ', 'required', ' P   ', ' Ü    ', ' 2   ', ' 5'],
-  [4, 'B19   ', ' Internationale   Medienwirtschaft  und  Kommunikation ', 'required', ' P   ', ' SL/Ü ', ' 2/2 ', ' 5'],
-  [4, 'B20   ', ' Praxisphase 1:  Fachpraktikum im  Ausland             ', 'required', ' P   ', '      ', '     ', ' 25'],
-  [4, 'B20.1 ', ' Auswertung  von Erfahrungen am Praxisplatz            ', 'required', ' EL  ', ' Ü    ', ' 2   ', '  0'],
-  [4, 'B20.2 ', ' Fachpraktikum                                         ', 'required', '     ', '      ', '     ', '   0'],
+  [4, 'B19   ', ' Internationale   Medienwirtschaft  und  Kommunikation ', 'required', ' P   ', ' SL/Ü ', ' 2/2 ',
+   ' 5'],
+  [4, 'B20   ', ' Praxisphase 1:  Fachpraktikum im  Ausland             ', 'required', ' P   ', '      ', '     ',
+   ' 25'],
+  [4, 'B20.1 ', ' Auswertung  von Erfahrungen am Praxisplatz            ', 'required', ' EL  ', ' Ü    ', ' 2   ',
+   '  0'],
+  [4, 'B20.2 ', ' Fachpraktikum                                         ', 'required', '     ', '      ', '     ',
+   '   0'],
   [5, 'B21   ', ' Wahlpflichtmodul 1          ', 'required', ' WP  ', ' SL/Ü ', ' 2/2 ', ' 5'],
   [5, 'B22   ', ' Wahlpflichtmodul 2          ', 'required', ' WP  ', ' SL/Ü ', ' 2/2 ', ' 5'],
   [5, 'B23   ', ' Wahlpflichtmodul 3          ', 'required', ' WP  ', ' SL/Ü ', ' 2/2 ', ' 5'],
@@ -66,15 +71,24 @@ courses = [
   [6, 'B28 ', ' AWE  WP                       ', 'required', ' SL  ', '      ', ' 2   ', ' 2'],
   [6, 'B29 ', ' Bachelorarbeit                ', 'required', ' P   ', '      ', '     ', ' 12'],
   [6, 'B30 ', ' Bachelorseminar/Kolloquium    ', 'required', ' P   ', ' Ü    ', ' 1   ', ' 4'],
-  [0, 'GTAT1 ', ' Game  Technology  &  Interactive  Systems  – Aktuelle  Themen  1 ', 'elective', 'SL/Ü', ' 2/2  ', ' 5'],
-  [0, 'VCAT1 ', ' Visual  Computing  –  Aktuelle Themen 1                          ', 'elective', 'SL/Ü', ' 2/2  ', ' 5'],
-  [0, 'WTAT1 ', ' Web Technology  –  Aktuelle Themen 1                             ', 'elective', 'SL/Ü', ' 2/2  ', ' 5'],
-  [0, 'GT2   ', ' Game  Engines                                                    ', 'elective', 'SL/Ü', ' 2/2      ', ' 5'],
-  [0, 'VC2   ', ' Bildanalyse                                                      ', 'elective', 'SL/Ü', ' 2/2      ', ' 5'],
-  [0, 'WT2   ', ' Usability                                                        ', 'elective', 'SL/Ü', ' 2/2      ', ' 5'],
-  [0, 'GTAT2 ', ' Game Technology & Interactive Systems – Aktuelle Themen 2        ', 'elective', 'SL/Ü', ' 2/2      ', ' 5'],
-  [0, 'VCAT2 ', ' Visual  Computing – Aktuelle Themen 2                            ', 'elective', 'SL/Ü', ' 2/2      ', ' 5'],
-  [0, 'WTAT2 ', ' Web  Technology – Aktuelle Themen2                               ', 'elective', 'SL/Ü', ' 2/2      ', ' 5']
+  [0, 'GTAT1 ', ' Game  Technology  &  Interactive  Systems  – Aktuelle  Themen  1 ', 'elective', 'SL/Ü', ' 2/2  ',
+   ' 5'],
+  [0, 'VCAT1 ', ' Visual  Computing  –  Aktuelle Themen 1                          ', 'elective', 'SL/Ü', ' 2/2  ',
+   ' 5'],
+  [0, 'WTAT1 ', ' Web Technology  –  Aktuelle Themen 1                             ', 'elective', 'SL/Ü', ' 2/2  ',
+   ' 5'],
+  [0, 'GT2   ', ' Game  Engines                                                    ', 'elective', 'SL/Ü', ' 2/2      ',
+   ' 5'],
+  [0, 'VC2   ', ' Bildanalyse                                                      ', 'elective', 'SL/Ü', ' 2/2      ',
+   ' 5'],
+  [0, 'WT2   ', ' Usability                                                        ', 'elective', 'SL/Ü', ' 2/2      ',
+   ' 5'],
+  [0, 'GTAT2 ', ' Game Technology & Interactive Systems – Aktuelle Themen 2        ', 'elective', 'SL/Ü', ' 2/2      ',
+   ' 5'],
+  [0, 'VCAT2 ', ' Visual  Computing – Aktuelle Themen 2                            ', 'elective', 'SL/Ü', ' 2/2      ',
+   ' 5'],
+  [0, 'WTAT2 ', ' Web  Technology – Aktuelle Themen2                               ', 'elective', 'SL/Ü', ' 2/2      ',
+   ' 5']
 ]
 
 courses.each do |a|
@@ -84,33 +98,33 @@ courses.each do |a|
                     name: a[2].strip,
                     methods: "#{a[4].strip} #{a[5].strip}",
                     ects: a[6].strip.to_i)
-  cp = CourseProgram.create(course: c, program: imib,
-                            semester: a[0],
-                            required: a[3].strip)
+  CourseProgram.create(course: c, program: imib,
+                       semester: a[0],
+                       required: a[3].strip)
 end
 
 # add some versions
 Version.destroy_all
 
-writer = User.find_by(email: "writer@mail.de")
+writer = User.find_by(email: 'writer@mail.de')
 puts writer.inspect
-PaperTrail.request.whodunnit= writer.id
+PaperTrail.request.whodunnit = writer.id
 
 b7 = Course.find_by(code: 'B7')
 b27 = Course.find_by(code: 'B27')
 wt2 = Course.find_by(code: 'WT2')
 
-b7.update contents: "first"
-b7.update contents: "second"
-b7.update contents: "third"
+b7.update contents: 'first'
+b7.update contents: 'second'
+b7.update contents: 'third'
 
-wt2.update contents: "first"
-wt2.update contents: "second"
-wt2.update contents: "third"
+wt2.update contents: 'first'
+wt2.update contents: 'second'
+wt2.update contents: 'third'
 
-editor = User.find_by(email: "editor@mail.de")
-PaperTrail.request.whodunnit= editor.id
+editor = User.find_by(email: 'editor@mail.de')
+PaperTrail.request.whodunnit = editor.id
 
-b27.update contents: "first"
-b27.update contents: "second"
-b27.update contents: "third"
+b27.update contents: 'first'
+b27.update contents: 'second'
+b27.update contents: 'third'

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommentsQaAbilitiesTest <  ActiveSupport::TestCase
+class CommentsQaAbilitiesTest < ActiveSupport::TestCase
   setup do
     @course = courses(:one)
     @user = users(:qa)
@@ -39,13 +39,12 @@ class CommentsQaAbilitiesTest <  ActiveSupport::TestCase
   end
 
   test 'as qa i can delete and destroy own comment' do
-    #assert @ability.can?(:delete, @comment_own)
+    # assert @ability.can?(:delete, @comment_own)
     assert @ability.can?(:destroy, @comment_own)
   end
 
   test 'as qa i cant delete and destroy others comment' do
-    #assert @ability.can?(:delete, @comment_other)
+    # assert @ability.can?(:delete, @comment_other)
     assert @ability.cannot?(:destroy, @comment_other)
   end
-
 end

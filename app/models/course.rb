@@ -98,8 +98,7 @@ class Course < ApplicationRecord
       end
     end
     data['programs'] = programs
-    data = data.as_json
-    data
+    data.as_json
   end
 end
 

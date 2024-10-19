@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class ProgramQAAbilitiesTest <  ActiveSupport::TestCase
+class ProgramQAAbilitiesTest < ActiveSupport::TestCase
   setup do
     @program = programs(:one)
     @user = users(:qa)

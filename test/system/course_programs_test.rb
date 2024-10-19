@@ -7,7 +7,6 @@ class CourseProgramsTest < ApplicationSystemTestCase
     system_test_login(@user.email, 'geheim12')
   end
 
-
   test 'visiting the index' do
     visit course_programs_url
     assert_selector 'h3', text: 'Course-Program Links'

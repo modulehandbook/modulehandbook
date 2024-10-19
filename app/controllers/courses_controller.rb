@@ -13,24 +13,24 @@ class CoursesController < ApplicationController
   end
 
   def versions
-
     @versions = @course.versions.reorder('created_at DESC')
-    @versions_authors = @versions.map{|v| [v, papertrail_author(v) ]}
+    @versions_authors = @versions.map { |v| [v, papertrail_author(v)] }
     @programs = @course.programs.order(:name).pluck(:name, :id)
   end
 
-
   LinkMemo = Data.define(:program, :link, :text)
-    
+
   # GET /courses/1
   # GET /courses/1.json
   def show
     @links = @course.course_programs.includes(:program)
-    @link_memos = @links.map { |l| LinkMemo.new(l.program, l ,
-        "#{l.semester}. Sem. / #{l.required}") }
+    @link_memos = @links.map do |l|
+      LinkMemo.new(l.program, l,
+                   "#{l.semester}. Sem. / #{l.required}")
+    end
     @link_memos = @link_memos.sort { |a, b| a.program.name <=> b.program.name }
     @programs = @course.programs.order(:name).pluck(:name, :id)
-    
+
     @course_program = CourseProgram.new(course: @course)
     @comments = @course.comments
     @comments_size = @comments.size
@@ -46,7 +46,9 @@ class CoursesController < ApplicationController
       if files.count < 1
         format.html { redirect_to courses_path, notice: 'No files selected to import Course(s) from' }
       elsif files.count > 1 && params[:program_id]
-        format.html { redirect_to program_path(params[:program_id]), notice: 'Course successfully imported into this Program' }
+        format.html do
+          redirect_to program_path(params[:program_id]), notice: 'Course successfully imported into this Program'
+        end
       elsif files.count > 1
         format.html { redirect_to courses_path, notice: 'Courses successfully imported' }
       else
@@ -90,8 +92,9 @@ class CoursesController < ApplicationController
       logger.debug resp
       filename = helpers.generate_filename(course)
       send_data resp.body, filename: filename + '.docx'
-    rescue Faraday::ConnectionFailed => e
-      redirect_to courses_path, alert: 'Error: Course could not be exported as DOCX because the connection to the external export service failed!'
+    rescue Faraday::ConnectionFailed
+      redirect_to courses_path,
+                  alert: 'Error: Course could not be exported as DOCX because the connection to the external export service failed!'
     end
   end
 
@@ -177,11 +180,11 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
-  PERMITTED_PARAMS = [:name, :code, :mission, :ects, :examination, :objectives, :contents,
-                        :prerequisites, :literature, :methods, :skills_knowledge_understanding,
-                        :skills_intellectual, :skills_practical, :skills_general,
-                        :lectureHrs, :labHrs, :tutorialHrs, :equipment, :room, :responsible_person,
-                        :teacher, :comment, :event_name]
+  PERMITTED_PARAMS = %i[name code mission ects examination objectives contents
+                        prerequisites literature methods skills_knowledge_understanding
+                        skills_intellectual skills_practical skills_general
+                        lectureHrs labHrs tutorialHrs equipment room responsible_person
+                        teacher comment event_name]
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(PERMITTED_PARAMS)

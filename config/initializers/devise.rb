@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 # Turbo does not work Devise out of the box
 # Issue on GitHub: https://github.com/heartcombo/devise/issues/5446
 # Workaround/fix: https://gorails.com/episodes/devise-hotwire-turbo & https://betterprogramming.pub/devise-auth-setup-in-rails-7-44240aaed4be
@@ -13,7 +12,7 @@
 #       super
 #     end
 #   end
-# 
+#
 #   def skip_format?
 #     %w(html turbo_stream */*).include? request_format.to_s
 #   end
@@ -27,9 +26,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  unless Rails.application.credentials.devise.nil?
-    config.secret_key = Rails.application.credentials.devise.secret_key
-  end
+  config.secret_key = Rails.application.credentials.devise.secret_key unless Rails.application.credentials.devise.nil?
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -311,7 +308,6 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-
   # ==> Hotwire/Turbo configuration
   # When using Devise with Hotwire/Turbo, the http status for error responses
   # and some redirects must match the following. The default in Devise for existing
@@ -320,7 +316,6 @@ Devise.setup do |config|
   # Note: These might become the new default in future versions of Devise.
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
-  
 
   # ==> Configuration for :registerable
 

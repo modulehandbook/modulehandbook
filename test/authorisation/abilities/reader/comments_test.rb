@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommentsReaderAbilitiesTest <  ActiveSupport::TestCase
+class CommentsReaderAbilitiesTest < ActiveSupport::TestCase
   setup do
     @course = courses(:one)
     @user = users(:reader)
@@ -39,13 +39,12 @@ class CommentsReaderAbilitiesTest <  ActiveSupport::TestCase
   end
 
   test 'as reader i can delete and destroy own comment' do
-    #assert @ability.can?(:delete, @comment_own)
+    # assert @ability.can?(:delete, @comment_own)
     assert @ability.can?(:destroy, @comment_own)
   end
 
   test 'as reader i cant delete and destroy others comment' do
-    #assert @ability.can?(:delete, @comment_other)
+    # assert @ability.can?(:delete, @comment_other)
     assert @ability.cannot?(:destroy, @comment_other)
   end
-
 end

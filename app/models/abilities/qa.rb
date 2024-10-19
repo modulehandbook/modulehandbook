@@ -6,7 +6,6 @@ module Abilities
   class Qa
     include CanCan::Ability
 
-    def initialize(_user)
-    end
+    def initialize(_user); end
   end
 end

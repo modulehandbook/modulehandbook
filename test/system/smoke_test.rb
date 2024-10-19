@@ -6,8 +6,7 @@ require 'application_system_test_case'
 #     driver_option.add_argument('--disable-search-engine-choice-screen')
 #   end
 # end
-#class SmokeTest < SimpleApplicationSystemTestCase
-
+# class SmokeTest < SimpleApplicationSystemTestCase
 
 class SmokeTest < ApplicationSystemTestCase
   setup do
@@ -18,7 +17,7 @@ class SmokeTest < ApplicationSystemTestCase
 
   test 'just visit root' do
     visit root_url
-    #assert false
-    #assert_selector 'h1', text: 'Welcome to the Module Handbook!'
+    # assert false
+    # assert_selector 'h1', text: 'Welcome to the Module Handbook!'
   end
 end

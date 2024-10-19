@@ -1,7 +1,5 @@
-
 module OwnCommentsAssertions
   include CommentsTestsHelper
-
 
   # def sees_courses
   #   get "/courses/"
@@ -33,21 +31,18 @@ module OwnCommentsAssertions
 
   def delete_and_destroy_own_comment
     skip
-  # due to intermittent...
-  #   Error:
-  #   CommentsWriterTest#test_as_writer_i_can_delete_and_destroy_own_comment:
-  #   Capybara::ModalNotFound: Unable to find modal dialog
-  #   test/system/comments/comments_system_test/own_comments_assertions.rb:36:in `delete_and_destroy_own_comment'
-  #   test/system/comments/comments_writer_test.rb:26:in `block in <class:CommentsWriterTest>'
+    # due to intermittent...
+    #   Error:
+    #   CommentsWriterTest#test_as_writer_i_can_delete_and_destroy_own_comment:
+    #   Capybara::ModalNotFound: Unable to find modal dialog
+    #   test/system/comments/comments_system_test/own_comments_assertions.rb:36:in `delete_and_destroy_own_comment'
+    #   test/system/comments/comments_writer_test.rb:26:in `block in <class:CommentsWriterTest>'
     assert_text @the_comment
     accept_alert do
       delete_button(@the_comment).click
     end
     refute_text @the_comment
   end
-
-
-
 
   def delete_one_out_of_three_comments
     visit course_path(@course)
@@ -65,12 +60,9 @@ module OwnCommentsAssertions
     assert_text the_comment_3
     accept_alert do
       delete_button(the_comment_2).click
-
     end
     assert_text the_comment_1
     refute_text the_comment_2
     assert_text the_comment_3
   end
-
-
 end

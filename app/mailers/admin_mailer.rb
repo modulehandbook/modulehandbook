@@ -1,6 +1,4 @@
-
 class AdminMailer < Devise::Mailer
-
   default from: Rails.configuration.x.mh_devise_email
   layout 'mailer'
 

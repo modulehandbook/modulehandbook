@@ -1,5 +1,5 @@
 Rails.application.configure do
-config.file_watcher = ActiveSupport::FileUpdateChecker
+  config.file_watcher = ActiveSupport::FileUpdateChecker
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.action_mailer.default_url_options = { host: config.x.mh_hostname }

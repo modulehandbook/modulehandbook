@@ -19,7 +19,7 @@ class DeviseApiTest < ApplicationSystemTestCase
   test 'is logged in' do
     # Logged in as admin@mail.de
     visit root_path
-    assert_text 'Logged in as '+@user_writer.email
+    assert_text 'Logged in as ' + @user_writer.email
   end
 
   test 'switch user' do
@@ -28,8 +28,6 @@ class DeviseApiTest < ApplicationSystemTestCase
     system_test_login(@user_editor.email, 'geheim12')
     visit root_path
 
-    assert_text 'Logged in as '+@user_editor.email
+    assert_text 'Logged in as ' + @user_editor.email
   end
-
-
 end
