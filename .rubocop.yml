@@ -1,0 +1,8 @@
+require:
+  - rubocop-rails
+  - rubocop-capybara
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*.rb'
+    - 'bin/**'
