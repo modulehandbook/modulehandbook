@@ -1,10 +1,10 @@
 class AbilitiesController < ApplicationController
   load_and_authorize_resource
   def index
-      @controller = all_controllers
-      @models = [Course, Program, CourseProgram, Comment, Faculty, Version, User]
+    #@controller = all_controllers
+    #@models = [Course, Program, CourseProgram, Comment, Faculty, Version, User]
       @roles = User::ROLES
-      @actions_by_controller = actions_by_controller
+    # @actions_by_controller = actions_by_controller
       @actions_by_model = actions_by_model
       @models = @actions_by_model.keys.sort_by(&:to_s)
       @abilities = @roles.map { |r| [r, Ability.new(User.new(role: r))] }.to_h
@@ -24,6 +24,7 @@ class AbilitiesController < ApplicationController
   def all_controllers
     controllers = all_routes.map { |r| r[:controller] }.uniq.sort
   end
+
   def all_routes
     routes = Rails.application.routes.routes.map(&:defaults)
     routes.reject! { |r| r[:controller].nil? }
