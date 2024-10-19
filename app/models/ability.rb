@@ -3,6 +3,7 @@
 # see https://github.com/CanCanCommunity/cancancan/blob/develop/docs/README.md
 class Ability
   include CanCan::Ability
+  include Abilities
 
   def initialize(user)
     aliases
@@ -21,8 +22,11 @@ class Ability
     return if user.role == 'writer'
 
     # return unless user.role == 'editor' || user.role == 'qa' || user.role == 'admin'
-
-    merge Abilities::Editor.new(user)
+    role = 'editor'
+    method_name = "#{role}_abilities"
+    self.send(method_name, user)
+    #editor_abilities(user)
+    #merge Abilities::Editor.new(user)
     return if user.role == 'editor'
 
     # return unless user.role == 'qa' || user.role == 'admin'
