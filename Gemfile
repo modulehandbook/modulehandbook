@@ -57,6 +57,11 @@ group :test do
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
 end
+
+group :development, :test do
+  gem "rubocop", "~> 1.67"
+end
+
 gem 'cancancan'
 gem 'devise'
 gem 'faraday'
