@@ -13,15 +13,18 @@ class Ability
     unless User::ROLES.include?(user.role.to_sym)
       raise("non-existent user role #{user.role}")
     end
-    
+
     merge Abilities::Reader.new(user)
-    return unless user.role == 'writer' || user.role == 'editor' || user.role == 'qa' || user.role == 'admin'
+    return if user.role == 'reader'
+    #return unless user.role == 'writer' || user.role == 'editor' || user.role == 'qa' || user.role == 'admin'
 
     merge Abilities::Writer.new(user)
-    return unless user.role == 'editor' || user.role == 'qa' || user.role == 'admin'
+    return if user.role == 'writer'
+    #return unless user.role == 'editor' || user.role == 'qa' || user.role == 'admin'
 
     merge Abilities::Editor.new(user)
-    return unless user.role == 'qa' || user.role == 'admin'
+    return if user.role == 'editor'
+    #return unless user.role == 'qa' || user.role == 'admin'
 
     merge Abilities::Qa.new(user)
     return unless user.role == 'admin'
