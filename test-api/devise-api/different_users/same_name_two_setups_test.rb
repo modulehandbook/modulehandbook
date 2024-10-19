@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 
 # If tests have the same name, all callbacks are called (see the example below).
@@ -45,7 +47,7 @@ class OneNameTest < ApplicationSystemTestCase
   test 'editor is logged in as both setups are called, also the one below!' do
     visit root_path
     # also, @user_editor is defined.
-    assert_text 'Logged in as ' + @user_editor.email
+    assert_text "Logged in as #{@user_editor.email}"
   end
 end
 
@@ -58,6 +60,6 @@ class OneNameTest < ApplicationSystemTestCase
 
   test 'editor is logged in 2' do
     visit root_path
-    assert_text 'Logged in as ' + @user_editor.email
+    assert_text "Logged in as #{@user_editor.email}"
   end
 end

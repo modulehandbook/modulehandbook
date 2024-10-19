@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'selenium-webdriver'
 # options = { browser: :remote, url: 'http://localhost:4444' }
 

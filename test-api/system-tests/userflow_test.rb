@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 ## adapted from https://api.rubyonrails.org/v7.0.4/classes/ActionDispatch/IntegrationTest.html

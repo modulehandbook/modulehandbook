@@ -17,7 +17,7 @@ class User < ApplicationRecord
   before_destroy :check_for_versions
 
   def check_for_versions
-    return unless versions.count > 0
+    return unless versions.count.positive?
 
     errors.add(:base, "User can't be Destroyed because there are Associated Versions")
     throw :abort

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Program < ApplicationRecord
   has_many :course_programs, dependent: :destroy
   has_many :courses, through: :course_programs
@@ -7,7 +9,7 @@ class Program < ApplicationRecord
   scope :study_plan, -> { where.not(required: 'elective-option') }
   scope :elective_options, -> { where(required: 'elective-option') }
 
-  EDITABLE_ATTRIBUTES = %i[name code mission degree ects]
+  EDITABLE_ATTRIBUTES = %i[name code mission degree ects].freeze
   def select_name
     "#{name} (#{code})"
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 require 'system/comments/comments_system_test/comments_system_test'
 class CommentsWriterTest < CommentsSystemTest

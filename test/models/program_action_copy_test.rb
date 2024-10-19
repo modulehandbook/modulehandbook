@@ -7,7 +7,7 @@ class ProgramActionCopyTest < ActiveSupport::TestCase
   end
   test 'make sure fixture associations work as expected' do
     assert_equal 3, @program.courses.size
-    codes = @program.courses.map { |course| course.code }
+    codes = @program.courses.map(&:code)
     assert_includes codes, 'CC01'
     assert_includes codes, 'CC02'
     assert_includes codes, 'CC03'
@@ -16,7 +16,7 @@ class ProgramActionCopyTest < ActiveSupport::TestCase
     skip
     program_copy = @program.shallow_copy
     assert_equal 3, program_copy.courses.size
-    program_copy.courses.map { |course| course.code }
+    program_copy.courses.map(&:code)
     # assert_includes codes, 'CC01'
     # assert_includes codes, 'CC02'
     # assert_includes codes, 'CC03'

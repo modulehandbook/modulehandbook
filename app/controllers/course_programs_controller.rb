@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CourseProgramsController < ApplicationController
   load_and_authorize_resource
   before_action :set_course_program, only: %i[show edit update destroy]
@@ -9,7 +11,7 @@ class CourseProgramsController < ApplicationController
                          CourseProgram.where(program_id: params[:program_id])
                                       .includes(:program, :course)
                                       .order('programs.name', 'semester', 'courses.name')
-                       elsif course_id = params[:course_id]
+                       elsif (course_id = params[:course_id])
                          CourseProgram.where(course_id: course_id)
                                       .includes(:program, :course)
                                       .order('programs.name', 'semester', 'courses.name')
@@ -85,7 +87,7 @@ class CourseProgramsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   #
-  PERMITTED_PARAMS = %i[course program course_id program_id semester required]
+  PERMITTED_PARAMS = %i[course program course_id program_id semester required].freeze
   def course_program_params
     params.require(:course_program).permit(PERMITTED_PARAMS)
   end

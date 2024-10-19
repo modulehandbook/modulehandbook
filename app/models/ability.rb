@@ -61,6 +61,6 @@ class Ability
     end
 
     # Remove duplicate actions
-    actions_by_module.transform_values { |actions| actions.uniq }
+    actions_by_module.transform_values(&:uniq)
   end
 end

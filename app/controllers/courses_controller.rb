@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CoursesController < ApplicationController
   load_and_authorize_resource except: :export_courses_json
   skip_authorization_check only: :export_courses_json
@@ -62,7 +64,7 @@ class CoursesController < ApplicationController
     data = JSON.pretty_generate(data)
     code = @course.try(:code) ? @course.code.gsub(' ', '') : 'XX'
     name = @course.try(:name) ? @course.name.gsub(' ', '') : 'xxx'
-    filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
+    filename = "#{Date.today}_#{code}-#{name}"
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}.json"
   end
@@ -82,7 +84,7 @@ class CoursesController < ApplicationController
 
   def export_course_docx
     base_url = ENV['EXPORTER_BASE_URL'] || 'http://localhost:3030/'
-    post_url = base_url + 'docx/course'
+    post_url = "#{base_url}docx/course"
     course = Course.find_by(id: params[:id])
     course_json = course.gather_data_for_json_export.to_json
 
@@ -91,7 +93,7 @@ class CoursesController < ApplicationController
       resp = Faraday.post(post_url, course_json, 'Content-Type' => 'application/json')
       logger.debug resp
       filename = helpers.generate_filename(course)
-      send_data resp.body, filename: filename + '.docx'
+      send_data resp.body, filename: "#{filename}.docx"
     rescue Faraday::ConnectionFailed
       redirect_to courses_path,
                   alert: 'Error: Course could not be exported as DOCX because the connection to the external export service failed!'
@@ -109,7 +111,7 @@ class CoursesController < ApplicationController
 
   def change_state
     @course = Course.find(params[:course_id])
-    event = params[:event_name] + '!'
+    event = "#{params[:event_name]}!"
     @course.send(event.to_sym)
     redirect_to course_path(@course), notice: 'State updated'
   end
@@ -184,7 +186,7 @@ class CoursesController < ApplicationController
                         prerequisites literature methods skills_knowledge_understanding
                         skills_intellectual skills_practical skills_general
                         lectureHrs labHrs tutorialHrs equipment room responsible_person
-                        teacher comment event_name]
+                        teacher comment event_name].freeze
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(PERMITTED_PARAMS)

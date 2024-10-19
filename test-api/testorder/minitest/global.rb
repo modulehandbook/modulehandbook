@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TestLog
   @@log = []
   def self.log(name)

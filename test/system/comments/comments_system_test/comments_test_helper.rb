@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CommentsTestsHelper
   def base_setup_helper
     system_test_login(@user.email, 'geheim12')

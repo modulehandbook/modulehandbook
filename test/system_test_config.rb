@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # system tests are test that access the rails app via
 # the browser.
 # thus, for the tests to run, the following services/processes are needed:
@@ -76,10 +78,10 @@ class SystemTestConfig
     return if capybara_run_server
 
     browser_url = driver_options[:url]
-    raise Error.new "Remote browser url cannot be reached: #{browser_url}" unless check_host_availability(browser_url)
+    raise Error, "Remote browser url cannot be reached: #{browser_url}" unless check_host_availability(browser_url)
     return if check_host_availability(capybara_app_host)
 
-    raise Error.new "Rails app cannot be reached: #{capybara_app_host}"
+    raise Error, "Rails app cannot be reached: #{capybara_app_host}"
   end
 
   def check_host_availability(url)
