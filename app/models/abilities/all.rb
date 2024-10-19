@@ -11,7 +11,6 @@ module Abilities
     can %i[read approve], User
   end
 
-  def qa_abilities(user) end
 
   def reader_abilities(user)
     can %i[read update], User, id: user.id
@@ -38,8 +37,7 @@ module Abilities
     can %i[crud export_course import_course versions], Course
     can %i[crud export_program import_program], Program
   end
-  class All < UserRole
-    include CanCan::Ability
+  def not_logged_in_abilities(user)
 
   end
 end

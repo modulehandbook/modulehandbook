@@ -8,12 +8,17 @@ class Ability
   def initialize(user)
     aliases
 
-    merge Abilities::All.new(user)
+    #not_logged_in_abilities(user)
     return if user.blank?
 
     raise("non-existent user role #{user.role}") unless User::ROLES.include?(user.role.to_sym)
 
-    merge Abilities::Reader.new(user)
+    User::ROLES.each do | user_role |# ROLES = %i[reader writer editor qa admin].freeze
+      method_name = "#{user_role}_abilities"
+      self.send(method_name, user)
+      return if user.role == user_role
+    end
+      merge Abilities::Reader.new(user)
     return if user.role == 'reader'
 
     # return unless user.role == 'writer' || user.role == 'editor' || user.role == 'qa' || user.role == 'admin'
