@@ -14,6 +14,10 @@ module Abilities
       can %i[read export_program], Program
       can %i[read], Faculty
       can %i[read], CourseProgram
+      comment_abilities(user)
+    end
+
+    def comment_abilities(user)
       can %i[read], Comment
       can %i[create], Comment
       can %i[destroy], Comment, author_id: user.id

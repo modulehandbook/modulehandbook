@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 while true; do
@@ -12,5 +11,4 @@ while true; do
     fi
 
     fswatch -r **/*.rb -1
-    
 done

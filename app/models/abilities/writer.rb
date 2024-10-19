@@ -2,7 +2,10 @@
 
 module Abilities
   # defines abilities for writers
-  # Autor:innen (Writer) können Modulbeschreibungen sowie Studiengänge editieren, die Versionsgeschichte einsehen und Änderungen rückgängig machen. Sie können jedoch nicht den Status der Modulbeschreibungen oder des Studiengangs verändern.
+  # Autor:innen (Writer) können Modulbeschreibungen sowie Studiengänge
+  # editieren, die Versionsgeschichte einsehen und Änderungen rückgängig machen.
+  # Sie können jedoch nicht den Status der Modulbeschreibungen oder des
+  # Studiengangs verändern.
   class Writer < UserRole
     include CanCan::Ability
 
