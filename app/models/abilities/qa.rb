@@ -6,7 +6,7 @@ module Abilities
   class Qa < UserRole
     include CanCan::Ability
     def initialize(user)
-      super(user)
+      super
     end
   end
 end
