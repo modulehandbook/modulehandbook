@@ -8,13 +8,15 @@ AllCops:
     - 'db/schema.rb'
     - 'db/migrate/*.rb'
     - 'bin/**'
+    # bigger refactorings needed
+    - 'app/models/course.rb'
     # incremental rubocop fixes: remove one by one
     #- 'app/models/*.rb'
     #- 'app/models/ability.rb'
     #- 'app/models/application_record.rb'
-    - 'app/models/comment.rb'
-    - 'app/models/course.rb'
-    - 'app/models/course_program.rb'
+    #- 'app/models/comment.rb'
+   
+    #- 'app/models/course_program.rb'
     - 'app/models/faculty.rb'
     - 'app/models/program.rb'
     - 'app/models/user.rb'

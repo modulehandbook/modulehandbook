@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+# one Course within a Program - Modulbeschreibung
 class Course < ApplicationRecord
   include AASM
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
   has_paper_trail
 
+  # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false do
     state :in_progress, initial: true
     state :in_review
@@ -23,22 +25,23 @@ class Course < ApplicationRecord
       transitions from: :ready_for_councils, to: :in_progress
     end
     event :decisions_complete do
-      transitions from: :ready_for_councils, to: :done, guard: :only_term_info_edied?
+      transitions from: :ready_for_councils, to: :done, guard: :only_term_info_edited?
       transitions from: :ready_for_councils, to: :updating
     end
     event :start_update do
       transitions from: :done, to: :updating
     end
     event :finish_updating do
-      transitions from: :updating, to: :done, guard: :only_term_info_edied?
+      transitions from: :updating, to: :done, guard: :only_term_info_edited?
       transitions from: :updating, to: :in_progress
     end
     event :reset_state do
       transitions to: :in_progress
     end
   end
+  # rubocop:enable Metrics/BlockLength
 
-  def only_term_info_edied?
+  def only_term_info_edited?
     true
   end
 
@@ -108,13 +111,13 @@ class CourseFactory
   def self.create(data, program_id_from_params)
     course = Course.find_or_create_from_json(data)
     unless program_id_from_params.nil?
-      course_program = CourseProgram.find_or_create_from_json(data, course.id, program_id_from_params)
+      CourseProgram.find_or_create_from_json(data, course.id, program_id_from_params)
     end
     course.save
     programs = data['programs']
     programs.each do |program_data|
       program = Program.find_or_create_from_json(program_data)
-      course_program = CourseProgram.find_or_create_from_json(program_data, course.id, program.id)
+      CourseProgram.find_or_create_from_json(program_data, course.id, program.id)
       course.save
     end
     course
