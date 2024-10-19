@@ -7,7 +7,7 @@ module Abilities
     include CanCan::Ability
 
     def initialize(user)
-      super(user)
+      super
       can %i[read update], User, id: user.id
       can %i[read], User, readable: true
       can %i[read export_course], Course

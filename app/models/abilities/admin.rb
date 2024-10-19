@@ -5,7 +5,7 @@ module Abilities
   class Admin < UserRole
     include CanCan::Ability
 
-    def initialize(_user)
+    def initialize(user)
       super(user)
       can :manage, :all
     end

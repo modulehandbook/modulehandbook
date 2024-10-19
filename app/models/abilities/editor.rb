@@ -6,7 +6,7 @@ module Abilities
   class Editor < UserRole
     include CanCan::Ability
 
-    def initialize(_user)
+    def initialize(user)
       super(user)
       can %i[crud], CourseProgram
       can %i[create read update], Faculty

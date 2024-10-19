@@ -4,7 +4,7 @@ module Abilities
   # defines abilities without login
   class All < UserRole
     include CanCan::Ability
-    def initialize(_user)
+    def initialize(user)
       super(user)
     end
   end
