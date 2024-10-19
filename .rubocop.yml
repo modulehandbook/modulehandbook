@@ -2,6 +2,7 @@ require:
   - rubocop-rails
   - rubocop-capybara
 AllCops:
+  NewCops: enable
   Exclude:
     - 'db/schema.rb'
     - 'db/migrate/*.rb'
