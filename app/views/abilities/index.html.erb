@@ -1,10 +1,8 @@
 <% content_for(:title, "Abilities") %>
 
 <%
-  models = @models
   roles = @roles
-  actions_by_module = @actions_by_module
-  abilities = @abilities
+  @abilities
 %>
 
 <table class="table table-sm table-striped">
@@ -18,13 +16,13 @@
   </thead>
   <tbody>
     <% @models.each do |model| %>
-      <% actions_for_model = actions_by_module[model.name] || [] %>
-      <% actions_for_model.each do |action| %>
+      <% actions = @actions_by_model[model] || [] %>
+      <% actions.each do |action| %>
         <tr>
           <th scope="row"><%= "#{model} / #{action}" %></th>
-          <% roles.each do |role| %>
+          <%  @roles.each do |role| %>
             <td>
-              <% can_do = abilities[role].can? action, model %>
+              <% can_do = @abilities[role].can? action, model %>
               <div class="alert alert-<%= can_do ? 'success' : 'danger' %>" role="alert">
                 <%= can_do %>
               </div>
