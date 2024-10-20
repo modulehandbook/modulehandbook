@@ -3,7 +3,7 @@
 
 <% case type.to_sym  %>
 <% when :datetime %>
-  <%= user.format_time(value) %>
+  <%= format_time(value) %>
 <% when :boolean %>
    <input type="checkbox" <%= value ? "checked":"" %> disabled>
    <% if field_name == :approved && !user.approved && can?(:approve, user) %> | <%= link_to "Approve", approve_user_path(id: user.id) %><% end %>

@@ -9,6 +9,11 @@ module UsersHelper
     FIELD_TYPE[field_name.to_sym]
   end
 
+  def format_time(at)
+    return '' if at.nil? || at == ''
+    at.strftime('%d/%m/%y (%H:%M)')
+  end
+
   def field_editable?(field_name, user)
     if field_name == :approved
       (user != current_user) && (can? :manage_access, user)

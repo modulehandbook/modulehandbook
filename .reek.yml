@@ -63,7 +63,22 @@ detectors:
 exclude_paths:
   - db/migrate
   # todo: fix reek errors in files below
-  - app
+#  - app
+  - app/assets
+  - app/channels
+  - app/controllers
+  - app/helpers
+  - app/javascript
+  - app/jobs
+  - app/mailers
+  #- app/models
+  # - app/models/user.rb
+  - app/models/course.rb
+  - app/models/course_program.rb
+  - app/models/ability.rb
+  - app/models/program.rb
+  
+  - app/views
   - test-api
 #  - config
 #  - test
