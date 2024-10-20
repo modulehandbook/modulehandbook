@@ -1,4 +1,4 @@
-name: rubocop
+name: 'reek and rubocop'
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   rubocop:
-    name: Test
+    name: Rubocop
     runs-on: ubuntu-latest
 
     steps:
@@ -24,5 +24,22 @@ jobs:
         run: bin/bundle install
 
       - name: Run Rubocop
-        id: run-tests
         run: rubocop
+
+  reek:
+    name: Reek
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check out repo code
+        uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.3
+      - name: Install dependencies
+        run: bin/bundle install
+
+      - name: Run Reek
+        run: reek
