@@ -12,25 +12,25 @@ class CourseTest < ActiveSupport::TestCase
         "id": 1,
         "name": "Informatik  1",
         "code": "B2",
-        "mission": nil,
+        "mission": "This course\'s mission",
         "ects": 4,
-        "examination": nil,
-        "objectives": nil,
-        "contents": nil,
-        "prerequisites": nil,
-        "literature": nil,
+        "examination": "Exam",
+        "objectives": "learn programming",
+        "contents": "loops and objects",
+        "prerequisites": "typing",
+        "literature": "a book",
         "methods": "P SL/Ü",
-        "skills_knowledge_understanding": nil,
-        "skills_intellectual": nil,
-        "skills_practical": nil,
-        "skills_general": nil,
+        "skills_knowledge_understanding": "this and that",
+        "skills_intellectual": "some intellectual skills",
+        "skills_practical": "some practical skills",
+        "skills_general": "some general skills",
         "created_at": "2020-08-13T13:27:21.179Z",
         "updated_at": "2020-08-13T13:27:21.179Z",
-        "lectureHrs": nil,
-        "labHrs": nil,
-        "tutorialHrs": nil,
-        "equipment": nil,
-        "room": nil
+        "lectureHrs": 4,
+        "labHrs": 2,
+        "tutorialHrs": 2,
+        "equipment": "computer",
+        "room": "101"
         }'.gsub('nil', 'null'))
   end
 
@@ -41,12 +41,24 @@ class CourseTest < ActiveSupport::TestCase
     course.save!
     assert_equal @course_json['name'], course.name
   end
+
   # describe "find_or_create_from_json creates valid course" do
   test 'find_or_create_from_json creates valid course with all details provided' do
     assert_difference('Course.count', 1) do
       course = Course.find_or_create_from_json(@course_json)
-      assert_equal @course_json['code'], course.code
-    end
+      keys_to_check =  @course_json.keys
+      keys_to_check = keys_to_check - ['id', 'created_at', 'updated_at']
+      nil_keys = keys_to_check.select { |key| @course_json[key].nil? }
+      keys_to_check = keys_to_check - nil_keys
+      nil_keys.each do |key|
+        assert_nil course.send(key), "field #{key} is not nil"
+
+      end
+      keys_to_check.each do |key|
+        value = course.send(key)
+        assert_equal @course_json[key], value , "field #{key} does not match"
+      end
+     end
   end
 
   test 'find_or_create_from_json creates valid course with not all details provided' do

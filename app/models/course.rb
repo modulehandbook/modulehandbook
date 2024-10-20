@@ -57,31 +57,29 @@ class Course < ApplicationRecord
   end
 
   def self.find_or_create_from_json(data)
-    existing_course = Course.find_by(code: data['code'])
-    course = if existing_course.nil?
-               Course.new
-             else
-               existing_course
-             end
-    course.name = data['name']
-    course.code = data['code']
-    course.mission = data['mission']
-    course.ects = data['ects']
-    course.examination = data['examination']
-    course.objectives = data['objectives']
-    course.contents = data['contents']
-    course.prerequisites = data['prerequisites']
-    course.literature = data['literature']
-    course.methods = data['methods']
-    course.skills_knowledge_understanding = data['skills_knowledge_understanding']
-    course.skills_intellectual = data['skills_intellectual']
-    course.skills_practical = data['skills_practical']
-    course.skills_general = data['skills_general']
-    course.lectureHrs = data['lectureHrs']
-    course.labHrs = data['labHrs']
-    course.tutorialHrs = data['tutorialHrs']
-    course.equipment = data['equipment']
-    course.room = data['room']
+    course_code = data['code']
+    course = Course.where(code: course_code).first_or_create
+
+      course.name = data['name']
+      course.code = course_code
+      course.mission = data['mission']
+      course.ects = data['ects']
+      course.examination = data['examination']
+      course.objectives = data['objectives']
+      course.contents = data['contents']
+      course.prerequisites = data['prerequisites']
+      course.literature = data['literature']
+      course.methods = data['methods']
+      course.skills_knowledge_understanding = data['skills_knowledge_understanding']
+      course.skills_intellectual = data['skills_intellectual']
+      course.skills_practical = data['skills_practical']
+      course.skills_general = data['skills_general']
+      course.lectureHrs = data['lectureHrs']
+      course.labHrs = data['labHrs']
+      course.tutorialHrs = data['tutorialHrs']
+      course.equipment = data['equipment']
+      course.room = data['room']
+
     course.save
     course
   end
@@ -110,7 +108,7 @@ end
 class CourseFactory
   def self.create(data, program_id_from_params)
     course = Course.find_or_create_from_json(data)
-    unless program_id_from_params.nil?
+    unless program_id_from_params == :no_program_id
       CourseProgram.find_or_create_from_json(data, course.id, program_id_from_params)
     end
     course.save

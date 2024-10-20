@@ -23,12 +23,6 @@ class User < ApplicationRecord
     throw :abort
   end
 
-  def format_time(at)
-    return '' if at.nil? || at == ''
-
-    at.strftime('%d/%m/%y (%H:%M)')
-  end
-
   def faculty_name
     @faculty_name ||= faculty ? faculty.name : '---'
   end

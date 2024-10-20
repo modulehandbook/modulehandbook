@@ -40,7 +40,7 @@ init-local: start_db
 - bin/rails db:migrate
 - bin/rails db:seed
 
-test: start_db test_local rubocop
+test: start_db test_local rubocop reek
 
 start_db:
 - docker compose up -d module-handbook-postgres
@@ -55,7 +55,8 @@ test_local:
 rubocop:
 - rubocop
 
-
+reek:
+- reek
 #
 #
 #    ---- DOCKER ----

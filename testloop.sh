@@ -10,5 +10,5 @@ while true; do
       bin/rails test
     fi
 
-    fswatch -r **/*.rb -1
+    fswatch -1 -r ./**/*.rb
 done
