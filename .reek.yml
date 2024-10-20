@@ -10,6 +10,16 @@ detectors:
   IrresponsibleModule:
     enabled: false
 
+  TooManyInstanceVariables:
+    exclude:
+      - "SystemTestConfig" # it's a config, maybe put them in a dict
+  TooManyStatements: 
+    exclude:
+      - 'SystemTestConfig#config_selenium'
+  InstanceVariableAssumption:
+    exclude:
+      - "SystemTestConfig" # TBD: refactor or remove SystemTestConfig?
+  
   # You can use filters to silence Reek warnings.
   # Either because you simply disagree with Reek (we are not the police) or
   # because you want to fix this at a later point in time.
@@ -47,10 +57,24 @@ detectors:
 
 ### Excluding directories
 
+
+
 # Directories and files below will not be scanned at all
 exclude_paths:
+  - db/migrate
+  # todo: fix reek errors in files below
   - app
   - test-api
 #  - config
-  - db
-  - test
+#  - test
+  - test/application_system_test_case.rb
+  - test/authorisation
+  - test/channels
+  - test/controllers
+  - test/fixtures
+  - test/helpers
+  - test/integration
+  - test/mailers
+  - test/models
+  - test/rails-api
+  - test/system

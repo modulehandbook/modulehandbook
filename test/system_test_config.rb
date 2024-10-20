@@ -21,7 +21,7 @@
 # docker/docker : everything in docker
 
 class SystemTestConfig
-  attr_accessor :driver, :driver_loc,
+  attr_reader   :driver, :driver_loc,
                 :driver_options,
                 :selenium_host, :selenium_port,
                 :host_running_test,
@@ -38,24 +38,22 @@ class SystemTestConfig
   end
 
   def config_selenium
-    host = ENV.fetch('SELENIUM_REMOTE_HOST', nil)
-    if host.nil?
+    if ENV.has_key?('SELENIUM_REMOTE_HOST')
+      @selenium_host = ENV['SELENIUM_REMOTE_HOST']
+      @driver_loc = :docker_selenium_standalone
+      @selenium_port = ENV.fetch('SELENIUM_REMOTE_PORT', 4444)
+      url = "http://#{@selenium_host}:#{@selenium_port}"
+      @driver_options = { browser: :remote, url: url }
+      @capybara_run_server = false
+    else
       @driver_loc = :local
       @driver_options = {}
       @capybara_run_server = true
-    else
-      @selenium_host = host
-      @driver_loc = :docker_selenium_standalone
-      @selenium_port = ENV.fetch('SELENIUM_REMOTE_PORT', 4444)
-      url = "http://#{selenium_host}:#{selenium_port}"
-      @driver_options = { browser: :remote, url: url }
-      @capybara_run_server = false
     end
   end
 
   def detect_host_running_test
-    docker_image = ENV.fetch('MODHAND_IMAGE', nil)
-    @host_running_test = docker_image.nil? ? :local : :docker
+    @host_running_test = ENV.has_key?('MODHAND_IMAGE') ? :local : :docker
   end
 
   def detect_app_server
@@ -64,7 +62,7 @@ class SystemTestConfig
     @capybara_server_host = if host_running_test == :local
                               '0.0.0.0'
                             else
-                              selenium_host
+                              @selenium_host
                             end
 
     @capybara_app_host = if driver_loc == :local
@@ -78,23 +76,31 @@ class SystemTestConfig
     return if capybara_run_server
 
     browser_url = driver_options[:url]
-    raise Error, "Remote browser url cannot be reached: #{browser_url}" unless check_host_availability(browser_url)
+    raise Error, "Remote browser url cannot be reached: #{browser_url}" unless HttpURLChecker(browser_url).available?
     return if check_host_availability(capybara_app_host)
 
     raise Error, "Rails app cannot be reached: #{capybara_app_host}"
   end
 
-  def check_host_availability(url)
-    begin
-      require 'net/http'
-      url = URI.parse(url)
-      req = Net::HTTP.new(url.host, url.port)
-      req.request_head(url.path)
-    rescue StandardError
-      # error occured, return false
-      return false
+  class HttpURLChecker 
+    def initialize(url_string)
+      url = URI.parse(url_string)
+      @host = url.host
+      @port = url.port
+      @path = url.path
     end
-    # valid site
-    true
+    def available?
+      begin
+        require 'net/http'
+        req = Net::HTTP.new(@host, @port)
+        req.request_head(@path)
+      rescue StandardError
+        # error occured, return false
+        return false
+      end
+      # valid site
+      true
+    end
   end
+  
 end
