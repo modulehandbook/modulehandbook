@@ -1,10 +1,5 @@
 <% content_for(:title, "Abilities") %>
 
-<%
-  roles = @roles
-  @abilities
-%>
-
 <table class="table table-sm table-striped">
   <thead>
     <tr>
@@ -22,7 +17,7 @@
           <th scope="row"><%= "#{model} / #{action}" %></th>
           <%  @roles.each do |role| %>
             <td>
-              <% can_do = @abilities[role].can? action, model %>
+              <% can_do = @abilities[role].can? action.to_sym, model.constantize %>
               <div class="alert alert-<%= can_do ? 'success' : 'danger' %>" role="alert">
                 <%= can_do %>
               </div>

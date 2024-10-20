@@ -9,7 +9,7 @@ class AbilitiesController < ApplicationController
       @models = @actions_by_model.keys.sort_by(&:to_s)
       @abilities = @roles.map { |r| [r, Ability.new(User.new(role: r))] }.to_h
   end
-  def actions_by_controller
+  def _actions_by_controller
 
     actions_by_controller = Hash.new { |hash, key| hash[key] = [] }
 
@@ -36,7 +36,7 @@ class AbilitiesController < ApplicationController
 
   end
 
-  def actions_by_model
+  def actions_by_model2
     actions_by_model = Hash.new { |hash, key| hash[key] = [] }
     ability = Ability.new(User.new(role: 'admin'))
     alias_expansion = ability.aliased_actions
@@ -49,6 +49,24 @@ class AbilitiesController < ApplicationController
         end
     end
     actions_by_model = actions_by_model.transform_values(&:uniq)
+    actions_by_model
+  end
+
+  def actions_by_model
+    Rails.application.eager_load!
+
+    actions_by_model = {}
+    controllers_ignore = ["DeviseController", "WelcomeController", "ViewsController"]
+    # c.name.match("::") -> ignores Controllers in the Users and Devise modules (from Devise)
+    # TBD: maybe a Whitelist of Controllers that should be included is better/more readable?
+    controllers = ApplicationController.descendants.reject{|c| c.name.match("::") || controllers_ignore.include?(c.name)}
+
+    controllers.each do |controller|
+      defined_actions = controller.instance_methods(false).map(&:to_s)
+      name = controller.name.demodulize.sub('Controller', '').singularize
+      actions_by_model[name] = defined_actions
+    end
+
     actions_by_model
   end
 end
