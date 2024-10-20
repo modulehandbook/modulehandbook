@@ -108,7 +108,7 @@ end
 class CourseFactory
   def self.create(data, program_id_from_params)
     course = Course.find_or_create_from_json(data)
-    unless program_id_from_params.nil?
+    unless program_id_from_params == :no_program_id
       CourseProgram.find_or_create_from_json(data, course.id, program_id_from_params)
     end
     course.save

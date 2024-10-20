@@ -41,14 +41,16 @@ class CoursesController < ApplicationController
 
   def import_course_json
     files = params[:files] || []
+    import_with_program_context = params.has_key?(:program_id)
+    program_context = import_with_program_context ? params[:program_id] : :no_program_id
     files.each do |file|
-      @course = Course.json_import_from_file(file, params[:program_id])
+      @course = Course.json_import_from_file(file, program_context)
     end
     respond_to do |format|
       if files.count < 1
         format.html { redirect_to courses_path, notice: I18n.t('controllers.courses.error_import') }
-      elsif files.count > 1 && params[:program_id]
-        format.html { redirect_to program_path(params[:program_id]), notice: I18n.t('controllers.courses.imported_to_program') }
+      elsif files.count > 1 && import_with_program_context
+        format.html { redirect_to program_path(program_context), notice: I18n.t('controllers.courses.imported_to_program') }
       elsif files.count > 1
         format.html { redirect_to courses_path, notice: I18n.t('controllers.courses.many_imported') }
       else
