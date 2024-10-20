@@ -77,3 +77,5 @@ gem 'jquery-rails'
 gem 'redcarpet'
 
 gem 'importmap-rails', '~> 1.1'
+
+gem "reek", "~> 6.3"
