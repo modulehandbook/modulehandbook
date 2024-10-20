@@ -25,7 +25,7 @@ AllCops:
     - 'app/helpers/**/*.rb'
     - 'app/controllers/**/*.rb'
     - 'app/mailers/**/*.rb'
-    - 'app/**/*.jbuilder'
+    #- 'app/**/*.jbuilder'
     - 'bin/**/*.rb'
     - 'config/**/*.rb'
     - 'container_logs/**/*.rb'
