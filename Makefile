@@ -30,7 +30,7 @@ sshid=
 
 # start rails locally - default target 
 # Runs Rails on local Machine (with postgres in docker container)
-start-local: start_db open 
+start_local: start_db open 
 - bin/rails s
 
 ### Run this once after cloning the repo
@@ -40,15 +40,21 @@ init-local: start_db
 - bin/rails db:migrate
 - bin/rails db:seed
 
+test: start_db test_local rubocop
+
 start_db:
 - docker compose up -d module-handbook-postgres
 
 open:
 - open http://localhost:3000
 
-test-local:
+test_local:
 - bin/rails test
 - bin/rails test:system
+
+rubocop:
+- rubocop
+
 
 #
 #

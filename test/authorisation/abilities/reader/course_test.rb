@@ -2,12 +2,12 @@
 
 require 'test_helper'
 
-class CourseReaderAbilitiesTest <  ActiveSupport::TestCase
+class CourseReaderAbilitiesTest < ActiveSupport::TestCase
   setup do
     @course = courses(:one)
     @user = users(:reader)
     @ability = Ability.new(@user)
-  #  system_test_login(@user.email, 'geheim12')
+    #  system_test_login(@user.email, 'geheim12')
   end
 
   test 'as reader i cant create a course' do

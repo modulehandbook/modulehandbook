@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 
 class UserWriterTest < ApplicationSystemTestCase
@@ -14,7 +16,6 @@ class UserWriterTest < ApplicationSystemTestCase
   test 'writer is logged in' do
     # Logged in as admin@mail.de
     visit root_path
-    assert_text 'Logged in as '+@user.email
+    assert_text "Logged in as #{@user.email}"
   end
-
 end

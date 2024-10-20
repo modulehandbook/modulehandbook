@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CoursesController < ApplicationController
   load_and_authorize_resource except: :export_courses_json
   skip_authorization_check only: :export_courses_json
@@ -13,24 +15,24 @@ class CoursesController < ApplicationController
   end
 
   def versions
-
     @versions = @course.versions.reorder('created_at DESC')
-    @versions_authors = @versions.map{|v| [v, papertrail_author(v) ]}
+    @versions_authors = @versions.map { |v| [v, papertrail_author(v)] }
     @programs = @course.programs.order(:name).pluck(:name, :id)
   end
 
-
   LinkMemo = Data.define(:program, :link, :text)
-    
+
   # GET /courses/1
   # GET /courses/1.json
   def show
     @links = @course.course_programs.includes(:program)
-    @link_memos = @links.map { |l| LinkMemo.new(l.program, l ,
-        "#{l.semester}. Sem. / #{l.required}") }
+    @link_memos = @links.map do |l|
+      LinkMemo.new(l.program, l,
+                   "#{l.semester}. Sem. / #{l.required}")
+    end
     @link_memos = @link_memos.sort { |a, b| a.program.name <=> b.program.name }
     @programs = @course.programs.order(:name).pluck(:name, :id)
-    
+
     @course_program = CourseProgram.new(course: @course)
     @comments = @course.comments
     @comments_size = @comments.size
@@ -60,7 +62,7 @@ class CoursesController < ApplicationController
     data = JSON.pretty_generate(data)
     code = @course.try(:code) ? @course.code.gsub(' ', '') : 'XX'
     name = @course.try(:name) ? @course.name.gsub(' ', '') : 'xxx'
-    filename = Date.today.to_s + '_' + code.to_s + '-' + name.to_s
+    filename = "#{Time.zone.today}_#{code}-#{name}"
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}.json"
   end
@@ -73,14 +75,14 @@ class CoursesController < ApplicationController
       data << course.gather_data_for_json_export.to_json
     end
     data = data.as_json
-    filename = Date.today.to_s
+    filename = Time.zone.today.to_s
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}_all-courses.json"
   end
 
   def export_course_docx
     base_url = ENV['EXPORTER_BASE_URL'] || 'http://localhost:3030/'
-    post_url = base_url + 'docx/course'
+    post_url = "#{base_url}docx/course"
     course = Course.find_by(id: params[:id])
     course_json = course.gather_data_for_json_export.to_json
 
@@ -106,7 +108,7 @@ class CoursesController < ApplicationController
 
   def change_state
     @course = Course.find(params[:course_id])
-    event = params[:event_name] + '!'
+    event = "#{params[:event_name]}!"
     @course.send(event.to_sym)
     redirect_to course_path(@course), notice: I18n.t('controllers.courses.state_updated')
   end
@@ -177,11 +179,11 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
-  PERMITTED_PARAMS = [:name, :code, :mission, :ects, :examination, :objectives, :contents,
-                        :prerequisites, :literature, :methods, :skills_knowledge_understanding,
-                        :skills_intellectual, :skills_practical, :skills_general,
-                        :lectureHrs, :labHrs, :tutorialHrs, :equipment, :room, :responsible_person,
-                        :teacher, :comment, :event_name]
+  PERMITTED_PARAMS = %i[name code mission ects examination objectives contents
+                        prerequisites literature methods skills_knowledge_understanding
+                        skills_intellectual skills_practical skills_general
+                        lectureHrs labHrs tutorialHrs equipment room responsible_person
+                        teacher comment event_name].freeze
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(PERMITTED_PARAMS)

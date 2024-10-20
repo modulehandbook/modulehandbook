@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class CourseProgramsControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     @course_program = course_programs(:one)
     sign_in users(:one)
@@ -20,16 +21,18 @@ class CourseProgramsControllerTest < ActionDispatch::IntegrationTest
   test 'should not create second link between the same course/program' do
     skip
     assert_difference('CourseProgram.count', 0, 'link already exists') do
-      post course_programs_url, params: { course_program: { course_id: @course_program.course_id, program_id: @course_program.program_id, required: @course_program.required, semester: @course_program.semester } }
+      post course_programs_url,
+           params: { course_program: { course_id: @course_program.course_id, program_id: @course_program.program_id,
+                                       required: @course_program.required, semester: @course_program.semester } }
     end
     assert_response :success
-    #tbd: error should be shown!
+    # tbd: error should be shown!
   end
 
   test 'should create course_program' do
     course = courses(:one)
     program = programs(:two)
-    assert_not_includes program.courses, course, "no prior link may exist"
+    assert_not_includes program.courses, course, 'no prior link may exist'
     params = { course_id: course.id,
                program_id: program.id,
                required: @course_program.required,
@@ -52,7 +55,9 @@ class CourseProgramsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update course_program' do
-    patch course_program_url(@course_program), params: { course_program: { course_id: @course_program.course_id, program_id: @course_program.program_id, required: @course_program.required, semester: @course_program.semester } }
+    patch course_program_url(@course_program),
+          params: { course_program: { course_id: @course_program.course_id, program_id: @course_program.program_id,
+                                      required: @course_program.required, semester: @course_program.semester } }
     assert_redirected_to course_program_url(@course_program)
   end
 

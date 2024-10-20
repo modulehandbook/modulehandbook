@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-   
   setup do
     @user = users(:reader)
     @admin = users(:one)
@@ -23,7 +24,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get new_user_registration_url
     assert_response :success
     assert_nil @controller.current_user
-
   end
 
   test 'should get new with login' do
@@ -32,8 +32,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
   end
 
-#  teardown do
-#    sign_out @admin
-#  end
-
+  #  teardown do
+  #    sign_out @admin
+  #  end
 end

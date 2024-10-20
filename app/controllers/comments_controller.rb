@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   load_and_authorize_resource
 
   def show; end
+
+  def edit; end
+
   def create
     @comment = Comment.new(comment_params)
-
     if @comment.save
       redirect_to request.referrer, notice: I18n.t('controllers.comments.saved')
     else
       redirect_to request.referrer, error: I18n.t('controllers.comments.error_save')
     end
   end
-
-  def edit; end
 
   def update
     if @comment.update(comment_params)

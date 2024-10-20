@@ -1,0 +1,28 @@
+name: rubocop
+
+on:
+  push:
+    branches: '*'
+  workflow_call:
+  pull_request:
+
+jobs:
+  rubocop:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+        
+      - name: Check out repo code
+        uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.3
+          #bundler-cache: true
+      - name: Install dependencies
+        run: bin/bundle install
+
+      - name: Run Rubocop
+        id: run-tests
+        run: rubocop

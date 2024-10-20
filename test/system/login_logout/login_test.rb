@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 
 class LoginTest < ApplicationSystemTestCase
@@ -14,5 +16,4 @@ class LoginTest < ApplicationSystemTestCase
     click_on 'Log in'
     assert_text 'Signed in successfully.'
   end
-
 end

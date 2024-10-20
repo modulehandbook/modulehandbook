@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 require 'system/comments/comments_system_test/comments_system_test'
 class CommentsWriterTest < CommentsSystemTest
-
   def setup
     @course = courses(:one)
     @user = users(:writer)
@@ -16,14 +17,11 @@ class CommentsWriterTest < CommentsSystemTest
     read_own_comment
   end
 
-
   test 'as writer i can edit and update own comment' do
     edit_and_update_own_comment
   end
 
-
   test 'as writer i can delete and destroy own comment' do
     delete_and_destroy_own_comment
   end
-
 end

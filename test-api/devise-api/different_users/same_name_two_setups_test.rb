@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 
 # If tests have the same name, all callbacks are called (see the example below).
@@ -7,8 +9,6 @@ require 'application_system_test_case'
 # def sign_in(resource, scope: nil)
 #     puts "+++++ DEVISE INTEGRATION PID #{Process.pid} THR #{Thread.current.object_id} signing in #{resource.email} (#{resource.id})"
 #     puts "+++++ from: #{caller[0]}"
-
-
 
 # ok  (versioning✗)code/modulehandbook/modulehandbook # rails test test/system/devise-api/different_users/active_record_callback_test.rb
 # Running via Spring preloader in process 72251
@@ -37,7 +37,6 @@ require 'application_system_test_case'
 # 2 runs, 2 assertions, 0 failures, 0 errors, 0 skips
 # Coverage report generated for Unit Tests to /Users/kleinen/mine/current/code/modulehandbook/modulehandbook/coverage. 110 / 661 LOC (16.64%) covered.
 
-
 class OneNameTest < ApplicationSystemTestCase
   setup do
     @user_writer = users(:writer)
@@ -48,7 +47,7 @@ class OneNameTest < ApplicationSystemTestCase
   test 'editor is logged in as both setups are called, also the one below!' do
     visit root_path
     # also, @user_editor is defined.
-    assert_text 'Logged in as '+@user_editor.email
+    assert_text "Logged in as #{@user_editor.email}"
   end
 end
 
@@ -61,7 +60,6 @@ class OneNameTest < ApplicationSystemTestCase
 
   test 'editor is logged in 2' do
     visit root_path
-    assert_text 'Logged in as '+@user_editor.email
+    assert_text "Logged in as #{@user_editor.email}"
   end
-
 end

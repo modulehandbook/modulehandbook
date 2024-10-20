@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class WelcomeControllerTest < ActionDispatch::IntegrationTest
@@ -8,7 +10,6 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
 end
 
 class WelcomeControllerLoggedInTest < ActionDispatch::IntegrationTest
-   
   setup do
     sign_in users(:one)
   end

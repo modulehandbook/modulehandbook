@@ -10,13 +10,14 @@
     </tr>
   </thead>
   <tbody>
-    <% @abilities_map.each do |model_name, actions| %>
+    <% @models.each do |model| %>
+      <% actions = @actions_by_model[model] || [] %>
       <% actions.each do |action| %>
         <tr>
-          <th scope="row"><%= "#{model_name} / #{action}" %></th>
-          <% @roles.each do |role| %>
+          <th scope="row"><%= "#{model} / #{action}" %></th>
+          <%  @roles.each do |role| %>
             <td>
-              <% can_do = @abilities[role].can?(action.to_sym, model_name.constantize) %>
+              <% can_do = @abilities[role].can? action.to_sym, model.constantize %>
               <div class="alert alert-<%= can_do ? 'success' : 'danger' %>" role="alert">
                 <%= can_do %>
               </div>

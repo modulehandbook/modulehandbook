@@ -1,21 +1,18 @@
-require "minitest/autorun"
-require_relative ("global")
+# frozen_string_literal: true
+
+require 'minitest/autorun'
+require_relative('global')
 require 'test_helper'
 
 class TestOrder2 < ActiveSupport::TestCase
-
-  def setup
-
-  end
+  def setup; end
 
   def teardown
-      TestLog.printlog(self.class.name)
+    TestLog.printlog(self.class.name)
   end
-
 
   def test_1
     TestLog.log(11)
-
   end
 
   def test_2
@@ -25,24 +22,17 @@ class TestOrder2 < ActiveSupport::TestCase
   def test_3
     TestLog.log(13)
   end
-
 end
 
-
 class TestOrder3 < ActiveSupport::TestCase
-
-  def setup
-
-  end
+  def setup; end
 
   def teardown
-      TestLog.printlog(self.class.name)
+    TestLog.printlog(self.class.name)
   end
-
 
   def test_1
     TestLog.log(31)
-
   end
 
   def test_2
@@ -52,5 +42,4 @@ class TestOrder3 < ActiveSupport::TestCase
   def test_3
     TestLog.log(33)
   end
-
 end

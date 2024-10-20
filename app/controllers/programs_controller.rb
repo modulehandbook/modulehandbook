@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 class ProgramsController < ApplicationController
   include ApplicationHelper
 
   load_and_authorize_resource except: :export_programs_json
   skip_authorization_check only: :export_programs_json
   skip_before_action :authenticate_user!, only: :export_programs_json
-
 
   before_action :set_program, only: %i[show edit update destroy export_program_json import_courses_json]
   before_action :set_paper_trail_whodunnit
@@ -21,12 +22,12 @@ class ProgramsController < ApplicationController
     @course_programs = @program
                        .course_programs
                        .includes(:course)
-            #.order('semester',  'courses.code')
-    @course_programs = @course_programs.sort do | cp1, cp2 |
+    # .order('semester',  'courses.code')
+    @course_programs = @course_programs.sort do |cp1, cp2|
       compare_course_codes(cp1.course.code, cp2.course.code)
     end
     @show_objectives = params['objectives'] || false
-    #.order('semester', 'required DESC', 'courses.code')
+    # .order('semester', 'required DESC', 'courses.code')
     commentable = @program
     @comments = commentable.comments
     @comments_size = @comments.size
@@ -41,10 +42,10 @@ class ProgramsController < ApplicationController
     @elective_rows = @program.course_programs.elective_options.includes(:course)
                              .order('course_programs.semester', 'courses.code')
                              .group_by(&:semester)
-    @elective_rows.each do |semester,cps|
+    @elective_rows.each do |semester, cps|
       @rows["electives #{semester}"] = cps
     end
-    @options = @program.course_programs.where(required: "elective-option")
+    @options = @program.course_programs.where(required: 'elective-option')
   end
 
   def import_program_json
@@ -65,24 +66,24 @@ class ProgramsController < ApplicationController
     files = params[:files] || []
     files.each do |file|
       json = JSON.parse(file.read)
-      if json.is_a?(Array)
-        json.each do |course_json |
-          params = ActionController::Parameters.new(course_json).permit(CoursesController::PERMITTED_PARAMS)
-          course = @program.courses.find_by(code: params['code'])
+      next unless json.is_a?(Array)
 
-          if course
-            course.update(params)
-          else
-            course = @program.courses.create!(params)
-          end
-          course.save!
-          @program.save if @program.changed?
-          course_programs = @program.course_programs.where(course_id: course.id)
-          course_program = course_programs.first
-          course_program_params = ActionController::Parameters.new(course_json).permit(CourseProgramsController::PERMITTED_PARAMS)
-          course_program.update(course_program_params)
-          course_program.save!
+      json.each do |course_json|
+        params = ActionController::Parameters.new(course_json).permit(CoursesController::PERMITTED_PARAMS)
+        course = @program.courses.find_by(code: params['code'])
+
+        if course
+          course.update(params)
+        else
+          course = @program.courses.create!(params)
         end
+        course.save!
+        @program.save if @program.changed?
+        course_programs = @program.course_programs.where(course_id: course.id)
+        course_program = course_programs.first
+        course_program_params = ActionController::Parameters.new(course_json).permit(CourseProgramsController::PERMITTED_PARAMS)
+        course_program.update(course_program_params)
+        course_program.save!
       end
     end
     respond_to do |format|
@@ -92,6 +93,7 @@ class ProgramsController < ApplicationController
       format.html { redirect_to program_path(@program), notice: I18n.t('controllers.programs.course_imported') }
     end
   end
+
   def export_program_json
     data = @program.gather_data_for_json_export
     data = JSON.pretty_generate(data)
@@ -108,14 +110,14 @@ class ProgramsController < ApplicationController
       data << program.gather_data_for_json_export.to_json
     end
     data = data.as_json
-    filename = Date.today.to_s + '_all_programs'
+    filename = "#{Time.zone.today}_all_programs"
     send_data data, type: 'application/json; header=present',
                     disposition: "attachment; filename=#{filename}_all-programs.json"
   end
 
   def export_program_docx
     base_url = ENV['EXPORTER_BASE_URL'] || 'http://localhost:3030/'
-    post_url = base_url + 'docx/program'
+    post_url = "#{base_url}docx/program"
     program = Program.find_by(id: params[:id])
     program_json = program.gather_data_for_json_export.to_json
 
@@ -162,7 +164,7 @@ class ProgramsController < ApplicationController
         format.html { redirect_to @program, notice: I18n.t('controllers.programs.updated') }
         format.json { render :show, status: :ok, location: @program }
       else
-        format.html { render :edit, status: :unprocessable_entity  }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @program.errors, status: :unprocessable_entity }
       end
     end

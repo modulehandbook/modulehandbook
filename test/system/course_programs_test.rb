@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 
 class CourseProgramsTest < ApplicationSystemTestCase
@@ -6,7 +8,6 @@ class CourseProgramsTest < ApplicationSystemTestCase
     @user = users(:one)
     system_test_login(@user.email, 'geheim12')
   end
-
 
   test 'visiting the index' do
     visit course_programs_url

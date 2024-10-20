@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
-class CommentsEditorAbilitiesTest <  ActiveSupport::TestCase
+class CommentsEditorAbilitiesTest < ActiveSupport::TestCase
   setup do
     @course = courses(:one)
     @user = users(:editor)
@@ -39,13 +41,12 @@ class CommentsEditorAbilitiesTest <  ActiveSupport::TestCase
   end
 
   test 'as editor i can delete and destroy own comment' do
-    #assert @ability.can?(:delete, @comment_own)
+    # assert @ability.can?(:delete, @comment_own)
     assert @ability.can?(:destroy, @comment_own)
   end
 
   test 'as editor i cant delete and destroy others comment' do
-    #assert @ability.can?(:delete, @comment_other)
+    # assert @ability.can?(:delete, @comment_other)
     assert @ability.cannot?(:destroy, @comment_other)
   end
-
 end

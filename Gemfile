@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -34,12 +36,15 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rubocop', '~> 1.67'
+  gem 'rubocop-capybara', '~> 2.21'
+  gem 'rubocop-rails', '~> 2.26'
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'bundler'
-  gem "listen", "~> 3.9"
+  gem 'listen', '~> 3.9'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -51,7 +56,8 @@ group :test do
   # see https://bundler.io/guides/gemfile.html
   # gem 'capybara', '>= 3.40'
   # gem 'capybara', :path => '../capybara'
-  gem 'capybara', :git => 'https://github.com/modulehandbook/capybara.git', :branch => 'clear_session_storage_warning_master'
+  gem 'capybara', git: 'https://github.com/modulehandbook/capybara.git',
+                  branch: 'clear_session_storage_warning_master'
 
   gem 'launchy'
   gem 'selenium-webdriver'
@@ -70,4 +76,4 @@ gem 'bootstrap', '~> 4.6'
 gem 'jquery-rails'
 gem 'redcarpet'
 
-gem "importmap-rails", "~> 1.1"
+gem 'importmap-rails', '~> 1.1'

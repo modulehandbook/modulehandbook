@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class UserAdminAbilitiesTest <  ActiveSupport::TestCase
+class UserAdminAbilitiesTest < ActiveSupport::TestCase
   setup do
     @user = users(:one)
     @user2 = users(:two)

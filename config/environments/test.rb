@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
 # your test database is "scratch space" for the test suite and is wiped
@@ -61,11 +63,11 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.log_level = :warn
-  config.hosts << "127.0.0.1"
-  config.hosts << "0.0.0.0"
-  config.hosts << "0.0.0.0:61402"
-  config.hosts << "www.example.com"
-  config.hosts << "172.18.0.2"
-  config.hosts << "selenium-standalone"
-  config.hosts << "localhost"
+  config.hosts << '127.0.0.1'
+  config.hosts << '0.0.0.0'
+  config.hosts << '0.0.0.0:61402'
+  config.hosts << 'www.example.com'
+  config.hosts << '172.18.0.2'
+  config.hosts << 'selenium-standalone'
+  config.hosts << 'localhost'
 end

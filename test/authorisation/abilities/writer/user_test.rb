@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class UserWriterAbilitiesTest <  ActiveSupport::TestCase
+class UserWriterAbilitiesTest < ActiveSupport::TestCase
   setup do
     @user = users(:writer)
     @user1 = users(:one)

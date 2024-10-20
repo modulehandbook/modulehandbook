@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class CoursesControllerTest < ActionDispatch::IntegrationTest
-   
   setup do
     @course = courses(:one)
     sign_in users(:one)
@@ -19,7 +20,9 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create course' do
     assert_difference('Course.count') do
-      post courses_url, params: { course: { code: @course.code, contents: @course.contents, ects: @course.ects, examination: @course.examination, literature: @course.literature, methods: @course.methods, mission: @course.mission, name: @course.name, objectives: @course.objectives, prerequisites: @course.prerequisites, skills_general: @course.skills_general, skills_intellectual: @course.skills_intellectual, skills_knowledge_understanding: @course.skills_knowledge_understanding, skills_practical: @course.skills_practical } }
+      post courses_url,
+           params: { course: { code: @course.code, contents: @course.contents, ects: @course.ects,
+                               examination: @course.examination, literature: @course.literature, methods: @course.methods, mission: @course.mission, name: @course.name, objectives: @course.objectives, prerequisites: @course.prerequisites, skills_general: @course.skills_general, skills_intellectual: @course.skills_intellectual, skills_knowledge_understanding: @course.skills_knowledge_understanding, skills_practical: @course.skills_practical } }
     end
 
     assert_equal Course.last.aasm_state, 'in_progress'
@@ -37,7 +40,9 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update course' do
-    patch course_url(@course), params: { course: { code: @course.code, contents: @course.contents, ects: @course.ects, examination: @course.examination, literature: @course.literature, methods: @course.methods, mission: @course.mission, name: @course.name, objectives: @course.objectives, prerequisites: @course.prerequisites, skills_general: @course.skills_general, skills_intellectual: @course.skills_intellectual, skills_knowledge_understanding: @course.skills_knowledge_understanding, skills_practical: @course.skills_practical } }
+    patch course_url(@course),
+          params: { course: { code: @course.code, contents: @course.contents, ects: @course.ects,
+                              examination: @course.examination, literature: @course.literature, methods: @course.methods, mission: @course.mission, name: @course.name, objectives: @course.objectives, prerequisites: @course.prerequisites, skills_general: @course.skills_general, skills_intellectual: @course.skills_intellectual, skills_knowledge_understanding: @course.skills_knowledge_understanding, skills_practical: @course.skills_practical } }
     assert_redirected_to course_url(@course)
   end
 

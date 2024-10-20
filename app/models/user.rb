@@ -7,29 +7,30 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   belongs_to :faculty, optional: true
-  has_many :versions, foreign_key: "whodunnit"
+  has_many :versions, foreign_key: 'whodunnit'
 
-  # ROLES = %i[admin reader writer editor qa].freeze
   ROLES = %i[reader writer editor qa admin].freeze
 
   after_initialize :set_default_role, if: :new_record?
 
+  after_create :send_admin_mail
   before_destroy :check_for_versions
 
   def check_for_versions
-    if (versions.count > 0)
-      errors.add(:base, "User can't be Destroyed because there are Associated Versions")
-      throw :abort
-    end
+    return unless versions.count.positive?
+
+    errors.add(:base, "User can't be Destroyed because there are Associated Versions")
+    throw :abort
   end
 
   def format_time(at)
-    return "" if (at.nil? || at == "")
-    at.strftime("%d/%m/%y (%H:%M)")
+    return '' if at.nil? || at == ''
+
+    at.strftime('%d/%m/%y (%H:%M)')
   end
 
   def faculty_name
-    @faculty_name ||= faculty ? faculty.name : "---"
+    @faculty_name ||= faculty ? faculty.name : '---'
   end
 
   def versions_count
@@ -40,7 +41,6 @@ class User < ApplicationRecord
     self.role ||= :reader
   end
 
-  after_create :send_admin_mail
   def send_admin_mail
     AdminMailer.new_user_waiting_for_approval(email).deliver
   end
@@ -50,14 +50,14 @@ class User < ApplicationRecord
   end
 
   def inactive_message
-    #approved? ? super : :not_approved
-    !confirmed? ? :unconfirmed : super
+    # approved? ? super : :not_approved
+    confirmed? ? super : :unconfirmed
   end
 
   def self.send_reset_password_instructions(attributes = {})
     recoverable = find_or_initialize_with_errors(reset_password_keys, attributes, :not_found)
     if !recoverable.approved?
-      recoverable.errors[:base] << I18n.t('devise.failure.not_approved')
+      recoverable.errors.add(:base, I18n.t('devise.failure.not_approved'))
     elsif recoverable.persisted?
       recoverable.send_reset_password_instructions
     end

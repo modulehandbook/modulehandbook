@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FacultiesController < ApplicationController
   # before_action :set_faculty, only: %i[ show edit update destroy ]
   load_and_authorize_resource
@@ -7,8 +9,7 @@ class FacultiesController < ApplicationController
   end
 
   # GET /faculties/1 or /faculties/1.json
-  def show
-  end
+  def show; end
 
   # GET /faculties/new
   def new
@@ -16,8 +17,7 @@ class FacultiesController < ApplicationController
   end
 
   # GET /faculties/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /faculties or /faculties.json
   def create
@@ -58,13 +58,14 @@ class FacultiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_faculty
-      @faculty = Faculty.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def faculty_params
-      params.require(:faculty).permit(:name, :url, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_faculty
+    @faculty = Faculty.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def faculty_params
+    params.require(:faculty).permit(:name, :url, :description)
+  end
 end

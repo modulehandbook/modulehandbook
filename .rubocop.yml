@@ -1,0 +1,52 @@
+require:
+  - rubocop-rails
+  - rubocop-capybara
+AllCops:
+  NewCops: enable
+  StyleGuideBaseURL: https://rubystyle.guide
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*.rb'
+    - 'bin/**'
+    # bigger refactorings needed
+    - 'app/models/course.rb'
+    # incremental rubocop fixes: remove one by one
+    #- 'app/models/*.rb'
+    #- 'app/models/ability.rb'
+    #- 'app/models/application_record.rb'
+    #- 'app/models/comment.rb'
+   
+    #- 'app/models/course_program.rb'
+    - 'app/models/faculty.rb'
+    - 'app/models/program.rb'
+    - 'app/models/user.rb'
+    - 'app/models/version.rb'
+    - 'app/mailers/**/*.rb'
+    - 'app/helpers/**/*.rb'
+    - 'app/controllers/**/*.rb'
+    - 'app/mailers/**/*.rb'
+    #- 'app/**/*.jbuilder'
+    - 'bin/**/*.rb'
+    - 'config/**/*.rb'
+    - 'container_logs/**/*.rb'
+    - 'container_tmp/**/*.rb'
+    - 'coverage/**/*.rb'
+    - 'db/**/*.rb'
+    - 'deploy/**/*.rb'
+    - 'doc/**/*.rb'
+    - 'entrypoints/**/*.rb'
+    - 'lib/**/*.rb'
+    - 'log/**/*.rb'
+    - 'nginx/**/*.rb'
+    - 'node_modules/**/*.rb'
+    - 'optimize-build-pipeline/**/*.rb'
+    - 'pg_data/**/*.rb'
+    - 'pg_transfer/**/*.rb'
+    - 'public/**/*.rb'
+    - 'secrets/**/*.rb'
+    - 'showtime-grading/**/*.rb'
+    - 'storage/**/*.rb'
+    - 'test/**/*.rb'
+    - 'test-api/**/*.rb'
+    - 'tmp/**/*.rb'
+    - 'vendor/**/*.rb'

@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 require 'system/comments/comments_system_test/comments_system_test'
 class CommentsWriterOthersTest < CommentsSystemTest
-
   def setup
     @course = courses(:one)
     @user = users(:writer)

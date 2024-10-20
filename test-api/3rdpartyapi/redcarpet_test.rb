@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 
 # https://github.com/vmg/redcarpet
@@ -6,7 +8,7 @@ require 'minitest/autorun'
 class TryoutRedcarpet < Minitest::Test
   def setup
     html_renderer = Redcarpet::Render::HTML.new
-    @markdown = Redcarpet::Markdown.new(html_renderer, extensions = {})
+    @markdown = Redcarpet::Markdown.new(html_renderer, {})
   end
 
   def test_paragraph
@@ -26,7 +28,8 @@ class TryoutRedcarpet < Minitest::Test
   end
 
   def test_bold_and_italics
-    assert_equal "<p>an <strong><em>italics and bold</em></strong> example</p>\n", @markdown.render('an **_italics and bold_** example')
+    assert_equal "<p>an <strong><em>italics and bold</em></strong> example</p>\n",
+                 @markdown.render('an **_italics and bold_** example')
   end
 
   def test_links
@@ -35,32 +38,32 @@ class TryoutRedcarpet < Minitest::Test
   end
 
   def test_blockquotes
-    html = <<~DeLiM
+    html = <<~DELIM
       <blockquote>
       <p>Blockquotes are also possible</p>
       </blockquote>
-    DeLiM
+    DELIM
     assert_equal html, @markdown.render('> Blockquotes are also possible')
   end
 
   def test_list
-    md = <<~DeLiM
+    md = <<~DELIM
       * eins
       * zwei
       * drei
-    DeLiM
-    html = <<~DeLiM
+    DELIM
+    html = <<~DELIM
       <ul>
       <li>eins</li>
       <li>zwei</li>
       <li>drei</li>
       </ul>
-    DeLiM
+    DELIM
     assert_equal html, @markdown.render(md)
   end
 
   def test_paragraphs
-    md = <<~DeLiM
+    md = <<~DELIM
       Und wieder wecken mich Berliner Spatzen!
       Ich liebe diesen märkisch-kessen Ton.
       Hör ich sie morgens an mein Fenster kratzen,
@@ -68,15 +71,15 @@ class TryoutRedcarpet < Minitest::Test
       Komm ich beglückt, nach alter Tradition,
       Ganz so wie damals mit besagten Spatzen
       Mein Tagespensum durchzuschwatzen.
-      
+
       Es ostert schon. Grün treibt die Zimmerlinde.
       Wies heut im Grunewald nach Frühjahr roch!
       Ein erster Specht beklopft die Birkenrinde.
       Nun pfeift der Ostwind aus dem letzten Loch.
       Und alles fragt, wie ich Berlin denn finde?
       – Wie ich es finde? Ach, ich such es noch!
-    DeLiM
-    html = <<~DeLiM
+    DELIM
+    html = <<~DELIM
       <p>Und wieder wecken mich Berliner Spatzen!
       Ich liebe diesen märkisch-kessen Ton.
       Hör ich sie morgens an mein Fenster kratzen,
@@ -84,14 +87,14 @@ class TryoutRedcarpet < Minitest::Test
       Komm ich beglückt, nach alter Tradition,
       Ganz so wie damals mit besagten Spatzen
       Mein Tagespensum durchzuschwatzen.</p>
-      
+
       <p>Es ostert schon. Grün treibt die Zimmerlinde.
       Wies heut im Grunewald nach Frühjahr roch!
       Ein erster Specht beklopft die Birkenrinde.
       Nun pfeift der Ostwind aus dem letzten Loch.
       Und alles fragt, wie ich Berlin denn finde?
       – Wie ich es finde? Ach, ich such es noch!</p>
-    DeLiM
+    DELIM
     assert_equal html, @markdown.render(md)
-end
+  end
 end
