@@ -49,28 +49,8 @@ detectors:
 
 # Directories and files below will not be scanned at all
 exclude_paths:
- - node_modules
- - container_tmp
- - storage
- - pg_transfer
- - lib
- - coverage
- - public
- - .github
- - app
- - nginx
- - optimize-build-pipeline
- - vendor
- - showtime-grading
- - log
- - container_logs
- - entrypoints
- - doc
- - test-api
- - secrets
- - bin
- - pg_data
- - deploy
- - config
- - db
- - test
+  - app
+  - test-api
+#  - config
+  - db
+  - test
