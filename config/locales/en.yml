@@ -30,4 +30,57 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  controllers:
+    comments:
+      saved: "Comment saved successfully."
+      error_save: "Error saving comment."
+      updated: "Comment was successfully updated."
+      error_update: "Error updating comment."
+      destroyed: "Comment was successfully destroyed."
+      error_destroy: "Comment could not be destroyed."
+    course_programs:
+      created: "Course program was successfully created."
+      updated: "Course program was successfully updated."
+      destroyed: "Course program was successfully destroyed."
+    courses:
+      imported_to_program: "Course successfully imported into this Program."
+      error_import: "No files selected to import Course(s) from."
+      many_imported: "Courses successfully imported."
+      imported: "Course successfully imported."
+      error_export: "Error: Course could not be exported as DOCX because the connection to the external export service failed!"
+      created: "Course was successfully created."
+      updated: "Course was successfully updated."
+      reverted: "Course was successfully reverted."
+      destroyed: "Course was successfully destroyed."
+      state_updated: "State updated"
+    faculties:
+      created: "Faculty was successfully created."
+      updated: "Faculty was successfully updated."
+      destroyed: "Faculty was successfully destroyed."
+    programs:
+      program_imported: "Program successfully imported."
+      programs_imported: "Programs successfully imported."
+      program_error_import: "No files selected to import Program(s) from."
+      course_imported: "Courses successfully imported."
+      course_error_import: "No files selected to import Courses(s) from."
+      error_export: "Error: Program could not be exported as DOCX because the connection to the external export service failed!"
+      created: "Program was successfully created."
+      updated: "Program was successfully updated."
+      destroyed: "Program was successfully destroyed."
+    users:
+      destroyed: "User was successfully destroyed."
+      error_destroy: "Logged in User can't be destroyed."
+      approved: "User was successfully approved."
+      error_aprrove: "Error approving user."
+      updated: "User was successfully updated."
+      error_update: "User could not be updated."
+  mailers:
+    admin:
+      new_user: "Module Handbook: New User awaiting Admin Approval"
+    user:
+      account_approved: "Your Account has been Approved"
+
+
+
+
+

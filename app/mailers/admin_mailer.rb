@@ -8,6 +8,6 @@ class AdminMailer < Devise::Mailer
     @email = email
     deviseEmail = Rails.configuration.x.mh_devise_email
     @host = Rails.configuration.x.mh_hostname
-    mail(to: deviseEmail, subject: 'Module Handbook: New User Awaiting Admin Approval')
+    mail(to: deviseEmail, subject: I18n.t('mailers.admin.new_user'))
   end
-end
+end 

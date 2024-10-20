@@ -44,7 +44,7 @@ class CourseProgramsController < ApplicationController
     next_view_edit = params['next_view'] && params['next_view'] == 'edit'
     respond_to do |format|
       if @course_program.save && !next_view_edit
-        format.html { redirect_to @course_program, notice: 'Course program was successfully created.' }
+        format.html { redirect_to @course_program, notice: I18n.t('controllers.course_programs.created') }
         format.json { render :show, status: :created, location: @course_program }
       else
         format.html { render :new }
@@ -58,7 +58,7 @@ class CourseProgramsController < ApplicationController
   def update
     respond_to do |format|
       if @course_program.update(course_program_params)
-        format.html { redirect_to @course_program, notice: 'Course program was successfully updated.' }
+        format.html { redirect_to @course_program, notice: I18n.t('controllers.course_programs.updated') }
         format.json { render :show, status: :ok, location: @course_program }
       else
         format.html { render :edit, status: :unprocessable_entity  }
@@ -73,7 +73,7 @@ class CourseProgramsController < ApplicationController
     @program = @course_program.program
     @course_program.destroy
     respond_to do |format|
-      format.html { redirect_to @program, notice: 'Course program was successfully destroyed.' }
+      format.html { redirect_to @program, notice: I18n.t('controllers.course_programs.destroyed') }
       format.json { head :no_content }
     end
   end
