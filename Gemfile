@@ -78,4 +78,4 @@ gem 'redcarpet'
 
 gem 'importmap-rails', '~> 1.1'
 
-gem "reek", "~> 6.3"
+gem 'reek', '~> 6.3'
