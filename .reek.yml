@@ -7,6 +7,9 @@
 
 detectors:
   # You can disable smells completely
+  NestedIterators:
+    exclude:
+      - 'Course' # needs refactoring
   IrresponsibleModule:
     enabled: false
 
@@ -16,10 +19,14 @@ detectors:
   TooManyStatements: 
     exclude:
       - 'SystemTestConfig#config_selenium'
+      - 'Course' # course, especially the course export, needs refactoring
   InstanceVariableAssumption:
     exclude:
       - "SystemTestConfig" # TBD: refactor or remove SystemTestConfig?
-  
+  DuplicateMethodCall:
+    max_calls: 2
+
+
   # You can use filters to silence Reek warnings.
   # Either because you simply disagree with Reek (we are not the police) or
   # because you want to fix this at a later point in time.
@@ -58,14 +65,11 @@ detectors:
 ### Excluding directories
 
 
-
 # Directories and files below will not be scanned at all
 exclude_paths:
   - db/migrate
   # todo: fix reek errors in files below
-#  - app
-  - app/assets
-  - app/channels
+
   - app/controllers
   - app/helpers
   - app/javascript
@@ -73,7 +77,7 @@ exclude_paths:
   - app/mailers
   #- app/models
   # - app/models/user.rb
-  - app/models/course.rb
+  #- app/models/course.rb
   - app/models/course_program.rb
   - app/models/ability.rb
   - app/models/program.rb

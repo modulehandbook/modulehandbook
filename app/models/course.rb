@@ -57,14 +57,15 @@ class Course < ApplicationRecord
   end
 
   def self.find_or_create_from_json(data)
-    existing_course = Course.find_by(code: data['code'])
+    course_code = data['code']
+    existing_course = Course.find_by(code: course_code)
     course = if existing_course.nil?
                Course.new
              else
                existing_course
              end
     course.name = data['name']
-    course.code = data['code']
+    course.code = course_code
     course.mission = data['mission']
     course.ects = data['ects']
     course.examination = data['examination']
