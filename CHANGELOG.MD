@@ -1,4 +1,15 @@
 
+## Monday, 21.October 2024 
+
+- added static code quality tools: rubocop and reek:
+    - separate gh actions checks for push & pr - need to check this before every push
+    - new make target: `make test` runs all tests+checks relevant for ci
+    - see https://github.com/modulehandbook/modulehandbook/pull/199 and https://github.com/modulehandbook/modulehandbook/pull/198
+- added brakeman [PR 200](https://github.com/modulehandbook/modulehandbook/pull/200)
+    - fixed 1 warning 
+
+- further refactoring needed: https://github.com/modulehandbook/modulehandbook/issues/201 
+
 # Rails 7.1. upgrade - rails_upgrade_71
 ## Saturday, 13.July 2024 13:30
 
