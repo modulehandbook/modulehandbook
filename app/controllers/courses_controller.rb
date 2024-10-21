@@ -110,8 +110,8 @@ class CoursesController < ApplicationController
 
   def change_state
     @course = Course.find(params[:course_id])
-    event = "#{params[:event_name]}!"
-    @course.send(event.to_sym)
+    event_name = params[:event_name]
+    @course.accept_event(event_name)
     redirect_to course_path(@course), notice: I18n.t('controllers.courses.state_updated')
   end
 

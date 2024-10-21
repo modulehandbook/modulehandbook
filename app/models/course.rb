@@ -49,6 +49,14 @@ class Course < ApplicationRecord
     aasm.permitted_transitions.map(&:event)
   end
 
+  def accept_event(event_name)
+    all_events = Course.aasm.events.map{|e|e.name}
+    if all_events.include?(event_name)
+      event = "#{event_name}!"
+      @course.send(event.to_sym)
+    end
+  end
+
   has_many :course_programs, dependent: :destroy
   has_many :programs, through: :course_programs
 

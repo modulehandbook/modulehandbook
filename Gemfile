@@ -34,8 +34,10 @@ gem 'redis', '~> 4.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
+  gem 'brakeman', '~> 6.2'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'reek', '~> 6.3'
   gem 'rubocop', '~> 1.67'
   gem 'rubocop-capybara', '~> 2.21'
   gem 'rubocop-rails', '~> 2.26'
@@ -77,5 +79,3 @@ gem 'jquery-rails'
 gem 'redcarpet'
 
 gem 'importmap-rails', '~> 1.1'
-
-gem 'reek', '~> 6.3'
