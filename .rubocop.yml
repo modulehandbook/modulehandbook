@@ -17,7 +17,7 @@ AllCops:
     #- 'app/models/comment.rb'
    
     #- 'app/models/course_program.rb'
-    - 'app/models/faculty.rb'
+    #- 'app/models/faculty.rb'
     - 'app/models/program.rb'
     - 'app/models/user.rb'
     - 'app/models/version.rb'
