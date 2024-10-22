@@ -57,8 +57,16 @@ class ProgramsController < ApplicationController
       if files.count < 1
         format.html { redirect_to programs_path, notice: I18n.t('controllers.programs.program_error_import') }
       end
-      format.html { redirect_to programs_path, notice: I18n.t('controllers.programs.programs_imported') } if files.count > 1
-      format.html { redirect_to program_path(@program), notice: I18n.t('controllers.programs.program_imported') } if files.count == 1
+      if files.count > 1
+        format.html do
+          redirect_to programs_path, notice: I18n.t('controllers.programs.programs_imported')
+        end
+      end
+      if files.count == 1
+        format.html do
+          redirect_to program_path(@program), notice: I18n.t('controllers.programs.program_imported')
+        end
+      end
     end
   end
 
@@ -127,8 +135,8 @@ class ProgramsController < ApplicationController
       logger.debug resp
       filename = helpers.generate_filename(program)
       send_data resp.body, filename: filename + '.docx'
-    rescue Faraday::ConnectionFailed => e
-      redirect_to programs_path, alert: I18n.t('controllers.programs.error_export')+post_url
+    rescue Faraday::ConnectionFailed
+      redirect_to programs_path, alert: I18n.t('controllers.programs.error_export') + post_url
     end
   end
 

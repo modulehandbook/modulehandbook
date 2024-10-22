@@ -6,7 +6,6 @@ class UsersController < ApplicationController
   before_action :select_fields_single, only: %i[show edit update]
   # before_action :select_fields_edit, only: %i[]
 
-
   def select_fields_single
     include_fields(UserAttrs::SHOW)
   end
@@ -18,8 +17,6 @@ class UsersController < ApplicationController
   def select_fields_index
     include_fields(UserAttrs::INDEX)
   end
-
-
 
   def index
     if can? :see_admin_fields, User
@@ -40,18 +37,18 @@ class UsersController < ApplicationController
   def edit; end
 
   def destroy
-    if can? :destroy, @user
-        if current_user == @user
-            @user.errors.add(:base, I18n.t('controllers.users.error_destroy'))
-            result = false
-        else
-          result = @user.destroy
-        end
-      messages = result ? {notice: I18n.t('controllers.users.destroyed')} : {alert: "User could not be destroyed: #{@user.errors.full_messages}"}
-      respond_to do |format|
-        format.html { redirect_to users_url, messages }
-        format.json { head :no_content }
-      end
+    return unless can? :destroy, @user
+
+    if current_user == @user
+      @user.errors.add(:base, I18n.t('controllers.users.error_destroy'))
+      result = false
+    else
+      result = @user.destroy
+    end
+    messages = result ? { notice: I18n.t('controllers.users.destroyed') } : { alert: "User could not be destroyed: #{@user.errors.full_messages}" }
+    respond_to do |format|
+      format.html { redirect_to users_url, messages }
+      format.json { head :no_content }
     end
   end
 
@@ -91,7 +88,7 @@ class UsersController < ApplicationController
         flash.now[:alert] = I18n.t('controllers.users.error_update')
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @program.errors, status: :unprocessable_entity }
-        end
+      end
     end
   end
 
@@ -109,6 +106,7 @@ class UsersController < ApplicationController
   end
 
   private
+
   def include_fields(include_fields)
     @include_fields = if can? :see_admin_fields, User
                         include_fields

@@ -46,19 +46,18 @@ class CourseTest < ActiveSupport::TestCase
   test 'find_or_create_from_json creates valid course with all details provided' do
     assert_difference('Course.count', 1) do
       course = Course.find_or_create_from_json(@course_json)
-      keys_to_check =  @course_json.keys
-      keys_to_check = keys_to_check - ['id', 'created_at', 'updated_at']
+      keys_to_check = @course_json.keys
+      keys_to_check -= %w[id created_at updated_at]
       nil_keys = keys_to_check.select { |key| @course_json[key].nil? }
-      keys_to_check = keys_to_check - nil_keys
+      keys_to_check -= nil_keys
       nil_keys.each do |key|
         assert_nil course.send(key), "field #{key} is not nil"
-
       end
       keys_to_check.each do |key|
         value = course.send(key)
-        assert_equal @course_json[key], value , "field #{key} does not match"
+        assert_equal @course_json[key], value, "field #{key} does not match"
       end
-     end
+    end
   end
 
   test 'find_or_create_from_json creates valid course with not all details provided' do

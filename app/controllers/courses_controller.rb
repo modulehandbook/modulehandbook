@@ -50,7 +50,9 @@ class CoursesController < ApplicationController
       if files.count < 1
         format.html { redirect_to courses_path, notice: I18n.t('controllers.courses.error_import') }
       elsif files.count > 1 && import_with_program_context
-        format.html { redirect_to program_path(program_context), notice: I18n.t('controllers.courses.imported_to_program') }
+        format.html do
+          redirect_to program_path(program_context), notice: I18n.t('controllers.courses.imported_to_program')
+        end
       elsif files.count > 1
         format.html { redirect_to courses_path, notice: I18n.t('controllers.courses.many_imported') }
       else
@@ -94,7 +96,7 @@ class CoursesController < ApplicationController
       logger.debug resp
       filename = helpers.generate_filename(course)
       send_data resp.body, filename: filename + '.docx'
-    rescue Faraday::ConnectionFailed => e
+    rescue Faraday::ConnectionFailed
       redirect_to courses_path, alert: I18n.t('controllers.courses.error_export')
     end
   end

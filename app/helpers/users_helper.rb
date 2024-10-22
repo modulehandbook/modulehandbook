@@ -11,6 +11,7 @@ module UsersHelper
 
   def format_time(at)
     return '' if at.nil? || at == ''
+
     at.strftime('%d/%m/%y (%H:%M)')
   end
 
@@ -32,10 +33,12 @@ module UsersHelper
     Rails.application.eager_load!
 
     actions_by_module = {}
-    controllers_ignore = ["DeviseController", "WelcomeController", "ViewsController"]
+    controllers_ignore = %w[DeviseController WelcomeController ViewsController]
     # c.name.match("::") -> ignores Controllers in the Users and Devise modules (from Devise)
     # TBD: maybe a Whitelist of Controllers that should be included is better/more readable?
-    controllers = ApplicationController.descendants.reject{|c| c.name.match("::") || controllers_ignore.include?(c.name)}
+    controllers = ApplicationController.descendants.reject do |c|
+      c.name.match('::') || controllers_ignore.include?(c.name)
+    end
 
     controllers.each do |controller|
       defined_actions = controller.instance_methods(false).map(&:to_s)

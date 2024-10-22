@@ -50,11 +50,11 @@ class Course < ApplicationRecord
   end
 
   def accept_event(event_name)
-    all_events = Course.aasm.events.map{|e|e.name}
-    if all_events.include?(event_name)
-      event = "#{event_name}!"
-      @course.send(event.to_sym)
-    end
+    all_events = Course.aasm.events.map { |e| e.name }
+    return unless all_events.include?(event_name)
+
+    event = "#{event_name}!"
+    @course.send(event.to_sym)
   end
 
   has_many :course_programs, dependent: :destroy
@@ -68,25 +68,25 @@ class Course < ApplicationRecord
     course_code = data['code']
     course = Course.where(code: course_code).first_or_create
 
-      course.name = data['name']
-      course.code = course_code
-      course.mission = data['mission']
-      course.ects = data['ects']
-      course.examination = data['examination']
-      course.objectives = data['objectives']
-      course.contents = data['contents']
-      course.prerequisites = data['prerequisites']
-      course.literature = data['literature']
-      course.methods = data['methods']
-      course.skills_knowledge_understanding = data['skills_knowledge_understanding']
-      course.skills_intellectual = data['skills_intellectual']
-      course.skills_practical = data['skills_practical']
-      course.skills_general = data['skills_general']
-      course.lectureHrs = data['lectureHrs']
-      course.labHrs = data['labHrs']
-      course.tutorialHrs = data['tutorialHrs']
-      course.equipment = data['equipment']
-      course.room = data['room']
+    course.name = data['name']
+    course.code = course_code
+    course.mission = data['mission']
+    course.ects = data['ects']
+    course.examination = data['examination']
+    course.objectives = data['objectives']
+    course.contents = data['contents']
+    course.prerequisites = data['prerequisites']
+    course.literature = data['literature']
+    course.methods = data['methods']
+    course.skills_knowledge_understanding = data['skills_knowledge_understanding']
+    course.skills_intellectual = data['skills_intellectual']
+    course.skills_practical = data['skills_practical']
+    course.skills_general = data['skills_general']
+    course.lectureHrs = data['lectureHrs']
+    course.labHrs = data['labHrs']
+    course.tutorialHrs = data['tutorialHrs']
+    course.equipment = data['equipment']
+    course.room = data['room']
 
     course.save
     course

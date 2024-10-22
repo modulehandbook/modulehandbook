@@ -82,13 +82,14 @@ class SystemTestConfig
     raise Error, "Rails app cannot be reached: #{capybara_app_host}"
   end
 
-  class HttpURLChecker 
+  class HttpURLChecker
     def initialize(url_string)
       url = URI.parse(url_string)
       @host = url.host
       @port = url.port
       @path = url.path
     end
+
     def available?
       begin
         require 'net/http'
@@ -102,5 +103,4 @@ class SystemTestConfig
       true
     end
   end
-  
 end

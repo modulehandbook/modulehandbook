@@ -10,4 +10,4 @@ class AdminMailer < Devise::Mailer
     @host = Rails.configuration.x.mh_hostname
     mail(to: deviseEmail, subject: I18n.t('mailers.admin.new_user'))
   end
-end 
+end
