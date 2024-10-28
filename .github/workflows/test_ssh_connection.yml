@@ -83,5 +83,24 @@ jobs:
       - name: Test Connection
         run: |
           ssh $SSH_USER@$SSH_HOST "ls -lart"
-  
 
+  makesign:
+    runs-on: ubuntu-latest
+    env:
+      SSH_KEY: ${{ secrets.DEPLOY_MAKESIGN_KEY }}
+      SSH_USER: ${{ secrets.DEPLOY_MAKESIGN_USER }}
+      SSH_HOST: 'makesign.f4.htw-berlin.de'
+      KNOWN_HOST: 'makesign.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.SSH_KEY }}
+      - name: Create Known Hosts File
+        run: |
+            echo $KNOWN_HOST > ~/.ssh/known_hosts
+      - name: Test Connection
+        run: |
+          ssh $SSH_USER@$SSH_HOST "ls -lart"
+     
+        
