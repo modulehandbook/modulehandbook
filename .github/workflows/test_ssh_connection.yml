@@ -9,9 +9,10 @@ jobs:
   mh-imi:
     runs-on: ubuntu-latest
     env:
-      SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY_IMI }}
-      SSH_HOST: ${{ secrets.DEPLOY_HOST_IMI }}
-      KNOWN_HOST_KEY: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
+      SSH_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
+      SSH_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
+      SSH_HOST: 'mh-imi.f4.htw-berlin.de'
+      KNOWN_HOST: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
     steps:
       - uses: actions/checkout@v3
       - uses: webfactory/ssh-agent@v0.9.0
@@ -19,8 +20,26 @@ jobs:
           ssh-private-key: ${{ env.SSH_KEY }}
       - name: Create Known Hosts File
         run: |
-            echo $KNOWN_HOST_KEY > ~/.ssh/known_hosts
+            echo $KNOWN_HOST > ~/.ssh/known_hosts
       - name: Test Connection
         run: |
-          ssh $SSH_HOST "ls -lart"
-    
+          ssh $SSH_USER@$SSH_HOST "ls -lart"
+
+  infrastructure:
+    runs-on: ubuntu-latest
+    env:
+      SSH_KEY: ${{ secrets.DEPLOY_INF_KEY }}
+      SSH_USER: ${{ secrets.DEPLOY_INF_USER }}
+      SSH_HOST: 'infrastructure.f4.htw-berlin.de'
+      KNOWN_HOST: 'infrastructure.f4.htw-berlin.de ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFrJk3IjoJf61+rHU/ZMyD4ud488roXMJaa2NEeBiNruZGIw7k4YBLaZgCgfQNk+T/vzXTls+XIuY5S6rI8FD2I='
+    steps:
+      - uses: actions/checkout@v3
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.SSH_KEY }}
+      - name: Create Known Hosts File
+        run: |
+            echo $KNOWN_HOST > ~/.ssh/known_hosts
+      - name: Test Connection
+        run: |
+          ssh $SSH_USER@$SSH_HOST "ls -lart"
