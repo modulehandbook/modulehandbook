@@ -33,6 +33,26 @@ jobs:
       SSH_HOST: 'infrastructure.f4.htw-berlin.de'
       KNOWN_HOST: 'infrastructure.f4.htw-berlin.de ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFrJk3IjoJf61+rHU/ZMyD4ud488roXMJaa2NEeBiNruZGIw7k4YBLaZgCgfQNk+T/vzXTls+XIuY5S6rI8FD2I='
     steps:
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.SSH_KEY }}
+      - name: Create Known Hosts File
+        run: |
+            echo $KNOWN_HOST > ~/.ssh/known_hosts
+      - name: Test Connection
+        run: |
+          ssh $SSH_USER@$SSH_HOST "ls -lart"
+
+
+  module-handbook-staging:
+    runs-on: ubuntu-latest
+    env:
+      SSH_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+      SSH_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+      SSH_HOST: 'module-handbook-staging.f4.htw-berlin.de'
+      KNOWN_HOST: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
+  
+    steps:
       - uses: actions/checkout@v3
       - uses: webfactory/ssh-agent@v0.9.0
         with:
@@ -43,3 +63,25 @@ jobs:
       - name: Test Connection
         run: |
           ssh $SSH_USER@$SSH_HOST "ls -lart"
+
+
+  module-handbook:
+    runs-on: ubuntu-latest
+    env:
+      SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
+      SSH_USER: ${{ secrets.DEPLOY_MH_USER }}
+      SSH_HOST: 'module-handbook.f4.htw-berlin.de'
+      KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.SSH_KEY }}
+      - name: Create Known Hosts File
+        run: |
+            echo $KNOWN_HOST > ~/.ssh/known_hosts
+      - name: Test Connection
+        run: |
+          ssh $SSH_USER@$SSH_HOST "ls -lart"
+  
+
