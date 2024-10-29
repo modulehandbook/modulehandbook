@@ -14,7 +14,6 @@ jobs:
       SSH_HOST: 'mh-imi.f4.htw-berlin.de'
       KNOWN_HOST: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
     steps:
-      - uses: actions/checkout@v3
       - uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
@@ -53,7 +52,6 @@ jobs:
       KNOWN_HOST: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
   
     steps:
-      - uses: actions/checkout@v3
       - uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
@@ -73,7 +71,6 @@ jobs:
       SSH_HOST: 'module-handbook.f4.htw-berlin.de'
       KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
     steps:
-      - uses: actions/checkout@v3
       - uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
@@ -92,7 +89,6 @@ jobs:
       SSH_HOST: 'progwebtec.f4.htw-berlin.de'
       KNOWN_HOST: 'progwebtec.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
     steps:
-      - uses: actions/checkout@v3
       - uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
@@ -111,7 +107,6 @@ jobs:
       SSH_HOST: 'makesign.f4.htw-berlin.de'
       KNOWN_HOST: 'makesign.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
     steps:
-      - uses: actions/checkout@v3
       - uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
