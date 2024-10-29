@@ -113,12 +113,21 @@ class Course < ApplicationRecord
   end
 end
 
-class CourseFactory
-  def self.create(data, program_id_from_params)
-    course = Course.find_or_create_from_json(data)
-    unless program_id_from_params == :no_program_id
-      CourseProgram.find_or_create_from_json(data, course.id, program_id_from_params)
+class CourseImporterFactory
+  def self.create(program_id_from_params)
+    if program_id_from_params != :no_program_id
+      CourseInProgramImporter()
+    else
+      CourseImporter()
     end
+  end
+end
+class CourseImporter
+  def import(data, program_id_from_params)
+    course = Course.find_or_create_from_json(data)
+
+    link_program_hook(data, course, program_id_from_params)
+
     course.save
     programs = data['programs']
     programs.each do |program_data|
@@ -127,5 +136,15 @@ class CourseFactory
       course.save
     end
     course
+  end
+  def link_program_hook(data, course, program_id_from_params)
+  end
+end
+
+class CourseInProgramImporter < CourseImporter
+
+  def link_program_hook(data, course, program_id_from_params)
+      CourseProgram.find_or_create_from_json(data, course.id, program_id_from_params)
+   
   end
 end
