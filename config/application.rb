@@ -37,6 +37,8 @@ module ModuleHandbook
     config.hosts << 'module-handbook.f4.htw-berlin.de'
     config.hosts << 'module-handbook-staging.f4.htw-berlin.de'
     config.hosts << 'makesign.f4.htw-berlin.de'
+    config.hosts << 'mh-imi.f4.htw-berlin.de'
+    
     # config.hosts << "141.45.191.40"
     # config.hosts << "141.45.191.41"
 
