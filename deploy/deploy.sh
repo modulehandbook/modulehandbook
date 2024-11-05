@@ -22,7 +22,7 @@ if [ $RAILS_MASTER_KEY = "" ]; then
   echo "RAILS_MASTER_KEY missing"
   exit 42
 fi
-ssh $HOST "echo echo RAILS_MASTER_KEY=$RAILS_MASTER_KEY >> .env"
+ssh $HOST "echo RAILS_MASTER_KEY=$RAILS_MASTER_KEY >> .env"
 #echo RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key) | ssh $HOST "cat >> .env"
 
 ssh $HOST "sudo docker compose down"
