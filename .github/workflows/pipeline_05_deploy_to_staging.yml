@@ -17,6 +17,8 @@ jobs:
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v3
+              with:
+                fetch-depth: 0
 
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.9.0
@@ -32,4 +34,6 @@ jobs:
               run: |
                 chmod +x deploy/staging.sh
                 ./deploy/staging.sh
+              env:
+                RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
   
