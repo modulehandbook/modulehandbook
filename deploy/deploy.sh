@@ -2,6 +2,8 @@
 ENV=$1
 TAG=$2
 
+RAILS_MASTER_KEY=$RAILS_MASTER_KEY
+
 source ./deploy/environments/$ENV.env
 echo "about to deploy commit $TAG to $ENV"
 
@@ -17,7 +19,8 @@ ssh $HOST "ln -sf deploy/environments/$ENV.env active-environment.env"
 # .env
 scp .env $HOST:~
 ssh $HOST "echo TAG_MODULE_HANDBOOK=$TAG >> .env"
-RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key)
+
+# RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key)
 if [ $RAILS_MASTER_KEY = "" ]; then
   echo "RAILS_MASTER_KEY missing"
   exit 42

@@ -29,11 +29,12 @@ jobs:
               run: |
                   ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
               
+            - name: Set Environment Variables
+              run: |
+                echo "export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY_STAGING }}" >> $GITHUB_ENV
 
             - name: Execute Deployment
               run: |
                 chmod +x deploy/staging.sh
                 ./deploy/staging.sh
-              env:
-                RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
   
