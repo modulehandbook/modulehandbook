@@ -48,6 +48,12 @@ jobs:
     name: "3"
     if: ${{ inputs.environment == 'staging' }}
     uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
+  
+  trigger-production-deployment:
+    needs: build_and_push
+    name: "4"
+    if: ${{ inputs.environment == 'production' }}
+    uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
 
   info:
     name: Show Parameter

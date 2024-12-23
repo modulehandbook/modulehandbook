@@ -22,7 +22,7 @@ jobs:
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.9.0
               with:
-                ssh-private-key: ${{ env.SSH_KEY }}
+                ssh-private-key: ${{ secrets.DEPLOY_MH_STAG_KEY }}
             
             - name: Verify SSH Connection
               run: |
