@@ -2,6 +2,17 @@ name: Deploy to Production
 
 on:
     workflow_call:  # Triggered by the Build and Push workflow
+      secrets:
+        rails_master_key:
+          required: true
+        DEPLOY_MH_KEY: 
+          required: true
+        DEPLOY_MH_USER: 
+          required: true
+        DEPLOY_MHIMI_KEY: 
+          required: true
+        DEPLOY_MHIMI_USER: 
+          required: true
       
 
 jobs:
@@ -30,7 +41,7 @@ jobs:
               
             - name: Set Environment Variables
               run: |
-                echo "RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}" >> $GITHUB_ENV
+                echo "RAILS_MASTER_KEY=${{ secrets.rails_master_key }}" >> $GITHUB_ENV
 
             - name: Execute Deployment
               run: |
@@ -62,7 +73,7 @@ jobs:
               
             - name: Set Environment Variables
               run: |
-                echo "RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}" >> $GITHUB_ENV
+                echo "RAILS_MASTER_KEY=${{ secrets.rails_master_key }}" >> $GITHUB_ENV
 
             - name: Execute Deployment
               run: |

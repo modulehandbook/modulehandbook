@@ -15,6 +15,14 @@ on:
         required: false
       DEPLOY_MH_STAG_USER:
         required: false
+      DEPLOY_MH_KEY: 
+        required: false
+      DEPLOY_MH_USER: 
+        required: false
+      DEPLOY_MHIMI_KEY: 
+        required: false
+      DEPLOY_MHIMI_USER: 
+        required: false
 
 
     inputs:
@@ -53,7 +61,7 @@ jobs:
   trigger-staging-deployment:
     needs: build_and_push
     name: "3"
-    if: ${{ inputs.environment == 'staging' }}
+    if: ${{ inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
     secrets: 
       DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
@@ -63,8 +71,14 @@ jobs:
   trigger-production-deployment:
     needs: build_and_push
     name: "4"
-    if: ${{ inputs.environment == 'production' }}
+    if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
+    secrets:
+      rails_master_key: ${{ secrets.rails_master_key }}
+      DEPLOY_MH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
+      DEPLOY_MH_USER: ${{ secrets.DEPLOY_MH_USER }}
+      DEPLOY_MHIMI_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
+      DEPLOY_MHIMI_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
 
   info:
     name: Show Parameter
