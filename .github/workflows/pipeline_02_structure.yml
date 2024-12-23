@@ -9,6 +9,10 @@ on:
     secrets:
       rails_master_key:
         required: false
+      DEPLOY_MH_STAG_KEY: 
+        required: false
+      DEPLOY_MH_STAG_USER:
+        required: false
 
     inputs:
       tags:
@@ -48,6 +52,9 @@ jobs:
     name: "3"
     if: ${{ inputs.environment == 'staging' }}
     uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
+    secrets: 
+      DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+      DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
   
   trigger-production-deployment:
     needs: build_and_push

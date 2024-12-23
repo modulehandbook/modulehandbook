@@ -2,6 +2,11 @@ name: Deploy to Staging
 
 on:
     workflow_call:  # Triggered by the Build and Push workflow
+      secrets:
+        DEPLOY_MH_STAG_KEY: 
+          required: true
+        DEPLOY_MH_STAG_USER:
+          required: true
       
 
 jobs:
@@ -22,7 +27,7 @@ jobs:
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.9.0
               with:
-                ssh-private-key: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+                ssh-private-key: ${{ env.SSH_KEY }}
             
             - name: Verify SSH Connection
               run: |
