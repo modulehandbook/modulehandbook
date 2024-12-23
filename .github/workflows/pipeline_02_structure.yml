@@ -42,6 +42,12 @@ jobs:
       environment: ${{ inputs.environment }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
+  
+  trigger-staging-deployment:
+    needs: build_and_push
+    name: "3"
+    if: ${{ inputs.environment == 'staging' }}
+    uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
 
   info:
     name: Show Parameter
