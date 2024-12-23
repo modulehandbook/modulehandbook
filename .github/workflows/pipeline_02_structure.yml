@@ -9,10 +9,13 @@ on:
     secrets:
       rails_master_key:
         required: false
+      RAILS_MASTER_KEY_STAGING:
+        required: false
       DEPLOY_MH_STAG_KEY: 
         required: false
       DEPLOY_MH_STAG_USER:
         required: false
+
 
     inputs:
       tags:
@@ -55,6 +58,7 @@ jobs:
     secrets: 
       DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
       DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+      RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
   
   trigger-production-deployment:
     needs: build_and_push
