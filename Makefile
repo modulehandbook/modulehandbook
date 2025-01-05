@@ -264,6 +264,10 @@ dump_production:
 -   echo $(sshid)
 - 	ssh local@module-handbook.f4.htw-berlin.de $(sshid)  "docker compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../modhand-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 
+dump_imi:
+-   echo $(sshid)
+- 	ssh local@mh-imi.f4.htw-berlin.de $(sshid) "docker compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../modhand-dumps-imi/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+
 cron_dump:
 - # ping -t 2 module-handbook.f4.htw-berlin.de; if [ $$? == 0 ]; then ssh local@module-handbook.f4.htw-berlin.de "docker compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump ; fi
 - PING := $(ping -t 2 module-handbook.f4.htw-berlin.de)
