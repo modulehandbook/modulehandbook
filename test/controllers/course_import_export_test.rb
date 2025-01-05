@@ -32,6 +32,21 @@ class CoursesControllerImportTest < ActionDispatch::IntegrationTest
     assert_redirected_to course_url(Course.find_by(code: 'B1'))
   end
 
+
+  test 'should set teacher and responsible person when importing from json' do
+    file = fixture_file_upload(Rails.root.join('test/fixtures/files/2025-01-05_B1-Informatik1.json').to_s,
+                               'application/json')
+    files_array = []
+    files_array << file
+    post import_course_json_url, params: { files: files_array }
+    assert_response :redirect
+    imported_course = Course.find_by(code: 'IMI25-B1')
+    assert_redirected_to course_url(imported_course)
+    assert_equal "", imported_course.teacher
+    assert_equal "", imported_course.responsible_person
+    
+  end
+
   test 'should import courses from multiple json' do
     file1 = fixture_file_upload(Rails.root.join('test/fixtures/files/2020-08-14_B1-Informatik1.json').to_s,
                                 'application/json')

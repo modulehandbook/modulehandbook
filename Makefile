@@ -240,6 +240,10 @@ open_staging:
 open_production:
 - open https://module-handbook.f4.htw-berlin.de
 
+
+
+# ssh local@mh-imi.f4.htw-berlin.de "docker compose exec -ti module-handbook rails c"
+
 #  ** wip **
 
 import_dump_staging:
