@@ -240,6 +240,10 @@ open_staging:
 open_production:
 - open https://module-handbook.f4.htw-berlin.de
 
+
+
+# ssh local@mh-imi.f4.htw-berlin.de "docker compose exec -ti module-handbook rails c"
+
 #  ** wip **
 
 import_dump_staging:
@@ -253,6 +257,12 @@ import_dump_production:
 
 import_dump_local:
 - cat $(file) | docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
+
+import_dump_imi:
+- echo "disabled - uncomment line below to temporarily enable it"
+- echo using file $(file)
+- cat $(file) | ssh local@mh-imi.f4.htw-berlin.de "docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+
 
 staging_file=../modhand-dumps/modhand-stag-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 dump_staging:

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
+  include ApplicationHelper
+
   load_and_authorize_resource except: :export_courses_json
   skip_authorization_check only: :export_courses_json
   skip_before_action :authenticate_user!, only: :export_courses_json
@@ -12,6 +14,9 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     @courses = Course.order(:name)
+    @courses = @courses.sort do |c1, c2|
+      compare_course_codes(c1.code, c2.code)
+    end
   end
 
   def versions
@@ -176,6 +181,11 @@ class CoursesController < ApplicationController
     end
   end
 
+  PERMITTED_PARAMS = %i[name code mission ects examination objectives contents
+                        prerequisites literature methods skills_knowledge_understanding
+                        skills_intellectual skills_practical skills_general
+                        lectureHrs labHrs tutorialHrs equipment room responsible_person
+                        teacher comment event_name].freeze
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -183,11 +193,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
-  PERMITTED_PARAMS = %i[name code mission ects examination objectives contents
-                        prerequisites literature methods skills_knowledge_understanding
-                        skills_intellectual skills_practical skills_general
-                        lectureHrs labHrs tutorialHrs equipment room responsible_person
-                        teacher comment event_name].freeze
+
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(PERMITTED_PARAMS)
