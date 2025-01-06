@@ -1,12 +1,12 @@
 <div id="<%= dom_id topic_description %>">
   <p>
     <strong>Topic:</strong>
-    <%= topic_description.topic_id %>
+    <%= topic_description.topic.title %>
   </p>
 
   <p>
-    <strong>Implementable:</strong>
-    <%= topic_description.implementable_id %>
+    <strong><%= topic_description.implementable.class %>:</strong>
+    <%= topic_description.implementable.code %>
   </p>
 
   <p>

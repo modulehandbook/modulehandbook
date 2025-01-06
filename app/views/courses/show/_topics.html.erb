@@ -1,31 +1,38 @@
 
 
 <% @link_memos.each do | lm | %>
-  <br/>Topics for <b><%= lm.program.code %></b>:
+  <br/>Topics for Program <b><%= lm.program.code %></b>:
 
-  <% lm.program.topics.each do |topic| %>
-    <%= topic.title %> |
-  <% end %>
 
 <hr/>
 <div>
   <dl>
-  <% lm.program.topics.each do |topic| %>
-      <dt><%= topic.title %> </dt>
+  <%
+    not_included = []
+    lm.program.topics.each do |topic| %>
 
-    <dd>
       <% @course_topic_description = TopicDescription.where(implementable: @course, topic: topic).first
          if @course_topic_description %>
+        <dt><%= topic.title %> </dt>
+        <dd>
         <%= @course_topic_description.description %>
-      <% else %>
-      add description for <%= topic.title %>
-    <% end %>
-    </dd>
+        </dd>
+      <% else
+        not_included << topic
+    end %>
+
   <% end %>
   </dl>
 </div>
 <div>
   <br/>
+
+  <hr/>
+
+  <% not_included.each do |topic| %>
+    <%= link_to "+ #{topic.title}", new_topic_description_path(topic_id: topic.id, course_id: @course.id) %>
+    |
+  <% end %>
 
   <hr/>
   course topics

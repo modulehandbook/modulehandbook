@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   resources :topic_descriptions, only: %i[index create show edit update destroy]
-  get 'topic_descriptions/new/:topic_id/:type/:id', to: 'topic_descriptions#new', as: :new_topic_description
+  get 'topic_descriptions/new/:topic_id/:course_id', to: 'topic_descriptions#new', as: :new_topic_description
 
   resources :topics, only: %i[index create show edit update destroy]
   get 'topics/new/:program_id', to: 'topics#new', as: :new_topic

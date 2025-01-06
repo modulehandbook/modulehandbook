@@ -12,12 +12,9 @@ class TopicDescriptionsController < ApplicationController
 
   # GET /topic_descriptions/new
   def new
-    clazz_name = params[:type]
-    id = params[:id]
-    clazz = clazz_name.constantize
-    @implementable = clazz.find(id)
-    @topic = Topic.new
-    @topic_description = TopicDescription.new(implementable: @implementable, topic: @topic)
+    @topic = Topic.find(params[:topic_id])
+    @course = Course.find(params[:course_id])
+    @topic_description = TopicDescription.new(implementable: @course, topic: @topic)
   end
 
   # GET /topic_descriptions/1/edit

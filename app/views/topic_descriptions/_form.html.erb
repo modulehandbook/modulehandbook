@@ -12,14 +12,13 @@
   <% end %>
 
   <div>
-    <%= form.label :topic_id, style: "display: block" %>
-    <%= form.text_field :topic_id %>
+    Course <%= @course.code %> <%= @course.name %> adds to Topic "<%= @topic.title %>":
+    <%= form.hidden_field :topic_id, value: @topic.id %>
+    <%= form.hidden_field :implementable_id, value: @course.id %>
+    <%= form.hidden_field :implementable_type, value: 'Course' %>
+
   </div>
 
-  <div>
-    <%= form.label :implementable_id, style: "display: block" %>
-    <%= form.text_field :implementable_id %>
-  </div>
 
   <div>
     <%= form.label :description, style: "display: block" %>
