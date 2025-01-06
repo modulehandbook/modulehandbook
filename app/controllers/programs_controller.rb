@@ -34,8 +34,8 @@ class ProgramsController < ApplicationController
     @comments = commentable.comments
     @comments_size = @comments.size
     @comment = commentable.comments.build(author: current_user)
-    if @tab in [:table, :overview]
-      overview
+    if [:table, :overview].include? @tab
+      @semester = overview
     end
   end
 
@@ -52,6 +52,7 @@ class ProgramsController < ApplicationController
     end
     @options = @program.course_programs.where(required: 'elective-option')
     @semester = @rows
+    @semester
   end
 
   def htw_overview

@@ -14,7 +14,7 @@
 <% end %>
 
 <% if @tab == :overview %>
-  <%= render 'programs/show/overview', course_programs: @course_programs %>
+  <%= render 'programs/show/overview', program: @program, semester: @semester  %>
 <% end %>
 
 <% if @tab == :table %>
