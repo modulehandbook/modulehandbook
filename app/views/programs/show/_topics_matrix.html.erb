@@ -1,0 +1,34 @@
+Matrix
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th></th>
+    <% @topics.each do | topic| %>
+        <th onclick = "location.href='<%= topic_path(topic) %>'"><%=topic.title %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @courses.each do | course| %>
+  <tr>
+    <td onclick = "location.href='<%= course_path(course) %>'"><%= course.code %><br/><small><%= course.name %></small></td>
+    <% @topics.each do | topic|
+      topic_description = TopicDescription.where(implementable: course, topic: topic).first
+      %>
+
+      <td >
+     <% if topic_description %>
+        <%=  topic_description.description %>
+        <% else %>
+          <%= link_to "+", new_topic_description_path(course_id: course.id, topic_id: topic.id, back_to: course.id)  %>
+
+      <% end %>
+      </td>
+    <% end %>
+
+  </tr>
+  <% end %>
+
+  </tbody>
+</table>

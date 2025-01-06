@@ -39,6 +39,8 @@ class ProgramsController < ApplicationController
     end
     if [:topics].include? @tab
       @topic_descriptions = @program.topic_descriptions
+      @topics = @program.topics
+      @courses = @course_programs.map{|cp| cp.course}
     end
   end
 
