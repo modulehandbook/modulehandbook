@@ -30,6 +30,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @tab = (params['tab'] || :course).to_sym
     @links = @course.course_programs.includes(:program)
     @link_memos = @links.map do |l|
       LinkMemo.new(l.program, l,
