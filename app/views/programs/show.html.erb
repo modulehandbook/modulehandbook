@@ -48,6 +48,7 @@
  <% params =  @show_objectives ? {} : { objectives: true } %>
  <%= link_to 'Toggle Objectives', program_path(@program, params) %>
   |  <%= link_to 'Overview', program_overview_path(@program) %>
+  |  <%= link_to 'HTW Overview', program_htw_overview_path(@program) %>
 
 <%= render 'comments/comments_teaser'%>
  <br><br>

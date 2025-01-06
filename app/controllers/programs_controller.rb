@@ -46,6 +46,22 @@ class ProgramsController < ApplicationController
       @rows["electives #{semester}"] = cps
     end
     @options = @program.course_programs.where(required: 'elective-option')
+    @semester = @rows
+  end
+
+  def htw_overview
+    @course_programs = @program.course_programs.includes(:course)
+    @rows = @program.course_programs.study_plan.includes(:course)
+                    .order('course_programs.semester', 'courses.code')
+                    .group_by(&:semester)
+    @elective_rows = @program.course_programs.elective_options.includes(:course)
+                             .order('course_programs.semester', 'courses.code')
+                             .group_by(&:semester)
+    @elective_rows.each do |semester, cps|
+      @rows["electives #{semester}"] = cps
+    end
+    @options = @program.course_programs.where(required: 'elective-option')
+    @semester = @rows
   end
 
   def import_program_json

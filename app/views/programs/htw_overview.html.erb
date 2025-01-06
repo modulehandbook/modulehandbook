@@ -1,0 +1,65 @@
+<% content_for(:title, "Program Overview") %>
+<%= link_to @program.name, @program %>
+
+
+<table class="table table-sm" xmlns="http://www.w3.org/1999/html">
+    <% ects_total = 0
+       @semester.each do | semester, cps | %>
+
+
+    <% lectureHrs = cps.inject(0){|sum,cp| sum = sum + (cp.course.lectureHrs.nil? ?  0 : cp.course.lectureHrs ) } %>
+    <% labHrs = cps.inject(0){|sum,cp| sum = sum + (cp.course.labHrs.nil? ?  0 : cp.course.labHrs ) } %>
+
+       <% ects = cps.inject(0){|sum,cp| sum = sum + (cp.course.ects.nil? ?  0 : cp.course.ects ) }
+           ects_total += ects unless semester.to_s.starts_with? 'elective'%>
+
+      <tr><td colspan ="8">&nbsp;</td></tr>
+    <thead class="thead-light">
+        <tr>  <th class="text-center" colspan=10><%= semester %>. Semester </th></tr>
+        <tr>
+          <th>Nr.</th>
+          <th>Modulbezeichnung</th>
+          <th>Art</th>
+          <th>Form</th>
+          <th>SWS</th>
+          <th>LP</th>
+          <th>Info</th>
+        </tr>
+        </thead>
+      <tbody>
+      <% cps.each do | cp | %>
+          <tr>
+            <td><%=link_to cp.course.code, cp.course %></td>
+            <td ><%=link_to cp.course.name, cp.course %></td>
+            <td>Art</td>
+            <td><%= htw_form(cp.course) %></td>
+            <td><%= htw_sws(cp.course)%></td>
+            <td><%= cp.course.ects %></td>
+            <td class="bg-required-<%= cp.required %>">
+              <span class="bg-<%= cp.course.aasm_state %>">&nbsp;&nbsp;&nbsp; </span>&nbsp;&nbsp;
+              <%= link_to "#{cp.required}, in #{cp.course.course_programs.count} programs", course_programs_url(course_id: cp.course) %>
+            </td>
+          </tr>
+
+          <% end %>
+      </tbody>
+          <thead class="thead-light">
+          <tr>
+            <th></th>
+            <th>Summe Semester</th>
+            <th></th>
+            <th></th>
+            <th><%= pn(lectureHrs) %>/<%= pn(labHrs) %></th>
+            <th><%= ects %></th>
+            <th></th>
+          </tr>
+          </thead>
+
+    <% end %>
+
+
+</table>
+
+        Summe: <%= ects_total %> ECTS
+
+
