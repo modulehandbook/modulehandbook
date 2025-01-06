@@ -1,1 +1,41 @@
-Topics
+
+
+<% @link_memos.each do | lm | %>
+  <br/>Topics for <b><%= lm.program.code %></b>:
+
+  <% lm.program.topics.each do |topic| %>
+    <%= topic.title %> |
+  <% end %>
+
+<hr/>
+<div>
+  <dl>
+  <% lm.program.topics.each do |topic| %>
+      <dt><%= topic.title %> </dt>
+
+    <dd>
+      <% @course_topic_description = TopicDescription.where(implementable: @course, topic: topic).first
+         if @course_topic_description %>
+        <%= @course_topic_description.description %>
+      <% else %>
+      add description for <%= topic.title %>
+    <% end %>
+    </dd>
+  <% end %>
+  </dl>
+</div>
+<div>
+  <br/>
+
+  <hr/>
+  course topics
+  <dl>
+    <% @topic_descriptions.each do | td |%>
+      <dt><%= td.topic.title %></dt>
+      <dd><%= td.description %></dd>
+    <% end %>
+  </dl>
+</div>
+
+<% end %>
+<hr/>

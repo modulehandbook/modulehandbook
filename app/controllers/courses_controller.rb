@@ -43,6 +43,9 @@ class CoursesController < ApplicationController
     @comments = @course.comments
     @comments_size = @comments.size
     @comment = @course.comments.build(author: @current_user)
+    if @tab == :topics
+      @topic_descriptions = @course.topic_descriptions
+    end
   end
 
   def import_course_json
