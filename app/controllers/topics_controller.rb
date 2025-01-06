@@ -32,7 +32,8 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save && @topic_description.save
-        format.html { redirect_to topic_description_url(@topic_description), notice: "Topic and Topic Description was successfully created." }
+        @program = @topic_description.implementable
+        format.html { redirect_to program_url(@program, tab: :topics), notice: "Topic and Topic Description was successfully created." }
         format.json { render :show, status: :created, location: @topic_description }
       else
         format.html { render :new, status: :unprocessable_entity }

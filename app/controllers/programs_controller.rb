@@ -37,6 +37,9 @@ class ProgramsController < ApplicationController
     if [:table, :overview].include? @tab
       @semester = overview
     end
+    if [:topics].include? @tab
+      @topic_descriptions = @program.topic_descriptions
+    end
   end
 
   def overview
