@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :comments, only: %i[index show create edit update destroy]
 
   get 'programs/:id/overview', to: 'programs#overview', as: 'program_overview'
+  get 'programs/:id/htw_overview', to: 'programs#htw_overview', as: 'program_htw_overview'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   get 'courses/:id/versions', to: 'courses#versions', as: 'course_versions'
