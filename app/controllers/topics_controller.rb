@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
-  before_action :set_topic, only: %i[ show edit update destroy ]
+
+  load_and_authorize_resource
 
   # GET /topics or /topics.json
   def index
@@ -58,10 +59,6 @@ class TopicsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_topic
-      @topic = Topic.find(params[:id])
-    end
 
     # Only allow a list of trusted parameters through.
     def topic_params
