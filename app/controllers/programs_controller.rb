@@ -19,6 +19,8 @@ class ProgramsController < ApplicationController
   # GET /programs/1
   # GET /programs/1.json
   def show
+
+    @tab = (params['tab'] || :program).to_sym
     @course_programs = @program
                        .course_programs
                        .includes(:course)
@@ -32,6 +34,9 @@ class ProgramsController < ApplicationController
     @comments = commentable.comments
     @comments_size = @comments.size
     @comment = commentable.comments.build(author: current_user)
+    if @tab in [:table, :overview]
+      overview
+    end
   end
 
   def overview
