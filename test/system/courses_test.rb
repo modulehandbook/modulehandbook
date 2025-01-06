@@ -152,4 +152,12 @@ class CoursesTest < ApplicationSystemTestCase
 
     assert_text 'Course was successfully destroyed'
   end
+
+  test 'change state' do
+    @course = courses(:for_state_test)
+    visit course_path(@course)
+    click_on "Finish Writing"
+    assert_text "State updated"
+    assert_text "State: In Review"
+  end
 end
