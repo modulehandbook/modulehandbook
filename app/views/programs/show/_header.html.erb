@@ -15,7 +15,8 @@
       ['Course List', :course_list, program_path(@program, { tab: :course_list, objectives: false })],
       ['with Objectives', :course_list_with_objectives, program_path(@program, { tab: :course_list_with_objectives, objectives: true })],
       ['Plan', :overview,  program_path(@program, { tab: :overview})],
-      ['Table Overview', :table, program_path(@program, { tab: :table})]
+      ['Table Overview', :table, program_path(@program, { tab: :table})],
+      ['Topics', :topics, program_path(@program, { tab: :topics})]
      ].each do | title, tab, path |  %>
   <li class="nav-item">
     <a class="nav-link <%= @tab == tab ? 'active' : '' %>" href="<%= path %>"><%= title %></a>

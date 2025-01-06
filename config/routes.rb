@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :topic_descriptions
+  resources :topic_descriptions, only: %i[index create show edit update destroy]
+  #get 'topic_descriptions/new'
+  # topic_descriptions#new only:
+
   resources :topics
   resources :faculties
 

@@ -2,15 +2,16 @@
 
 <%= render 'programs/show/header', program: @program %>
 
+
 <% if @tab == :program %>
   <%= render 'programs/show/program', program: @program %>
 <% end %>
 <% if @tab == :course_list %>
-  <%= render 'course_list', course_programs: @course_programs, show_objectives: false %>
+  <%= render 'programs/show/course_list', course_programs: @course_programs, show_objectives: false %>
 <% end %>
 
 <% if @tab == :course_list_with_objectives %>
-  <%= render 'course_list', course_programs: @course_programs, show_objectives: true %>
+  <%= render 'programs/show/course_list', course_programs: @course_programs, show_objectives: true %>
 <% end %>
 
 <% if @tab == :overview %>
@@ -20,6 +21,12 @@
 <% if @tab == :table %>
   <%= render 'programs/show/htw_overview', course_programs: @course_programs %>
 <% end %>
+
+<% if @tab == :topics %>
+  <%= render 'programs/show/topics', program: @program %>
+<% end %>
+
+
 
 <%= render 'programs/show/footer', program: @program %>
 

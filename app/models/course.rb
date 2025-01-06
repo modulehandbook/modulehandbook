@@ -4,7 +4,7 @@
 class Course < ApplicationRecord
   include AASM
   has_many :comments, as: :commentable, dependent: :destroy
-  has_many :topic_descriptions, as: :implementable
+  has_many :topic_descriptions, as: :implementable, dependent: :destroy
   has_many :topics, through: :topic_descriptions
   has_paper_trail
 
