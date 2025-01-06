@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  topic: one
+  implementer: one
+  implementer_type: Implementer
+  description: MyText
+
+two:
+  topic: two
+  implementer: two
+  implementer_type: Implementer
+  description: MyText

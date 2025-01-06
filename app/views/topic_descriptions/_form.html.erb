@@ -1,0 +1,32 @@
+<%= form_with(model: topic_description) do |form| %>
+  <% if topic_description.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(topic_description.errors.count, "error") %> prohibited this topic_description from being saved:</h2>
+
+      <ul>
+        <% topic_description.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :topic_id, style: "display: block" %>
+    <%= form.text_field :topic_id %>
+  </div>
+
+  <div>
+    <%= form.label :implementer_id, style: "display: block" %>
+    <%= form.text_field :implementer_id %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

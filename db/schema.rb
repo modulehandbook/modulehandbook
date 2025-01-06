@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_06_172304) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_06_173813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,6 +83,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_06_172304) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "topic_descriptions", force: :cascade do |t|
+    t.bigint "topic_id", null: false
+    t.string "implementer_type", null: false
+    t.bigint "implementer_id", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["implementer_type", "implementer_id"], name: "index_topic_descriptions_on_implementer"
+    t.index ["topic_id"], name: "index_topic_descriptions_on_topic_id"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -137,5 +148,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_06_172304) do
 
   add_foreign_key "course_programs", "courses"
   add_foreign_key "course_programs", "programs"
+  add_foreign_key "topic_descriptions", "topics"
   add_foreign_key "users", "faculties"
 end

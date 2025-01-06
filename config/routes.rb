@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :topic_descriptions
   resources :topics
   resources :faculties
 
