@@ -12,8 +12,11 @@ class TopicsController < ApplicationController
   end
 
   # GET /topics/new
+  # new topics are always generated from a program together with the linking topic_description
   def new
     @topic = Topic.new
+    @program = Program.find(params[:program_id])
+    @topic_description = TopicDescription.new(implementable: @program, topic: @topic)
   end
 
   # GET /topics/1/edit
@@ -22,15 +25,18 @@ class TopicsController < ApplicationController
 
   # POST /topics or /topics.json
   def create
+
     @topic = Topic.new(topic_params)
+    tdp = topic_description_params.merge(topic: @topic)
+    @topic_description = TopicDescription.new(tdp)
 
     respond_to do |format|
-      if @topic.save
-        format.html { redirect_to topic_url(@topic), notice: "Topic was successfully created." }
-        format.json { render :show, status: :created, location: @topic }
+      if @topic.save && @topic_description.save
+        format.html { redirect_to topic_description_url(@topic_description), notice: "Topic and Topic Description was successfully created." }
+        format.json { render :show, status: :created, location: @topic_description }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @topic.errors, status: :unprocessable_entity }
+        format.json { render json: @topic_description.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,6 +68,10 @@ class TopicsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def topic_params
-      params.require(:topic).permit(:title)
+      params.require(:topic).permit(:title, :topic_description)
     end
+
+  def topic_description_params
+    params.require(:topic).require(:topic_description).permit(:description, :implementable_id, :implementable_type)
+  end
 end

@@ -2,10 +2,11 @@
 
 Rails.application.routes.draw do
   resources :topic_descriptions, only: %i[index create show edit update destroy]
-  #get 'topic_descriptions/new'
-  # topic_descriptions#new only:
+  get 'topic_descriptions/new/:topic_id/:type/:id', to: 'topic_descriptions#new', as: :new_topic_description
 
-  resources :topics
+  resources :topics, only: %i[index create show edit update destroy]
+  get 'topics/new/:program_id', to: 'topics#new', as: :new_topic
+
   resources :faculties
 
   root 'welcome#index'

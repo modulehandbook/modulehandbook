@@ -1,3 +1,4 @@
+
 <%= form_with(model: topic) do |form| %>
   <% if topic.errors.any? %>
     <div style="color: red">
@@ -11,11 +12,39 @@
     </div>
   <% end %>
 
+  <% if topic_description.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(topic_description.errors.count, "error") %> prohibited this topic_description from being saved:</h2>
+
+      <ul>
+        <% topic_description.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+  for Program <%=link_to program.code, program %>
+     <%= hidden_field :program, :id %>
+
+  </div>
+
   <div>
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
   </div>
 
+  <%= form.fields_for topic_description do |td_form| %>
+    <%= td_form.hidden_field :implementable_id, value: program.id %>
+    <%= td_form.hidden_field :implementable_type, value: 'Program' %>
+    <div>
+      <%= td_form.label :description, style: "display: block" %>
+      <%= td_form.text_area :description %>
+    </div>
+
+
+  <% end %>
   <div>
     <%= form.submit %>
   </div>
