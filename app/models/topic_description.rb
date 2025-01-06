@@ -1,4 +1,5 @@
 class TopicDescription < ApplicationRecord
+  has_paper_trail
   belongs_to :topic
-  belongs_to :implementer, polymorphic: true
+  belongs_to :implementable, polymorphic: true
 end

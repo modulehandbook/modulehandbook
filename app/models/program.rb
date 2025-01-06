@@ -4,6 +4,8 @@ class Program < ApplicationRecord
   has_many :course_programs, dependent: :destroy
   has_many :courses, through: :course_programs
   has_many :comments, as: :commentable
+  has_many :topic_descriptions, as: :implementable
+  has_many :topics, through: :topic_descriptions
   has_paper_trail
 
   scope :study_plan, -> { where.not(required: 'elective-option') }

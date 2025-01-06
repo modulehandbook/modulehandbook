@@ -85,12 +85,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_06_173813) do
 
   create_table "topic_descriptions", force: :cascade do |t|
     t.bigint "topic_id", null: false
-    t.string "implementer_type", null: false
-    t.bigint "implementer_id", null: false
+    t.string "implementable_type", null: false
+    t.bigint "implementable_id", null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["implementer_type", "implementer_id"], name: "index_topic_descriptions_on_implementer"
+    t.index ["implementable_type", "implementable_id"], name: "index_topic_descriptions_on_implementable"
     t.index ["topic_id"], name: "index_topic_descriptions_on_topic_id"
   end
 
