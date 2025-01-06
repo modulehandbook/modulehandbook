@@ -53,7 +53,7 @@ class Ability
     reader_abilities(user)
     can %i[crud], CourseProgram
     can %i[crud export_course import_course versions], Course
-    can %i[crud export_program import_program], Program
+    can %i[crud copy export_program import_program], Program
   end
 
   def editor_abilities(user)

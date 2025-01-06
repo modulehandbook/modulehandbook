@@ -30,6 +30,12 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  helpers:
+    submit:
+      programs:
+        create: "Create"
+        update: "Updatexxx"
+        copy: "Copy"
   controllers:
     comments:
       saved: "Comment saved successfully."

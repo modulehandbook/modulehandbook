@@ -145,6 +145,21 @@ class ProgramsController < ApplicationController
     @program = Program.new
   end
 
+  def copy
+    parameters = ActionController::Parameters.new(@program.attributes).permit(ProgramsController::PERMITTED_PARAMS)
+    @program_copy = Program.new(parameters)
+    @program_copy.code = @program.code+"-copy"
+    @program_copy.name = @program.code+" (Copy)"
+
+    cps = @program.course_programs
+    cps.each do |cp|
+      cp_attributes = ActionController::Parameters.new(cp.attributes).permit(CourseProgramsController::PERMITTED_PARAMS)
+      cp_attributes.delete(:program_id)
+      @program_copy.course_programs << CourseProgram.new(cp_attributes)
+    end
+    @program_copy.save
+  end
+
   # GET /programs/1/edit
   def edit; end
 

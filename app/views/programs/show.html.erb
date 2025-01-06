@@ -5,7 +5,9 @@
   </p>
 <p>
   Export Program as <%= link_to 'JSON', export_program_json_url(id: @program.id) %> | <%= link_to 'DOCX', export_program_docx_url(id: @program.id) %> <br>
-<% if can? :edit, @program %><%= link_to 'Edit', edit_program_path(@program) %>, <% end %><%= link_to 'Back to Index', programs_path %>
+<% if can? :edit, @program %><%= link_to 'Edit', edit_program_path(@program) %>, <% end %>
+  <% if can? :copy, @program %><%= link_to 'Copy', copy_program_path(@program) %>, <% end %>
+  <%= link_to 'Back to Index', programs_path %>
 </p>
 <p>
   <strong>Name:</strong>

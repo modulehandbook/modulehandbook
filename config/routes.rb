@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :course_programs
   resources :courses
   resources :programs
+  get 'programs/:id/copy', to: 'programs#copy', as: 'copy_program'
   resources :comments, only: %i[index show create edit update destroy]
 
   get 'programs/:id/overview', to: 'programs#overview', as: 'program_overview'

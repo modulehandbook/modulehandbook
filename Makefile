@@ -233,6 +233,8 @@ ssh_staging:
 - ssh local@module-handbook-staging.f4.htw-berlin.de
 ssh_production:
 - ssh local@module-handbook.f4.htw-berlin.de
+ssh_imi:
+- ssh local@mh-imi.f4.htw-berlin.de
 
 open_staging:
 - open https://module-handbook-staging.f4.htw-berlin.de
