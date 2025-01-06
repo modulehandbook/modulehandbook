@@ -3,11 +3,11 @@
 one:
   topic: one
   implementable: one
-  implementable_type: Implementer
+  implementable_type: Course
   description: MyText
 
 two:
   topic: two
   implementable: two
-  implementable_type: Implementer
+  implementable_type: Program
   description: MyText

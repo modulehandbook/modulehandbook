@@ -3,6 +3,8 @@ require "application_system_test_case"
 class TopicsTest < ApplicationSystemTestCase
   setup do
     @topic = topics(:one)
+    @user = users(:one)
+    system_test_login(@user.email, 'geheim12')
   end
 
   test "visiting the index" do
