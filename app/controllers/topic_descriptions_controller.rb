@@ -61,6 +61,6 @@ class TopicDescriptionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def topic_description_params
-      params.require(:topic_description).permit(:topic_id, :implementer_id, :implementer_type, :description)
+      params.require(:topic_description).permit(:topic_id, :implementable_id, :implementable_type, :description)
     end
 end

@@ -2,12 +2,12 @@
 
 one:
   topic: one
-  implementer: one
-  implementer_type: Implementer
+  implementable: one
+  implementable_type: Implementer
   description: MyText
 
 two:
   topic: two
-  implementer: two
-  implementer_type: Implementer
+  implementable: two
+  implementable_type: Implementer
   description: MyText
