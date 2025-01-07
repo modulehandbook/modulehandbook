@@ -9,3 +9,23 @@ sequenceDiagram
 
 
 ```
+
+```mermaid
+classDiagram
+    Course
+    Program
+    Topic o-- TopicDescription
+    TopicDescription -- Course
+    TopicDescription -- Program
+
+    class TopicDescription{
+      topic
+      course_or_program
+      description
+
+    }
+    class Topic{
+      title
+    }
+    
+```
