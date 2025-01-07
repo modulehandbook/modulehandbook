@@ -12,10 +12,14 @@
   <% end %>
 
   <div>
+    <% if @implementable_type == Course %>
     Course <%= @course.code %> <%= @course.name %> adds to Topic "<%= @topic.title %>":
+      <% else %>
+      (program)
+      <% end %>
     <%= form.hidden_field :topic_id, value: @topic.id %>
-    <%= form.hidden_field :implementable_id, value: @course.id %>
-    <%= form.hidden_field :implementable_type, value: 'Course' %>
+    <%= form.hidden_field :implementable_id, value: @implementable_id %>
+    <%= form.hidden_field :implementable_type, value: @implementable_type %>
 
   </div>
 

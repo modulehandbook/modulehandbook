@@ -14,11 +14,17 @@ class TopicDescriptionsController < ApplicationController
   def new
     @topic = Topic.find(params[:topic_id])
     @course = Course.find(params[:course_id])
+    @implementable_id = @course.id
+    @implementable_type = @course.class
     @topic_description = TopicDescription.new(implementable: @course, topic: @topic)
   end
 
   # GET /topic_descriptions/1/edit
   def edit
+    @topic = @topic_description.topic
+    @implementable = @topic_description.implementable
+    @implementable_type = @topic_description.implementable_type
+    @implementable_id = @topic_description.implementable_id
   end
 
   # POST /topic_descriptions or /topic_descriptions.json

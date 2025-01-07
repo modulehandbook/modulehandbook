@@ -1,7 +1,11 @@
 
 
-<% @link_memos.each do | lm | %>
+<% @link_memos.each do | lm |
+   topic_list = lm.program.topics %>
   <br/>Topics for Program <b><%= lm.program.code %></b>:
+  <% if topic_list.empty? %>
+    keine
+    <% else  %>
 
 
 <hr/>
@@ -26,23 +30,12 @@
 </div>
 <div>
   <br/>
-
   <hr/>
-
   <% not_included.each do |topic| %>
     <%= link_to "+ #{topic.title}", new_topic_description_path(topic_id: topic.id, course_id: @course.id) %>
     |
   <% end %>
-
-  <hr/>
-  course topics
-  <dl>
-    <% @topic_descriptions.each do | td |%>
-      <dt><%= td.topic.title %></dt>
-      <dd><%= td.description %></dd>
-    <% end %>
-  </dl>
 </div>
+  <% end %>
 
 <% end %>
-<hr/>

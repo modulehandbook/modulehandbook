@@ -17,14 +17,17 @@ Matrix
       topic_description = TopicDescription.where(implementable: course, topic: topic).first
       %>
 
-      <td >
-     <% if topic_description %>
-        <%=  topic_description.description %>
-        <% else %>
-          <%= link_to "+", new_topic_description_path(course_id: course.id, topic_id: topic.id, back_to: course.id)  %>
 
+     <% if topic_description %>
+          <td onclick = "location.href='<%= topic_description_path(topic_description) %>'">
+              <%=  topic_description.description %>
+          </td>
+      <% else %>
+        <td >
+          <%= link_to "+", new_topic_description_path(course_id: course.id, topic_id: topic.id, back_to: course.id)  %>
+        </td>
       <% end %>
-      </td>
+
     <% end %>
 
   </tr>
