@@ -1,1 +1,1 @@
-json.partial! "topic_descriptions/topic_description", topic_description: @topic_description
+json.partial! 'topic_descriptions/topic_description', topic_description: @topic_description
