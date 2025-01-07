@@ -19,6 +19,8 @@ class ProgramsController < ApplicationController
   # GET /programs/1
   # GET /programs/1.json
   def show
+
+    @tab = (params['tab'] || :program).to_sym
     @course_programs = @program
                        .course_programs
                        .includes(:course)
@@ -32,6 +34,14 @@ class ProgramsController < ApplicationController
     @comments = commentable.comments
     @comments_size = @comments.size
     @comment = commentable.comments.build(author: current_user)
+    if [:table, :overview].include? @tab
+      @semester = overview
+    end
+    if [:topics].include? @tab
+      @topic_descriptions = @program.topic_descriptions
+      @topics = @program.topics
+      @courses = @course_programs.map{|cp| cp.course}
+    end
   end
 
   def overview
@@ -46,6 +56,23 @@ class ProgramsController < ApplicationController
       @rows["electives #{semester}"] = cps
     end
     @options = @program.course_programs.where(required: 'elective-option')
+    @semester = @rows
+    @semester
+  end
+
+  def htw_overview
+    @course_programs = @program.course_programs.includes(:course)
+    @rows = @program.course_programs.study_plan.includes(:course)
+                    .order('course_programs.semester', 'courses.code')
+                    .group_by(&:semester)
+    @elective_rows = @program.course_programs.elective_options.includes(:course)
+                             .order('course_programs.semester', 'courses.code')
+                             .group_by(&:semester)
+    @elective_rows.each do |semester, cps|
+      @rows["electives #{semester}"] = cps
+    end
+    @options = @program.course_programs.where(required: 'elective-option')
+    @semester = @rows
   end
 
   def import_program_json
@@ -143,6 +170,21 @@ class ProgramsController < ApplicationController
   # GET /programs/new
   def new
     @program = Program.new
+  end
+
+  def copy
+    parameters = ActionController::Parameters.new(@program.attributes).permit(ProgramsController::PERMITTED_PARAMS)
+    @program_copy = Program.new(parameters)
+    @program_copy.code = @program.code+"-copy"
+    @program_copy.name = @program.code+" (Copy)"
+
+    cps = @program.course_programs
+    cps.each do |cp|
+      cp_attributes = ActionController::Parameters.new(cp.attributes).permit(CourseProgramsController::PERMITTED_PARAMS)
+      cp_attributes.delete(:program_id)
+      @program_copy.course_programs << CourseProgram.new(cp_attributes)
+    end
+    @program_copy.save
   end
 
   # GET /programs/1/edit

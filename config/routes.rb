@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :topic_descriptions, only: %i[index create show edit update destroy]
+  get 'topic_descriptions/new/:topic_id/:course_id', to: 'topic_descriptions#new', as: :new_topic_description
+
+  resources :topics, only: %i[index create show edit update destroy]
+  get 'topics/new/:program_id', to: 'topics#new', as: :new_topic
+
   resources :faculties
 
   root 'welcome#index'
@@ -21,9 +27,11 @@ Rails.application.routes.draw do
   resources :course_programs
   resources :courses
   resources :programs
-  resources :comments, only: %i[show create edit update destroy]
+  get 'programs/:id/copy', to: 'programs#copy', as: 'copy_program'
+  resources :comments, only: %i[index show create edit update destroy]
 
   get 'programs/:id/overview', to: 'programs#overview', as: 'program_overview'
+  get 'programs/:id/htw_overview', to: 'programs#htw_overview', as: 'program_htw_overview'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   get 'courses/:id/versions', to: 'courses#versions', as: 'course_versions'

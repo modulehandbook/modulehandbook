@@ -85,3 +85,8 @@ copy_test_03:
   ects: 5
   objectives: Course 03 Objectives
 
+for_state_test:
+  name: Course with state
+  code: ST0815
+  ects: 5
+  objectives: Course with state Objectives

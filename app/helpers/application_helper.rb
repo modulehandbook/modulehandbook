@@ -23,15 +23,17 @@ module ApplicationHelper
   end
 
   def compare_course_codes(code1, code2)
-    re = /([A-Z]+)(\d+)/
+    re = /(IMI25-)?([A-Z]+)(\d+)/
+    letter_group = 2
+    number_group = 3
     match1 = code1.match(re)
     match2 = code2.match(re)
     return -1 if match1.nil?
     return 1 if match2.nil?
-    return -1 if match1[1] < match2[1]
-    return 1 if match1[1] > match2[1]
+    return -1 if match1[letter_group] < match2[letter_group]
+    return 1 if match1[letter_group] > match2[letter_group]
 
-    match1[2].to_i <=> match2[2].to_i
+    match1[number_group].to_i <=> match2[number_group].to_i
   end
 
   # def fetch_app_version

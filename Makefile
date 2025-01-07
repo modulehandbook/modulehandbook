@@ -50,12 +50,12 @@ open:
 
 test_local:
 - bin/rails test
-- bin/rails test:system
+- PARALLEL_WORKERS=1 bin/rails test:system
 
 static_code_checks:
 - rubocop
 - reek
-- brakeman
+- brakeman --no-pager
 
 
 #
@@ -233,12 +233,18 @@ ssh_staging:
 - ssh local@module-handbook-staging.f4.htw-berlin.de
 ssh_production:
 - ssh local@module-handbook.f4.htw-berlin.de
+ssh_imi:
+- ssh local@mh-imi.f4.htw-berlin.de
 
 open_staging:
 - open https://module-handbook-staging.f4.htw-berlin.de
 
 open_production:
 - open https://module-handbook.f4.htw-berlin.de
+
+
+
+# ssh local@mh-imi.f4.htw-berlin.de "docker compose exec -ti module-handbook rails c"
 
 #  ** wip **
 
@@ -254,6 +260,12 @@ import_dump_production:
 import_dump_local:
 - cat $(file) | docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
 
+import_dump_imi:
+- echo "disabled - uncomment line below to temporarily enable it"
+- echo using file $(file)
+- cat $(file) | ssh local@mh-imi.f4.htw-berlin.de "docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d modhand-db-prod"
+
+
 staging_file=../modhand-dumps/modhand-stag-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 dump_staging:
 -   echo $(sshid)
@@ -263,6 +275,10 @@ dump_staging:
 dump_production:
 -   echo $(sshid)
 - 	ssh local@module-handbook.f4.htw-berlin.de $(sshid)  "docker compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../modhand-dumps/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+
+dump_imi:
+-   echo $(sshid)
+- 	ssh local@mh-imi.f4.htw-berlin.de $(sshid) "docker compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../modhand-dumps-imi/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 
 cron_dump:
 - # ping -t 2 module-handbook.f4.htw-berlin.de; if [ $$? == 0 ]; then ssh local@module-handbook.f4.htw-berlin.de "docker compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ../dumps-htw/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump ; fi

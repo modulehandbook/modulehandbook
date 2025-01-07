@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
+  include ApplicationHelper
+
   load_and_authorize_resource except: :export_courses_json
   skip_authorization_check only: :export_courses_json
   skip_before_action :authenticate_user!, only: :export_courses_json
@@ -12,6 +14,9 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     @courses = Course.order(:name)
+    @courses = @courses.sort do |c1, c2|
+      compare_course_codes(c1.code, c2.code)
+    end
   end
 
   def versions
@@ -25,6 +30,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @tab = (params['tab'] || :course).to_sym
     @links = @course.course_programs.includes(:program)
     @link_memos = @links.map do |l|
       LinkMemo.new(l.program, l,
@@ -37,6 +43,9 @@ class CoursesController < ApplicationController
     @comments = @course.comments
     @comments_size = @comments.size
     @comment = @course.comments.build(author: @current_user)
+    if @tab == :topics
+      @topic_descriptions = @course.topic_descriptions
+    end
   end
 
   def import_course_json
@@ -155,7 +164,7 @@ class CoursesController < ApplicationController
     @course = @course.versions.find(params[:to_version]).reify
     if @course.save!
       respond_to do |format|
-        format.html { redirect_to @course, notice: I18n.t('controllers.courses.reverted') }
+        format.html { redirect_to @course, notice: I18n.t('controllers.courses.reverted'), allow_other_host: false }
         format.json { render :show, status: :ok, location: @course }
       end
     else
@@ -176,6 +185,11 @@ class CoursesController < ApplicationController
     end
   end
 
+  PERMITTED_PARAMS = %i[name code mission ects examination objectives contents
+                        prerequisites literature methods skills_knowledge_understanding
+                        skills_intellectual skills_practical skills_general
+                        lectureHrs labHrs tutorialHrs equipment room responsible_person
+                        teacher comment event_name].freeze
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -183,11 +197,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
-  PERMITTED_PARAMS = %i[name code mission ects examination objectives contents
-                        prerequisites literature methods skills_knowledge_understanding
-                        skills_intellectual skills_practical skills_general
-                        lectureHrs labHrs tutorialHrs equipment room responsible_person
-                        teacher comment event_name].freeze
+
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(PERMITTED_PARAMS)

@@ -18,14 +18,14 @@ three:
   semester: 2
   required: MyText
 
-copy_test_01:
+copy_test_l01:
   program: copy_test
   course: copy_test_01
 
-copy_test_02:
+copy_test_l02:
   program: copy_test
   course: copy_test_02
 
-copy_test_03:
+copy_test_l03:
   program: copy_test
   course: copy_test_03

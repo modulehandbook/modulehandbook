@@ -1,0 +1,6 @@
+<% content_for(:title, "Copying Program") %>
+
+<h2>Copying Program <%= @program.code %></h2>
+<%= render 'form', program: @program_copy %>
+
+<%= link_to 'Back', @program %>

@@ -56,4 +56,21 @@ class ProgramsTest < ApplicationSystemTestCase
     assert_text 'Program was successfully destroyed'
     assert_not Program.exists?(@program.id)
   end
+
+
+
+  test 'copy a program' do
+    @original = programs(:copy_test)
+
+    # visit copy_program_url(@original.id)
+    visit program_url(@original.id)
+    click_on 'Copy'
+
+    click_on 'Update Program'
+    assert_text 'Program was successfully updated'
+    @copy = Program.where(code: @original.code+"-copy").first
+    assert_equal @original.courses.size, @copy.courses.size
+
+  end
+
 end

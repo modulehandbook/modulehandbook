@@ -1,0 +1,25 @@
+
+
+<p id="notice"><%= notice %><br>
+</p>
+<p>
+  Export Program as <%= link_to 'JSON', export_program_json_url(id: @program.id) %> | <%= link_to 'DOCX', export_program_docx_url(id: @program.id) %> <br>
+  <% if can? :edit, @program %><%= link_to 'Edit', edit_program_path(@program) %>, <% end %>
+  <% if can? :copy, @program %><%= link_to 'Copy', copy_program_path(@program) %>, <% end %>
+  <%= link_to 'Back to Index', programs_path %>
+</p>
+
+<%= render 'comments/comments_teaser'%>
+<ul class="nav nav-tabs">
+  <% [['Program', :program, program_path(@program, { tab: :program})],
+      ['Course List', :course_list, program_path(@program, { tab: :course_list, objectives: false })],
+      ['with Objectives', :course_list_with_objectives, program_path(@program, { tab: :course_list_with_objectives, objectives: true })],
+      ['Plan', :overview,  program_path(@program, { tab: :overview})],
+      ['Table Overview', :table, program_path(@program, { tab: :table})],
+      ['Topics', :topics, program_path(@program, { tab: :topics})]
+     ].each do | title, tab, path |  %>
+  <li class="nav-item">
+    <a class="nav-link <%= @tab == tab ? 'active' : '' %>" href="<%= path %>"><%= title %></a>
+  </li>
+    <% end %>
+</ul>
