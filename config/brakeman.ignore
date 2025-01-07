@@ -1,0 +1,52 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "1e7674d5fcadcd0b72e51eb961b9c54d833d6cae16fa103509f24cf1f110fb4e",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/users_controller.rb",
+      "line": 102,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email, :approved, :role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "UsersController",
+        "method": "user_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "2e1f7482aa5c482ea04bbd8dda4916a5b4ac2b4c24cf209e8d224044fb8f9a0d",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/controllers/courses_controller.rb",
+      "line": 172,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => versions(Course.find(params[:id]).versions.find(params[:to_version]).reify), {})",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "CoursesController",
+        "method": "revert_to"
+      },
+      "user_input": "params[:to_version]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    }
+  ],
+  "updated": "2025-01-07 13:28:51 +0100",
+  "brakeman_version": "6.2.2"
+}
