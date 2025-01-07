@@ -164,7 +164,7 @@ class CoursesController < ApplicationController
     @course = @course.versions.find(params[:to_version]).reify
     if @course.save!
       respond_to do |format|
-        format.html { redirect_to @course, notice: I18n.t('controllers.courses.reverted') }
+        format.html { redirect_to @course, notice: I18n.t('controllers.courses.reverted'), allow_other_host: false }
         format.json { render :show, status: :ok, location: @course }
       end
     else

@@ -55,7 +55,7 @@ test_local:
 static_code_checks:
 - rubocop
 - reek
-- brakeman
+- brakeman --no-pager
 
 
 #

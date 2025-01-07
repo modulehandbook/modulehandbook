@@ -100,6 +100,7 @@ class UsersController < ApplicationController
   def user_params
     if can? :manage_access, User
       params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email, :approved, :role)
+      #params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email, :approved)
     else
       params.require(:user).permit(:full_name, :about, :readable, :faculty_id, :email)
     end

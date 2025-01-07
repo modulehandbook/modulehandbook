@@ -52,7 +52,7 @@ class Course < ApplicationRecord
   end
 
   def accept_event(event_name)
-    all_events = Course.aasm.events.map { |e| e.name }
+    all_events = Course.aasm.events.map { |event| event.name }
     return unless all_events.include?(event_name.to_sym)
 
     event = "#{event_name}!"
