@@ -30,6 +30,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @tab = (params['tab'] || :course).to_sym
     @links = @course.course_programs.includes(:program)
     @link_memos = @links.map do |l|
       LinkMemo.new(l.program, l,
@@ -42,6 +43,9 @@ class CoursesController < ApplicationController
     @comments = @course.comments
     @comments_size = @comments.size
     @comment = @course.comments.build(author: @current_user)
+    if @tab == :topics
+      @topic_descriptions = @course.topic_descriptions
+    end
   end
 
   def import_course_json
@@ -160,7 +164,7 @@ class CoursesController < ApplicationController
     @course = @course.versions.find(params[:to_version]).reify
     if @course.save!
       respond_to do |format|
-        format.html { redirect_to @course, notice: I18n.t('controllers.courses.reverted') }
+        format.html { redirect_to @course, notice: I18n.t('controllers.courses.reverted'), allow_other_host: false }
         format.json { render :show, status: :ok, location: @course }
       end
     else

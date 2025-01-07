@@ -1,4 +1,4 @@
-name: 'reek and rubocop'
+name: 'rubocop, reek, brakeman'
 
 on:
   push:
@@ -43,3 +43,23 @@ jobs:
 
       - name: Run Reek
         run: reek
+
+  brakeman:
+    name: Brakeman
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check out repo code
+        uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.3
+      - name: Install dependencies
+        run: bin/bundle install
+
+      - name: Run Brakeman
+        uses: artplan1/brakeman-action@v1.2.1
+        with:
+          flags: "--color"

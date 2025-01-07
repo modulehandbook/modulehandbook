@@ -19,6 +19,8 @@ class ProgramsController < ApplicationController
   # GET /programs/1
   # GET /programs/1.json
   def show
+
+    @tab = (params['tab'] || :program).to_sym
     @course_programs = @program
                        .course_programs
                        .includes(:course)
@@ -32,6 +34,14 @@ class ProgramsController < ApplicationController
     @comments = commentable.comments
     @comments_size = @comments.size
     @comment = commentable.comments.build(author: current_user)
+    if [:table, :overview].include? @tab
+      @semester = overview
+    end
+    if [:topics].include? @tab
+      @topic_descriptions = @program.topic_descriptions
+      @topics = @program.topics
+      @courses = @course_programs.map{|cp| cp.course}
+    end
   end
 
   def overview
@@ -47,6 +57,7 @@ class ProgramsController < ApplicationController
     end
     @options = @program.course_programs.where(required: 'elective-option')
     @semester = @rows
+    @semester
   end
 
   def htw_overview

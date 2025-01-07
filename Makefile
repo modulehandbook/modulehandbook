@@ -50,12 +50,12 @@ open:
 
 test_local:
 - bin/rails test
-- bin/rails test:system
+- PARALLEL_WORKERS=1 bin/rails test:system
 
 static_code_checks:
 - rubocop
 - reek
-- brakeman
+- brakeman --no-pager
 
 
 #

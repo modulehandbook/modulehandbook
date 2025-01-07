@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  topic: one
+  implementable: one
+  implementable_type: Course
+  description: MyText
+
+two:
+  topic: two
+  implementable: two
+  implementable_type: Program
+  description: MyText

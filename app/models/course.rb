@@ -4,6 +4,8 @@
 class Course < ApplicationRecord
   include AASM
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :topic_descriptions, as: :implementable, dependent: :destroy
+  has_many :topics, through: :topic_descriptions
   has_paper_trail
 
   # rubocop:disable Metrics/BlockLength
@@ -50,7 +52,7 @@ class Course < ApplicationRecord
   end
 
   def accept_event(event_name)
-    all_events = Course.aasm.events.map { |e| e.name }
+    all_events = Course.aasm.events.map { |event| event.name }
     return unless all_events.include?(event_name.to_sym)
 
     event = "#{event_name}!"
