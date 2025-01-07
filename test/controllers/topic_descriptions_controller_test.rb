@@ -11,8 +11,13 @@ class TopicDescriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  # topic_descriptions need to be created from courses
+  # for a specific topic
+  #  /topic_descriptions/new/:topic_id/:course_id(.:format)
   test "should get new" do
-    get new_topic_description_url
+    @topic = topics(:one)
+    @course = courses(:one)
+    get new_topic_description_url(topic_id: @topic, course_id: @course)
     assert_response :success
   end
 

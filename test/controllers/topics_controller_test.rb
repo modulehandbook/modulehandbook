@@ -10,18 +10,32 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
     get topics_url
     assert_response :success
   end
-
+  # topics need to be created in the context of a program
   test "should get new" do
-    get new_topic_url
+    @program = programs(:one)
+    get new_topic_url(program_id: @program.id)
     assert_response :success
   end
 
+  # topics need to be created in the context of a program and
+  # together with the topic_description linking
+  # program and topic
+  # and be redirected to the program's topic tab
   test "should create topic" do
+    @program = programs(:one)
+
     assert_difference("Topic.count") do
-      post topics_url, params: { topic: { title: @topic.title } }
+      post topics_url, params: { 
+        topic: {
+          title: @topic.title,
+          topic_description: { description: "role of topic in program", 
+                                implementable_id: @program.id,
+                                implementable_type: 'Program'} }
+    }
+        
     end
 
-    assert_redirected_to topic_url(Topic.last)
+    assert_redirected_to program_url(@program, tab: :topics)
   end
 
   test "should show topic" do
