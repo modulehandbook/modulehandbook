@@ -48,7 +48,7 @@ jobs:
         run: bin/bundle install
 
       - name: create test db
-        run: bin/rails db:create RAILS_ENV=test
+        run: bin/rails db:test:prepare
 
       - name: Run Tests
         id: run-tests
