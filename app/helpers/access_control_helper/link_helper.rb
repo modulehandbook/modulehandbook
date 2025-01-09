@@ -7,11 +7,11 @@ module AccessControlHelper
             "#{clazz.to_s.underscore}"
         end
 
-        def link_to_edit(link_text, resource)
+        def link_to_edit(link_text, resource, link_args = {})
           if can? :edit,resource
               path_helper = "edit_#{snake(resource.class)}_path"
               path = self.send(path_helper, resource)
-              link_to(link_text, path)
+              link_to(link_text, path, link_args)
           else
               "<!-- link omitted -->"
           end
