@@ -4,8 +4,10 @@
 <br/>
 <dl>
   <% @topic_descriptions.each do | td |%>
-    <dt><%= td.topic.title %></dt>
-    <dd><%= td.description %></dd>
+    <dt>Title: <%= link_to  td.topic.title, topic_path(td.topic) %></dt>
+    <% desc =  td.description || "..."
+       desc = "..." if desc == "" %>
+    <dd>Beschreibung für diesen Studiengang: <%= link_to desc, topic_description_path(td) %></dd>
   <% end %>
 </dl>
 </div>
