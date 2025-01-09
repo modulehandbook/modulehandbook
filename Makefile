@@ -362,3 +362,8 @@ selenium:
 
 gemdir:
 - pushd $(rvm gemdir)/gems
+
+# -----
+
+build:
+- docker build . -f Dockerfile.alpine -t mh-rails80
