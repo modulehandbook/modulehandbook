@@ -15,6 +15,8 @@
 # If set to `:offset`, `to_time` methods will use the UTC offset.
 # If `false`, `to_time` methods will convert to the local system UTC offset instead.
 #++
+# puts "-------   j e t z t -------"
+# in application.rb aktiviert; hier ist es zu spät (nach der deprecation warning)
 # Rails.application.config.active_support.to_time_preserves_timezone = :zone
 
 ###
