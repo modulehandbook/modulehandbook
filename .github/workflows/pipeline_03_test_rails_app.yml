@@ -64,8 +64,3 @@ jobs:
         if: ${{ failure() }}
         run: cat "log/test.log"
 
-      - name: Some Info
-        if: ${{ always() }}
-        run: |
-          ls -lart log
-          less "log/test.log"
