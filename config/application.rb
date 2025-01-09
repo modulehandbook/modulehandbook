@@ -11,8 +11,6 @@ module ModuleHandbook
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
-
-    # ----start deleted by update task
     # rails_upgrade_71: try with # config/application.rb
     # config.load_defaults 7.0
 
@@ -32,16 +30,13 @@ module ModuleHandbook
     # see https://guides.rubyonrails.org/i18n.html
     config.i18n.load_path += Rails.root.glob('config/locales/**/*.{rb,yml}')
 
-    config.hosts << 'module-handbook'
-    config.hosts << 'localhost'
     config.hosts << 'module-handbook.f4.htw-berlin.de'
     config.hosts << 'module-handbook-staging.f4.htw-berlin.de'
-    config.hosts << 'makesign.f4.htw-berlin.de'
     config.hosts << 'mh-imi.f4.htw-berlin.de'
 
-    # config.hosts << "141.45.191.40"
-    # config.hosts << "141.45.191.41"
+    #  -  config.log_level = :warn
 
+ 
     # im nginx als schlichter 403 zu sehen:
     # [ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: localhost
     # rails_upgrade_71: may be necessary
@@ -53,9 +48,7 @@ module ModuleHandbook
       config.version = 'unknown'
     end
 
- # ----end deleted by update task
-
-
+ #
  
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
