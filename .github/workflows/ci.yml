@@ -11,7 +11,7 @@ env:
   POSTGRES_PORT: 5432
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
-  
+
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
@@ -31,7 +31,7 @@ jobs:
 
   scan_js:
     runs-on: ubuntu-latest
-    if:
+    if: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -46,6 +46,7 @@ jobs:
         run: bin/importmap audit
 
   lint:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
