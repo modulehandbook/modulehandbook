@@ -27,6 +27,15 @@ module AccessControlHelper
             end
         end
 
+        def link_to_delete(link_text, resource, confirmation = 'Are you sure?')
+            if can? :destroy, resource
+                snake = snake(resource.class)
+                link_to(link_text, resource, id: "delete_#{snake}_#{resource.id}", data: { turbo_method: :delete, turbo_confirm: confirmation })
+            else
+                "<!-- delete link omitted -->"
+            end
+        end
+             
 
 
     end

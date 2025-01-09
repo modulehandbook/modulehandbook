@@ -14,7 +14,8 @@
         <td class="text-right">
           <%= link_to_edit('Edit', comment, id: "edit_comment_#{comment.id}") %>
           <% if can? :destroy, comment %><%= link_to 'Delete', comment, id: "delete_comment_#{comment.id}", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %><% end %>
-        </td>
+          // <%= link_to_delete('Delete', comment) %>
+       </td>
       </tr>
       <tr>
         <td  id="comment_<%=comment.id%>" colspan="2" style="border-top: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=md2html(comment.comment)%></td>
