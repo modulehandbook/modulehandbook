@@ -2,6 +2,7 @@
 # Rails update to 8.0
 
 - https://rubygems.org/gems/rails/versions
+- https://guides.rubyonrails.org/8_0_release_notes.html
 
 ## update to 7.1.5.1 December 10, 2024 (7 KB)
 
@@ -49,3 +50,5 @@ version 2.3.0.
 
 ## update to 7.2.2.1 December 10, 2024 (7 KB)
 - uneventful
+
+## update to 8.0.1 December 13, 2024 (7 KB)
