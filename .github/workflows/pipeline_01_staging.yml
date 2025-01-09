@@ -16,4 +16,8 @@ jobs:
       environment: staging
     secrets:
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
+      DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+      DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+      RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
+
 

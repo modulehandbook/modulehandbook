@@ -1,0 +1,83 @@
+name: Deploy to Production
+
+on:
+    workflow_call:  # Triggered by the Build and Push workflow
+      secrets:
+        rails_master_key:
+          required: true
+        DEPLOY_MH_KEY: 
+          required: true
+        DEPLOY_MH_USER: 
+          required: true
+        DEPLOY_MHIMI_KEY: 
+          required: true
+        DEPLOY_MHIMI_USER: 
+          required: true
+      
+
+jobs:
+    deploy-production:
+        runs-on: ubuntu-latest
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
+          SSH_USER: ${{ secrets.DEPLOY_MH_USER }}
+          SSH_HOST: 'module-handbook.f4.htw-berlin.de'
+          KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
+        
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+              with:
+                fetch-depth: 0
+
+            - name: Set Up SSH
+              uses: webfactory/ssh-agent@v0.9.0
+              with:
+                ssh-private-key: ${{ env.SSH_KEY }}
+            
+            - name: Verify SSH Connection
+              run: |
+                  ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
+              
+            - name: Set Environment Variables
+              run: |
+                echo "RAILS_MASTER_KEY=${{ secrets.rails_master_key }}" >> $GITHUB_ENV
+
+            - name: Execute Deployment
+              run: |
+                chmod +x deploy/production.sh
+                ./deploy/production.sh
+
+    deploy-imi-production:
+        runs-on: ubuntu-latest
+        if: false
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
+          SSH_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
+          SSH_HOST: 'mh-imi.f4.htw-berlin.de'
+          KNOWN_HOST: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
+        
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+              with:
+                fetch-depth: 0
+
+            - name: Set Up SSH
+              uses: webfactory/ssh-agent@v0.9.0
+              with:
+                ssh-private-key: ${{ env.SSH_KEY }}
+            
+            - name: Verify SSH Connection
+              run: |
+                  ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
+              
+            - name: Set Environment Variables
+              run: |
+                echo "RAILS_MASTER_KEY=${{ secrets.rails_master_key }}" >> $GITHUB_ENV
+
+            - name: Execute Deployment
+              run: |
+                chmod +x deploy/imi_production.sh
+                ./deploy/imi_production.sh
+  

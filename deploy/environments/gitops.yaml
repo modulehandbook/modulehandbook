@@ -1,0 +1,16 @@
+environments:
+  staging:
+    file: deploy/staging.env
+    tag_module_handbook: 1.0.10
+    tag_module_handbook_exporter: sha-4ef1b2d
+    tag_repo: 1.0.10
+  production:
+    file: deploy/production.env
+    tag_module_handbook: 1.0.10
+    tag_module_handbook_exporter: sha-4ef1b2d
+    tag_repo: 1.0.10
+  imi_production:
+    file: deploy/imi_production.env
+    tag_module_handbook: 1.0.10
+    tag_module_handbook_exporter: sha-4ef1b2d
+    tag_repo: 1.0.10
