@@ -17,7 +17,9 @@ WORKDIR /rails
 # Install base packages
 # replacements for alpine: libjemalloc2 -> jemalloc, libvips -> vips, sqlite3 -> sqlite
 RUN apk update && \
-    apk add --no-cache curl jemalloc vips tzdata sqlite
+    apk add --no-cache curl jemalloc vips tzdata  \
+            nodejs libpq
+
 
 # Set production environment
 ENV RAILS_ENV="production" \
@@ -26,13 +28,14 @@ ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development:test" \
     EDITOR="vi"
 
+
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
 # Install packages needed to build gems
 # replacements for alpine: build-essential -> build-base, pkg-config -> pkgconfig
 RUN apk update && \
-    apk add build-base pkgconfig 
+    apk add build-base pkgconfig postgresql-dev
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -47,7 +50,10 @@ COPY . .
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+# RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+RUN RAILS_MASTER_KEY=05f8b6761fa3108933c6190622a24214
+RUN echo $RAILS_MASTER_KEY 
+RUN ./bin/rails assets:precompile
 
 
 
@@ -77,5 +83,6 @@ USER rails:rails
 ENTRYPOINT ["/rails/bin/docker-entrypoint-alpine"]
 
 # Start server via Thruster by default, this can be overwritten at runtime
-EXPOSE 80
-CMD ["./bin/thrust", "./bin/rails", "server"]
+# EXPOSE 80
+# CMD ["./bin/thrust", "./bin/rails", "server"]
+CMD ["./bin/rails", "server"]

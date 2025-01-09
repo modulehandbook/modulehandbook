@@ -73,3 +73,12 @@ DEPRECATION WARNING: `to_time` will always preserve the full timezone rather tha
       idea for normal use. Please install a compatible version of ActiveRecord
       instead (>= 6.1, < 7.2). Please see the discussion in paper_trail/compatibility.rb
       for details.
+
+
+### and...... the ASSET PIPELINE!!
+
+export RAILS_MASTER_KEY=$(cat config/credentials/production.key)
+RAILS_ENV=production ./bin/rails assets:precompile
+
+
+public/assets/
