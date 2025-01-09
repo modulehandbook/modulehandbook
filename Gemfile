@@ -72,7 +72,7 @@ gem 'faraday'
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'aasm'
 
-gem 'paper_trail'
+gem 'paper_trail', '~> 16.0'
 
 gem 'bootstrap', '~> 4.6'
 gem 'jquery-rails'

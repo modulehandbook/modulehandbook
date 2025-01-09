@@ -52,3 +52,24 @@ version 2.3.0.
 - uneventful
 
 ## update to 8.0.1 December 13, 2024 (7 KB)
+
+
+
+### bin/rails test
+
+ok  (barne.kleinen@htw-berlin.de @ rails_update_72✗)code/uas-module-handbook/module-handbook-2024>bin/rails test
+DEPRECATION WARNING: `to_time` will always preserve the full timezone rather than offset of the receiver in Rails 8.1. To opt in to the new behavior, set `config.active_support.to_time_preserves_timezone = :zone`. (called from <top (required)> at /Users/kleinen/mine/current/code/uas-module-handbook/module-handbook-2024/config/environment.rb:23)
+DEPRECATION WARNING: `to_time` will always preserve the full timezone rather than offset of the receiver in Rails 8.1. To opt in to the new behavior, set `config.active_support.to_time_preserves_timezone = :zone`. (called from <top (required)> at /Users/kleinen/mine/current/code/uas-module-handbook/module-handbook-2024/config/environment.rb:23)
+
+
+# Running:
+
+
+### update papertrail to 16.0
+
+      PaperTrail 15.1.0 is not compatible with ActiveRecord 8.0.1. We allow PT
+      contributors to install incompatible versions of ActiveRecord, and this
+      warning can be silenced with an environment variable, but this is a bad
+      idea for normal use. Please install a compatible version of ActiveRecord
+      instead (>= 6.1, < 7.2). Please see the discussion in paper_trail/compatibility.rb
+      for details.
