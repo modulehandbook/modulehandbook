@@ -15,6 +15,7 @@ module ModuleHandbook
     # config.load_defaults 7.0
 
     config.active_support.cache_format_version = 7.0
+    config.active_support.to_time_preserves_timezone = :zone
 
     config.x.mh_hostname = ENV.fetch('DEVISE_EMAIL_HOSTNAME', 'http://localhost:3000')
     config.x.mh_devise_email = ENV.fetch('DEVISE_EMAIL', 'module-handbook@infrastructure.de')
@@ -48,6 +49,7 @@ module ModuleHandbook
       config.version = 'unknown'
     end
 
+    
  #
  
     # Please, add to the `ignore` list any other `lib` subdirectories that do
