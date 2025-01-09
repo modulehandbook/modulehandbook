@@ -1,8 +1,6 @@
-# frozen_string_literal: true
+require_relative "boot"
 
-require_relative 'boot'
-
-require 'rails/all'
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -11,11 +9,13 @@ Bundler.require(*Rails.groups)
 module ModuleHandbook
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 6.1
 
+
+    # ----start deleted by update task
     # rails_upgrade_71: try with # config/application.rb
     # config.load_defaults 7.0
 
-    config.load_defaults 6.1
     config.active_support.cache_format_version = 7.0
 
     config.x.mh_hostname = ENV.fetch('DEVISE_EMAIL_HOSTNAME', 'http://localhost:3000')
@@ -38,20 +38,36 @@ module ModuleHandbook
     config.hosts << 'module-handbook-staging.f4.htw-berlin.de'
     config.hosts << 'makesign.f4.htw-berlin.de'
     config.hosts << 'mh-imi.f4.htw-berlin.de'
-    
+
     # config.hosts << "141.45.191.40"
     # config.hosts << "141.45.191.41"
 
     # im nginx als schlichter 403 zu sehen:
     # [ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: localhost
-
     # rails_upgrade_71: may be necessary
     # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#sqlite3adapter-now-configured-to-be-used-in-a-strict-strings-mode
-    # config.active_record.sqlite3_adapter_strict_strings_by_default = false
-    begin
-      config.version = File.read('./MH_VERSION').strip
-    rescue StandardError
-      config.version = 'unknown'
-    end
+#    # config.active_record.sqlite3_adapter_strict_strings_by_default = false
+#    begin
+#      config.version = File.read('./MH_VERSION').strip
+#    rescue StandardError
+#      config.version = 'unknown'
+#    end
+
+ # ----end deleted by update task
+
+
+ 
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
+
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
   end
 end

@@ -81,4 +81,112 @@ export RAILS_MASTER_KEY=$(cat config/credentials/production.key)
 RAILS_ENV=production ./bin/rails assets:precompile
 
 
-public/assets/
+.... did actually work. files in public are not delivered. Due to new thrust thing?!
+
+### bin/rails app:update
+
+
+What's next:
+    Try Docker Debug for seamless, persistent debugging tools in any container or image → docker debug rails80-alpine-debug
+    Learn more at https://docs.docker.com/go/debug-cli/
+ok  (barne.kleinen@htw-berlin.de @ rails_update_72√)code/uas-module-handbook/module-handbook-2024>bin/rails app:update
+    conflict  config/boot.rb
+Overwrite /Users/kleinen/mine/current/code/uas-module-handbook/module-handbook-2024/config/boot.rb? (enter "h" for help) [Ynaqdhm] a
+       force  config/boot.rb
+       exist  config
+    conflict  config/application.rb
+       force  config/application.rb
+    conflict  config/environment.rb
+       force  config/environment.rb
+    conflict  config/puma.rb
+       force  config/puma.rb
+       exist  config/environments
+    conflict  config/environments/development.rb
+       force  config/environments/development.rb
+    conflict  config/environments/production.rb
+       force  config/environments/production.rb
+    conflict  config/environments/test.rb
+       force  config/environments/test.rb
+       exist  config/initializers
+    conflict  config/initializers/assets.rb
+       force  config/initializers/assets.rb
+    conflict  config/initializers/content_security_policy.rb
+       force  config/initializers/content_security_policy.rb
+      create  config/initializers/cors.rb
+    conflict  config/initializers/filter_parameter_logging.rb
+       force  config/initializers/filter_parameter_logging.rb
+    conflict  config/initializers/inflections.rb
+       force  config/initializers/inflections.rb
+      create  config/initializers/new_framework_defaults_8_0.rb
+      remove  app/assets/stylesheets/application.css
+      remove  config/initializers/cors.rb
+       exist  bin
+      create  bin/brakeman
+      create  bin/dev
+   identical  bin/rails
+   identical  bin/rake
+      create  bin/rubocop
+    conflict  bin/setup
+       force  bin/setup
+       exist  public
+      create  public/400.html
+    conflict  public/404.html
+       force  public/404.html
+      create  public/406-unsupported-browser.html
+    conflict  public/422.html
+       force  public/422.html
+    conflict  public/500.html
+       force  public/500.html
+      create  public/icon.png
+      create  public/icon.svg
+   identical  public/robots.txt
+       rails  active_storage:update
+Copied migration 20250109170523_add_service_name_to_active_storage_blobs.active_storage.rb from active_storage
+Copied migration 20250109170524_create_active_storage_variant_records.active_storage.rb from active_storage
+Copied migration 20250109170525_remove_not_null_on_active_storage_blobs_checksum.active_storage.rb from active_storage
+
+After this, check Rails upgrade guide at https://guides.rubyonrails.org/upgrading_ruby_on_rails.html for more details about upgrading your app.
+
+
+##
+- mostly reverted config/environment.rb
+
+
+#### notes/review
+
+##### config/environments/production.rb
+
+-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+-  config.action_mailer.perform_caching = false
+
++  config.action_mailer.default_url_options = { host: "example.com" }
+
+-  # Use a different logger for distributed setups.
+-  # require 'syslog/logger'
+-  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+-
+-  if ENV['RAILS_LOG_TO_STDOUT'].present?
+-    logger           = ActiveSupport::Logger.new($stdout)
+-    logger.formatter = config.log_formatter
+-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+-  end
+
++  # Enable DNS rebinding protection and other `Host` header attacks.
++  # config.hosts = [
++  #   "example.com",     # Allow requests from example.com
++  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
++  # ]
+
+##### config/environments/test.rb
+-
+-  config.log_level = :warn
+-  config.hosts << '127.0.0.1'
+-  config.hosts << '0.0.0.0'
+-  config.hosts << '0.0.0.0:61402'
+-  config.hosts << 'www.example.com'
+-  config.hosts << '172.18.0.2'
+-  config.hosts << 'selenium-standalone'
+-  config.hosts << 'localhost'
+
+
+##### config/initializers/assets.rb
