@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_06_173813) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_09_170525) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "comments", force: :cascade do |t|
     t.bigint "author_id", null: false

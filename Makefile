@@ -362,3 +362,37 @@ selenium:
 
 gemdir:
 - pushd $(rvm gemdir)/gems
+
+# -----
+
+build:
+- docker build . -f Dockerfile.alpine -t mh-rails80
+
+RAILS_MASTER_KEY=$(shell cat config/credentials/production.key)
+DOCKER_ENV=-p 3004:3000 -e RAILS_MASTER_KEY='$(RAILS_MASTER_KEY)' -e POSTGRES_DB='mhdocker' -e RAILS_DB_HOST='host.docker.internal'
+
+run:  opendocker
+- docker rm -f mh-rails80
+- docker run $(DOCKER_ENV) --name mh-rails80 mh-rails80 bin/rails server
+
+opendocker: 
+- open http://localhost:3004/
+
+
+debug:
+- docker build . -f Dockerfile.alpine --target debug -t rails80-alpine-debug
+- docker run $(DOCKER_ENV) -it --name rails80-alpine-debug rails80-alpine-debug /bin/ash
+#- docker run -e RAILS_MASTER_KEY='$(cat config/credentials/production.key)' -e POSTGRES_DB='modhand-db-prod' -e RAILS_DB_HOST='host.docker.internal' -it rails80-alpine-debug /bin/ash
+
+shell-debug:
+- docker exec -it  rails80-alpine-debug /bin/ash
+
+shell:
+- docker run -e RAILS_MASTER_KEY='$(cat config/credentials/production.key)' mh-rails80 /bin/ash
+
+shell-in-running-container:
+- docker exec -it mh-rails80 ash
+
+
+compose: 
+- export RAILS_MASTER_KEY=$(cat config/credentials/production.key); docker compose  -f compose.yaml up

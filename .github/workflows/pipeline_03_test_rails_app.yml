@@ -42,13 +42,13 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.3
+          ruby-version: 3.3.6
           #bundler-cache: true
       - name: Install dependencies
         run: bin/bundle install
 
       - name: create test db
-        run: bin/rails db:create RAILS_ENV=test
+        run: bin/rails db:test:prepare
 
       - name: Run Tests
         id: run-tests
@@ -64,8 +64,3 @@ jobs:
         if: ${{ failure() }}
         run: cat "log/test.log"
 
-      - name: Some Info
-        if: ${{ always() }}
-        run: |
-          ls -lart log
-          less "log/test.log"
