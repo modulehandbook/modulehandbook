@@ -190,3 +190,20 @@ After this, check Rails upgrade guide at https://guides.rubyonrails.org/upgradin
 
 
 ##### config/initializers/assets.rb
+
+-Rails.application.config.assets.version = '1.2'
++Rails.application.config.assets.version = "1.0"
+
+##### config/puma.rb
+
+-max_threads_count = ENV.fetch('RAILS_MAX_THREADS', 5)
+-min_threads_count = ENV.fetch('RAILS_MIN_THREADS') { max_threads_count }
+-threads min_threads_count, max_threads_count
+
+-port        ENV.fetch('PORT', 3000)
+-environment ENV.fetch('RAILS_ENV', 'development')
+-
+-# Specifies the `pidfile` that Puma will use.
+-pidfile ENV.fetch('PIDFILE', 'tmp/pids/server.pid')
+-
+
