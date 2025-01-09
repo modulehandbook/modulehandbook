@@ -404,7 +404,7 @@ DEPENDENCIES
   paper_trail
   pg
   puma (~> 6.4)
-  rails (~> 7.1.3)
+  rails (~> 7.1.5.1)
   redcarpet
   redis (~> 4.0)
   reek (~> 6.3)
