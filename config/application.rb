@@ -46,12 +46,12 @@ module ModuleHandbook
     # [ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: localhost
     # rails_upgrade_71: may be necessary
     # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#sqlite3adapter-now-configured-to-be-used-in-a-strict-strings-mode
-#    # config.active_record.sqlite3_adapter_strict_strings_by_default = false
-#    begin
-#      config.version = File.read('./MH_VERSION').strip
-#    rescue StandardError
-#      config.version = 'unknown'
-#    end
+    # config.active_record.sqlite3_adapter_strict_strings_by_default = false
+    begin
+      config.version = File.read('./MH_VERSION').strip
+    rescue StandardError
+      config.version = 'unknown'
+    end
 
  # ----end deleted by update task
 
