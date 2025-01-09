@@ -5,6 +5,13 @@ on:
   push:
     branches: [ main ]
   workflow_call:
+
+env:
+  RAILS_DB_HOST: localhost
+  POSTGRES_PORT: 5432
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
@@ -24,7 +31,7 @@ jobs:
 
   scan_js:
     runs-on: ubuntu-latest
-    if: false
+    if:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -62,6 +69,22 @@ jobs:
     #    ports:
     #      - 6379:6379
     #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    services:
+      postgres:
+        image: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+    
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git pkg-config google-chrome-stable
