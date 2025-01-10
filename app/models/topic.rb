@@ -11,14 +11,13 @@ class Topic < ApplicationRecord
   accepts_nested_attributes_for :topic_descriptions
 
   def programs
-    tds = self.topic_descriptions.where(implementable_type: Program)
-    tds.map{ |td| td.implementable}
+    tds = topic_descriptions.where(implementable_type: Program)
+    tds.map { |td| td.implementable }
   end
 
   def courses(program)
-    tds = self.topic_descriptions.where(implementable_type: Course, topic: self)
-    courses = tds.map { |td| td.implementable}
+    tds = topic_descriptions.where(implementable_type: Course, topic: self)
+    courses = tds.map { |td| td.implementable }
     program.courses - courses
   end
-
 end
