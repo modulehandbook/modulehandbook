@@ -130,3 +130,29 @@ PaperTrail.request.whodunnit = editor.id
 b27.update contents: 'first'
 b27.update contents: 'second'
 b27.update contents: 'third'
+
+
+imib_copy = imib.create_copy
+imib_copy.save!
+
+topic1 = Topic.create(title: "Wissenschaftliches Arbeiten")
+topic2 = Topic.create(title: "Programmierhandwerk")
+topic3 = Topic.create(title: "Thema nur in Original")
+TopicDescription.create(description: "Beschreibung für Wissenschaftliches Arbeiten in imib", topic: topic1, implementable: imib)
+TopicDescription.create(description: "Beschreibung für Wissenschaftliches Arbeiten in imib copy",  topic: topic1, implementable: imib_copy)
+
+TopicDescription.create(description: "Beschreibung für Programmierhandwerk in imib", topic: topic2, implementable: imib)
+TopicDescription.create(description: "Beschreibung für Programmierhandwerk in imib copy", topic: topic2, implementable: imib_copy)
+
+TopicDescription.create(description: "Beschreibung für Thema3", topic: topic3, implementable: imib)
+
+info3 = Course.find_by(code: 'B15')
+
+TopicDescription.create(description: "git", topic: topic2, implementable: info3)
+TopicDescription.create(description: "lab reports", topic: topic1, implementable: info3)
+TopicDescription.create(description: "thema3 in info3", topic: topic3, implementable: info3)
+
+
+
+
+
