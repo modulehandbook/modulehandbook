@@ -14,7 +14,7 @@ class TopicMatrixTest < ApplicationSystemTestCase
     visit program_url(@program, tab: :topics)
     # https://github.com/teamcapybara/capybara#clicking-links-and-buttons
     #assert_equal "", Capybara.default_selector
-    _path, id = path_and_id_for_new('topic', program_id = @program.id)
+    _path, id = path_and_id_for_new('topic', program_id: @program.id)
 
     click_link(id)
     fill_in('topic_title', with: 'A Topic Title')
@@ -31,7 +31,7 @@ class TopicMatrixTest < ApplicationSystemTestCase
     course = courses(:topic_matrix)
     topic = topics(:topic_matrix)
     visit program_url(program, tab: :topics)
-    path_after_creation = program_path(program.id)
+    path_after_creation = program_path(program.id, tab: :topics)
     path_args = {course_id: course.id, topic_id: topic.id, back_to: path_after_creation}
     _path, id = path_and_id_for_new('topic_description', path_args)
     click_link(id)
@@ -39,8 +39,11 @@ class TopicMatrixTest < ApplicationSystemTestCase
     fill_in('topic_description_description', with: desc)
     find_button(name: 'commit').click
     assert_text 'Topic description was successfully created.'
-    assert_has_current_path(path_after_creation)
+    # assert_current_path does not contain get parameter
+    path_after_creation_without_params = path_after_creation.gsub(/\?.*/,'')
+    assert_current_path(path_after_creation)
+    #assert_current_path(path_after_creation_without_params)
     assert_text desc
-
+    assert_text 'New topic'
   end
 end
