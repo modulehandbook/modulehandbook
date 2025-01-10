@@ -12,12 +12,12 @@ class Topic < ApplicationRecord
 
   def programs
     tds = topic_descriptions.where(implementable_type: Program)
-    tds.map { |td| td.implementable }
+    tds.map(&:implementable)
   end
 
   def courses(program)
     tds = topic_descriptions.where(implementable_type: Course, topic: self)
-    courses = tds.map { |td| td.implementable }
+    courses = tds.map(&:implementable)
     program.courses - courses
   end
 end
