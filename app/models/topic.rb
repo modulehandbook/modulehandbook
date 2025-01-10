@@ -13,13 +13,13 @@ class Topic < ApplicationRecord
   def programs
     # this causes error with fixtures ("can't cast Class")
     # tds = topic_descriptions.where(implementable_type: Program)
-    tds = topic_descriptions.select { |td| td.implementable.class == Program }.uniq
+    tds = topic_descriptions.select { |td| td.implementable.instance_of?(Program) }.uniq
     tds.map(&:implementable)
   end
 
   def courses
     # tds = topic_descriptions.where(implementable_type: Course, topic: self)
-    tds = topic_descriptions.select { |td| td.implementable.class == Course }.uniq
+    tds = topic_descriptions.select { |td| td.implementable.instance_of?(Course) }.uniq
     courses = tds.map(&:implementable)
     courses.sort_by!(&:code)
   end
