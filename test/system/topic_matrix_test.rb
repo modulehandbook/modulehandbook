@@ -28,12 +28,15 @@ class TopicMatrixSystemTest < ApplicationSystemTestCase
 
 
   test 'add topic description for course' do
-    program = programs(:topic_matrix_program)
-    course = courses(:topic_matrix_course)
-    topic = topics(:topic_matrix_topic)
-    visit program_url(program, tab: :topics)
-    path_after_creation = program_path(program.id, tab: :topics)
-    path_args = {course_id: course.id, topic_id: topic.id, back_to: path_after_creation}
+
+    @td = topic_descriptions(:new_topic_in_program)
+    @program = @td.implementable
+    @topic = @td.topic
+    @course = @program.courses.first
+
+    visit program_url(@program, tab: :topics)
+    path_after_creation = program_path(@program.id, tab: :topics)
+    path_args = {course_id: @course.id, topic_id: @topic.id, back_to: path_after_creation}
     _path, id = path_and_id_for_new('topic_description', path_args)
     click_link(id)
     desc = 'A Topic Description for Course'

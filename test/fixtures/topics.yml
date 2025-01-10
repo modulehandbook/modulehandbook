@@ -11,3 +11,6 @@ topic_matrix_topic:
 
 plain:
   title: This is a plain topic without any associations
+
+new_topic:
+  title: This is a new topic which has no links to courses

@@ -96,3 +96,9 @@ topic_matrix_course:
   code: Matrix001
   ects: 5
   objectives: Course with some Objectives
+
+course_without_topic_description:
+  name: Course Without Topic Description
+  code: Matrix_Create_TD
+  ects: 5
+  objectives: some Objectives

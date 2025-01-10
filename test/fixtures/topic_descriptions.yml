@@ -22,3 +22,7 @@ topic_matrix_description_course:
   implementable: topic_matrix_course
   implementable_type: Course
 
+new_topic_in_program:
+  topic: new_topic
+  implementable: program_with_new_topic
+  implementable_type: Program

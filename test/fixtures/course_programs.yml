@@ -35,3 +35,10 @@ topic_matrix_course_program:
   course: topic_matrix_course
   semester: 1
   required: elective
+
+course_program_with_new_topic:
+  program: program_with_new_topic
+  course: course_without_topic_description
+  semester: 4
+  required: elective
+

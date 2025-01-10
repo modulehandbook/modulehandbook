@@ -55,3 +55,10 @@ topic_matrix_program:
   mission: This is the mission of A Program to test the topic matrix
   degree: Masters
   ects: 120
+
+program_with_new_topic:
+  name: This Program has a topic and a course, but no topic_description course/topic.
+  code: new-topic
+  mission: This is the mission of A Program to test +
+  degree: Masters
+  ects: 120
