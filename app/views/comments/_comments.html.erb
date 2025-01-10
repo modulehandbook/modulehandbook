@@ -12,9 +12,8 @@
           <em><% if comment.created_at != comment.updated_at %> (edited)<% end %></em>
         </td>
         <td class="text-right">
-          <%= link_to_edit('Edit', comment, id: "edit_comment_#{comment.id}") %>
-          <% if can? :destroy, comment %><%= link_to 'Delete', comment, id: "delete_comment_#{comment.id}", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %><% end %>
-          // <%= link_to_delete('Delete', comment) %>
+          <%= link_to_edit('Edit', comment) %>
+          <%= link_to_delete('Delete', comment) %>
        </td>
       </tr>
       <tr>
