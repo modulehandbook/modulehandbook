@@ -3,6 +3,7 @@
 <%= render @topic %>
 
 <div>
+  <%= link_to_edit "Edit this topic", @topic, suffix: ' |' %>
   <%= link_to "Edit this topic", edit_topic_path(@topic) %> |
   <%= link_to "Back to topics", topics_path %>
 
