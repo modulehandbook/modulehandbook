@@ -50,9 +50,9 @@ class TopicMatrixTest < ApplicationSystemTestCase
   test 'edit topic description for course' do
     skip
     program = programs(:topic_matrix_program)
-    course = courses(:topic_matrix_course)
-    topic = topics(:topic_matrix_topic)
-    topic_description = topic_descriptions(:topic_matrix_td_course)
+    topic_description = topic_descriptions(:topic_matrix_description_course)
+    course = topic_description.implementable
+    topic = topic_description.topic
     visit program_url(program, tab: :topics)
     assert_text 'Course Topic Description to Edit'
     # path_after_creation = program_path(program.id, tab: :topics)

@@ -30,8 +30,8 @@ copy_test_l03:
   program: copy_test
   course: copy_test_03
 
-topic_matrix:
-  program: topic_matrix
-  course: topic_matrix
+topic_matrix_course_program:
+  program: topic_matrix_program
+  course: topic_matrix_course
   semester: 1
   required: elective

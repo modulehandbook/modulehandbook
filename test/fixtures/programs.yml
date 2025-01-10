@@ -42,7 +42,7 @@ copy_test:
   degree: Bachelors
   ects: 180
 
-topic_matrix:
+topic_matrix_program:
   name: A Program to test the topic matrix
   code: 4711-topic
   mission: This is the mission of A Program to test the topic matrix

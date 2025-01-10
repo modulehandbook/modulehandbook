@@ -91,7 +91,7 @@ for_state_test:
   ects: 5
   objectives: Course with state Objectives
 
-topic_matrix:
+topic_matrix_course:
   name: Course for Topic Matrix
   code: Matrix001
   ects: 5
