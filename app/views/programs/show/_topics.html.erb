@@ -1,6 +1,6 @@
 
 <div>
-<%= link_to "New topic", new_topic_path(program_id: @program.id) %>
+<%= link_to_new "New topic", Topic, program_id: @program.id %>
 <br/>
 <dl>
   <% @topic_descriptions.each do | td |%>
