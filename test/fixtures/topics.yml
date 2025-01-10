@@ -8,3 +8,6 @@ two:
 
 topic_matrix_topic:
   title: Topic for Topic Matrix Test
+
+plain:
+  title: This is a plain topic without any associations

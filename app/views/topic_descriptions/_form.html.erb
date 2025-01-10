@@ -1,4 +1,5 @@
 <%= form_with(model: topic_description) do |form| %>
+  <%= render 'layouts/form_include' %>
   <% if topic_description.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(topic_description.errors.count, "error") %> prohibited this topic_description from being saved:</h2>
@@ -21,7 +22,6 @@
     <%= form.hidden_field :topic_id, value: @topic.id %>
     <%= form.hidden_field :implementable_id, value: @implementable_id %>
     <%= form.hidden_field :implementable_type, value: @implementable_type %>
-    <% if @back_to %><%= hidden_field_tag :back_to, @back_to %><% end %>
 
   </div>
 

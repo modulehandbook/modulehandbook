@@ -12,7 +12,6 @@ class TopicDescriptionsController < ApplicationController
 
   # GET /topic_descriptions/new
   def new
-    @back_to = params[:back_to]
     @topic = Topic.find(params[:topic_id])
     @course = Course.find(params[:course_id])
     @implementable_id = @course.id
@@ -33,8 +32,10 @@ class TopicDescriptionsController < ApplicationController
     @topic_description = TopicDescription.new(topic_description_params)
     respond_to do |format|
       if @topic_description.save
-        back_to_path = params[:back_to] || topic_description_url(@topic_description)
-        format.html { redirect_to back_to_path, notice: "Topic description was successfully created.", allow_other_host: false }
+        back_to_path = @back_to_path || topic_description_url(@topic_description)
+        format.html { redirect_to back_to_path,
+                                  notice: "Topic description was successfully created.",
+                                  allow_other_host: false }
         format.json { render :show, status: :created, location: @topic_description }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,9 +46,13 @@ class TopicDescriptionsController < ApplicationController
 
   # PATCH/PUT /topic_descriptions/1 or /topic_descriptions/1.json
   def update
+
     respond_to do |format|
+      back_to_path = @back_to_path || topic_description_url(@topic_description)
       if @topic_description.update(topic_description_params)
-        format.html { redirect_to topic_description_url(@topic_description), notice: "Topic description was successfully updated." }
+        format.html { redirect_to back_to_path,
+                                  notice: "Topic description was successfully updated.",
+                                  allow_other_host: false }
         format.json { render :show, status: :ok, location: @topic_description }
       else
         format.html { render :edit, status: :unprocessable_entity }

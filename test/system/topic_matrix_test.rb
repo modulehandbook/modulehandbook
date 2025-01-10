@@ -1,6 +1,6 @@
 require "application_system_test_case"
 
-class TopicMatrixTest < ApplicationSystemTestCase
+class TopicMatrixSystemTest < ApplicationSystemTestCase
   include AccessControlHelper::LinkHelper
   setup do
 
@@ -26,6 +26,7 @@ class TopicMatrixTest < ApplicationSystemTestCase
 
   end
 
+
   test 'add topic description for course' do
     program = programs(:topic_matrix_program)
     course = courses(:topic_matrix_course)
@@ -47,28 +48,5 @@ class TopicMatrixTest < ApplicationSystemTestCase
     assert_text 'New topic'
   end
 
-  test 'edit topic description for course' do
-    skip
-    program = programs(:topic_matrix_program)
-    topic_description = topic_descriptions(:topic_matrix_description_course)
-    course = topic_description.implementable
-    topic = topic_description.topic
-    visit program_url(program, tab: :topics)
-    assert_text 'Course Topic Description to Edit'
-    # path_after_creation = program_path(program.id, tab: :topics)
-    # path_args = {course_id: course.id, topic_id: topic.id, back_to: path_after_creation}
-    # _path, id = path_and_id_for_new('topic_description', path_args)
-    # click_link(id)
-    # desc = 'A Topic Description for Course'
-    # fill_in('topic_description_description', with: desc)
-    # find_button(name: 'commit').click
-    # assert_text 'Topic description was successfully created.'
-    # # assert_current_path does not contain get parameter
-    # path_after_creation_without_params = path_after_creation.gsub(/\?.*/,'')
-    # assert_current_path(path_after_creation)
-    # #assert_current_path(path_after_creation_without_params)
-    # assert_text desc
-    # assert_text 'New topic'
-  end
 
 end

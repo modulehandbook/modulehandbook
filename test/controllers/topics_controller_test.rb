@@ -10,6 +10,7 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
     get topics_url
     assert_response :success
   end
+
   # topics need to be created in the context of a program
   test "should get new" do
     @program = programs(:one)

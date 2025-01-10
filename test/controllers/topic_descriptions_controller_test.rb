@@ -21,11 +21,19 @@ class TopicDescriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create topic_description" do
+  test "should create topic_description for program" do
+    @program = programs(:plain)
+    @topic = topics(:plain)
     assert_difference("TopicDescription.count") do
-      post topic_descriptions_url, params: { topic_description: { description: @topic_description.description, implementable_id: @topic_description.implementable_id, implementable_type: @topic_description.implementable_type, topic_id: @topic_description.topic_id } }
+      post topic_descriptions_url, params: {
+        #back_to:
+        topic_description: {
+          description: @topic_description.description,
+          implementable_id: @program.id,
+          implementable_type: @program.class,
+          topic_id: @topic_description.topic_id } }
     end
-
+    created = TopicDescription.last
     assert_redirected_to topic_description_url(TopicDescription.last)
   end
 

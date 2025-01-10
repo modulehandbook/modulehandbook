@@ -42,6 +42,13 @@ copy_test:
   degree: Bachelors
   ects: 180
 
+plain:
+  name: Plain Program
+  code: PLAINP
+  mission: This is a plain program without any associations
+  degree: Bachelors
+  ects: 180
+
 topic_matrix_program:
   name: A Program to test the topic matrix
   code: 4711-topic
