@@ -3,7 +3,14 @@ class TopicDescriptionsController < ApplicationController
 
   # GET /topic_descriptions or /topic_descriptions.json
   def index
-    @topic_descriptions = TopicDescription.all.select('title', 'topic_id').group('topic_id')
+    @topic_descriptions = TopicDescription.all.select{|td| td.implementable.class == Program}.uniq
+    @programs = @topic_descriptions.map(&:implementable)
+
+
+    # TopicDescription.all.map(&:implementable)
+    # TopicDescription.where(implementable_type: Program).map(&:implementable)
+    # TopicDescription.where(implementable_type: Course).map(&:implementable)
+
   end
 
   # GET /topic_descriptions/1 or /topic_descriptions/1.json

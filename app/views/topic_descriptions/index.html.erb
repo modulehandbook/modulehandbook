@@ -3,12 +3,17 @@
 <h1>Topic descriptions</h1>
 
 <div id="topic_descriptions">
-  <% @topic_descriptions.each do |topic_description| %>
+
+  <% @programs.each do  | program |%>
+    <h4><%= program.code %> <%= program.name %></h4>
+  <% program.topic_descriptions do |topic_description| %>
+      hullu
     <%= render topic_description %>
     <p>
       <%= link_to "Show this topic description", topic_description %>
     </p>
     <hr/>
+  <% end %>
   <% end %>
 </div>
 

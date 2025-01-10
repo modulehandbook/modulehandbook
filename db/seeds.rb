@@ -131,6 +131,8 @@ b27.update contents: 'first'
 b27.update contents: 'second'
 b27.update contents: 'third'
 
+Topic.destroy_all
+TopicDescription.destroy_all
 
 imib_copy = imib.create_copy
 imib_copy.save!
@@ -146,10 +148,13 @@ TopicDescription.create(description: "Beschreibung für Programmierhandwerk in i
 
 TopicDescription.create(description: "Beschreibung für Thema3", topic: topic3, implementable: imib)
 
+info1 = Course.find_by(code: 'B1')
 info3 = Course.find_by(code: 'B15')
 
 TopicDescription.create(description: "git", topic: topic2, implementable: info3)
-TopicDescription.create(description: "lab reports", topic: topic1, implementable: info3)
+TopicDescription.create(description: "componentenauswahl", topic: topic1, implementable: info3)
+TopicDescription.create(description: "debugger", topic: topic2, implementable: info1)
+TopicDescription.create(description: "lab reports", topic: topic1, implementable: info1)
 TopicDescription.create(description: "thema3 in info3", topic: topic3, implementable: info3)
 
 

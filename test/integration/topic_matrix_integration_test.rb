@@ -31,7 +31,7 @@ class TopicMatrixIntegrationTest < ActionDispatch::IntegrationTest
 
      @topic_description.reload
      assert_equal updated_description, @topic_description.description
-     assert_equal "xxx", @topic_description.description
+
 
    end
 

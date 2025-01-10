@@ -11,13 +11,17 @@ class Topic < ApplicationRecord
   accepts_nested_attributes_for :topic_descriptions
 
   def programs
-    tds = topic_descriptions.where(implementable_type: Program)
-    tds.map(&:implementable)
+    # this causes error with fixtures ("can't cast Class")
+    #tds = topic_descriptions.where(implementable_type: Program)
+    tds = topic_descriptions.select{|td| td.implementable.class == Program}.uniq
+    programs = tds.map(&:implementable)
+    programs
   end
 
-  def courses(program)
-    tds = topic_descriptions.where(implementable_type: Course, topic: self)
+  def courses
+    #tds = topic_descriptions.where(implementable_type: Course, topic: self)
+    tds = topic_descriptions.select{|td| td.implementable.class == Course}.uniq
     courses = tds.map(&:implementable)
-    program.courses - courses
+    courses.sort_by!(&:code)
   end
 end
