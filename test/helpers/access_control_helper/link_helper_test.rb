@@ -11,21 +11,20 @@ require 'test_helper'
 # as a parameter
 
 class MockContext
-  attr_accessor :action_view_test
   def initialize(action_view_test)
-    self.action_view_test = action_view_test
+    @action_view_test = action_view_test
   end
 
  def can?(*args)
-    user = users(:one)
+    user = @action_view_test.users(:one)
     ability = Ability.new(user)
     ability.can?(*args)
  end
 
-
   def method_missing(m, *args, &block)
+    super unless @action_view_test.respond_to?(m)
     #puts "Delegating #{m}"
-    action_view_test.send(m, *args, &block)
+    @action_view_test.send(m, *args, &block)
   end
 
 end

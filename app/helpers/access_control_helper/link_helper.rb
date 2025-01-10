@@ -3,16 +3,25 @@
 module AccessControlHelper
     module LinkHelper
 
+        # def initialize(*args)
+        #     @link_generator  =LinkGenerator.new(self)
+        # end
         # todo: dry with method missing, see
-        # https://stackoverflow.com/questions/49712163/ruby-module-that-delegates-methods-to-an-object
+        # see https://stackoverflow.com/questions/49712163/ruby-module-that-delegates-methods-to-an-object
+        # def method_missing(name, *args)
+        #     puts ("method missing: #{name}")
+        #     super unless @link_generator.respond_to?(name)
+        #     @link_generator.send(name, *args)
+        # end
+
         def link_to_delete(link_text, resource, confirmation = 'Are you sure?')
             LinkGenerator.new(self).link_to_delete(link_text, resource, confirmation)
         end
-
+#
         def link_to_edit(link_text, resource, options = {})
             LinkGenerator.new(self).link_to_edit(link_text, resource, options)
         end
-
+#
         def link_to_new(link_text, clazz, path_args = {})
             LinkGenerator.new(self).link_to_new(link_text, clazz, path_args)
         end
@@ -41,7 +50,7 @@ module AccessControlHelper
           if my_can? :edit,resource
               snake = snake(resource.class)
               path_helper = "edit_#{snake}_path"
-              path = @controller_context.send(path_helper, resource)
+              path = @controller_context.send(path_helper, resource.id)
               link = @controller_context.link_to(link_text, path, id: "edit_#{snake}_#{resource.id}")
               link+opt[:suffix]
               #"#{link}#{opt[:suffix]}"
