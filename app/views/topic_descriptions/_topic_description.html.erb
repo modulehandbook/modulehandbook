@@ -1,13 +1,19 @@
 <div id="<%= dom_id topic_description %>">
-  <p>
-    <strong>Topic:</strong>
+  <h3>
+    <strong>Topic Description für:</strong>
     <%= topic_description.topic.title %>
-  </p>
+  </h3>
 
   <p>
+    <strong>Topic:</strong>
+    <%= topic_description.topic.title %>  <%= link_to '->', topic_description.topic %>
+  </p>
+  <p>
+
     <strong><%= topic_description.implementable_type %>:</strong>
     <%= topic_description.implementable.code %> /
     <%= topic_description.implementable.name %>
+    <%= link_to '->', topic_description.implementable %>
   </p>
 
   <p>

@@ -9,6 +9,7 @@ class TopicMatrixIntegrationTest < ActionDispatch::IntegrationTest
     @topic = topics(:one)
     sign_in users(:one)
   end
+
    test "should update topic_description for course" do
      @program = programs(:topic_matrix_program)
      @topic_description = topic_descriptions(:topic_matrix_description_course)
@@ -30,6 +31,7 @@ class TopicMatrixIntegrationTest < ActionDispatch::IntegrationTest
 
      @topic_description.reload
      assert_equal updated_description, @topic_description.description
+     assert_equal "xxx", @topic_description.description
 
    end
 

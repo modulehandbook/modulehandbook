@@ -3,7 +3,7 @@ class TopicDescriptionsController < ApplicationController
 
   # GET /topic_descriptions or /topic_descriptions.json
   def index
-    @topic_descriptions = TopicDescription.all
+    @topic_descriptions = TopicDescription.all.select('title', 'topic_id').group('topic_id')
   end
 
   # GET /topic_descriptions/1 or /topic_descriptions/1.json
