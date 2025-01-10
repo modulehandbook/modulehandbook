@@ -34,7 +34,7 @@ class TopicDescriptionsController < ApplicationController
     respond_to do |format|
       if @topic_description.save
         back_to_path = params[:back_to] || topic_description_url(@topic_description)
-        format.html { redirect_to back_to_path, notice: "Topic description was successfully created." }
+        format.html { redirect_to back_to_path, notice: "Topic description was successfully created.", allow_other_host: false }
         format.json { render :show, status: :created, location: @topic_description }
       else
         format.html { render :new, status: :unprocessable_entity }
