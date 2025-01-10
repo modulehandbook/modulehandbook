@@ -24,7 +24,7 @@ Matrix
           </td>
       <% else %>
         <td >
-          <%= link_to_new "+", TopicDescription, course_id: course.id, topic_id: topic.id, back_to: course.id  %>
+          <%= link_to_new "+", TopicDescription, course_id: course.id, topic_id: topic.id, back_to: program_path(@program.id, tab: :topics)  %>
         </td>
       <% end %>
 

@@ -12,6 +12,7 @@ class TopicDescriptionsController < ApplicationController
 
   # GET /topic_descriptions/new
   def new
+    @back_to = params[:back_to]
     @topic = Topic.find(params[:topic_id])
     @course = Course.find(params[:course_id])
     @implementable_id = @course.id
@@ -30,10 +31,10 @@ class TopicDescriptionsController < ApplicationController
   # POST /topic_descriptions or /topic_descriptions.json
   def create
     @topic_description = TopicDescription.new(topic_description_params)
-
     respond_to do |format|
       if @topic_description.save
-        format.html { redirect_to topic_description_url(@topic_description), notice: "Topic description was successfully created." }
+        back_to_path = params[:back_to] || topic_description_url(@topic_description)
+        format.html { redirect_to back_to_path, notice: "Topic description was successfully created." }
         format.json { render :show, status: :created, location: @topic_description }
       else
         format.html { render :new, status: :unprocessable_entity }

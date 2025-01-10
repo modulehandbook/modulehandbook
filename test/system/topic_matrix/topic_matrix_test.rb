@@ -1,6 +1,7 @@
 require "application_system_test_case"
 
 class TopicMatrixTest < ApplicationSystemTestCase
+  include AccessControlHelper::LinkHelper
   setup do
 
     @program = programs(:one)
@@ -13,14 +14,33 @@ class TopicMatrixTest < ApplicationSystemTestCase
     visit program_url(@program, tab: :topics)
     # https://github.com/teamcapybara/capybara#clicking-links-and-buttons
     #assert_equal "", Capybara.default_selector
-    click_link('new_topic')
+    _path, id = path_and_id_for_new('topic', program_id = @program.id)
+
+    click_link(id)
     fill_in('topic_title', with: 'A Topic Title')
     fill_in('topic_topic_description_description', with: 'A Topic Description for Program')
     find_button(name: 'commit').click
-    assert_text 'Topic and Topic Description was successfully created.'
+    assert_text 'Topic and Topic Description were successfully created.'
     assert_text 'A Topic Title'
     assert_text 'A Topic Description for Program'
 
+  end
+
+  test 'add topic description for course' do
+    program = programs(:topic_matrix)
+    course = courses(:topic_matrix)
+    topic = topics(:topic_matrix)
+    visit program_url(program, tab: :topics)
+    path_after_creation = program_path(program.id)
+    path_args = {course_id: course.id, topic_id: topic.id, back_to: path_after_creation}
+    _path, id = path_and_id_for_new('topic_description', path_args)
+    click_link(id)
+    desc = 'A Topic Description for Course'
+    fill_in('topic_description_description', with: desc)
+    find_button(name: 'commit').click
+    assert_text 'Topic description was successfully created.'
+    assert_has_current_path(path_after_creation)
+    assert_text desc
 
   end
 end

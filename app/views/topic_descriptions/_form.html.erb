@@ -17,9 +17,11 @@
       <% else %>
       (program)
       <% end %>
+
     <%= form.hidden_field :topic_id, value: @topic.id %>
     <%= form.hidden_field :implementable_id, value: @implementable_id %>
     <%= form.hidden_field :implementable_type, value: @implementable_type %>
+    <% if @back_to %><%= hidden_field_tag :back_to, @back_to %><% end %>
 
   </div>
 

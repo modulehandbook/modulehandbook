@@ -11,3 +11,8 @@ two:
   implementable: two
   implementable_type: Program
   description: MyText
+
+topic_matrix:
+  topic: topic_matrix
+  implementable: topic_matrix
+  implementable_type: Program
