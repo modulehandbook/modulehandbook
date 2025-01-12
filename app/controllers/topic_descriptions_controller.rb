@@ -4,7 +4,7 @@ class TopicDescriptionsController < ApplicationController
   # GET /topic_descriptions or /topic_descriptions.json
   def index
     @topic_descriptions = TopicDescription.all.select{|td| td.implementable.class == Program}.uniq
-    @programs = @topic_descriptions.map(&:implementable)
+    @programs = @topic_descriptions.map(&:implementable).uniq
 
 
     # TopicDescription.all.map(&:implementable)
