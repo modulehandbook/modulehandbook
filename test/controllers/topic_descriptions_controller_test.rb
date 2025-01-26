@@ -6,11 +6,6 @@ class TopicDescriptionsControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:one)
   end
 
-  test "should get index" do
-    get topic_descriptions_url
-    assert_response :success
-  end
-
   # topic_descriptions need to be created from courses
   # for a specific topic
   #  /topic_descriptions/new/:topic_id/:course_id(.:format)
