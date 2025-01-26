@@ -3,6 +3,7 @@
 <%= render @topic %>
 
 <% @programs = @topic.programs %>
+<%= render 'comments/comments_teaser'%>
 <div>
   <%= link_to_edit "Edit this topic", @topic, suffix: ' |' %>
 
@@ -49,5 +50,5 @@ used in  <%= @programs.count %> Programs:
 
 </table>
 
-
-
+<hr/>
+<%= render 'comments/comments'%>

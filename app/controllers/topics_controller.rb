@@ -9,6 +9,9 @@ class TopicsController < ApplicationController
 
   # GET /topics/1 or /topics/1.json
   def show
+    @comments = @topic.comments
+    @comments_size = @comments.size
+    @comment = @topic.comments.build(author: @current_user)
   end
 
   # GET /topics/new

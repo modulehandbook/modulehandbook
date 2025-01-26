@@ -46,7 +46,7 @@
   <%= form.hidden_field :author_id, value: @current_user.id %>
 
   <%= form.hidden_field :commentable_id, value: params["id"] %>
-  <%= form.hidden_field :commentable_type, value: params["controller"].singularize.capitalize %>
+  <%= form.hidden_field :commentable_type, value: params["controller"].singularize.capitalize.camelize %>
 
 
   <div class="form-group">

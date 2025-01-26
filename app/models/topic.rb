@@ -5,6 +5,7 @@
 # normalized Title for Topics
 class Topic < ApplicationRecord
   has_paper_trail
+  has_many :comments, as: :commentable, dependent: :destroy
   has_many :topic_descriptions, dependent: :destroy
   has_many :implementables, through: :topic_descriptions, as: :implementable
 
