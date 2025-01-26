@@ -37,7 +37,7 @@ class ProgramsController < ApplicationController
     if [:table, :overview].include? @tab
       @semester = overview
     end
-    if [:topics].include? @tab
+    if [:topics, :topics_for_courses].include? @tab
       @topic_descriptions = @program.topic_descriptions
       @topics = @program.topics
       @courses = @course_programs.map{|cp| cp.course}
