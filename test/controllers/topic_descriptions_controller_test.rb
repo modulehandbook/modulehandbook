@@ -48,10 +48,12 @@ class TopicDescriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy topic_description" do
+    @program_id = @topic_description.topic.topic_descriptions.first.implementable_id
+    
     assert_difference("TopicDescription.count", -1) do
       delete topic_description_url(@topic_description)
     end
 
-    assert_redirected_to topic_descriptions_url
+    assert_redirected_to program_url(@program_id , tab: :topics_for_courses)
   end
 end

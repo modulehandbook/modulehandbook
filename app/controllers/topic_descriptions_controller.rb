@@ -73,11 +73,11 @@ class TopicDescriptionsController < ApplicationController
 
   # DELETE /topic_descriptions/1 or /topic_descriptions/1.json
   def destroy
-    @topic = @topic_description.topic.id
+    @program_id = @topic_description.topic.topic_descriptions.first.implementable_id  
     @topic_description.destroy!
 
     respond_to do |format|
-      format.html { redirect_to topic_path(@topic), notice: "Topic description was successfully destroyed." }
+      format.html { redirect_to program_path(@program_id, tab: :topics_for_courses), notice: "Topic description was successfully destroyed." }
       format.json { head :no_content }
     end
   end

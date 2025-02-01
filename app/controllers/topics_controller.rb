@@ -60,9 +60,7 @@ class TopicsController < ApplicationController
 
   # DELETE /topics/1 or /topics/1.json
   def destroy
-    @topic_description = @topic.topic_descriptions.first
-    @program = @topic_description.implementable
-    @program_id = @program.id  
+    @program_id = @topic.topic_descriptions.first.implementable.id  
     @topic.destroy!
 
     respond_to do |format|
