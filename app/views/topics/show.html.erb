@@ -1,13 +1,11 @@
 <p style="color: green"><%= notice %></p>
 <h3>Topic "<%=@topic.title %>"</h3>
-<%= render @topic %>
 
 <% @programs = @topic.programs %>
 <%= render 'comments/comments_teaser'%>
 <div>
   <%= link_to_edit "Edit this topic", @topic, suffix: ' |' %>
-
-  <%= button_to "Destroy this topic", @topic, method: :delete %>
+  <%= link_to 'Destroy this topic', @topic, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
 </div>
 <hr/>
 used in  <%= @programs.count %> Programs:
