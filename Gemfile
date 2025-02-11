@@ -74,7 +74,8 @@ gem 'aasm'
 
 gem 'paper_trail', '~> 16.0'
 
-gem 'bootstrap', '~> 4.6'
+gem 'bootstrap', '~> 5.3'
+gem 'popper_js', '~> 2.11.8'
 gem 'jquery-rails'
 gem 'redcarpet'
 
