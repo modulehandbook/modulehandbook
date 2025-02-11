@@ -1,5 +1,7 @@
 <% @show_objectives = show_objectives %>
 
+<br/></br>
+
 <h3>Courses in Program</h3>
 <% if can? :edit, @program %><%= link_to 'New Course', new_course_path(program_id: @program) %>
   <!-- Button trigger modal -->

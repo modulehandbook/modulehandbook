@@ -30,9 +30,9 @@
   <%= render 'programs/show/topics_matrix', program: @program %>
 <% end %>
 
-
-
-<%= render 'programs/show/footer', program: @program %>
+<% if @tab == :comments %>
+  <%= render 'programs/show/footer', program: @program %>
+<% end %>
 
 
 
