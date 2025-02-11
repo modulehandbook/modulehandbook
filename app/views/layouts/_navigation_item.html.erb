@@ -1,5 +1,5 @@
 
 
-<li class="nav-item <% if current_page?(path) %>active<% end %>">
+<li class="nav-item <%= 'active' if current_page?(path) %>">
   <%= link_to link_text, path, class: "nav-link" %>
 </li>
