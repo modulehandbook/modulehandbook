@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @topic_description %>
-<%= render 'comments/comments_teaser'%>
+<%= render 'comments/comments_teaser', has_comments_tab: false, this: @topic_description%>
 
 <div>
   <%= link_to "Edit this topic description", edit_topic_description_path(@topic_description) %> |

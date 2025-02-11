@@ -7,7 +7,7 @@
   <%= link_to 'Back to Index', programs_path %>
 </p>
 
-<%= render 'comments/comments_teaser'%>
+<%= render 'comments/comments_teaser', has_comments_tab: true, this: @program%>
 
 <ul class="nav nav-tabs">
   <% [['Program', :program, program_path(@program, { tab: :program})],

@@ -2,7 +2,7 @@
 <h3>Topic "<%=@topic.title %>"</h3>
 
 <% @programs = @topic.programs %>
-<%= render 'comments/comments_teaser'%>
+<%= render 'comments/comments_teaser', has_comments_tab: false, this: @topic%>
 <div>
   <%= link_to_edit "Edit this topic", @topic, suffix: ' |' %>
   <%= link_to 'Destroy this topic', @topic, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
