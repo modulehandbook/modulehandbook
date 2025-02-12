@@ -2,19 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-.bg-in_progress {
+.bg-in_progress, table td.bg-in_progress{
   background-color: #F24726;
 }
-.bg-in_review {
+.bg-in_review, table td.bg-in_review {
   background-color: #FAA810;
 }
-.bg-ready_for_councils {
+.bg-ready_for_councils, table td.bg-ready_for_councils {
   background-color: #808080;
 }
-.bg-updating {
+.bg-updating, table td.bg-updating {
   background-color: #FADB10;
 }
-.bg-done {
+.bg-done, table td.bg-done {
   background-color: #8FD14F;
   background-color: #8FD14F;
 }
