@@ -1,7 +1,7 @@
 <% # tbd: more beautiful forms https://getbootstrap.com/docs/4.0/components/forms/ %>
 <%= form_with(model: program, local: true) do |form| %>
   <% if program.errors.any? %>
-    <div class="form-group" id="error_explanation">
+    <div class="mb-3" id="error_explanation">
       <h2><%= pluralize(program.errors.count, "error") %> prohibited this program from being saved:</h2>
 
       <ul>
@@ -12,28 +12,28 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :name %>
+  <div class="mb-3">
+    <%= form.label :name,  class: "form-label" %>
     <%= form.text_area :name, class: "form-control"  %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :code %>
+  <div class="mb-3">
+    <%= form.label :code,  class: "form-label" %>
     <%= form.text_area :code, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :mission %>
+  <div class="mb-3">
+    <%= form.label :mission,  class: "form-label" %>
     <%= form.text_area :mission, class: "form-control"  %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :degree %>
+  <div class="mb-3">
+    <%= form.label :degree,  class: "form-label" %>
     <%= form.text_area :degree, class: "form-control"  %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :ects %>
+  <div class="mb-3">
+    <%= form.label :ects,  class: "form-label" %>
     <%= form.number_field :ects, class: "form-control"  %>
   </div>
 

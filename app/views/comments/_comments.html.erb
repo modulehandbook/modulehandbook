@@ -11,13 +11,13 @@
           <%=comment.created_at.strftime("%d of %B %Y - %k:%M")%>
           <em><% if comment.created_at != comment.updated_at %> (edited)<% end %></em>
         </td>
-        <td class="text-right">
+        <td class="text-end">
           <% if can? :edit, comment %><%= link_to 'Edit', edit_comment_path(comment), id: "edit_comment_#{comment.id}" %> | <% end %>
           <% if can? :destroy, comment %><%= link_to 'Delete', comment, id: "delete_comment_#{comment.id}", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %><% end %>
         </td>
       </tr>
       <tr>
-        <td  id="comment_<%=comment.id%>" colspan="2" style="border-top: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=md2html(comment.comment)%></td>
+        <td  id="comment_<%=comment.id%>" colspan="2" style="border-0: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=md2html(comment.comment)%></td>
       </tr>
       <% end %>
     <% end %>
@@ -32,7 +32,7 @@
 
 <%= form_with(model: @comment, local: true) do |form| %>
   <% if @comment.errors.any? %>
-    <div class="form-group" id="error_explanation">
+    <div class="mb-3" id="error_explanation">
       <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
       <ul>
@@ -49,7 +49,7 @@
   <%= form.hidden_field :commentable_type, value: params["controller"].singularize.capitalize %>
 
 
-  <div class="form-group">
+  <div class="mb-3">
     <%= form.text_area :comment, class: "form-control"  %>
   </div>
 
