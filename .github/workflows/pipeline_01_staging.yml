@@ -19,7 +19,5 @@ jobs:
       DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
       DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
       RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
-      DEPLOY_MHIMI_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-      DEPLOY_MHIMI_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
 
 

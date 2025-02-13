@@ -18,7 +18,6 @@ on:
 jobs:
     deploy-production:
         runs-on: ubuntu-latest
-        if: false
         env:
           SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
           SSH_USER: ${{ secrets.DEPLOY_MH_USER }}
