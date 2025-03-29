@@ -33,11 +33,7 @@ jobs:
                 ssh-private-key: ${{ env.SSH_KEY }}
 
             - name: Add SSH Host to Known Hosts
-              run: |
-                set -x  
-                mkdir -p $HOME/.ssh
-                ssh-keyscan -H $SSH_HOST >> $HOME/.ssh/known_hosts
-                set +x 
+              run: echo "$SSH_HOST" >> ~/.ssh/known_hosts
             
             - name: Verify SSH Connection
               run: |
