@@ -21,6 +21,7 @@ class Ability
     # alias_action :new, :to => :create
     # alias_action :edit, :to => :update
     alias_action :create, :read, :update, :delete, :destroy, to: :crud
+    alias_action :create, :update, to: :write
     alias_action :export_course_json, :export_courses_json, :export_course_docx, to: :export_course
     alias_action :export_program_json, :export_programs_json, :export_program_docx, to: :export_program
     alias_action :import_course_json, to: :import_course
@@ -36,6 +37,8 @@ class Ability
     can %i[read export_course], Course
     can %i[read export_program], Program
     can %i[read], Faculty
+    can %i[read], Topic
+    can %i[read], TopicDescription
     can %i[read], CourseProgram
     reader_comment_abilities(user)
   end
@@ -53,13 +56,15 @@ class Ability
     reader_abilities(user)
     can %i[crud], CourseProgram
     can %i[crud export_course import_course versions], Course
+    can %i[write], Topic
+    can %i[crud], TopicDescription
     can %i[crud copy export_program import_program], Program
   end
 
   def editor_abilities(user)
     writer_abilities(user)
-    can %i[crud], CourseProgram
-    can %i[create read update], Faculty
+    can %i[crud], Faculty
+    can %i[crud], Topic
     can %i[crud export_course import_course change_state revert_to], Course
     can %i[crud export_program import_program], Program
     can %i[read approve], User

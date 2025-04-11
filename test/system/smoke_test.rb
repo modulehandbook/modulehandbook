@@ -19,7 +19,6 @@ class SmokeTest < ApplicationSystemTestCase
 
   test 'just visit root' do
     visit root_url
-    # assert false
-    # assert_selector 'h1', text: 'Welcome to the Module Handbook!'
+    assert_text 'Welcome to the Module Handbook!'
   end
 end

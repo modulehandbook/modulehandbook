@@ -13,7 +13,8 @@ class AbilitiesTableTest < ApplicationSystemTestCase
     'Course' => %i[export_course_docx index change_state create_course_program_link edit show versions
                    export_courses_json export_course_json revert_to create destroy import_course_json new update],
     'CourseProgram' => %i[create index destroy edit show new update],
-    'Comment' => %i[create destroy edit show update]
+    'Comment' => %i[create destroy edit show update],
+    'Topic' => %i[create destroy edit show update]
   }
 
   setup do

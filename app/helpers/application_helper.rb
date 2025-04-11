@@ -4,16 +4,6 @@ module ApplicationHelper
   require 'redcarpet'
   @@html_renderer = Redcarpet::Render::HTML.new
   @@markdown = Redcarpet::Markdown.new(@@html_renderer, {})
-
-  def link_to_edit(link_text, resource)
-    if can? :edit,resource
-        path_helper = "edit_#{resource.class.to_s.downcase}_path"
-        path = self.send(path_helper, resource)
-        link_to(link_text, path)
-    else
-        "<!-- link omitted -->"
-    end
-  end
   
   def md2html(md)
     md = @@markdown.render(html_escape(md))

@@ -8,7 +8,7 @@ module CommentsTestsHelper
   def own_comments_setup_helper
     base_setup_helper
     @the_comment = "This is a comment, #{context(__method__)}"
-    visit course_path(@course)
+    visit course_path(@course, tab: :comments)
     fill_in 'comment_comment', with: @the_comment
     click_on 'Create Comment'
   end
@@ -18,7 +18,7 @@ module CommentsTestsHelper
     @user_other = users(:author_of_other_comment)
     @the_comment = "The others comment #{@user_other.email}, #{context(__method__)}"
     @course.comments.create(author: @user_other, comment: @the_comment)
-    visit course_path(@course)
+    visit course_path(@course, tab: :comments)
   end
 
   def context(_method_name)

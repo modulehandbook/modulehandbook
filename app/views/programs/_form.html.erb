@@ -1,5 +1,6 @@
 <% # tbd: more beautiful forms https://getbootstrap.com/docs/4.0/components/forms/ %>
 <%= form_with(model: program, local: true) do |form| %>
+  <%= render 'layouts/form_include' %>
   <% if program.errors.any? %>
     <div class="form-group" id="error_explanation">
       <h2><%= pluralize(program.errors.count, "error") %> prohibited this program from being saved:</h2>

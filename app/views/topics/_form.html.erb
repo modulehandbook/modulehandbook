@@ -1,5 +1,6 @@
 
 <%= form_with(model: topic) do |form| %>
+  <%= render 'layouts/form_include' %>
   <% if topic.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(topic.errors.count, "error") %> prohibited this topic from being saved:</h2>

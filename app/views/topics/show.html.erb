@@ -1,10 +1,52 @@
 <p style="color: green"><%= notice %></p>
+<h3>Topic "<%=@topic.title %>"</h3>
 
-<%= render @topic %>
-
+<% @programs = @topic.programs %>
+<%= render 'comments/comments_teaser', has_comments_tab: false, this: @topic%>
 <div>
-  <%= link_to "Edit this topic", edit_topic_path(@topic) %> |
-  <%= link_to "Back to topics", topics_path %>
-
-  <%= button_to "Destroy this topic", @topic, method: :delete %>
+  <%= link_to_edit "Edit this topic", @topic, suffix: ' |' %>
+  <%= link_to 'Destroy this topic', @topic, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
 </div>
+<hr/>
+used in  <%= @programs.count %> Programs:
+
+<% @programs.each do | program | %>
+  <h4><%= program.code %> - <%= program.name %></h4>
+  <% td = TopicDescription.find_by(implementable: program) %>
+  <p><%= td.description %></p>
+<% end %>
+
+<% @courses = @topic.courses %>
+
+<table class = 'table table-hover'>
+  <thead>
+    <tr>
+      <th>Course</th>
+      <th>Contribution to Topic</th>
+      <% @programs.each do | program |%>
+      <th><%= program.code%></th>
+      <% end %>
+    </tr>
+  </thead>
+  <% @courses.each do | course |
+    td = TopicDescription.where(topic: @topic, implementable: course).first
+  %>
+  <tr>
+    <td  onclick = "location.href='<%= course_path(course) %>'"><%= course.code %></td>
+    <td  ><%= td.description %></td>
+    <% @programs.each do | program |%>
+      <td>
+       <%  cp = CourseProgram.where(course: course, program: program) %>
+
+
+        <% if cp.count > 0 %><large><bold>X</bold></large><br><small><%= program.code%>/<%=course.code %></small><% end %>
+      </td>
+    <% end %>
+
+  </tr>
+  <% end %>
+
+</table>
+
+<hr/>
+<%= render 'comments/comments'%>
