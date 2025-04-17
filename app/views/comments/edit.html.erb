@@ -3,7 +3,7 @@
 
 <%= form_with(model: @comment, local: true) do |form| %>
   <% if @comment.errors.any? %>
-    <div class="form-group" id="error_explanation">
+    <div class="mb-3" id="error_explanation">
       <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
       <ul>
@@ -20,7 +20,7 @@
   <%= form.hidden_field :commentable_type, value: @comment.commentable_type %>
 
 
-  <div class="form-group">
+  <div class="mb-3">
     <%= form.text_area :comment, class: "form-control"  %>
   </div>
 

@@ -8,8 +8,8 @@
    when :role %>
     <%= form.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
   <% when :faculty_name %>
-  <div class="form-group">
-    <%= form.label :faculty %>
+  <div class="mb-3">
+    <%= form.label :faculty,  class: "form-label" %>
     <%= form.collection_select(:faculty_id, Faculty.all, :id, :name, {:prompt => "Please select your faculty"})
       %>
   </div>

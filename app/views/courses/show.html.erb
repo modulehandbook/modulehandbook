@@ -44,7 +44,7 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
 <%= form_with(model: @course_program, local: true) do |form| %>
     <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
   <div class="field">
-    <%= form.label 'add to another program:' %>
+    <%= form.label 'add to another program:',  class: "form-label" %>
     <%= form.collection_select(:program_id, Program.order(:name), :id, :select_name) %>
   </div>
 
