@@ -24,6 +24,11 @@
    background-color: rgba(150, 150, 150, 0.7);
  };
 
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+  background-color: transparent;
+};
+
  @import "media_print";
  @import "markdown";
  

@@ -50,7 +50,6 @@ jobs:
 
     deploy-imi-production:
         runs-on: ubuntu-latest
-        if: false
         env:
           SSH_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
           SSH_USER: ${{ secrets.DEPLOY_MHIMI_USER }}

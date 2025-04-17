@@ -45,7 +45,7 @@ class AbilitiesTableTest < ApplicationSystemTestCase
     cell = row.all('th,td')[column_index]
 
     assert_equal 'true', cell.find('div').text
-    assert_equal 'rgb(212, 237, 218)', cell.find('div').native.style('background-color')
+    assert_equal 'rgb(209, 231, 221)', cell.find('div').native.style('background-color')
   end
 
   test 'smoke_test_ability_always_false' do

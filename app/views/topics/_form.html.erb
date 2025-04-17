@@ -32,7 +32,7 @@
   </div>
 
   <div>
-    <%= form.label :title, style: "display: block" %>
+    <%= form.label :title, style: "display: block",  class: "form-label" %>
     <%= form.text_field :title %>
   </div>
   <% if @topic_description %>
@@ -40,7 +40,7 @@
     <%= td_form.hidden_field :implementable_id, value: program.id %>
     <%= td_form.hidden_field :implementable_type, value: 'Program' %>
     <div>
-      <%= td_form.label :description, style: "display: block" %>
+      <%= td_form.label :description, style: "display: block",  class: "form-label" %>
       <%= td_form.text_area :description %>
     </div>
       <% end %>
