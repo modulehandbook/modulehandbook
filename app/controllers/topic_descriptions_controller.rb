@@ -3,11 +3,21 @@ class TopicDescriptionsController < ApplicationController
 
   # GET /topic_descriptions or /topic_descriptions.json
   def index
-    @topic_descriptions = TopicDescription.all
+    @topic_descriptions = TopicDescription.all.select{|td| td.implementable.class == Program}.uniq
+    @programs = @topic_descriptions.map(&:implementable).uniq
+
+
+    # TopicDescription.all.map(&:implementable)
+    # TopicDescription.where(implementable_type: Program).map(&:implementable)
+    # TopicDescription.where(implementable_type: Course).map(&:implementable)
+
   end
 
   # GET /topic_descriptions/1 or /topic_descriptions/1.json
   def show
+    @comments = @topic_description.comments
+    @comments_size = @comments.size
+    @comment = @topic_description.comments.build(author: @current_user)
   end
 
   # GET /topic_descriptions/new
@@ -30,10 +40,12 @@ class TopicDescriptionsController < ApplicationController
   # POST /topic_descriptions or /topic_descriptions.json
   def create
     @topic_description = TopicDescription.new(topic_description_params)
-
     respond_to do |format|
       if @topic_description.save
-        format.html { redirect_to topic_description_url(@topic_description), notice: "Topic description was successfully created." }
+        back_to_path = @back_to_path || topic_description_url(@topic_description)
+        format.html { redirect_to back_to_path,
+                                  notice: "Topic description was successfully created.",
+                                  allow_other_host: false }
         format.json { render :show, status: :created, location: @topic_description }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,9 +56,13 @@ class TopicDescriptionsController < ApplicationController
 
   # PATCH/PUT /topic_descriptions/1 or /topic_descriptions/1.json
   def update
+
     respond_to do |format|
+      back_to_path = @back_to_path || topic_description_url(@topic_description)
       if @topic_description.update(topic_description_params)
-        format.html { redirect_to topic_description_url(@topic_description), notice: "Topic description was successfully updated." }
+        format.html { redirect_to back_to_path,
+                                  notice: "Topic description was successfully updated.",
+                                  allow_other_host: false }
         format.json { render :show, status: :ok, location: @topic_description }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,10 +73,11 @@ class TopicDescriptionsController < ApplicationController
 
   # DELETE /topic_descriptions/1 or /topic_descriptions/1.json
   def destroy
+    @program_id = @topic_description.topic.topic_descriptions.first.implementable_id  
     @topic_description.destroy!
 
     respond_to do |format|
-      format.html { redirect_to topic_descriptions_url, notice: "Topic description was successfully destroyed." }
+      format.html { redirect_to program_path(@program_id, tab: :topics_for_courses), notice: "Topic description was successfully destroyed." }
       format.json { head :no_content }
     end
   end

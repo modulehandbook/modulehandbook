@@ -12,9 +12,9 @@
           <em><% if comment.created_at != comment.updated_at %> (edited)<% end %></em>
         </td>
         <td class="text-end">
-          <% if can? :edit, comment %><%= link_to 'Edit', edit_comment_path(comment), id: "edit_comment_#{comment.id}" %> | <% end %>
-          <% if can? :destroy, comment %><%= link_to 'Delete', comment, id: "delete_comment_#{comment.id}", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %><% end %>
-        </td>
+          <%= link_to_edit('Edit', comment) %>
+          <%= link_to_delete('Delete', comment) %>
+       </td>
       </tr>
       <tr>
         <td  id="comment_<%=comment.id%>" colspan="2" style="border-0: 1px solid Transparent!important;" class="mt-0 pt-0"> <%=md2html(comment.comment)%></td>
@@ -46,7 +46,7 @@
   <%= form.hidden_field :author_id, value: @current_user.id %>
 
   <%= form.hidden_field :commentable_id, value: params["id"] %>
-  <%= form.hidden_field :commentable_type, value: params["controller"].singularize.capitalize %>
+  <%= form.hidden_field :commentable_type, value: params["controller"].singularize.capitalize.camelize %>
 
 
   <div class="mb-3">

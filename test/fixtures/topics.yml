@@ -5,3 +5,12 @@ one:
 
 two:
   title: Cross Cutting Topic Two
+
+topic_matrix_topic:
+  title: Topic for Topic Matrix Test
+
+plain:
+  title: This is a plain topic without any associations
+
+new_topic:
+  title: This is a new topic which has no links to courses

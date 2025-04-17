@@ -24,12 +24,15 @@
 
 <% if @tab == :topics %>
   <%= render 'programs/show/topics', program: @program %>
+<% end %>
+
+<% if @tab == :topics_for_courses %>
   <%= render 'programs/show/topics_matrix', program: @program %>
 <% end %>
 
-
-
-<%= render 'programs/show/footer', program: @program %>
+<% if @tab == :comments %>
+  <%= render 'programs/show/footer', program: @program %>
+<% end %>
 
 
 

@@ -9,6 +9,9 @@ class TopicsController < ApplicationController
 
   # GET /topics/1 or /topics/1.json
   def show
+    @comments = @topic.comments
+    @comments_size = @comments.size
+    @comment = @topic.comments.build(author: @current_user)
   end
 
   # GET /topics/new
@@ -33,7 +36,7 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @topic.save && @topic_description.save
         @program = @topic_description.implementable
-        format.html { redirect_to program_url(@program, tab: :topics), notice: "Topic and Topic Description was successfully created." }
+        format.html { redirect_to program_url(@program, tab: :topics), notice: "Topic and Topic Description were successfully created." }
         format.json { render :show, status: :created, location: @topic_description }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -57,10 +60,11 @@ class TopicsController < ApplicationController
 
   # DELETE /topics/1 or /topics/1.json
   def destroy
+    @program_id = @topic.topic_descriptions.first.implementable.id  
     @topic.destroy!
 
     respond_to do |format|
-      format.html { redirect_to topics_url, notice: "Topic was successfully destroyed." }
+      format.html { redirect_to program_url(@program_id, tab: :topics), notice: "Topic was successfully destroyed." }
       format.json { head :no_content }
     end
   end

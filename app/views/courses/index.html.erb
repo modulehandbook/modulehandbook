@@ -3,7 +3,7 @@
 <% content_for(:title, "Courses") %>
 
 
-<% if can? :edit, @courses %><%= link_to 'New Course', new_course_path %><br><% end %>
+<%= link_to_new('New Course', Course, suffix: '<br/>') %>
 JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
 <!-- Button trigger modal -->
 <% if can? :edit, @courses %>| <a href="#" data-bs-toggle="modal" data-bs-target="#jsonModal">
