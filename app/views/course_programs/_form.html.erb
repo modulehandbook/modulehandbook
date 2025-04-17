@@ -1,4 +1,5 @@
 <%= form_with(model: course_program, local: true) do |form| %>
+  <%= render 'layouts/form_include' %>
   <% if course_program.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(course_program.errors.count, "error") %> prohibited this course_program from being saved:</h2>
@@ -12,23 +13,23 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :course_id %>
+    <%= form.label :course_id, class: "form-label" %>
     <%= form.collection_select(:course_id, Course.all, :id, :select_name) %>
   </div>
 
   <div class="field">
-    <%= form.label :program_id %>
+    <%= form.label :program_id, class: "form-label" %>
     <%= form.collection_select(:program_id, Program.all, :id, :select_name) %>
 
   </div>
 
   <div class="field">
-    <%= form.label :semester %>
+    <%= form.label :semester, class: "form-label" %>
     <%= form.number_field :semester %>
   </div>
 
   <div class="field">
-    <%= form.label :required %>
+    <%= form.label :required , class: "form-label"%>
     <%=  form.select(:required,[['mandatory','mandatory'],['required','required'],['elective','elective'],['elective-option','elective-option']])%>
   </div>
 

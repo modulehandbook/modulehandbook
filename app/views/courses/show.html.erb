@@ -44,7 +44,7 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
 <%= form_with(model: @course_program, local: true) do |form| %>
     <%= form.hidden_field :course_id %><%= hidden_field_tag 'next_view','edit' %>
   <div class="field">
-    <%= form.label 'add to another program:' %>
+    <%= form.label 'add to another program:',  class: "form-label" %>
     <%= form.collection_select(:program_id, Program.order(:name), :id, :select_name) %>
   </div>
 
@@ -57,13 +57,14 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
   </div>
 </div>
 <div class = "no_print">
-<%= render 'comments/comments_teaser'%>
+<%= render 'comments/comments_teaser', has_comments_tab: true, this: @course%>
 </div>
 <hr/>
 
 <ul class="nav nav-tabs">
   <% [['Course', :course, course_path(@course, { tab: :course})],
-      ['Topics', :topics, course_path(@course, { tab: :topics})]
+      ['Topics', :topics, course_path(@course, { tab: :topics})],
+      ['Comments', :comments, course_path(@course, { tab: :comments})]
      ].each do | title, tab, path |  %>
     <li class="nav-item">
       <a class="nav-link <%= @tab == tab ? 'active' : '' %>" href="<%= path %>"><%= title %></a>
@@ -79,5 +80,7 @@ Export Course as <%= link_to 'JSON', export_course_json_url(id: @course.id) %> |
 <% if @tab == :topics %>
   <%= render 'courses/show/topics', program: @program %>
 <% end %>
+<% if @tab == :comments %>
+  <%= render 'comments/comments'%>
+<% end %>
 
-<%= render 'comments/comments'%>

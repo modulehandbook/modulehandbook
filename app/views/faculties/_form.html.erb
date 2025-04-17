@@ -1,4 +1,5 @@
 <%= form_with(model: faculty) do |form| %>
+  <%= render 'layouts/form_include' %>
   <% if faculty.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(faculty.errors.count, "error") %> prohibited this faculty from being saved:</h2>
@@ -12,17 +13,17 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label :name, style: "display: block",  class: "form-label" %>
     <%= form.text_field :name %>
   </div>
 
   <div>
-    <%= form.label :url, style: "display: block" %>
+    <%= form.label :url, style: "display: block",  class: "form-label" %>
     <%= form.text_field :url %>
   </div>
 
   <div>
-    <%= form.label :description, style: "display: block" %>
+    <%= form.label :description, style: "display: block",  class: "form-label" %>
     <%= form.text_area :description %>
   </div>
 

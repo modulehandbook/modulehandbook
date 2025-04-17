@@ -3,10 +3,10 @@
 <% content_for(:title, "Courses") %>
 
 
-<% if can? :edit, @courses %><%= link_to 'New Course', new_course_path %><br><% end %>
+<%= link_to_new('New Course', Course, suffix: '<br/>') %>
 JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
 <!-- Button trigger modal -->
-<% if can? :edit, @courses %>| <a href="#" data-toggle="modal" data-target="#jsonModal">
+<% if can? :edit, @courses %>| <a href="#" data-bs-toggle="modal" data-bs-target="#jsonModal">
   Import Course(s)
 </a>
 <% end %>
@@ -82,7 +82,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
       <%= form_tag import_course_json_path, multipart: true do %>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Import a Course from an existing JSON-File</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -93,7 +93,7 @@ JSON: <%= link_to 'Export all Courses', export_courses_json_url %>
         <%= file_field_tag :files, accept: 'application/json', :multiple => true, name: 'files[]', :style => 'display:inline; margin-top:-10px' %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <%= submit_tag 'Upload & Import', :class => 'btn btn-primary' %>
       </div>
       <% end %>

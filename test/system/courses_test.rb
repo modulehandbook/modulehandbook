@@ -60,7 +60,7 @@ class CoursesTest < ApplicationSystemTestCase
     fill_in 'Skills practical', with: @course.skills_practical
     click_on 'Update Course'
 
-    assert_text 'Course was successfully updated'
+    assert_text 'Course was successfully updated', wait: true
     click_on 'Back'
   end
 

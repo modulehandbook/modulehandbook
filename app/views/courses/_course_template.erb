@@ -1,14 +1,14 @@
 
 
-  <div class="form-group">
-    <div class = "form-row">
+  <div class="mb-3">
+    <div class = "row g-3">
       <div class = "col">
         <%= render 'course_field', course: @course,
         field_name: :name, markdown: false,
         editing: editing, form: form, rows: 1 %>
       </div>
       <div class = "col">
-        <div class="form-group">
+        <div class="mb-3">
           <%= render 'course_field', course: @course,
                      field_name: :ects, markdown: false,
                      editing: editing, form: form, rows: 1 %></div>
@@ -22,9 +22,9 @@
     </div>
   </div>
 
-<div class = "form-row">
+<div class = "row g-3">
 <div class = "col">
-  <div class="form-group">
+  <div class="mb-3">
     <%= render 'course_field', course: @course,
     field_name: :code, markdown: false,
     editing: editing, form: form, rows: 1 %>
@@ -42,10 +42,10 @@
   </div>
 
 
-  <div class = "form-row border">
+  <div class = "row g-3 border">
 
   <div class = "col">
-    <div class="form-group">
+    <div class="mb-3">
       <%= render 'course_field', course: @course,
       field_name: :lectureHrs, markdown: false,
       editing: editing, form: form, rows: 1 %>
@@ -53,7 +53,7 @@
    </div>
 
    <div class = "col">
-     <div class="form-group">
+     <div class="mb-3">
        <%= render 'course_field', course: @course,
        field_name: :labHrs, markdown: false,
        editing: editing, form: form, rows: 1 %>
@@ -62,7 +62,7 @@
     </div>
 
     <div class = "col">
-      <div class="form-group">
+      <div class="mb-3">
         <%= render 'course_field', course: @course,
         field_name: :tutorialHrs, markdown: false,
         editing: editing, form: form, rows: 1 %>
@@ -73,10 +73,10 @@
   </div>
 
 
-  <div class = "form-row border">
+  <div class = "row g-3 border">
 
     <div class = "col no_print_imi">
-      <div class="form-group">
+      <div class="mb-3">
         <%= render 'course_field', course: @course,
         field_name: :room, markdown: true,
         editing: editing, form: form, rows: 1 %>
@@ -84,7 +84,7 @@
     </div>
 
     <div class = "col no_print_imi">
-      <div class="form-group">
+      <div class="mb-3">
         <%= render 'course_field', course: @course,
         field_name: :equipment, markdown: true,
         editing: editing, form: form, rows: 1 %>
@@ -98,7 +98,7 @@
                [:skills_intellectual, 3, "no_print_imi"],[:skills_practical, 3, "no_print_imi"],
                [:skills_general, 3, "no_print_imi"], [:comment, 3] ] %>
   <% fields.each do | field_name, rows, css_classes |  %>
-    <div class="form-group <%= css_classes || "" %> %>">
+    <div class="mb-3 <%= css_classes || "" %> %>">
       <%= render 'course_field', course: @course,
                  field_name: field_name, markdown: true,
                  editing: editing, form: form, rows: rows %>

@@ -13,7 +13,8 @@ class AbilitiesTableTest < ApplicationSystemTestCase
     'Course' => %i[export_course_docx index change_state create_course_program_link edit show versions
                    export_courses_json export_course_json revert_to create destroy import_course_json new update],
     'CourseProgram' => %i[create index destroy edit show new update],
-    'Comment' => %i[create destroy edit show update]
+    'Comment' => %i[create destroy edit show update],
+    'Topic' => %i[create destroy edit show update]
   }
 
   setup do
@@ -44,7 +45,7 @@ class AbilitiesTableTest < ApplicationSystemTestCase
     cell = row.all('th,td')[column_index]
 
     assert_equal 'true', cell.find('div').text
-    assert_equal 'rgb(212, 237, 218)', cell.find('div').native.style('background-color')
+    assert_equal 'rgb(209, 231, 221)', cell.find('div').native.style('background-color')
   end
 
   test 'smoke_test_ability_always_false' do

@@ -66,6 +66,23 @@ class Program < ApplicationRecord
     end
     program_copy
   end
+
+  def create_copy
+    @program = self
+    parameters = ActionController::Parameters.new(@program.attributes).permit(ProgramsController::PERMITTED_PARAMS)
+    @program_copy = Program.build(parameters)
+    @program_copy.code = @program.code+"-copy"
+    @program_copy.name = @program.name+" (Copy)"
+
+    cps = @program.course_programs
+    cps.each do |cp|
+      cp_attributes = ActionController::Parameters.new(cp.attributes).permit(CourseProgramsController::PERMITTED_PARAMS)
+      cp_attributes.delete(:program_id)
+      @program_copy.course_programs << CourseProgram.build(cp_attributes)
+    end
+    @program_copy
+  end
+
 end
 
 class ProgramFactory

@@ -1,6 +1,13 @@
+<meta name="turbo-prefetch" content="false">
 
 <div>
-  <br/><br/>
+  <br/></br>
+  
+<p>
+  <% if can? :edit, @program %><%= link_to 'Edit', edit_program_path(@program) %> | <% end %>
+  <% if can? :copy, @program %><%= link_to 'Copy', copy_program_path(@program) %> <% end %>
+</p>
+
 <p>
   <strong>Name:</strong>
   <%= @program.name %>

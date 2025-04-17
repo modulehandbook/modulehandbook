@@ -47,7 +47,7 @@ module OwnCommentsAssertions
   end
 
   def delete_one_out_of_three_comments
-    visit course_path(@course)
+    visit course_path(@course, tab: :comments)
     the_comment_1 = "This is the first comment, #{context(__method__)}"
     fill_in 'comment_comment', with: the_comment_1
     click_on 'Create Comment'

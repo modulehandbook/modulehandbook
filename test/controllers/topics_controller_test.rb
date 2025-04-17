@@ -6,10 +6,6 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:one)
   end
 
-  test "should get index" do
-    get topics_url
-    assert_response :success
-  end
   # topics need to be created in the context of a program
   test "should get new" do
     @program = programs(:one)
@@ -54,10 +50,12 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy topic" do
+    @program_id = @topic.topic_descriptions.first.implementable.id  
+
     assert_difference("Topic.count", -1) do
       delete topic_url(@topic)
     end
 
-    assert_redirected_to topics_url
+    assert_redirected_to program_url(@program_id, tab: :topics)
   end
 end
