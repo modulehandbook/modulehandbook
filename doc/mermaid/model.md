@@ -44,7 +44,7 @@ classDiagram
     }
   
     Program ~~ Course
-     class CourseProgram{
+    class CourseProgram{
         semester
         required
     }
