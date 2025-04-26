@@ -29,15 +29,16 @@
     field_name: :code, markdown: false,
     editing: editing, form: form, rows: 1 %>
     </div>
- </div>
-  <div class = "col">
-
-    </div>
-
+  </div>
   <div class = "col">
     <%= render 'course_field', course: @course,
                field_name: :teacher, markdown: false,
                editing: editing, form: form, rows: 1 %>
+  </div>
+  <div class = "col">
+    <%= render 'course_field', course: @course, label: "Email",
+        field_name: :responsible_person_email, markdown: false,
+        editing: editing, form: form, rows: 1 %>
   </div>
   </div>
 
@@ -91,7 +92,7 @@
       </div>
     </div>
   </div>
-  <% fields = [[:mission, 3, "no_print_imi"],[:examination, 3, "no_print_imi"],
+  <% fields = [[:specialization, 3, "no_print_imi"],[:mission, 3, "no_print_imi"],[:examination, 3, "no_print_imi"],
                 [:objectives, 7],[:contents, 7],
                [:prerequisites, 3],[:literature, 7],
                [:methods, 7, "no_print_imi"],[:skills_knowledge_understanding, 7, "no_print_imi"],

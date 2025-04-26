@@ -2,7 +2,7 @@
 
 <div class="card">
   <div class="card-header">
-    <b><%= form.label field_name, class: "form-label" %><%= markdown && editing ? " (Markdown)" : "" %>:</b>
+  <b><%= form.label field_name, (local_assigns[:label] || field_name.to_s.humanize), class: "form-label" %><%= markdown && editing ? " (Markdown)" : "" %>:</b>
     <% unless markdown %>
       <% if editing %><%= form.text_area field_name, class: "form-control", rows: rows %>
       <% else %><%=  @course.send(field_name) %><% end %>
