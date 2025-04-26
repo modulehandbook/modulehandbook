@@ -1,0 +1,117 @@
+services:
+
+  module-handbook-postgres-staging:
+    container_name: modulehandbook-database-stag
+    image: postgres:13.4-alpine
+    #    container_name: module-handbook-postgres
+    environment:
+      - APPLICATION=module-handbook
+      - POSTGRES_PASSWORD=modhand
+      - POSTGRES_USER=modhand
+      - POSTGRES_DB=modhand-db-prod
+      # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+      - POSTGRES_HOST_AUTH_METHOD=password
+    volumes:
+      - ./pg_data_mh_stag:/var/lib/postgresql/data
+    restart: always
+
+  module-handbook-postgres-giu:
+    container_name: modulehandbook-database-giu
+    image: postgres:13.4-alpine
+    #    container_name: module-handbook-postgres
+    environment:
+      - APPLICATION=module-handbook
+      - POSTGRES_PASSWORD=modhand
+      - POSTGRES_USER=modhand
+      - POSTGRES_DB=modhand-db-prod
+      # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+      - POSTGRES_HOST_AUTH_METHOD=password
+    volumes:
+      - ./pg_data_mh_giu:/var/lib/postgresql/data
+    restart: always
+
+  module-handbook-exporter:
+    platform: linux/x86_64/v8
+    image: ghcr.io/modulehandbook/exporter:${TAG_MODULE_HANDBOOK_EXPORTER}
+    container_name: modulehandbook-exporter
+    restart: always
+
+  module-handbook-staging:
+    env_file: &env_file
+      - ./deploy/environments/staging.env
+    image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
+    container_name: modulehandbook_stag
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY_STAGING}
+      - RAILS_DB_HOST="module-handbook-postgres-staging"
+      - POSTGRES_USER=modhand
+      - POSTGRES_PASSWORD=modhand
+      - POSTGRES_DB=modhand-db-prod
+      - RAILS_SERVE_STATIC_FILES=true
+      - RAILS_RELATIVE_URL_ROOT=/staging
+      - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
+      - TZ=Europe/Berlin
+      - EDITOR=vi
+      - TAG_MODULE_HANDBOOK=${TAG_MODULE_HANDBOOK}
+
+    depends_on:
+      - module-handbook-postgres-staging
+#     - module-handbook-exporter
+    volumes:
+      - ./container_logs:/module-handbook/log
+      - ./secrets:/module-handbook/secrets
+      - ./nginx:/nginx
+      - ./deploy/environments:/module-handbook/deploy/environments
+    restart: always
+
+  module-handbook-giu:
+    env_file:
+      - ./deploy/environments/giu_production.env
+    image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
+    container_name: modulehandbook_giu
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY_PRODUCTION}
+      - RAILS_DB_HOST="module-handbook-postgres-giu"
+      - POSTGRES_USER=modhand
+      - POSTGRES_PASSWORD=modhand
+      - POSTGRES_DB=modhand-db-prod
+      - RAILS_SERVE_STATIC_FILES=true
+      - RAILS_RELATIVE_URL_ROOT=/giu
+
+      - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
+      - TZ=Europe/Berlin
+      - EDITOR=vi
+      - TAG_MODULE_HANDBOOK=${TAG_MODULE_HANDBOOK}
+
+    depends_on:
+      - module-handbook-postgres-giu
+#     - module-handbook-exporter
+    volumes:
+      - ./entrypoints:/entrypoints
+      - ./container_logs:/module-handbook/log
+      - ./secrets:/module-handbook/secrets
+      - ./nginx:/nginx
+      - ./deploy/environments:/module-handbook/deploy/environments
+    restart: always
+
+  nginx:
+     env_file: *env_file
+     image: nginx:latest
+     container_name: reverse_proxy
+     volumes:
+         - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+         - ./nginx/templates:/etc/nginx/templates
+         - ./container_logs/nginx:/var/log/nginx
+         - ./secrets/nginx:/etc/ssl
+     ports:
+         - "80:80"
+         - "443:443"
+     environment:
+        - NGINX_CERT_DIR=/etc/ssl
+        - NGINX_PORT=80
+        - NGINX_SSL_PORT=443
+        - NGINX_ENTRYPOINT_QUIET_LOGS=1
+     depends_on:
+         - module-handbook-staging
+         - module-handbook-giu
+     restart: always
