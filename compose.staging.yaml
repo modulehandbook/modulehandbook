@@ -77,7 +77,6 @@ services:
       - POSTGRES_DB=modhand-db-prod
       - RAILS_SERVE_STATIC_FILES=true
       - RAILS_RELATIVE_URL_ROOT=/giu
-
       - EXPORTER_BASE_URL=${EXPORTER_BASE_URL:-http://module-handbook-exporter:3030/}
       - TZ=Europe/Berlin
       - EDITOR=vi
@@ -87,7 +86,6 @@ services:
       - module-handbook-postgres-giu
 #     - module-handbook-exporter
     volumes:
-      - ./entrypoints:/entrypoints
       - ./container_logs:/module-handbook/log
       - ./secrets:/module-handbook/secrets
       - ./nginx:/nginx

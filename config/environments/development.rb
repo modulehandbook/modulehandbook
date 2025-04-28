@@ -3,6 +3,11 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  relative_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '')
+  config.relative_url_root = relative_root
+  config.action_controller.relative_url_root = relative_root
+  config.assets.prefix = "#{relative_root}/assets"
+  
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
 

@@ -6,6 +6,11 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  relative_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '')
+  config.relative_url_root = relative_root
+  config.action_controller.relative_url_root = relative_root
+  config.assets.prefix = "#{relative_root}/assets"
+
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
