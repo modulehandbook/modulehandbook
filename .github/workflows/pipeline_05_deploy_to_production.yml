@@ -5,29 +5,36 @@ on:
       secrets:
         rails_master_key:
           required: true
-        DEPLOY_MH_KEY: 
+        DEPLOY_KEY: 
           required: true
-        DEPLOY_MH_USER: 
+        DEPLOY_USER: 
           required: true
-        DEPLOY_MHIMI_KEY: 
+      inputs:
+        host:
           required: true
-        DEPLOY_MHIMI_USER: 
+          type: string
+        known_host:
           required: true
-      
+          type: boolean
+        env_name:
+          required: false
+          type: string
+          default: production
+
 
 jobs:
     deploy-production:
-        name: "Deploy module-handbook"
+        name: "Deploy Production"
         runs-on: ubuntu-latest
         env:
           SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
           SSH_USER: ${{ secrets.DEPLOY_MH_USER }}
-          SSH_HOST: 'module-handbook.f4.htw-berlin.de'
-          KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
-          ENV_NAME: 'imi-production' 
+          SSH_HOST: ${{ inputs.host }}
+          KNOWN_HOST: ${{ inputs.known_host }}
+          ENV_NAME: ${{ inputs.env_name }}
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                 fetch-depth: 0
 

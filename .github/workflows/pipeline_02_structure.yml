@@ -81,24 +81,29 @@ jobs:
     name: "Deploy Production"
     if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
+    inputs:
+      host: 'module-handbook.f4.htw-berlin.de'
+      known_host: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
+      env_name: 'production'
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
-      DEPLOY_MH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
-      DEPLOY_MH_USER: ${{ secrets.DEPLOY_MH_USER }}
-      DEPLOY_MHIMI_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-      DEPLOY_MHIMI_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_MH_KEY }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_MH_USER }}
 
   mh-imi-production-deployment:
     needs: build_and_push
     name: "Deploy Production"
     if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
+    inputs:
+      host: 'mh-imi.f4.htw-berlin.de'
+      known_host: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
+      env_name: 'imi-production'
+    
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
-      DEPLOY_MH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
-      DEPLOY_MH_USER: ${{ secrets.DEPLOY_MH_USER }}
-      DEPLOY_MHIMI_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-      DEPLOY_MHIMI_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
 
   info:
     name: Show Parameter
