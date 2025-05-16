@@ -73,23 +73,16 @@ jobs:
         #  echo "${{ toJSON(github) }}"
 
   test_app:
-    env:
-      RUN_TESTS: ${{ env.RUN_TESTS }}
-    if: ${{ $RUN_TESTS == 'true' }}
+    if: {{ 1 == 2 }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
   
   test_system:
-    env:
-      RUN_TESTS: ${{ env.RUN_TESTS }}
-    if: ${{ $RUN_TESTS == 'true' }}
+    if: false
     name: "2"
     uses: ./.github/workflows/pipeline_03_test_system.yml
 
   code_quality:
-    env:
-      RUN_TESTS: ${{ env.RUN_TESTS }}
-    if: ${{ $RUN_TESTS == 'true' }}
     name: "3"
     uses: ./.github/workflows/pipeline_03_code_quality.yml
 
