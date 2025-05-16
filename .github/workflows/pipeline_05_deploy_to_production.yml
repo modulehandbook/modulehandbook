@@ -18,6 +18,7 @@ on:
           type: string
         rails_environment:
           required: false
+          type: string
           default: production
         env_name:
           required: false
