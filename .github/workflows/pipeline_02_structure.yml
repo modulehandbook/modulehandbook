@@ -57,10 +57,15 @@ jobs:
           echo ref ${{ github.ref }}
           echo ref_name ${{ github.ref_name }}
           echo "----- inputs ------"
+          echo "-- docker build tags"
           echo "tags: ${{ inputs.tags }}"
+          echo "---- this is the git tag that will be deployed: ---"
           echo "deploy_tag: ${{ inputs.deploy_tag }}"
+          echo "---- push docker image to registry?: ---"
           echo "push: ${{ inputs.push }}"
+          echo "---- docker build target: ---"
           echo "target: ${{ inputs.target }}"
+          echo "---- rails environment (is this needed?) ---"
           echo "environment: ${{ inputs.environment }}"
   test_app:
     name: "1"
