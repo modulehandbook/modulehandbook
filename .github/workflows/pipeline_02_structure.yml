@@ -68,7 +68,7 @@ jobs:
           echo "---- rails environment (is this needed?) ---"
           echo "environment: ${{ inputs.environment }}"
           echo "------------------  github ------------------"
-          echo "${{ github }}"
+          echo "${{ toJSON(github) }}"
 
   test_app:
     name: "1"
