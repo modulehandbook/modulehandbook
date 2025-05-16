@@ -67,6 +67,9 @@ jobs:
           echo "target: ${{ inputs.target }}"
           echo "---- rails environment (is this needed?) ---"
           echo "environment: ${{ inputs.environment }}"
+          echo "------------------  github ------------------"
+          echo "${{ github }}"
+
   test_app:
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
@@ -91,7 +94,7 @@ jobs:
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
   
-  trigger-staging-deployment:
+  staging-deployment:
     needs: build_and_push
     name: "Deploy Staging"
     if: ${{ inputs.environment == 'staging' && inputs.push == true }}
@@ -111,6 +114,7 @@ jobs:
       known_host: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
       env_name: 'production'
       deploy_tag: ${{ inputs.deploy_tag }}
+      rails_environment: 'production'
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
       DEPLOY_KEY: ${{ secrets.DEPLOY_MH_KEY }}
@@ -127,6 +131,7 @@ jobs:
       known_host: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
       env_name: 'imi-production'
       deploy_tag: ${{ inputs.deploy_tag }}
+      rails_environment: 'production'
     
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}

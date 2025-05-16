@@ -14,6 +14,7 @@ jobs:
       tags: type=sha
       push: true
       environment: staging
+      deploy_tag: ${{ github.ref_name }}
     secrets:
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
       DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
