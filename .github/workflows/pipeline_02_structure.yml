@@ -85,7 +85,7 @@ jobs:
     name: "Deploy Production"
     if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
-    inputs:
+    with:
       host: 'module-handbook.f4.htw-berlin.de'
       known_host: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
       env_name: 'production'
@@ -101,7 +101,7 @@ jobs:
     name: "Deploy Production"
     if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
-    inputs:
+    with:
       host: 'mh-imi.f4.htw-berlin.de'
       known_host: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
       env_name: 'imi-production'
