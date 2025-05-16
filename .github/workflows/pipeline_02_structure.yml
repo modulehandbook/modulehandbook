@@ -45,7 +45,23 @@ on:
         type: string
         default: staging
 
+  
 jobs:
+  info:
+    name: Show Parameter
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo event_name ${{ github.event_name }}
+          echo ref_type ${{ github.ref_type }}
+          echo ref ${{ github.ref }}
+          echo ref_name ${{ github.ref_name }}
+          echo "----- inputs ------"
+          echo "tags: ${{ inputs.tags }}"
+          echo "deploy_tag: ${{ inputs.deploy_tag }}"
+          echo "push: ${{ inputs.push }}"
+          echo "target: ${{ inputs.target }}"
+          echo "environment: ${{ inputs.environment }}"
   test_app:
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
@@ -111,17 +127,3 @@ jobs:
       rails_master_key: ${{ secrets.rails_master_key }}
       DEPLOY_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
       DEPLOY_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
-
-  info:
-    name: Show Parameter
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo event_name ${{ github.event_name }}
-          echo ref_type ${{ github.ref_type }}
-          echo ref ${{ github.ref }}
-          echo "----- inputs ------"
-          echo "tags: ${{ inputs.tags }}"
-          echo "push: ${{ inputs.push }}"
-          echo "target: ${{ inputs.target }}"
-          echo "environment: ${{ inputs.environment }}"
