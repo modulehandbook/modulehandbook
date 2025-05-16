@@ -17,6 +17,7 @@ on:
 
 jobs:
     deploy-production:
+        name: "Deploy module-handbook"
         runs-on: ubuntu-latest
         env:
           SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
@@ -49,6 +50,7 @@ jobs:
                 ./deploy/production.sh
 
     deploy-imi-production:
+        name: "Deploy mh-imi"
         runs-on: ubuntu-latest
         env:
           SSH_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}

@@ -1,5 +1,5 @@
 # names are short as they are pre-pended on gh actions
-name: PR
+name: PR Pipeline
 on:
     pull_request:
         branches: [ 'main' ]

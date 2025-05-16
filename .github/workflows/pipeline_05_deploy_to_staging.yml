@@ -15,6 +15,7 @@ on:
 jobs:
     deploy-staging:
         runs-on: ubuntu-latest
+        name: "Deploy module-handbook-staging"
         env:
             SSH_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
             SSH_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}

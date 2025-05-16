@@ -1,5 +1,5 @@
 # names are short as they are prepended on gh actions
-name: S
+name: Staging Pipeline
 on:
   push:
     branches: [ main ]
@@ -7,7 +7,7 @@ on:
 
 jobs:
   staging:
-    name: Stag
+    name: S
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main'}}
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:

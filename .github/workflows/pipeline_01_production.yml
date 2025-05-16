@@ -1,12 +1,12 @@
 # names are short as they are pre-pended on gh actions
-name: P
+name: Production Pipeline
 on:
   push:
     tags: [ '*' ]
 
 jobs:
   production:
-     name: Prod
+     name: P
      # this will not work as the ref is ref/tags/0...
      # if: github.ref == 'refs/heads/master'
      uses: ./.github/workflows/pipeline_02_structure.yml

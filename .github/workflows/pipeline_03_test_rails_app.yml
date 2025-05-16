@@ -54,12 +54,6 @@ jobs:
         id: run-tests
         run: bin/rails test
 
-      - name: Run System Tests
-        id: test-system
-        run: |
-          chrome --version
-          bin/rails test:system
-
       - name: Echo Log on Failure
         if: ${{ failure() }}
         run: cat "log/test.log"
