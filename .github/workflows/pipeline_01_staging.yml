@@ -7,11 +7,13 @@ on:
 
 jobs:
   sha:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
     - name: sha
       run: |
-        deploy_tag=$(echo {${{ github.ref_name }}::7})
+        gh_ref={{ github.ref_name }}
+        echo ${gh_ref::7}
+        deploy_tag=$(echo ${gh_ref::7})
         deploy_tag2=$(git rev-parse --short HEAD)
         echo $deploy_tag, $deploy_tag1
   staging:
