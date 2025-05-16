@@ -1,4 +1,4 @@
-name: 'rubocop, reek, brakeman'
+name: 'Code Quality'
 
 on:
   push:
