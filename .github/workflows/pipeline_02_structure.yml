@@ -73,7 +73,7 @@ jobs:
         #  echo "${{ toJSON(github) }}"
 
   test_app:
-    if: {{ 1 == 2 }}
+    if: ${{ 1 == 2 }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
   
