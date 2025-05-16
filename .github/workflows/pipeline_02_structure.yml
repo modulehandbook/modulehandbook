@@ -26,6 +26,10 @@ on:
 
 
     inputs:
+      deploy_tag:
+        required: false
+        type: string
+        default: no_deployment
       tags:
         required: true
         type: string
@@ -85,10 +89,12 @@ jobs:
       host: 'module-handbook.f4.htw-berlin.de'
       known_host: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
       env_name: 'production'
+      deploy_tag: ${{ inputs.deploy_tag }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
       DEPLOY_KEY: ${{ secrets.DEPLOY_MH_KEY }}
       DEPLOY_USER: ${{ secrets.DEPLOY_MH_USER }}
+      
 
   mh-imi-production-deployment:
     needs: build_and_push
@@ -99,6 +105,7 @@ jobs:
       host: 'mh-imi.f4.htw-berlin.de'
       known_host: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
       env_name: 'imi-production'
+      deploy_tag: ${{ inputs.deploy_tag }}
     
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}

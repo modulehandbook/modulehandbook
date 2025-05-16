@@ -20,6 +20,10 @@ on:
           required: false
           type: string
           default: production
+        deploy_tag:
+          required: true
+          type: string
+
 
 
 jobs:
@@ -54,6 +58,6 @@ jobs:
             - name: Execute Deployment
               run: |
                 chmod +x deploy/production.sh
-                ./deploy/production.sh ${{ env.ENV_NAME }}
+                ./deploy/production.sh ${{ env.ENV_NAME }} ${{ inputs.deploy_tag }}
 
    

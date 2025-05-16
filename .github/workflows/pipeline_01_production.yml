@@ -12,6 +12,7 @@ jobs:
      uses: ./.github/workflows/pipeline_02_structure.yml
      with:
        tags: type=ref,event=tag
+       deploy_tag: ${{ github.ref_name }}
        push: true
        environment: production
      secrets:
