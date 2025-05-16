@@ -2,6 +2,7 @@
 name: Production Pipeline
 on:
   push:
+    branches: [ '*' ]
     tags: [ '*' ]
 
 jobs:

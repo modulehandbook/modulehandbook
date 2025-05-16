@@ -8,7 +8,7 @@ on:
 
 jobs:
   branch:
-    name: B
+    name: Branch Pipeline
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:

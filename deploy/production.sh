@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ENV=production
+ENV=$1
 TAG=$(git -c 'versionsort.suffix=-' \
     ls-remote --exit-code --refs --sort='version:refname' --tags origin '*.*.*' \
     | tail --lines=1 \
