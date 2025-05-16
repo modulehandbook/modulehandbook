@@ -2,8 +2,7 @@
 name: Production Pipeline
 on:
   push:
-    branches: [ '*' ]
-    tags: [ 'new_system_test_action' ]
+    tags: [ '*' ]
 
 jobs:
   production:
