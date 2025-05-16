@@ -1,0 +1,67 @@
+
+# called by  pipeline_02_structure.yml
+
+name: "03: Pipeline Step Test App"
+
+on:
+  push:
+    branches:
+      - try_cuprite_driver
+  workflow_call:
+env:
+  RAILS_DB_HOST: localhost
+  POSTGRES_PORT: 5432
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+
+      selenium:
+        image: selenium/standalone-chrome:latest
+        ports:
+          - 4444:4444
+        options: >-
+          --health-cmd="curl -f http://localhost:4444 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3     
+    steps:
+      - name: Check out repo code
+        uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.6
+          #bundler-cache: true
+      - name: Install dependencies
+        run: bin/bundle install
+
+      - name: create test db
+        run: bin/rails db:test:prepare
+
+      - name: Run System Tests
+        id: test-system
+        run: |
+          bin/rails test:system
+
+      - name: Echo Log on Failure
+        if: ${{ failure() }}
+        run: cat "log/test.log"
+

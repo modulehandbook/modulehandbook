@@ -45,10 +45,14 @@ jobs:
   test_app:
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
+  
+  system_test:
+    name: "2"
+    uses: ./.github/workflows/pipeline_03_test_system.yml
 
   build_and_push:
     needs: test_app   #### for now to get faster results on the builds
-    name: "2"
+    name: "3"
     uses: ./.github/workflows/pipeline_04_docker_build_and_push.yml
     with:
       tags: ${{ inputs.tags }}
@@ -60,7 +64,7 @@ jobs:
   
   trigger-staging-deployment:
     needs: build_and_push
-    name: "3"
+    name: "4"
     if: ${{ inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
     secrets: 
@@ -70,7 +74,7 @@ jobs:
   
   trigger-production-deployment:
     needs: build_and_push
-    name: "4"
+    name: "5"
     if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
     secrets:
