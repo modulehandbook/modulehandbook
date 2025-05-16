@@ -9,23 +9,23 @@ jobs:
   staging:
     name: S
     steps:
-    - name: sha
-      run: |
-        deploy_tag=$(echo {${{ github.ref_name }}::7})
-        deploy_tag2=$(git rev-parse --short HEAD)
-        echo $deploy_tag, $deploy_tag1
-    - name: call pipeline
-      # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main'}}
-      uses: ./.github/workflows/pipeline_02_structure.yml
-      with:
-        tags: type=sha
-        push: true
-        environment: staging
-        deploy_tag: ${{ github.ref_name }}
-      secrets:
-        rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
-        DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-        DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
-        RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
-
+      - name: sha
+        run: |
+          deploy_tag=$(echo {${{ github.ref_name }}::7})
+          deploy_tag2=$(git rev-parse --short HEAD)
+          echo $deploy_tag, $deploy_tag1
+      - name: call pipeline
+        # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main'}}
+        uses: ./.github/workflows/pipeline_02_structure.yml
+        with:
+          tags: type=sha
+          push: true
+          environment: staging
+          deploy_tag: ${{ github.ref_name }}
+        secrets:
+          rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
+          DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+          DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+          RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
+  
 
