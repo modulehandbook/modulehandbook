@@ -15,7 +15,7 @@ on:
           type: string
         known_host:
           required: true
-          type: boolean
+          type: string
         env_name:
           required: false
           type: string
