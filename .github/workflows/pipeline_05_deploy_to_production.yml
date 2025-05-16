@@ -16,6 +16,9 @@ on:
         known_host:
           required: true
           type: string
+        rails_environment:
+          required: false
+          default: production
         env_name:
           required: false
           type: string
@@ -31,8 +34,8 @@ jobs:
         name: "Deploy Production"
         runs-on: ubuntu-latest
         env:
-          SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
-          SSH_USER: ${{ secrets.DEPLOY_MH_USER }}
+          SSH_KEY: ${{ secrets.DEPLOY_KEY }}
+          SSH_USER: ${{ secrets.DEPLOY_USER }}
           SSH_HOST: ${{ inputs.host }}
           KNOWN_HOST: ${{ inputs.known_host }}
           ENV_NAME: ${{ inputs.env_name }}
