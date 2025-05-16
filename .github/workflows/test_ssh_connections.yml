@@ -3,7 +3,7 @@ name: Test SSH
 on:
   workflow_dispatch:
   push:
-    branches: 'automatic_deployment'
+    branches: 'main'
 
 jobs:
   mh-imi:
