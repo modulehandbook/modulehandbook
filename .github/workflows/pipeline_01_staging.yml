@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: sha
       run: |
-        gh_ref={{ github.ref_name }}
+        gh_ref=${{ github.ref_name }}
         echo ${gh_ref::7}
         deploy_tag=$(echo ${gh_ref::7})
         deploy_tag2=$(git rev-parse --short HEAD)
