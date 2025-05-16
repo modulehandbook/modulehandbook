@@ -31,8 +31,13 @@ module ModuleHandbook
     # see https://guides.rubyonrails.org/i18n.html
     config.i18n.load_path += Rails.root.glob('config/locales/**/*.{rb,yml}')
 
+    # host authorization
+    # see https://guides.rubyonrails.org/configuring.html#actiondispatch-hostauthorization
+    config.hosts << 'module-handbook.f4.htw-berlin.de'
     config.hosts << 'module-handbook.f4.htw-berlin.de'
     config.hosts << 'module-handbook-staging.f4.htw-berlin.de'
+    config.hosts << 'module-handbook-staging.f4.htw-berlin.de'
+    config.hosts << 'mh-imi.f4.htw-berlin.de'
     config.hosts << 'mh-imi.f4.htw-berlin.de'
 
     #  -  config.log_level = :warn
