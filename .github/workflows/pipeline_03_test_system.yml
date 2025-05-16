@@ -1,7 +1,7 @@
 
 # called by  pipeline_02_structure.yml
 
-name: "03: Pipeline Step Test App"
+name: "03: System Test"
 
 on:
   push:

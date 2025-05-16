@@ -1,5 +1,5 @@
 # names are short as they are prepended on gh actions
-name: Staging
+name: S
 on:
   push:
     branches: [ main ]

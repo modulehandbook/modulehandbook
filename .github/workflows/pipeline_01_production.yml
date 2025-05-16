@@ -1,5 +1,5 @@
 # names are short as they are pre-pended on gh actions
-name: Production
+name: P
 on:
   push:
     tags: [ '*' ]
