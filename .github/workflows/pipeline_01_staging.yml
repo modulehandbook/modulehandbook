@@ -12,7 +12,7 @@ jobs:
     outputs:
       deploy_tag: ${{ steps.sha.outputs.deploy_tag }}
     steps:
-      - sha:
+      - id: sha
         run: |
           sha_long=${{ github.sha }}
           deploy_tag=sha-${sha_long::7}
