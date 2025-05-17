@@ -6,16 +6,6 @@ on:
     tags-ignore: [ '*' ]
 
 jobs:
-  sha:
-    runs-on: ubuntu-latest
-    steps:
-    - name: sha
-      run: |
-        gh_ref=${{ github.ref_name }}
-        echo ${gh_ref::7}
-        deploy_tag=$(echo ${gh_ref::7})
-        deploy_tag2=$(git rev-parse --short HEAD)
-        echo $deploy_tag, $deploy_tag1
   staging:
     name: S
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main'}}

@@ -50,6 +50,13 @@ jobs:
           echo ref ${{ github.ref }}
           echo inputs tags ${{ inputs.tags }}
           echo inputs push ${{ inputs.push }}
+          gh_sha=${{ github.sha }}
+          echo $gh_sha
+          echo ${gh_sha::7}
+          deploy_tag="sha-$(echo ${gh_ref::7})"
+          echo deploy_tag: $deploy_tag
+          deploy_tag2=$(git rev-parse --short HEAD)
+          echo deploy_tag2: $deploy_tag2
       - name: Log in to the Container registry
         if: ${{ github.event_name != 'pull_request' }}
         uses: docker/login-action@v3
