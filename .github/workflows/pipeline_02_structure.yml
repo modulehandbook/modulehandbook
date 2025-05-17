@@ -118,9 +118,9 @@ jobs:
         
   staging-deployment-old:
     if: false
+    # if: ${{ inputs.environment == 'staging' && inputs.push == true }}
     needs: build_and_push
     name: "Deploy Staging Old"
-    if: ${{ inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
     secrets: 
       DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
