@@ -1,7 +1,7 @@
 
 # called by  pipeline_02_structure.yml
 
-name: "03: Pipeline Step Test App"
+name: "03: System Test"
 
 on:
   push:
@@ -15,7 +15,7 @@ env:
   POSTGRES_PASSWORD: postgres
 jobs:
   test:
-    name: Test
+    name: System Test
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -32,11 +32,17 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-      
+
+      selenium:
+        image: selenium/standalone-chrome:latest
+        ports:
+          - 4444:4444
+        options: >-
+          --health-cmd="curl -f http://localhost:4444 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3     
     steps:
-      - name: chrome
-        uses: browser-actions/setup-chrome@latest
-        
       - name: Check out repo code
         uses: actions/checkout@v4
       - name: Set up Ruby
@@ -50,9 +56,10 @@ jobs:
       - name: create test db
         run: bin/rails db:test:prepare
 
-      - name: Run Tests
-        id: run-tests
-        run: bin/rails test
+      - name: Run System Tests
+        id: test-system
+        run: |
+          bin/rails test:system
 
       - name: Echo Log on Failure
         if: ${{ failure() }}
