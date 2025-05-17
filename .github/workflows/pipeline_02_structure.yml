@@ -112,8 +112,8 @@ jobs:
       deploy_tag: ${{ inputs.deploy_tag }}
       rails_environment: 'staging'
     secrets:
-      rails_master_key: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      DEPLOY_KEY: ${{ secrets.DEPLOY_MH_KEY }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
       DEPLOY_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
         
   staging-deployment-old:
