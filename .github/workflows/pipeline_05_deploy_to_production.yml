@@ -32,7 +32,7 @@ on:
 
 jobs:
     deploy-production:
-        name: "Deploy Production"
+        name: "VM Deploy"
         runs-on: ubuntu-latest
         env:
           SSH_KEY: ${{ secrets.DEPLOY_KEY }}

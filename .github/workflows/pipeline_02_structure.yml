@@ -73,17 +73,17 @@ jobs:
           echo "${{ toJSON(github) }}"
 
   test_app:
-    if: false
+    # if: false
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
   
   test_system:
-    if: false
+    # if: false
     name: "2"
     uses: ./.github/workflows/pipeline_03_test_system.yml
 
   code_quality:
-    if: false
+    # if: false
     name: "3"
     uses: ./.github/workflows/pipeline_03_code_quality.yml
 

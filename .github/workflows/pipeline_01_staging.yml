@@ -2,7 +2,7 @@
 name: Staging Pipeline
 on:
   push:
-    branches: [ main, new_system_test_action]
+    branches: [ main ]
     tags-ignore: [ '*' ]
 
 jobs:

@@ -3,9 +3,9 @@
 name: Branch Pipeline
 on:
   workflow_call:
-  # push:
-  #   branches: [ '*' ]
-  #   tags-ignore: [ '*' ]
+  push:
+    branches: [ '*' ]
+    tags-ignore: [ '*' ]
 
 jobs:
   branch-pipeline-start:
