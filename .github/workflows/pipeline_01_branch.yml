@@ -5,6 +5,7 @@ on:
   workflow_call:
   push:
     branches: [ '*' ]
+    branches-ignore: [ 'main' ]
     tags-ignore: [ '*' ]
 
 jobs:
