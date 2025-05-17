@@ -61,7 +61,7 @@ jobs:
 
             - name: Execute Deployment
               run: |
-                chmod +x deploy/production.sh
-                ./deploy/production.sh ${{ env.ENV_NAME }} ${{ inputs.deploy_tag }}
+                chmod +x deploy/deploy.sh
+                ./deploy/deploy.sh ${{ env.ENV_NAME }} ${{ inputs.deploy_tag }}
 
    
