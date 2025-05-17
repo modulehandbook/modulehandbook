@@ -69,8 +69,8 @@ jobs:
           echo "target: ${{ inputs.target }}"
           echo "---- rails environment (is this needed?) ---"
           echo "environment: ${{ inputs.environment }}"
-        #  echo "------------------  github ------------------"
-        #  echo "${{ toJSON(github) }}"
+          echo "------------------  github ------------------"
+          echo "${{ toJSON(github) }}"
 
   test_app:
     if: false
@@ -111,7 +111,7 @@ jobs:
   
   mh-production-deployment:
     needs: build_and_push
-    name: "Deploy Production"
+    name: "Deploy module-handbook"
     if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
     with:
@@ -128,13 +128,13 @@ jobs:
 
   mh-imi-production-deployment:
     needs: build_and_push
-    name: "Deploy Production"
+    name: "Deploy mh-imi"
     if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
     with:
       host: 'mh-imi.f4.htw-berlin.de'
       known_host: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
-      env_name: 'imi-production'
+      env_name: 'imi_production'
       deploy_tag: ${{ inputs.deploy_tag }}
       rails_environment: 'production'
     

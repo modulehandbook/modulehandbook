@@ -40,6 +40,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: print sha
+        run: |
+          git rev-parse --short HEAD
       - name: Workflow Info
         run: |
           echo event_name ${{ github.event_name }}
