@@ -10,7 +10,7 @@ jobs:
   create_deploy_tag:
     runs-on: ubuntu-latest
     outputs:
-      deploy_tag: {{ steps.sha.outputs.deploy_tag }}
+      deploy_tag: ${{ steps.sha.outputs.deploy_tag }}
     steps:
       - sha:
         run: |
