@@ -6,15 +6,24 @@ on:
     tags-ignore: [ '*' ]
 
 jobs:
+  create_deploy_tag:
+    runs-on: ubuntu-latest
+    run: |
+      sha_long=${{ github.sha }}
+      deploy_tag=sha-${sha_long::7}
+      echo deploy_tag: $deploy_tag
+      echo "deploy_tag=$deploy_tag" >> "$GITHUB_OUTPUT" 
+
   staging:
     name: S
+    needs: create_deploy_tag
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main'}}
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:
       tags: type=sha
       push: true
       environment: staging
-      deploy_tag: ${{ github.ref_name }}
+      deploy_tag: ${{ needs.create_deploy_tag.outputs.deploy_tag }}
     secrets:
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
       DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
