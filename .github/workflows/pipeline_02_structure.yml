@@ -98,10 +98,28 @@ jobs:
       environment: ${{ inputs.environment }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
-  
+
   staging-deployment:
     needs: build_and_push
     name: "Deploy Staging"
+    
+    if: ${{ inputs.environment == 'staging' && inputs.push == true }}
+    uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
+    with:
+      host: 'module-handbook-staging.f4.htw-berlin.de'
+      known_host: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
+      env_name: 'staging'
+      deploy_tag: ${{ inputs.deploy_tag }}
+      rails_environment: 'staging'
+    secrets:
+      rails_master_key: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_MH_KEY }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+        
+  staging-deployment-old:
+    if: false
+    needs: build_and_push
+    name: "Deploy Staging Old"
     if: ${{ inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
     secrets: 

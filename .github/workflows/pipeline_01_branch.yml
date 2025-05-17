@@ -2,6 +2,7 @@
 # names are short as they are pre-pended on gh actions
 name: Branch Pipeline
 on:
+  workflow_call:
   # push:
   #   branches: [ '*' ]
   #   tags-ignore: [ '*' ]
