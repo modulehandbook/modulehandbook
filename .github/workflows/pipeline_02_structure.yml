@@ -116,17 +116,6 @@ jobs:
       DEPLOY_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
       DEPLOY_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
         
-  staging-deployment-old:
-    if: false
-    # if: ${{ inputs.environment == 'staging' && inputs.push == true }}
-    needs: build_and_push
-    name: "Deploy Staging Old"
-    uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
-    secrets: 
-      DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
-      RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
-  
   mh-production-deployment:
     needs: build_and_push
     name: "Deploy module-handbook"
