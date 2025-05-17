@@ -2,12 +2,11 @@
 # names are short as they are pre-pended on gh actions
 name: Branch Pipeline
 on:
-  # push:
-  #   branches: [ '*' ]
-  #   tags-ignore: [ '*' ]
+  push:
+    branches: [ '*' ]
+    tags-ignore: [ '*' ]
 
 jobs:
-  if: false
   branch-pipeline-start:
     name: Branch Pipeline
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
