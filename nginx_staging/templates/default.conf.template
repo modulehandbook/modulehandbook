@@ -23,7 +23,7 @@ server {
         #   server              ${NGINX_PROXY};
         # }
         location /staging/ {
-                proxy_pass http://module-handbook-staging:3000/staging/;
+                proxy_pass http://modulehandbook_stag:3000/staging/;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -34,7 +34,7 @@ server {
         }
 
         location /giu/ {
-                proxy_pass http://module-handbook-giu:3000/giu/;
+                proxy_pass http://modulehandbook_giu:3000/giu/;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
