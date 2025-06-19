@@ -116,4 +116,22 @@ jobs:
       - name: Test Connection
         run: |
           ssh $SSH_USER@$SSH_HOST "ls -lart"
+  
+  showtime:
+    runs-on: ubuntu-latest
+    env:
+      SSH_KEY: ${{ secrets.DEPLOY_SHOWTIME_KEY }}
+      SSH_USER: ${{ secrets.DEPLOY_SHOWTIME_USER }}
+      SSH_HOST: 'showtime.f4.htw-berlin.de'
+      KNOWN_HOST: 'showtime.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEC7pNAtG+bnI5K+FENhOng2m9fuD0jWC9okOWiAWOYa'
+    steps:
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.SSH_KEY }}
+      - name: Create Known Hosts File
+        run: |
+            echo $KNOWN_HOST > ~/.ssh/known_hosts
+      - name: Test Connection
+        run: |
+          ssh $SSH_USER@$SSH_HOST "ls -lart"
              
