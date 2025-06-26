@@ -1,32 +1,48 @@
-name: Deploy to Production
+name: Deploy WF
 
 on:
     workflow_call:  # Triggered by the Build and Push workflow
       secrets:
         rails_master_key:
           required: true
-        DEPLOY_MH_KEY: 
+        DEPLOY_KEY: 
           required: true
-        DEPLOY_MH_USER: 
+        DEPLOY_USER: 
           required: true
-        DEPLOY_MHIMI_KEY: 
+      inputs:
+        host:
           required: true
-        DEPLOY_MHIMI_USER: 
+          type: string
+        known_host:
           required: true
-      
+          type: string
+        rails_environment:
+          required: false
+          type: string
+          default: production
+        env_name:
+          required: false
+          type: string
+          default: production
+        deploy_tag:
+          required: true
+          type: string
+
+
 
 jobs:
     deploy-production:
+        name: "VM Deploy"
         runs-on: ubuntu-latest
         env:
-          SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
-          SSH_USER: ${{ secrets.DEPLOY_MH_USER }}
-          SSH_HOST: 'module-handbook.f4.htw-berlin.de'
-          KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
-        
+          SSH_KEY: ${{ secrets.DEPLOY_KEY }}
+          SSH_USER: ${{ secrets.DEPLOY_USER }}
+          SSH_HOST: ${{ inputs.host }}
+          KNOWN_HOST: ${{ inputs.known_host }}
+          ENV_NAME: ${{ inputs.env_name }}
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                 fetch-depth: 0
 
@@ -45,38 +61,7 @@ jobs:
 
             - name: Execute Deployment
               run: |
-                chmod +x deploy/production.sh
-                ./deploy/production.sh
+                chmod +x deploy/deploy.sh
+                ./deploy/deploy.sh ${{ env.ENV_NAME }} ${{ inputs.deploy_tag }}
 
-    deploy-imi-production:
-        runs-on: ubuntu-latest
-        env:
-          SSH_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-          SSH_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
-          SSH_HOST: 'mh-imi.f4.htw-berlin.de'
-          KNOWN_HOST: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
-        
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v3
-              with:
-                fetch-depth: 0
-
-            - name: Set Up SSH
-              uses: webfactory/ssh-agent@v0.9.0
-              with:
-                ssh-private-key: ${{ env.SSH_KEY }}
-            
-            - name: Verify SSH Connection
-              run: |
-                  ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
-              
-            - name: Set Environment Variables
-              run: |
-                echo "RAILS_MASTER_KEY=${{ secrets.rails_master_key }}" >> $GITHUB_ENV
-
-            - name: Execute Deployment
-              run: |
-                chmod +x deploy/imi_production.sh
-                ./deploy/imi_production.sh
-  
+   
