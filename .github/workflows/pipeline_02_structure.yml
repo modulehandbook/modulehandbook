@@ -3,7 +3,7 @@
 # it is called with different paramters from the
 # pl-start-* scripts.
 
-name: "02: Pipeline Structure"
+name: "Pipeline"
 on:
   workflow_call:
     secrets:
@@ -26,6 +26,10 @@ on:
 
 
     inputs:
+      deploy_tag:
+        required: false
+        type: string
+        default: no_deployment
       tags:
         required: true
         type: string
@@ -40,46 +44,11 @@ on:
         required: false
         type: string
         default: staging
+env:
+  RUN_TESTS: 'false'
 
+  
 jobs:
-  test_app:
-    name: "1"
-    uses: ./.github/workflows/pipeline_03_test_rails_app.yml
-
-  build_and_push:
-    needs: test_app   #### for now to get faster results on the builds
-    name: "2"
-    uses: ./.github/workflows/pipeline_04_docker_build_and_push.yml
-    with:
-      tags: ${{ inputs.tags }}
-      push: ${{ inputs.push }}
-      target: ${{ inputs.target }}
-      environment: ${{ inputs.environment }}
-    secrets:
-      rails_master_key: ${{ secrets.rails_master_key }}
-  
-  trigger-staging-deployment:
-    needs: build_and_push
-    name: "3"
-    if: ${{ inputs.environment == 'staging' && inputs.push == true }}
-    uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
-    secrets: 
-      DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
-      RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
-  
-  trigger-production-deployment:
-    needs: build_and_push
-    name: "4"
-    if: ${{ inputs.environment == 'production'  && inputs.push == true }}
-    uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
-    secrets:
-      rails_master_key: ${{ secrets.rails_master_key }}
-      DEPLOY_MH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
-      DEPLOY_MH_USER: ${{ secrets.DEPLOY_MH_USER }}
-      DEPLOY_MHIMI_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-      DEPLOY_MHIMI_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
-
   info:
     name: Show Parameter
     runs-on: ubuntu-latest
@@ -88,8 +57,96 @@ jobs:
           echo event_name ${{ github.event_name }}
           echo ref_type ${{ github.ref_type }}
           echo ref ${{ github.ref }}
+          echo ref_name ${{ github.ref_name }}
           echo "----- inputs ------"
+          echo "-- docker build tags"
           echo "tags: ${{ inputs.tags }}"
+          echo "---- this is the git tag that will be deployed: ---"
+          echo "deploy_tag: ${{ inputs.deploy_tag }}"
+          echo "---- push docker image to registry?: ---"
           echo "push: ${{ inputs.push }}"
+          echo "---- docker build target: ---"
           echo "target: ${{ inputs.target }}"
+          echo "---- rails environment (is this needed?) ---"
           echo "environment: ${{ inputs.environment }}"
+          echo "------------------  github ------------------"
+          echo "${{ toJSON(github) }}"
+
+  test_app:
+    # if: false
+    name: "1"
+    uses: ./.github/workflows/pipeline_03_test_rails_app.yml
+  
+  test_system:
+    # if: false
+    name: "2"
+    uses: ./.github/workflows/pipeline_03_test_system.yml
+
+  code_quality:
+    # if: false
+    name: "3"
+    uses: ./.github/workflows/pipeline_03_code_quality.yml
+
+  build_and_push:
+    needs: [test_app, code_quality] # system tests have too many intermittend failures
+    # needs: [test_app, test_system, code_quality]
+    name: "4"
+    uses: ./.github/workflows/pipeline_04_docker_build_and_push.yml
+    with:
+      tags: ${{ inputs.tags }}
+      push: ${{ inputs.push }}
+      target: ${{ inputs.target }}
+      environment: ${{ inputs.environment }}
+    secrets:
+      rails_master_key: ${{ secrets.rails_master_key }}
+
+  staging-deployment:
+    needs: build_and_push
+    name: "Deploy Staging"
+    
+    if: ${{ inputs.environment == 'staging' && inputs.push == true }}
+    uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
+    with:
+      host: 'module-handbook-staging.f4.htw-berlin.de'
+      known_host: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
+      env_name: 'staging'
+      deploy_tag: ${{ inputs.deploy_tag }}
+      rails_environment: 'staging'
+    secrets:
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+        
+  mh-production-deployment:
+    needs: build_and_push
+    name: "Deploy module-handbook"
+    if: ${{ inputs.environment == 'production'  && inputs.push == true }}
+    uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
+    with:
+      host: 'module-handbook.f4.htw-berlin.de'
+      known_host: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
+      env_name: 'production'
+      deploy_tag: ${{ inputs.deploy_tag }}
+      rails_environment: 'production'
+    secrets:
+      rails_master_key: ${{ secrets.rails_master_key }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_MH_KEY }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_MH_USER }}
+      
+
+  mh-imi-production-deployment:
+    needs: build_and_push
+    name: "Deploy mh-imi"
+    if: ${{ inputs.environment == 'production'  && inputs.push == true }}
+    uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
+    with:
+      host: 'mh-imi.f4.htw-berlin.de'
+      known_host: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
+      env_name: 'imi_production'
+      deploy_tag: ${{ inputs.deploy_tag }}
+      rails_environment: 'production'
+    
+    secrets:
+      rails_master_key: ${{ secrets.rails_master_key }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_MHIMI_USER }}

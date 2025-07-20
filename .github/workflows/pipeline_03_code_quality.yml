@@ -1,10 +1,7 @@
-name: 'rubocop, reek, brakeman'
+name: 'Code Quality'
 
 on:
-  push:
-    branches: '*'
   workflow_call:
-  pull_request:
 
 jobs:
   rubocop:

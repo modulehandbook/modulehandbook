@@ -1,14 +1,16 @@
 # this can be used to start the full pipeline from dev branches
 # names are short as they are pre-pended on gh actions
-name: Branch
+name: Branch Pipeline
 on:
+  workflow_call:
   push:
     branches: [ '*' ]
+    branches-ignore: [ 'main' ]
     tags-ignore: [ '*' ]
 
 jobs:
-  branch:
-    name: Branch
+  branch-pipeline-start:
+    name: Branch Pipeline
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:
