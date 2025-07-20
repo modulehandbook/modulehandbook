@@ -88,7 +88,7 @@ db_drop_test:
 - RAILS_ENV=test bin/rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 
 db_create_test:
 - RAILS_ENV=test bin/rails db:create
-db_start: start-db
+db_start: start_db
 
 
 restart-docker: stop start
@@ -165,11 +165,14 @@ bash_selenium:
 #
 
 
-db_reset_local:
+db_reset_local_docker:
 - docker compose exec module-handbook rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
 - docker compose exec module-handbook rails db:create RAILS_ENV=development
 - docker compose exec module-handbook rails db:migrate RAILS_ENV=development
-
+db_reset_local:
+- rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
+- rails db:create RAILS_ENV=development
+- rails db:migrate RAILS_ENV=development
 db_init_local: db_reset
 - docker compose exec module-handbook rails db:seed
 
@@ -259,6 +262,11 @@ import_dump_production:
 
 import_dump_local:
 - cat $(file) | docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
+
+# this deletes the db and imports a dump from a sql file
+import_dump_sql_local:
+- rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
+- cat $(file) | docker compose exec -T module-handbook-postgres psql  -h localhost -U modhand -d modhand-db-dev
 
 import_dump_imi:
 - echo "disabled - uncomment line below to temporarily enable it"
