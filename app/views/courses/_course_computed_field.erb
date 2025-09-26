@@ -1,0 +1,26 @@
+<div class="card mb-3">
+  <div class="card-header">
+    <b>
+      <%= form.label :computed_field, (label || "Computed Field"), class: "form-label" %>
+      <%= markdown && editing ? " (Markdown)" : "" %>:
+    </b>
+
+    <% unless markdown %>
+      <% if editing && editable %>
+        <%= text_area_tag nil, computed_value, class: "form-control", rows: rows %>
+      <% else %>
+        <%= computed_value %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if markdown %>
+    <div class="card-body">
+      <% if editing && editable %>
+        <%= text_area_tag nil, computed_value, class: "form-control", rows: rows %>
+      <% else %>
+        <div class="form-control"><%= md2html(computed_value) %></div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
