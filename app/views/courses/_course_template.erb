@@ -83,7 +83,7 @@
     <div class="mb-3">
       <%= render "course_computed_field", 
           label: "Student workload", 
-          computed_value: "#{@course.ects * 30} hrs", 
+          computed_value: (@course.ects ? "#{@course.ects * 30} hrs" : ""),
           markdown: false, editing: editing,
           editable: false, form: form, rows: 1 %>
     </div>
