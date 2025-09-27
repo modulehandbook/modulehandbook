@@ -189,7 +189,8 @@ class CoursesController < ApplicationController
                         prerequisites literature methods skills_knowledge_understanding
                         skills_intellectual skills_practical skills_general
                         lectureHrs labHrs tutorialHrs equipment room responsible_person
-                        teacher comment event_name].freeze
+                        teacher comment event_name semester_type department specialization 
+                        responsible_person_mail head_of_department].freeze
   private
 
   # Use callbacks to share common setup or constraints between actions.

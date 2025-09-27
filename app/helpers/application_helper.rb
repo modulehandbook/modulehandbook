@@ -3,7 +3,7 @@
 module ApplicationHelper
   require 'redcarpet'
   @@html_renderer = Redcarpet::Render::HTML.new
-  @@markdown = Redcarpet::Markdown.new(@@html_renderer, {})
+  @@markdown = Redcarpet::Markdown.new(@@html_renderer, {tables: true})
   
   def md2html(md)
     md = @@markdown.render(html_escape(md))

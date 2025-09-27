@@ -32,15 +32,19 @@
   </div>
 
   <div class="col">
-    <%= render 'course_field', course: @course,
-        field_name: :teacher, markdown: false,
-        editing: editing, form: form, rows: 1 %>
+      <div class="mb-3">
+        <%= render 'course_field', course: @course,
+            field_name: :teacher, markdown: false,
+            editing: editing, form: form, rows: 1 %>
+      </div>
   </div>
 
   <div class="col">
-    <%= render 'course_field', course: @course, label: "Email",
-        field_name: :responsible_person_mail, markdown: false,
-        editing: editing, form: form, rows: 1 %>
+      <div class="mb-3">
+        <%= render 'course_field', course: @course, label: "Email",
+            field_name: :responsible_person_mail, markdown: false,
+            editing: editing, form: form, rows: 1 %>
+      </div>
   </div>
 </div>
 
