@@ -154,12 +154,12 @@ GEM
       zeitwerk (~> 2.6)
     erubi (1.13.1)
     execjs (2.10.0)
-    faraday (2.12.2)
+    faraday (2.14.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-net_http (3.4.0)
-      net-http (>= 0.5.0)
+    faraday-net_http (3.4.2)
+      net-http (~> 0.5)
     ffi (1.17.1)
     ffi (1.17.1-aarch64-linux-gnu)
     ffi (1.17.1-aarch64-linux-musl)
@@ -185,7 +185,7 @@ GEM
     jbuilder (2.13.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    json (2.10.2)
+    json (2.18.1)
     language_server-protocol (3.17.0.4)
     launchy (3.1.0)
       addressable (~> 2.8)
@@ -194,7 +194,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    logger (1.6.5)
+    logger (1.7.0)
     loofah (2.24.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -209,8 +209,8 @@ GEM
     mini_portile2 (2.8.9)
     minitest (5.25.4)
     msgpack (1.8.0)
-    net-http (0.6.0)
-      uri
+    net-http (0.9.1)
+      uri (>= 0.11.1)
     net-imap (0.5.8)
       date
       net-protocol
@@ -385,7 +385,7 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    uri (1.0.3)
+    uri (1.1.1)
     useragent (0.16.11)
     warden (1.2.9)
       rack (>= 2.0.9)
