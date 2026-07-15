@@ -16,8 +16,7 @@ gem 'pg'
 
 # Use Puma as the app server
 gem 'puma', '~> 6.4'
-# Use SCSS for stylesheets
-gem 'sass-rails', '>= 6'
+
 # Turbo makes navigating your web application faster. Replaces turbo-links.
 gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

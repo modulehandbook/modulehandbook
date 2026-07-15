@@ -366,5 +366,5 @@ Update to new asset pipeline in rails 8
 - we have scss (sass) files, therefore https://github.com/rails/cssbundling-rails has to be installed:
 ````
 ./bin/bundle add cssbundling-rails
-./bin/bundle add cssbundling-rails
+./bin/rails css:install:sass
 ```

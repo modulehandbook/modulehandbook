@@ -353,16 +353,6 @@ GEM
       rubocop-ast (>= 1.31.1, < 2.0)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     securerandom (0.4.1)
     selenium-webdriver (4.28.0)
       base64 (~> 0.2)
@@ -377,15 +367,7 @@ GEM
     simplecov-html (0.13.1)
     simplecov_json_formatter (0.1.4)
     spring (4.2.1)
-    sprockets (4.2.1)
-      concurrent-ruby (~> 1.0)
-      rack (>= 2.2.4, < 4)
-    sprockets-rails (3.5.2)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      sprockets (>= 3.0.0)
     thor (1.5.0)
-    tilt (2.6.0)
     timeout (0.4.3)
     tsort (0.2.0)
     turbo-rails (2.0.23)
@@ -452,7 +434,6 @@ DEPENDENCIES
   rubocop (~> 1.67)
   rubocop-capybara (~> 2.21)
   rubocop-rails (~> 2.26)
-  sass-rails (>= 6)
   selenium-webdriver
   simplecov
   spring
