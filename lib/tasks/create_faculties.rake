@@ -3,7 +3,7 @@
 namespace :db do
   desc 'Creates GIU Faculties'
   task create_faculties: :environment do
-    if Faculty.count.positive?
+    if Faculty.any?
       puts 'Faculties exist; doing nothing'
     else
       Faculty.create(name: 'Faculty of Engineering', url: 'https://giu-uni.de/en/academic-specializations/engineering/')
