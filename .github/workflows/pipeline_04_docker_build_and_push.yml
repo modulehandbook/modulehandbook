@@ -40,13 +40,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Workflow Info
-        run: |
-          echo event_name ${{ github.event_name }}
-          echo ref_type ${{ github.ref_type }}
-          echo ref ${{ github.ref }}
-          echo inputs tags ${{ inputs.tags }}
-          echo inputs push ${{ inputs.push }}
       - name: Log in to the Container registry
         if: ${{ github.event_name != 'pull_request' }}
         uses: docker/login-action@v3
