@@ -5,20 +5,18 @@
 ### tl;dr:
 
 To Start the MH Rails app locally:
+````
+make init-local
+make start_local
+````
 
-#### Initial setup
-- install docker: https://docs.docker.com/get-docker/
-- run "make local_setup"
+## Dependencies
+- npm
+- docker: https://docs.docker.com/get-docker/
 
-#### start in docker
-- run "make start" to stop all container
-- run "make stop" to start all container
 
-or any of the other targets in the Makefile
+## Refer to the Makefile for further options.
 
-#### start rails on local machine
-
-- run "make local"
 
 ## Debugging a staging or production image
 
@@ -27,24 +25,17 @@ set the TAG_MODULE_HANDBOOK=in target debug
 - make debug
 - make bash
 
+## Wednesday, 15.July 2026 20:39
 
-# Old Stuff, needs review.
-## tl;dr: Quick start with an existing dump
-(other options below)
+Update to new asset pipeline in rails 8:
 
-Preparation:
-- install docker: https://docs.docker.com/get-docker/
-- create a new directory.
-- Put the dump in it with the name module-handbook.pgdump
+- we have scss (sass) files, therefore https://github.com/rails/cssbundling-rails has to be installed:
+````
+./bin/bundle add cssbundling-rails
+./bin/rails css:install:sass
+```
 
-git clone git@github.com:modulehandbook/modulehandbook.git
-
-cd modulehandbook
-make start
-make file=../module-handbook.pgdump init
-
-open http://localhost:3000
-
+https://guides.rubyonrails.org/v8.0/asset_pipeline.html#cssbundling-rails
 ---
 
 This is a [Ruby on Rails](https://rubyonrails.org) application using a
@@ -57,9 +48,7 @@ The Modulehandbook is being designed and developed by a team within the joint pr
 [German International University of Applied Sciences (GIU AS) - Hochschule für Technik und Wirtschaft Berlin University of Applied Sciences - HTW Berlin](https://www.htw-berlin.de/forschung/online-forschungskatalog/projekte/projekt/?eid=2839)
 in order to ease collaborative editing of the study programs for the GIU AS.
 
-## Start Locally
 
-    make start
 
 The [makefile](./makefile) contains useful commands; have a look at it.
 `make start` uses docker-compose up to start up the docker containers
@@ -252,10 +241,6 @@ Everything in the branch release is automatically deployed on the production ser
     rails test
 
 generates test coverage. does not work properly when calling rake/rake test
-
-## added bootstrap with webpack
-yarn add bootstrap jquery popper.js
-
 
 # Deployment to HTW server with Github actions
 

@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.3.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.1'
+gem 'rails', '~> 8.0.5'
 # group :development, :test do
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.4'
@@ -16,8 +16,8 @@ gem 'pg'
 
 # Use Puma as the app server
 gem 'puma', '~> 6.4'
-# Use SCSS for stylesheets
-gem 'sass-rails', '>= 6'
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem 'propshaft'
 # Turbo makes navigating your web application faster. Replaces turbo-links.
 gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -74,8 +74,10 @@ gem 'aasm'
 
 gem 'paper_trail', '~> 16.0'
 
-gem 'bootstrap', '~> 5.3'
-gem 'popper_js', '~> 2.11.8'
+# gem 'bootstrap', '~> 5.3'
+# gem 'popper_js', '~> 2.11.8'
 gem 'redcarpet'
 
 gem 'importmap-rails', '~> 1.1'
+
+gem 'cssbundling-rails', '~> 1.4'

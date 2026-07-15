@@ -71,3 +71,6 @@ secrets/**
 /config/credentials/production.key
 /config/credentials/test.key
 active-environment.env
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
