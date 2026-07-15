@@ -3,6 +3,7 @@
 # see https://github.com/CanCanCommunity/cancancan/blob/develop/docs/README.md
 class Ability
   include CanCan::Ability
+
   def initialize(user)
     aliases
 
