@@ -368,3 +368,5 @@ Update to new asset pipeline in rails 8
 ./bin/bundle add cssbundling-rails
 ./bin/rails css:install:sass
 ```
+
+https://guides.rubyonrails.org/v8.0/asset_pipeline.html#cssbundling-rails
