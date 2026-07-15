@@ -50,7 +50,8 @@ open:
 
 test_local:
 - bin/rails test
-- PARALLEL_WORKERS=1 bin/rails test:system
+- bin/rails test:system
+# this crashes - PARALLEL_WORKERS=1 bin/rails test:system
 
 static_code_checks:
 - rubocop
