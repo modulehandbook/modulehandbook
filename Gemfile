@@ -79,3 +79,5 @@ gem 'popper_js', '~> 2.11.8'
 gem 'redcarpet'
 
 gem 'importmap-rails', '~> 1.1'
+
+gem "cssbundling-rails", "~> 1.4"

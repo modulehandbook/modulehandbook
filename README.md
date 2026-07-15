@@ -359,3 +359,12 @@ This can be done through several IDEs, or even through Notepad++(Edit -> EOL Con
 ![](https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3)
 <iframe width="560" height="315" src='https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3'> </iframe>
 
+## Wednesday, 15.July 2026 20:39
+
+Update to new asset pipeline in rails 8
+
+- we have scss (sass) files, therefore https://github.com/rails/cssbundling-rails has to be installed:
+````
+./bin/bundle add cssbundling-rails
+./bin/bundle add cssbundling-rails
+```
