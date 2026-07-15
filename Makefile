@@ -39,6 +39,7 @@ init-local: start_db
 - bin/rails db:create
 - bin/rails db:migrate
 - bin/rails db:seed
+- npm run build:css
 
 test: start_db test_local static_code_checks
 
@@ -51,6 +52,7 @@ open:
 test_local:
 - bin/rails test
 - bin/rails test:system
+- rubocop
 # this crashes - PARALLEL_WORKERS=1 bin/rails test:system
 
 static_code_checks:
