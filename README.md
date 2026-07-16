@@ -18,6 +18,12 @@ make start_local
 ## Refer to the Makefile for further options.
 
 
+# Overview Documentation in /doc
+
+- doc/asset-pipeline.md
+
+
+
 ## Debugging a staging or production image
 
 set the TAG_MODULE_HANDBOOK=in target debug
@@ -331,4 +337,7 @@ This can be done through several IDEs, or even through Notepad++(Edit -> EOL Con
 
 ![](https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3)
 <iframe width="560" height="315" src='https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3'> </iframe>
+
+
+
 
