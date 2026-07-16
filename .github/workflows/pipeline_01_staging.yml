@@ -8,6 +8,12 @@ on:
 jobs:
   staging:
     runs-on: ubuntu-latest
+    secrets:
+       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
+       DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+       DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+       RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
+
     steps:
       - name: print github environment      
         run: |
@@ -20,8 +26,3 @@ jobs:
           tags: type=sha
           push: true
           environment: staging
-        secrets:
-          rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
-          DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-          DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
-          RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
