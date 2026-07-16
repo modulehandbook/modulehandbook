@@ -27,8 +27,17 @@ refer to `package.json` for the definition of these tasks.
 
 ### Development
 
+- npm build:css has to be run for initial setup
+- if working on the css files, use the watch command to reflect changes immediately:
+
+```
+npm run watch:css
+```
 
 ### Production
+
+
+
 
 ### References
 
