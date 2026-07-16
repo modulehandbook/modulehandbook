@@ -64,6 +64,7 @@ jobs:
         run: |
            echo "---- tags:\n ${{ steps.meta.outputs.tags }}"
            echo "---- labels:\n ${{ steps.meta.outputs.labels }}"
+           echo "---- version:\n ${{ steps.meta.outputs.version }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -74,3 +75,4 @@ jobs:
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          version: ${{ steps.meta.outputs.version }}
