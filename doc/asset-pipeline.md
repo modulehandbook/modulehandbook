@@ -36,7 +36,8 @@ npm run watch:css
 
 ### Production
 
-
+"When you deploy your application to production, the css:build task attaches to the assets:precompile task to ensure that all your package dependencies from package.json have been installed via yarn, and then runs yarn build:css to process your stylesheet entrypoint, as it would in development. This output is then picked up by the asset pipeline, digested, and copied into public/assets, as any other asset pipeline file.
+" (see https://github.com/rails/cssbundling-rails)
 
 
 ### References

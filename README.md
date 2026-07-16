@@ -53,7 +53,7 @@ It uses the Exporter specified in TAG_MODULE_HANDBOOK_EXPORTER set in the makefi
 
 ## Set up Database
 
-**see the [makefile](./makefile) for details and settings**
+**see the [makefile](./Makefile) for details and settings**
 
 You can either create a new database with seed data or import a db dump:
 

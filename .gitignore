@@ -66,7 +66,7 @@ container_logs/**
 secrets/**
 
 # Ignore Credentials
-/config/credentials/development.key
+/config/credentials/*.key
 /config/credentials/staging.key
 /config/credentials/production.key
 /config/credentials/test.key
