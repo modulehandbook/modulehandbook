@@ -73,6 +73,5 @@ jobs:
           target: ${{ inputs.target }}
           build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
           push: ${{ inputs.push }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: "ghcr.io/modulehandbook/modulehandbook:latest"
           labels: ${{ steps.meta.outputs.labels }}
-          version: ${{ steps.meta.outputs.version }}

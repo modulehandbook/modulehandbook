@@ -13,6 +13,7 @@ on:
       
 
 jobs:
+
     deploy-staging:
         runs-on: ubuntu-latest
         env:
@@ -20,7 +21,9 @@ jobs:
             SSH_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
             SSH_HOST: 'module-handbook-staging.f4.htw-berlin.de'
             KNOWN_HOST: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
-        
+            REGISTRY: ghcr.io
+            IMAGE_NAME: ${{ github.repository }}
+       
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v3
@@ -35,13 +38,21 @@ jobs:
             - name: Verify SSH Connection
               run: |
                   ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
-              
+            
+            - name: docker/metadata-action
+              id: meta
+              uses: docker/metadata-action@v5
+              with:
+                images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+                tags: ${{ inputs.tags}}
+
             - name: Set Environment Variables
               run: |
                 echo "RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY_STAGING }}" >> $GITHUB_ENV
 
             - name: Execute Deployment
               run: |
-                chmod +x deploy/staging.sh
+                echo "Deploy version:\n latest to Staging"
+                chmod +x deploy/staging.sh latest
                 ./deploy/staging.sh
   

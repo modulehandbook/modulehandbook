@@ -46,6 +46,19 @@ jobs:
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
 
+  create_tag_info:
+     - name: Extract metadata (tags, labels) for Docker - PR
+     id: meta
+     uses: docker/metadata-action@v5
+     with:
+       images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+       tags: ${{ inputs.tags}}
+   - name: Metadata Results
+     run: |
+        echo "---- tags:\n ${{ steps.meta.outputs.tags }}"
+        echo "---- labels:\n ${{ steps.meta.outputs.labels }}"
+        echo "---- version:\n ${{ steps.meta.outputs.version }}"
+
   build_and_push:
     # needs: test_app   #### for now to get faster results on the builds
     name: "2"
