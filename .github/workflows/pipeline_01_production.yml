@@ -5,8 +5,7 @@ on:
     tags: [ '*' ]
 
 env:
-  VERSION: ${{ github.sha }}
-  TAG:  ${{ github.tag }}
+  TAG:  ${{ github.ref_name }}
 
 jobs:
   defineversion:
