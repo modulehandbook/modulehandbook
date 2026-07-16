@@ -67,9 +67,6 @@ secrets/**
 
 # Ignore Credentials
 /config/credentials/*.key
-/config/credentials/staging.key
-/config/credentials/production.key
-/config/credentials/test.key
 active-environment.env
 
 /app/assets/builds/*
