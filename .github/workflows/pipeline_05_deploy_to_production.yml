@@ -50,7 +50,7 @@ jobs:
             - name: Execute Deployment
               run: |
                 chmod +x deploy/production.sh
-                ./deploy/production.sh
+                ./deploy/production.sh ${{ inputs.version }}
 
     deploy-imi-production:
         runs-on: ubuntu-latest
@@ -82,5 +82,5 @@ jobs:
             - name: Execute Deployment
               run: |
                 chmod +x deploy/imi_production.sh
-                ./deploy/imi_production.sh
+                ./deploy/imi_production.sh ${{ inputs.version }}
   
