@@ -58,7 +58,7 @@ jobs:
           SSH_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
           SSH_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
           SSH_HOST: 'mh-imi.f4.htw-berlin.de'
-          KNOWN_HOST: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
+          KNOWN_HOST: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml
         
         steps:
             - name: Checkout Repository
