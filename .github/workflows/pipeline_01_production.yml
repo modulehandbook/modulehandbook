@@ -14,6 +14,7 @@ jobs:
        tags: type=ref,event=tag
        push: true
        environment: production
+       version: ""
      secrets:
        rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
        DEPLOY_MH_KEY: ${{ secrets.DEPLOY_MH_KEY }}

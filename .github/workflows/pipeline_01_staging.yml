@@ -7,11 +7,12 @@ on:
 
 jobs:
   staging:
+    runs-on: ubuntu-latest
     steps:
       - name: print github environment      
         run: |
           echo "---- github:\n${{ github }}"
-      
+
       - name: Stag
         # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main'}}
         uses: ./.github/workflows/pipeline_02_structure.yml
