@@ -11,7 +11,7 @@ make start_local
 ````
 
 ## Dependencies
-- npm
+- node, yarn 
 - docker: https://docs.docker.com/get-docker/
 
 

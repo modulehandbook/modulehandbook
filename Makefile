@@ -406,3 +406,10 @@ shell-in-running-container:
 
 compose: 
 - export RAILS_MASTER_KEY=$(cat config/credentials/production.key); docker compose  -f compose.yaml up
+
+
+#
+#
+# 
+# 
+
