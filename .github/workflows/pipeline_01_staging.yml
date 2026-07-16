@@ -19,7 +19,7 @@ jobs:
         run: |
           echo "---- github:\n${{ toJSON(github) }}"
       - id: defineversion
-        run echo "version=sha-${SHA:0:7}" >> "$GITHUB_OUTPUT"
+        run: echo "version=sha-${SHA:0:7}" >> "$GITHUB_OUTPUT"
 
   staging:
     needs: version
