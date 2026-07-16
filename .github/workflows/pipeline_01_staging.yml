@@ -2,7 +2,7 @@
 name: Staging
 on:
   push:
-    branches: [ main ]
+    branches: [ main new_asset_pipeline ]
     tags-ignore: [ '*' ]
 
 env:
