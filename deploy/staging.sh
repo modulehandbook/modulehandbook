@@ -9,4 +9,4 @@ fi
 
 echo "deploy $TAG to staging"
 
-deploy/deploy.sh $ENV $TAG
+deploy/deploy.sh $ENV $TAG 

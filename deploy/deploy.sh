@@ -1,6 +1,9 @@
 #!/bin/bash
 ENV=$1
 TAG=$2
+# HOST=$3
+
+echo "---- deploy $TAG to $HOST"
 
 RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 

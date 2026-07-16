@@ -58,5 +58,5 @@ jobs:
               run: |
                 echo "Deploy version:\n ${{ inputs.version }} to Staging"
                 chmod +x deploy/staging.sh
-                ./deploy/staging.sh ${{ inputs.version }}
+                ./deploy/staging.sh ${{ inputs.version }} 
   
