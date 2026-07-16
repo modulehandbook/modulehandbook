@@ -13,6 +13,10 @@ on:
           required: true
         DEPLOY_MHIMI_USER: 
           required: true
+      inputs:     
+        version:
+          required: true
+          type: string
       
 
 jobs:

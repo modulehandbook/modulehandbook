@@ -22,6 +22,9 @@ on:
         required: false
         type: string
         default: staging
+      version:
+        required: true
+        type: string
 
 env:
   REGISTRY: ghcr.io
@@ -73,5 +76,5 @@ jobs:
           target: ${{ inputs.target }}
           build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
           push: ${{ inputs.push }}
-          tags: "ghcr.io/modulehandbook/modulehandbook:latest"
+          tags: "ghcr.io/modulehandbook/modulehandbook:${{ inputs.version }}"
           labels: ${{ steps.meta.outputs.labels }}

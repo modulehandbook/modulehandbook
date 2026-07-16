@@ -40,6 +40,10 @@ on:
         required: false
         type: string
         default: staging
+      version:
+        required: false
+        type: string
+        default: latest
 
 jobs:
   test_app:
@@ -55,6 +59,7 @@ jobs:
       push: ${{ inputs.push }}
       target: ${{ inputs.target }}
       environment: ${{ inputs.environment }}
+      version: ${{ inputs.version }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
   

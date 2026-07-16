@@ -9,6 +9,10 @@ on:
           required: true
         RAILS_MASTER_KEY_STAGING:
           required: true
+      inputs:     
+        version:
+          required: true
+          type: string
 
       
 
@@ -52,7 +56,7 @@ jobs:
 
             - name: Execute Deployment
               run: |
-                echo "Deploy version:\n latest to Staging"
+                echo "Deploy version:\n ${{ inputs.version }} to Staging"
                 chmod +x deploy/staging.sh
-                ./deploy/staging.sh latest
+                ./deploy/staging.sh ${{ inputs.version }}
   
