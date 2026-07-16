@@ -19,8 +19,16 @@
 @use "media_print";
 @use "markdown";
 
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
+
+@use 'bootstrap/scss/bootstrap';
+@use 'bootstrap-icons/font/bootstrap-icons';
+
+@use "courses";
+@use "course_programs";
+@use "course_programs";
+@use "programs";
+@use "scaffolds";
+@use "welcome";
 
 
  .navbar-light .navbar-nav .nav-link:hover,
