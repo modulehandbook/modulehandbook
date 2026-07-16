@@ -53,6 +53,6 @@ jobs:
             - name: Execute Deployment
               run: |
                 echo "Deploy version:\n latest to Staging"
-                chmod +x deploy/staging.sh latest
-                ./deploy/staging.sh
+                chmod +x deploy/staging.sh
+                ./deploy/staging.sh latest
   
