@@ -45,8 +45,8 @@ COPY . ./
 
 FROM modhand-prod-no-assets AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
-# ARG RAILS_MASTER_KEY
-# ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
+ARG RAILS_MASTER_KEY
+ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
 RUN set -ex  \
   && yarn install \
