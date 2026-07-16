@@ -18,5 +18,7 @@ jobs:
       
     secrets:
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
-
-
+    info:
+      run: |
+        echo "---- github:\n ${{ github }}"
+    
