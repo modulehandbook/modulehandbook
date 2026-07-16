@@ -22,7 +22,7 @@ rails build:css
 # or directly
 npm build:css
 ```
-
+    
 refer to `package.json` for the definition of these tasks.
 
 ### Development
