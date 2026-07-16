@@ -11,7 +11,7 @@ set -x
 echo "-----------"
 
 scp Makefile.prod $HOST:~/Makefile
-scp compose.yaml $HOST:~
+scp docker-compose.yaml $HOST:~
 scp -r nginx $HOST:~
 scp deploy/environments/$ENV.env $HOST:active-environment.env
 

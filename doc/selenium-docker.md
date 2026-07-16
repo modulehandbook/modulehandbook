@@ -35,7 +35,7 @@ does not work.
 ## docker/docker : everything in docker
 
 ## switch driver
-  - set image in compose.override.yaml
+  - set image in docker-compose.override.yaml
   - activate appropiate DRIVER in test/application_system_test_case.rb
 
 ## chromium

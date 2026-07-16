@@ -76,15 +76,15 @@ stop-docker:
 - docker compose down
 
 start-test-environment:
-- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d --remove-orphans
+- docker compose -f docker-compose.yaml -f docker-compose.override.yaml -f docker-compose.test.yaml  up -d --remove-orphans
 stop-test-environment:
-- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down
+- docker compose -f docker-compose.yaml -f docker-compose.override.yaml -f docker-compose.test.yaml down
 
 restart-selenium: stop-selenium start-selenium
 start-selenium:
-- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d selenium-standalone
+- docker compose -f docker-compose.yaml -f docker-compose.override.yaml -f docker-compose.test.yaml  up -d selenium-standalone
 stop-selenium:
-- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down selenium-standalone
+- docker compose -f docker-compose.yaml -f docker-compose.override.yaml -f docker-compose.test.yaml down selenium-standalone
 
 
 db_drop_test:
@@ -141,13 +141,13 @@ test-one:
 # (will need appropriate RAILS_MASTER_KEY and TAG_MODULE_HANDBOOK set in environment!)
 
 start-docker-prod:
-- export RAILS_MASTER_KEY=$(cat secrets/config/credentials/production.key) && docker compose -f compose.yaml up -d # ommits override
+- export RAILS_MASTER_KEY=$(cat secrets/config/credentials/production.key) && docker compose -f docker-compose.yaml up -d # ommits override
 
 start-docker-debug:
-- docker compose -f compose.yaml -f compose.override.yaml  -f compose.debug.yaml  up
+- docker compose -f docker-compose.yaml -f docker-compose.override.yaml  -f docker-compose.debug.yaml  up
 
 start-docker-prod-debug:
-- export RAILS_MASTER_KEY=$(cat secrets/config/credentials/production.key) && docker compose -f compose.yaml -f compose.debug.yaml up module-handbook
+- export RAILS_MASTER_KEY=$(cat secrets/config/credentials/production.key) && docker compose -f docker-compose.yaml -f docker-compose.debug.yaml up module-handbook
 
 ### Access Docker Container
 
@@ -405,7 +405,7 @@ shell-in-running-container:
 
 
 compose: 
-- export RAILS_MASTER_KEY=$(cat config/credentials/production.key); docker compose  -f compose.yaml up
+- export RAILS_MASTER_KEY=$(cat config/credentials/production.key); docker compose  -f docker-compose.yaml up
 
 
 #
