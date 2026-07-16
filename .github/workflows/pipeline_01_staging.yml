@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: print github environment      
         run: |
-          echo "---- github:\n${{ github }}"
+          echo "---- github:\n${{ toJSON(github) }}"
 
 
   staging:
