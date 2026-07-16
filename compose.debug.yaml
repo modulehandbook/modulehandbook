@@ -1,5 +1,12 @@
 services:
-  module-handbook:
+  module-handbook:    
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: modhand-prod
+      args:
+         RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+    image: mh-local-build
     entrypoint: entrypoints/keep-open.sh
     env_file: "secrets/env/staging.env"
 
@@ -8,3 +15,7 @@ services:
   #    target: "modhand-prod"
   #    args:
   #      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+
+
+#     image: mh-prod
+# >docker build . --target modhand-prod -t mh-prod

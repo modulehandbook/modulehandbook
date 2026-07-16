@@ -10,8 +10,10 @@
 services:
   nginx:
     profiles: [ dontstart ]
+  
   module-handbook-exporter:
     profiles: [ dontstart ]
+  
   module-handbook-postgres:
     platform: linux/arm64/v8
     container_name: modulehandbook-postgres
@@ -19,6 +21,7 @@ services:
       - POSTGRES_DB=modhand-db-dev
     ports:
      - "5432:5432" # don't do this on production!
+  
   module-handbook:
     platform: linux/amd64
     build:
