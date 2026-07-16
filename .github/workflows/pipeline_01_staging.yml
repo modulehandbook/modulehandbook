@@ -22,7 +22,7 @@ jobs:
         run: echo "version=sha-${SHA:0:7}" >> "$GITHUB_OUTPUT"
 
   staging:
-    needs: version
+    needs: defineversion
     name: Stag
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main'}}
     uses: ./.github/workflows/pipeline_02_structure.yml
