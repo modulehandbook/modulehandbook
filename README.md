@@ -25,18 +25,6 @@ set the TAG_MODULE_HANDBOOK=in target debug
 - make debug
 - make bash
 
-## Wednesday, 15.July 2026 20:39
-
-Update to new asset pipeline in rails 8:
-
-- we have scss (sass) files, therefore https://github.com/rails/cssbundling-rails has to be installed:
-````
-./bin/bundle add cssbundling-rails
-./bin/rails css:install:sass
-```
-
-https://guides.rubyonrails.org/v8.0/asset_pipeline.html#cssbundling-rails
----
 
 This is a [Ruby on Rails](https://rubyonrails.org) application using a
 [Postgres Database](https://www.postgresql.org) and Devise for Authentication
