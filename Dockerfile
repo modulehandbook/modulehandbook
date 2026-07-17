@@ -39,6 +39,9 @@ FROM modhand-base AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
 
 COPY . ./
+RUN set -ex  \
+  && yarn install \
+  && rails assets:precompile
 
 # -------------------------------------------------------------------
 # Development & Test
