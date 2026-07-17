@@ -386,6 +386,9 @@ gemdir:
 build:
 - docker build . -f Dockerfile.alpine -t mh-rails80
 
+build_production:
+- docker build . -t modhand-prod --target modhand-prod
+
 RAILS_MASTER_KEY=$(shell cat config/credentials/production.key)
 DOCKER_ENV=-p 3004:3000 -e RAILS_MASTER_KEY='$(RAILS_MASTER_KEY)' -e POSTGRES_DB='mhdocker' -e RAILS_DB_HOST='host.docker.internal'
 

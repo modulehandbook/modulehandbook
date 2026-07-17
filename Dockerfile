@@ -37,6 +37,8 @@ ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
 FROM modhand-base AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
+ARG RAILS_MASTER_KEY
+ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
 COPY . ./
 RUN set -ex  \

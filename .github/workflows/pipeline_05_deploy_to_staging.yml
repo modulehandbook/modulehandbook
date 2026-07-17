@@ -58,5 +58,6 @@ jobs:
               run: |
                 echo "Deploy version:\n ${{ inputs.version }} to Staging"
                 chmod +x deploy/staging.sh
+                # export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY_STAGING }}
                 ./deploy/staging.sh ${{ inputs.version }} 
   
