@@ -78,4 +78,4 @@ secrets/**
 /config/credentials/*.key
 /config/credentials/development.yml.enc
 active-environment.env
-
+.env
