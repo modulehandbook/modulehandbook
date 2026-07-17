@@ -11,11 +11,17 @@ make start_local
 ````
 
 ## Dependencies
-- npm
+- node, yarn 
 - docker: https://docs.docker.com/get-docker/
 
 
 ## Refer to the Makefile for further options.
+
+
+# Overview Documentation in /doc
+
+- doc/asset-pipeline.md
+
 
 
 ## Debugging a staging or production image
@@ -25,18 +31,6 @@ set the TAG_MODULE_HANDBOOK=in target debug
 - make debug
 - make bash
 
-## Wednesday, 15.July 2026 20:39
-
-Update to new asset pipeline in rails 8:
-
-- we have scss (sass) files, therefore https://github.com/rails/cssbundling-rails has to be installed:
-````
-./bin/bundle add cssbundling-rails
-./bin/rails css:install:sass
-```
-
-https://guides.rubyonrails.org/v8.0/asset_pipeline.html#cssbundling-rails
----
 
 This is a [Ruby on Rails](https://rubyonrails.org) application using a
 [Postgres Database](https://www.postgresql.org) and Devise for Authentication
@@ -59,7 +53,7 @@ It uses the Exporter specified in TAG_MODULE_HANDBOOK_EXPORTER set in the makefi
 
 ## Set up Database
 
-**see the [makefile](./makefile) for details and settings**
+**see the [makefile](./Makefile) for details and settings**
 
 You can either create a new database with seed data or import a db dump:
 
@@ -343,4 +337,7 @@ This can be done through several IDEs, or even through Notepad++(Edit -> EOL Con
 
 ![](https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3)
 <iframe width="560" height="315" src='https://dbdiagram.io/embed/639efdd399cb1f3b55a213d3'> </iframe>
+
+
+
 

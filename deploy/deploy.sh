@@ -1,6 +1,9 @@
 #!/bin/bash
 ENV=$1
 TAG=$2
+# HOST=$3
+
+echo "---- deploy $TAG to $HOST"
 
 RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
@@ -30,5 +33,5 @@ ssh $HOST "echo TAG_MODULE_HANDBOOK=$TAG >> .env"
 
 #echo RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key) | ssh $HOST "cat >> .env"
 
-ssh $HOST "sudo docker compose down"
-ssh $HOST "sudo docker compose up -d"
+ssh $HOST "docker compose down"
+ssh $HOST "docker compose up -d"

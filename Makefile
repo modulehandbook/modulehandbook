@@ -39,7 +39,7 @@ init-local: start_db
 - bin/rails db:create
 - bin/rails db:migrate
 - bin/rails db:seed
-- npm run build:css
+- yarn build:css
 
 test: start_db test_local static_code_checks
 
@@ -139,14 +139,15 @@ test-one:
 
 ### Run Rails with Production Configuration
 # (will need appropriate RAILS_MASTER_KEY and TAG_MODULE_HANDBOOK set in environment!)
+
 start-docker-prod:
-- docker compose -f compose.yaml up -d # ommits override
+- export RAILS_MASTER_KEY=$(cat secrets/config/credentials/production.key) && docker compose -f compose.yaml up -d # ommits override
 
 start-docker-debug:
 - docker compose -f compose.yaml -f compose.override.yaml  -f compose.debug.yaml  up
 
-debug-mh:
-- TAG_MODULE_HANDBOOK=sha-2f14dca docker compose -f compose.yaml -f compose.debug.yaml up module-handbook
+start-docker-prod-debug:
+- export RAILS_MASTER_KEY=$(cat secrets/config/credentials/production.key) && docker compose -f compose.yaml -f compose.debug.yaml up module-handbook
 
 ### Access Docker Container
 
@@ -328,6 +329,7 @@ rails_c_db_container:
 
 
 
+# DOCKER CLEANUP
 
 # https://depot.dev/blog/docker-clear-cache
 docker-df:
@@ -336,11 +338,8 @@ docker-cleanup:
 - docker image prune -a -f
 - docker buildx prune -f
 
-docker-rm:
-- docker rm $(docker ps -qa)
-- docker rmi $(docker images -qa)
-
-
+docker-remove-all:
+- ./docker-cleanup.sh
 
 
 ## Tags
@@ -407,3 +406,10 @@ shell-in-running-container:
 
 compose: 
 - export RAILS_MASTER_KEY=$(cat config/credentials/production.key); docker compose  -f compose.yaml up
+
+
+#
+#
+# 
+# 
+

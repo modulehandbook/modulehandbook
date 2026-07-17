@@ -1,8 +1,12 @@
 #!/bin/bash
 
 ENV=staging
-TAG=sha-$(git rev-parse --short origin/main)
 
-deploy/deploy.sh $ENV $TAG
+TAG=$1
+if [ $TAG == ""]; then
+    TAG=sha-$(git rev-parse --short origin/main)
+fi
 
+echo "deploy $TAG to staging"
 
+deploy/deploy.sh $ENV $TAG 

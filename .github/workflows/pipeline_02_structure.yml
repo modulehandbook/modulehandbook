@@ -40,6 +40,10 @@ on:
         required: false
         type: string
         default: staging
+      version:
+        required: false
+        type: string
+        default: latest
 
 jobs:
   test_app:
@@ -55,6 +59,7 @@ jobs:
       push: ${{ inputs.push }}
       target: ${{ inputs.target }}
       environment: ${{ inputs.environment }}
+      version: ${{ inputs.version }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
   
@@ -63,6 +68,8 @@ jobs:
     name: "3"
     if: ${{ inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
+    with:
+      version: ${{ inputs.version }}
     secrets: 
       DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
       DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
@@ -71,8 +78,10 @@ jobs:
   trigger-production-deployment:
     needs: build_and_push
     name: "4"
-    if: ${{ inputs.environment == 'production'  && inputs.push == true }}
-    uses: ./.github/workflows/pipeline_05_deploy_to_production.yml 
+    if: ${{ false && inputs.environment == 'production'  && inputs.push == true }}
+    uses: ./.github/workflows/pipeline_05_deploy_to_production.yml
+    with:
+      version: ${{ inputs.version }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
       DEPLOY_MH_KEY: ${{ secrets.DEPLOY_MH_KEY }}

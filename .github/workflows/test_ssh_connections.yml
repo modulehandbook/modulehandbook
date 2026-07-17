@@ -69,7 +69,7 @@ jobs:
       SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
       SSH_USER: ${{ secrets.DEPLOY_MH_USER }}
       SSH_HOST: 'module-handbook.f4.htw-berlin.de'
-      KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
+      KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODwf4O4tjTDXA6sOiVh9s4sCDqvPEhFdu7mj6TdtaF8'
     steps:
       - uses: webfactory/ssh-agent@v0.9.0
         with:

@@ -54,8 +54,6 @@ pg_transfer/**
 
 **/*.pgdump
 
-
-
 container_logs/**
 .idea/**
 
@@ -66,11 +64,9 @@ container_logs/**
 secrets/**
 
 # Ignore Credentials
-/config/credentials/development.key
-/config/credentials/staging.key
-/config/credentials/production.key
-/config/credentials/test.key
+/config/credentials/*.key
 active-environment.env
 
+# ignore asset pipeline build output
 /app/assets/builds/*
 !/app/assets/builds/.keep

@@ -4,8 +4,24 @@ on:
   push:
     tags: [ '*' ]
 
+
+env:
+  TAG:  ${{ github.ref_name }}
+
 jobs:
+  defineversion:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.defineversion.outputs.version}}
+    steps:
+      - name: print github environment      
+        run: |
+          echo "---- github:\n${{ toJSON(github) }}"
+      - id: defineversion
+        run: echo "version=${TAG}" >> "$GITHUB_OUTPUT"
+
   production:
+     needs: defineversion
      name: Prod
      # this will not work as the ref is ref/tags/0...
      # if: github.ref == 'refs/heads/master'
@@ -14,6 +30,7 @@ jobs:
        tags: type=ref,event=tag
        push: true
        environment: production
+       version: ${{ needs.defineversion.outputs.version }}
      secrets:
        rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
        DEPLOY_MH_KEY: ${{ secrets.DEPLOY_MH_KEY }}

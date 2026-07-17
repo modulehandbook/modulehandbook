@@ -4,16 +4,16 @@ FROM docker.io/library/ruby:$RUBY_VERSION-alpine AS  modhand-base
 ENV MODHAND_IMAGE=modhand-base
 ENV BUNDLER_VERSION=2.3.24
 
-ENV RAILS_ENV production
-ENV NODE_ENV production
+ENV RAILS_ENV=production
+ENV NODE_ENV=production
 
 WORKDIR /module-handbook
 COPY Gemfile Gemfile.lock ./
 
-ENV GENERAL_DEPS bash gcompat libpq tzdata nodejs
-ENV BUILD_DEPS git linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev
-ENV NOKOGIRI_SYSTEM_LIBS build-base libxml2-dev libxslt-dev
-ENV AO --no-install-recommends --no-cache
+ENV GENERAL_DEPS="bash gcompat libpq tzdata nodejs yarn"
+ENV BUILD_DEPS=g"it linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev"
+ENV NOKOGIRI_SYSTEM_LIBS="build-base libxml2-dev libxslt-dev"
+ENV AO="--no-install-recommends --no-cache"
 # general dependencies
 RUN apk update \
   && set -ex \
@@ -46,9 +46,10 @@ COPY . ./
 FROM modhand-prod-no-assets AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
 ARG RAILS_MASTER_KEY
-ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
+ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
 RUN set -ex  \
+  && yarn install \
   && rails assets:precompile
 
 # -------------------------------------------------------------------
