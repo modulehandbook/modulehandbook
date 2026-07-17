@@ -38,7 +38,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'reek', '~> 6.3'
-  gem 'rubocop', '~> 1.67'
+  gem 'rubocop', '~> 1.82'
   gem 'rubocop-capybara', '~> 2.21'
   gem 'rubocop-rails', '~> 2.26'
 end
@@ -66,7 +66,7 @@ group :test do
   gem 'simplecov', require: false
 end
 gem 'cancancan'
-gem 'devise'
+gem 'devise', '~> 5.0'
 gem 'faraday'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
