@@ -70,6 +70,11 @@ container_logs/**
 secrets/**
 
 # Ignore Credentials
+# these are environment-specific credentials! 
+# use bin/rails credentials:edit -e production
+# to edit
+# RAILS_ENV=development EDITOR="code --wait" rails credentials:edit -e development
+
 /config/credentials/*.key
 /config/credentials/development.yml.enc
 active-environment.env
