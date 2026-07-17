@@ -6,60 +6,69 @@ sshid=
 # use this to link a local exporter instance for development:
 # export EXPORTER_BASE_URL=http://host.docker.internal:3030/
 
-# cleanup:
+# cleanup of target naming
+# the make targets can target (;-/) either the host machine (e.g. your MacOS Laptop)
+# or instances running in docker.
 
-# environments:
-# local
-# docker
-# test
-# staging
-# production
+# for local development, you can use the following stacks:
 
-# tasks:
+# rails on host - db in container
+# rails in container - db in container
 
-# build / initialization
-# start
-# stop
-# test
+# additionally, you may want to replicate production or staging 
+# environments for specific testing.
+# the main reason for this would usually be testing the 
+# docker production image, thus running it locally.
+
+# note that there is no current configuration for a local dev database, 
+# thus all db-releated targets are only available for the container!
+
+# nginx and exporter are currently disabled in compose.override.yaml
+
+
+# here are some defaults
+start: start_host
+test: test_host
+stop: stop_container
 
 #
-#
-#    ---- LOCAL ----
+#    ---- HOST ----
 #
 #
 
 # start rails locally - default target 
 # Runs Rails on local Machine (with postgres in docker container)
-start_local: start_db open 
+
+start_host: start_db_container
 - bin/rails s
 
+open_in_browser:
+- open http://localhost:3000
+
 ### Run this once after cloning the repo
-init-local: start_db
+init: start_db_container
 - bin/bundle install
+- yarn build:css
 - bin/rails db:create
 - bin/rails db:migrate
 - bin/rails db:seed
-- yarn build:css
 
-test: start_db test_local static_code_checks
 
-start_db:
+test: start_db_container test_host static_code_checks
+
+start_db_container:
 - docker compose up -d module-handbook-postgres
 
-open:
-- open http://localhost:3000
+test_all_host: test_host static_code_checks_host
 
-test_local:
-- bin/rails test
+test_host:
+- PARALLEL_WORKERS=1 bin/rails test
 - bin/rails test:system
-- rubocop
-# this crashes - PARALLEL_WORKERS=1 bin/rails test:system
 
-static_code_checks:
+static_code_checks_host:
 - rubocop
 - reek
 - brakeman --no-pager
-
 
 #
 #
@@ -69,44 +78,54 @@ static_code_checks:
 
 ### Running Rails in Docker 
 
-start-docker:
+start_container:
 - docker compose up -d
 
-stop-docker: 
+stop_container: 
 - docker compose down
 
-start-test-environment:
-- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d --remove-orphans
-stop-test-environment:
-- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down
+restart_container: stop_container start_container
 
-restart-selenium: stop-selenium start-selenium
-start-selenium:
-- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d selenium-standalone
-stop-selenium:
-- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down selenium-standalone
+rebuild_container:
+- docker compose up -d --build --force-recreate module-handbook
 
+rebuild2_container:
+- docker compose build module-handbook
+- docker compose up --no-deps -d module-handbook
+
+#
+#
+#    ---- CLEANUP ----
+#
+#
+
+clean_logs_host: 
+- rm logs/nginx/*.*
+- rm logs/*.*
+
+clean_logs_container: bin
+- rm container_logs/*.*
+
+clean_docker:
+- ./docker-cleanup.sh
+
+#
+#
+#    ---- DATABASE MANAGEMENT ----
+#
+#
 
 db_drop_test:
 - RAILS_ENV=test bin/rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 
 db_create_test:
 - RAILS_ENV=test bin/rails db:create
-db_start: start_db
+db_start: start_db_container
 
+db_create_test_container:
+- docker compose exec module-handbook RAILS_ENV=test bin/rails db:create 
+db_migrate_test_container:
+- docker compose exec module-handbook RAILS_ENV=test bin/rails db:migrate 
 
-restart-docker: stop start
-
-rebuild-docker:
-- docker compose up -d --build --force-recreate module-handbook
-
-rebuild2-docker:
-- docker compose build module-handbook
-- docker compose up --no-deps -d module-handbook
-
-
-clean-logs-docker: bin
-- rm container_logs/nginx/*.*
-- rm container_logs/*.*
 
 ### Running Tests in Docker
 #
@@ -115,21 +134,16 @@ clean-logs-docker: bin
 #
 #
 
-test-docker: test-create-db test-migrate-db test-docker test-docker-system
+test_all_container: db_create_test_container db_migrate_test_container test_container 
 
-test-docker-unit:
-- docker compose exec module-handbook bin/rails test
+test_container:
+- docker compose exec module-handbook PARALLEL_WORKERS=1 bin/rails test 
+- docker compose exec module-handbook PARALLEL_WORKERS=1 bin/rails test:system 
 
-test-docker-system:
-- docker compose exec module-handbook rails test:system
 
-test-create-db:
-- docker compose exec module-handbook rails db:create RAILS_ENV=test
-test-migrate-db:
-- docker compose exec module-handbook rails db:migrate RAILS_ENV=test
 
 # use and change this to run single tests in docker
-test-one:
+test_one_container:
 - docker compose exec module-handbook rails test test/system/comments/comments_editor_test.rb:55
 #
 #
@@ -140,13 +154,13 @@ test-one:
 ### Run Rails with Production Configuration
 # (will need appropriate RAILS_MASTER_KEY and TAG_MODULE_HANDBOOK set in environment!)
 
-start-docker-prod:
+start_container_PROD:
 - export RAILS_MASTER_KEY=$(cat secrets/config/credentials/production.key) && docker compose -f compose.yaml up -d # ommits override
 
-start-docker-debug:
+start_container_DEBUG:
 - docker compose -f compose.yaml -f compose.override.yaml  -f compose.debug.yaml  up
 
-start-docker-prod-debug:
+start_container_PROD_DEBUG:
 - export RAILS_MASTER_KEY=$(cat secrets/config/credentials/production.key) && docker compose -f compose.yaml -f compose.debug.yaml up module-handbook
 
 ### Access Docker Container
@@ -221,13 +235,15 @@ CLEAN = "docker rmi $(docker images -f reference='*ghcr.io/modulehandbook/module
 deploy_staging:
 - ./deploy/staging.sh
 
-deploy_production:
-- ./deploy/production.sh
+#deploy_production:
+#- ./deploy/production.sh
 
 check_staging:
 - ssh local@module-handbook-staging.f4.htw-berlin.de "docker ps; df -h"
 check_production:
 - ssh local@module-handbook.f4.htw-berlin.de "docker ps; df -h"
+check_imi:
+- ssh local@mh-imi.f4.htw-berlin.de "docker ps; df -h"
 
 restart_staging:
 - ssh local@module-handbook-staging.f4.htw-berlin.de "sudo docker compose down"
@@ -235,6 +251,9 @@ restart_staging:
 restart_production:
 - ssh local@module-handbook.f4.htw-berlin.de "sudo docker compose down"
 - ssh local@module-handbook.f4.htw-berlin.de "sudo docker compose up -d"
+restart_imi:
+- ssh local@mh-imi.f4.htw-berlin.de "sudo docker compose down"
+- ssh local@mh-imi.f4.htw-berlin.de "sudo docker compose up -d"
 
 ssh_staging:
 - ssh local@module-handbook-staging.f4.htw-berlin.de
@@ -329,17 +348,7 @@ rails_c_db_container:
 
 
 
-# DOCKER CLEANUP
 
-# https://depot.dev/blog/docker-clear-cache
-docker-df:
-- docker system df
-docker-cleanup:
-- docker image prune -a -f
-- docker buildx prune -f
-
-docker-remove-all:
-- ./docker-cleanup.sh
 
 
 ## Tags
@@ -353,10 +362,8 @@ tags_origin:
 
 ## Miscellaneous Stuff
 
-
 list_targets:
 - grep "^\w*:"  Makefile | sort
-
 
 
 ### Clean Gemcache, docker
@@ -413,3 +420,15 @@ compose:
 # 
 # 
 
+# deprecated: use selenium standalone for test
+
+start-test-environment:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d --remove-orphans
+stop-test-environment:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down
+
+restart-selenium: stop-selenium start-selenium
+start-selenium:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d selenium-standalone
+stop-selenium:
+- docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down selenium-standalone

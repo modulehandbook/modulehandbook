@@ -10,7 +10,7 @@ bash:
 -  docker compose exec module-handbook bash
 bash_db:
 -  docker compose exec module-handbook-postgres bash
-bash_exp:
+bash_exporter:
 -  docker compose exec module-handbook-exporter bash
 
 rails-c:
@@ -19,6 +19,10 @@ rails-c:
 mk:
 - echo $RAILS_MASTER_KEY
 
+clean_all: clean_logs clean_docker
 
 clean_logs:
 - sudo rm container_logs/nginx/error.log container_logs/nginx/access.log container_logs/production.log
+
+clean_docker:
+- ./docker-cleanup.sh

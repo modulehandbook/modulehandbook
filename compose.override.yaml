@@ -28,7 +28,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: modhand-dev
-    image: mh-local-build
+    #image: mh-local-build
     ports:
       - "3000:3000"
     volumes:
