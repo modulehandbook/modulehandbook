@@ -433,3 +433,8 @@ start-selenium:
 - docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml  up -d selenium-standalone
 stop-selenium:
 - docker compose -f compose.yaml -f compose.override.yaml -f compose.test.yaml down selenium-standalone
+
+
+show_credentials:
+- ./deploy/show_credentials.sh
+

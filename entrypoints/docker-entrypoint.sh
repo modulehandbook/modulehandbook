@@ -11,6 +11,7 @@ echo "----------  MODHAND_IMAGE = ${MODHAND_IMAGE} --------"
 
 if [ "$RAILS_ENV" == "development" ]; then
   echo "environment is dev, skipping asset precompilation"
+  bundle exec rails css:build
 else
   bundle exec rails assets:precompile
 fi

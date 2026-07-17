@@ -8,8 +8,8 @@
 # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
 
 services:
-  nginx:
-    profiles: [ dontstart ]
+ # nginx:
+ #   profiles: [ dontstart ]
   
   module-handbook-exporter:
     profiles: [ dontstart ]

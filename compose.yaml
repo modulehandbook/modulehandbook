@@ -38,16 +38,17 @@ services:
       - TZ=Europe/Berlin
       - EDITOR=vi
       - TAG_MODULE_HANDBOOK=${TAG_MODULE_HANDBOOK}
+      - MODULE_HANDBOOK_INSTANCE=${MODULE_HANDBOOK_INSTANCE}
+      - DEVISE_EMAIL_HOSTNAME=${DEVISE_EMAIL_HOSTNAME}
+      - DEVISE_EMAIL=${DEVISE_EMAIL}
 
     depends_on:
       - module-handbook-postgres
 #     - module-handbook-exporter
     volumes:
       - ./container_logs:/module-handbook/log
-      - ./secrets:/module-handbook/secrets
-      - ./environments:/module-handbook/deploy/environments
       - ./nginx:/nginx
-      - ./deploy/environments:/module-handbook/deploy/environments
+      - ./entrypoints:/module-handbook/entrypoints
     restart: always
 
   nginx:
@@ -58,7 +59,7 @@ services:
          - ./nginx/nginx.conf:/etc/nginx/nginx.conf
          - ./nginx/templates:/etc/nginx/templates
          - ./container_logs/nginx:/var/log/nginx
-         - ./secrets/nginx:/etc/ssl
+         - ./NGINX_CERTIFICATES_GO_HERE_PLEASE:/etc/ssl
      ports:
          - "80:80"
          - "443:443"

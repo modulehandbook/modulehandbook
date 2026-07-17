@@ -34,8 +34,8 @@ jobs:
           POSTGRES_PASSWORD: postgres
       
     steps:
-      #- name: chrome
-      #  uses: browser-actions/setup-chrome@latest
+      - name: chrome
+        uses: browser-actions/setup-chrome@latest
         
       - name: Check out repo code
         uses: actions/checkout@v4
@@ -50,9 +50,11 @@ jobs:
       - name: create test db
         run: bin/rails db:test:prepare
 
-      - name: Run Tests
-        id: run-tests
-        run: bin/rails test
+      - name: Run System Tests
+        id: test-system
+        run: |
+          chrome --version
+          bin/rails test:system
 
       - name: Echo Log on Failure
         if: ${{ failure() }}
