@@ -31,9 +31,9 @@ set -x
 echo "-----------"
 
 scp compose.yaml $HOST:~
-scp ./deploy/environments/$ENV.env $HOST:~/active-environment.env
 
 scp -r nginx $HOST:~
+scp -r entrypoints $HOST:~
 
 scp Makefile.prod $HOST:~/Makefile
 scp docker-cleanup.sh $HOST:~
@@ -41,8 +41,9 @@ scp docker-cleanup.sh $HOST:~
 
 
 # .env
+scp ./deploy/environments/$ENV.env $HOST:~/.env
 
-ssh $HOST "echo TAG_MODULE_HANDBOOK_EXPORTER=sha-4ef1b2d > .env"
+ssh $HOST "echo TAG_MODULE_HANDBOOK_EXPORTER=sha-4ef1b2d >> .env"
 ssh $HOST "echo RAILS_MASTER_KEY=$RAILS_MASTER_KEY >> .env"
 ssh $HOST "echo TAG_MODULE_HANDBOOK=$TAG >> .env"
 

@@ -11,7 +11,7 @@ WORKDIR /module-handbook
 COPY Gemfile Gemfile.lock ./
 
 ENV GENERAL_DEPS="bash gcompat libpq tzdata nodejs yarn"
-ENV BUILD_DEPS=g"it linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev"
+ENV BUILD_DEPS="git linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev"
 ENV NOKOGIRI_SYSTEM_LIBS="build-base libxml2-dev libxslt-dev"
 ENV AO="--no-install-recommends --no-cache"
 # general dependencies
