@@ -30,6 +30,7 @@ sshid=
 start: start_host
 test: test_host
 stop: stop_container
+start_db: start_db_container
 
 #
 #    ---- HOST ----

@@ -2,7 +2,7 @@
 name: Staging
 on:
   push:
-    branches: [ main, new_asset_pipeline ]
+    branches: [ main, update_devise_email_texts ]
     tags-ignore: [ '*' ]
 
 env:

@@ -9,7 +9,12 @@ fi
 echo "----------  RAILS_ENV = ${RAILS_ENV} --------"
 echo "----------  MODHAND_IMAGE = ${MODHAND_IMAGE} --------"
 
-bundle exec rails assets:precompile
+if [ "$RAILS_ENV" == "development" ]; then
+  echo "environment is dev, skipping asset precompilation"
+else
+  bundle exec rails assets:precompile
+fi
+
 bundle exec rails db:migrate
 bundle exec rails s -b 0.0.0.0
 
