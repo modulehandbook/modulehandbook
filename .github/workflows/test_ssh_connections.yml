@@ -24,24 +24,6 @@ jobs:
         run: |
           ssh $SSH_USER@$SSH_HOST "ls -lart"
 
-  infrastructure:
-    runs-on: ubuntu-latest
-    env:
-      SSH_KEY: ${{ secrets.DEPLOY_INF_KEY }}
-      SSH_USER: ${{ secrets.DEPLOY_INF_USER }}
-      SSH_HOST: 'infrastructure.f4.htw-berlin.de'
-      KNOWN_HOST: 'infrastructure.f4.htw-berlin.de ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFrJk3IjoJf61+rHU/ZMyD4ud488roXMJaa2NEeBiNruZGIw7k4YBLaZgCgfQNk+T/vzXTls+XIuY5S6rI8FD2I='
-    steps:
-      - uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ env.SSH_KEY }}
-      - name: Create Known Hosts File
-        run: |
-            echo $KNOWN_HOST > ~/.ssh/known_hosts
-      - name: Test Connection
-        run: |
-          ssh $SSH_USER@$SSH_HOST "ls -lart"
-
 
   module-handbook-staging:
     runs-on: ubuntu-latest

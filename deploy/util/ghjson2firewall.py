@@ -23,17 +23,38 @@ header = """
 #
 
 """
+
+def get_ips():
+    with urllib.request.urlopen(gh_url) as response:
+        data = response.read()
+        meta = json.loads(data)
+        actions_ips = meta['actions']
+        return actions_ips
+
 def githubmeta_2_firewall():
     with urllib.request.urlopen(gh_url) as response:
         data = response.read()
         meta = json.loads(data)
         actions_ips = meta['actions']
-        rules = [rule_template.format(ip) for ip in actions_ips]
+        
         return rules
 
-if __name__ == '__main__':
-    rules = githubmeta_2_firewall()
+def filter_ip_v6(ips):
+    return [ip for ip in ips if ':' not in ip]
+    
+def print_rules(ips):
+    rules = [rule_template.format(ip) for ip in ips]
     scriptfile = os.path.basename(__file__)
     print (header.format(scriptfile, gh_url, len(rules)))
     rules_in_lines = "\n".join(rules)
     print(rules_in_lines)
+
+def print_ips(ips):
+    print("\n".join(ips))
+
+if __name__ == '__main__':
+    ips = get_ips()
+    ips = filter_ip_v6(ips)
+
+    # print_rules(ips)
+    print_ips(ips)
