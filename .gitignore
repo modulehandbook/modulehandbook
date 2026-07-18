@@ -69,6 +69,8 @@ container_logs/**
 !/secrets/env/public.env
 secrets/**
 
+deploy/util/iptables/
+
 # Ignore Credentials
 # these are environment-specific credentials! 
 # use bin/rails credentials:edit -e production
