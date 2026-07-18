@@ -65,6 +65,12 @@ iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
 #
 iptables -A INPUT -i lo -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
 iptables -A OUTPUT -o lo -d 127.0.0.0/8 -s 127.0.0.0/8 -j ACCEPT
+
+#
+# Include Rules for Module-Handbook
+#
+./mh-extern.sh
+
 #
 # alles von/nach aussen DROP
 #
@@ -115,6 +121,14 @@ iptables -A OUTPUT -p tcp --dport 465 -d 141.45.10.101 -j ACCEPT
 #iptables -A INPUT -j LOG --log-prefix ' ++ INPUT DROP ++ ' --log-level 4
 #iptables -A OUTPUT -j LOG --log-prefix ' ++ OUTPUT DROP ++ ' --log-level 4
 #
+
+#
+# Include Rules for Module-Handbook
+#
+./mh-intern.sh
+
+
+
 iptables-save > /etc/firewall.conf
 #
 echo -n "#"      > /etc/network/if-up.d/iptables
