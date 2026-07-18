@@ -37,13 +37,13 @@ ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
 FROM modhand-base AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
-ARG RAILS_MASTER_KEY
-ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
 COPY . ./
-RUN set -ex  \
+RUN --mount=type=secret,id=rails_master_key,env=RAILS_MASTER_KEY \
+  set -ex  \
   && yarn install \
-  && rails assets:precompile
+  && RAILS_MASTER_KEY=/run/secrets/rails_master_key \
+  rails assets:precompile
 
 # -------------------------------------------------------------------
 # Development & Test

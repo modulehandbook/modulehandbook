@@ -22,7 +22,7 @@ jobs:
 
   staging:
     needs: defineversion
-    name: Stag
+    name: "S"
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main' }}
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:

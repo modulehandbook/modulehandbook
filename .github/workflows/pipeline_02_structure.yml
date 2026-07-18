@@ -106,7 +106,7 @@ jobs:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
   
   trigger-production-deployment:
-    needs: build_and_push
+    needs: [all_tests, build_and_push]
     name: "4"
     if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml

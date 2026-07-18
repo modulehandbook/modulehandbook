@@ -25,9 +25,12 @@ services:
   module-handbook:
     platform: linux/amd64
     build:
+      secrets:
+        - rails_master_key
       context: .
       dockerfile: Dockerfile
       target: modhand-dev
+
     ports:
       - "3000:3000"
     volumes:
@@ -38,3 +41,6 @@ services:
       - RAILS_ENV=development
       - PARALLEL_WORKERS=1
     restart: "no"
+secrets:
+  rails_master_key:
+    environment: RAILS_MASTER_KEY
