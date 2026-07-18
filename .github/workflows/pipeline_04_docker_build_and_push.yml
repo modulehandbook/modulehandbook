@@ -78,4 +78,4 @@ jobs:
           tags: "ghcr.io/modulehandbook/modulehandbook:${{ inputs.version }}"
           labels: ${{ steps.meta.outputs.labels }}
           secrets: |
-            "rails_master_key=${{ secrets.rails_master_key }}
+            "rails_master_key=${{ secrets.rails_master_key }}"
