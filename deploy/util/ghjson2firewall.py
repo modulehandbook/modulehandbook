@@ -1,6 +1,9 @@
 # reads ips for github actions and transforms them to firewall rules.
 # needs certs to be installed:
 # pip install pip-system-certs
+# may be replaced with a one-liner:
+# curl -s https://api.github.com/meta | python3 -c "import sys, json; print(json.load(sys.stdin)['actions'])"
+# curl -s https://api.github.com/meta | python3 -c "import sys, json; print(' '.join(json.load(sys.stdin)['actions'])))"
 import urllib.request
 import json
 import os
