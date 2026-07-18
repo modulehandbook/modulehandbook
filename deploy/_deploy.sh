@@ -37,7 +37,7 @@ scp -r entrypoints $HOST:~
 
 scp Makefile.prod $HOST:~/Makefile
 scp docker-cleanup.sh $HOST:~
-
+scp deploy/vms/copy_to_host_home_directories/* $HOST:~
 
 
 # .env
