@@ -1,10 +1,10 @@
 
-
 # secrets in docker
 
-- https://docs.docker.com/reference/build-checks/secrets-used-in-arg-or-env/
+production build needs RAILS_MASTER_KEY
+which is passed via --secret to the build.
 
-docker build . -t modsec --target modhand-prod --secret id=rails_master_key,env=RAILS_MASTER_KEY
+- https://docs.docker.com/reference/build-checks/secrets-used-in-arg-or-env/
 
 
 docker build --secret id=rails_master_key,env=RAILS_MASTER_KEY --target modhand-prod .
