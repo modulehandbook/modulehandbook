@@ -25,8 +25,6 @@ if [ $RAILS_MASTER_KEY = "" ]; then
   exit 42
 fi
 
-
-
 set -x
 echo "-----------"
 
@@ -35,9 +33,9 @@ scp compose.yaml $HOST:~
 scp -r nginx $HOST:~
 scp -r entrypoints $HOST:~
 
-scp Makefile.prod $HOST:~/Makefile
-scp docker-cleanup.sh $HOST:~
+
 scp deploy/vms/copy_to_host_home_directories/* $HOST:~
+scp deploy/vms/copy_to_host_home_directories/.bashrc $HOST:~
 
 
 # .env
