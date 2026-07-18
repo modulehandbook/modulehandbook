@@ -49,6 +49,12 @@ jobs:
   test_app:
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
+  system_test:
+    name: "1"
+    uses: ./.github/workflows/pipeline_03_system_test.yml
+  code_quality:
+    name: "1"
+    uses: ./.github/workflows/pipeline_03_code_quality.yml
 
   build_and_push:
     # needs: test_app   #### for now to get faster results on the builds
@@ -82,10 +88,13 @@ jobs:
     uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
     with:
       version: ${{ inputs.version }}
+      host: 'module-handbook-staging.f4.htw-berlin.de'
+      environment: 'staging'
+      known_hosts: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
     secrets: 
-      DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
-      RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
   
   trigger-production-deployment:
     needs: build_and_push
