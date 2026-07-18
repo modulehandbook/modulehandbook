@@ -58,6 +58,12 @@ jobs:
 
   all_tests:
     needs: [unit_tests, system_test, code_quality]
+    name: All Tests OK
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo All Tests have passed!
+          
   
   build_and_push:
     # needs: test_app   #### for now to get faster results on the builds
