@@ -15,7 +15,7 @@ env:
   POSTGRES_PASSWORD: postgres
 jobs:
   test:
-    name: Test
+    name: System Test
     runs-on: ubuntu-latest
     services:
       postgres:
