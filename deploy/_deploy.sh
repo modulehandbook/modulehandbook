@@ -15,12 +15,12 @@ echo "---  deploy $TAG to $ENV ($HOST)"
 
 if [ "$RAILS_MASTER_KEY" == "" ]; then
   echo "RAILS_MASTER_KEY not set, using config/credentials/$ENV.key"
-  export RAILS_MASTER_KEY="$(cat config/credentials/$ENV.key)"
+  export RAILS_MASTER_KEY="$(cat config/credentials/$RAILS_ENV.key)"
   echo set to: $RAILS_MASTER_KEY
 fi
 
 #export RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key)
-if [ $RAILS_MASTER_KEY = "" ]; then
+if [ $RAILS_MASTER_KEY == "" ]; then
   echo "RAILS_MASTER_KEY missing"
   exit 42
 fi
@@ -46,7 +46,6 @@ ssh $HOST "echo RAILS_MASTER_KEY=$RAILS_MASTER_KEY >> .env"
 ssh $HOST "echo TAG_MODULE_HANDBOOK=$TAG >> .env"
 
 
-#echo RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key) | ssh $HOST "cat >> .env"
 
 ssh $HOST "docker compose down"
 ssh $HOST "docker compose up -d"

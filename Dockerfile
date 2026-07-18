@@ -42,8 +42,7 @@ COPY . ./
 RUN --mount=type=secret,id=rails_master_key,env=RAILS_MASTER_KEY \
   set -ex  \
   && yarn install \
-  && RAILS_MASTER_KEY=/run/secrets/rails_master_key \
-  rails assets:precompile
+  && rails assets:precompile
 
 # -------------------------------------------------------------------
 # Development & Test
