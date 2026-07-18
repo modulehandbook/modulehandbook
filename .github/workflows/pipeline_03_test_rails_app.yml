@@ -38,7 +38,7 @@ jobs:
       #  uses: browser-actions/setup-chrome@latest
         
       - name: Check out repo code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
