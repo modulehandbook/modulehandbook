@@ -102,7 +102,7 @@ jobs:
   trigger-production-deployment:
     needs: build_and_push
     name: "4"
-    if: ${{ false && inputs.environment == 'production'  && inputs.push == true }}
+    if: ${{ inputs.environment == 'production'  && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_production.yml
     with:
       version: ${{ inputs.version }}
