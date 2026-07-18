@@ -93,7 +93,7 @@ jobs:
   trigger-staging-deployment_via_generic_deployment:
     needs: [all_tests, build_and_push]
     name: "3"
-    if: ${{ false && inputs.environment == 'staging' && inputs.push == true }}
+    if: ${{ inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
