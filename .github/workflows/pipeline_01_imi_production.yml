@@ -2,7 +2,7 @@
 name: IMI
 on:
   push:
-    tags: [ 'vi*' ]
+    tags: [ 'v*' ]
 
 
 env:

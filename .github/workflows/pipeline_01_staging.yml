@@ -28,10 +28,11 @@ jobs:
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:
       tags: type=sha
-      push: true
+      push: false
       deploy: true
       environment: staging
-      version: ${{ needs.defineversion.outputs.version }}
+      #version: ${{ needs.defineversion.outputs.version }}
+      version: sha-0bf47a5
       target: modhand-prod
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_STAGING }}
