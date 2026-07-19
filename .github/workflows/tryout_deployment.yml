@@ -3,8 +3,8 @@
 name: Tryout Deployment
 on:
   workflow_dispatch:
-  push:
-    branches: [ '*' ]
+  #push:
+  #  branches: [ '*' ]
 
 jobs:
   trigger-staging:

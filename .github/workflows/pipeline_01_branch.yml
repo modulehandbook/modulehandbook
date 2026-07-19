@@ -15,4 +15,5 @@ jobs:
     with:
       tags: type=sha
       push: false # branches should not publish (push) docker images!
+      deploy: false
       target: modhand-dev

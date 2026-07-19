@@ -9,15 +9,6 @@ env:
   TAG:  ${{ github.ref_name }}
 
 jobs:
-  print_github_env:
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.defineversion.outputs.version}}
-    steps:
-      - name: print github environment
-        continue-on-error: true     
-        run: |
-          echo "---- github:\n${{ toJSON(github) }}"
 
   defineversion:
     runs-on: ubuntu-latest
@@ -28,13 +19,29 @@ jobs:
         run: echo "version=${TAG}" >> "$GITHUB_OUTPUT"
 
   production:
-     needs: defineversion
-     name: Prod
-     # this will not work as the ref is ref/tags/0...
-     # if: github.ref == 'refs/heads/master'
-     uses: ./.github/workflows/pipeline_02_structure.yml
-     with:
-       tags: type=ref,event=tag
-       push: true
-       environment: imi_production
-       version: ${{ needs.defineversion.outputs.version }}
+    needs: defineversion
+    name: Prod
+    # this will not work as the ref is ref/tags/0...
+    # if: github.ref == 'refs/heads/master'
+    uses: ./.github/workflows/pipeline_02_structure.yml
+    with:
+      tags: type=ref,event=tag
+      push: true
+      deploy: false
+      environment: production
+      version: ${{ needs.defineversion.outputs.version }}
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
+      ssh_user: ${{ secrets.DEPLOY_USER_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
+
+  print_github_env:
+    if: false
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.defineversion.outputs.version}}
+    steps:
+      - name: print github environment
+        continue-on-error: true     
+        run: |
+          echo "---- github:\n${{ toJSON(github) }}"

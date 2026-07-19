@@ -29,6 +29,7 @@ jobs:
     with:
       tags: type=sha
       push: true
+      deploy: true
       environment: staging
       version: ${{ needs.defineversion.outputs.version }}
       target: modhand-prod
