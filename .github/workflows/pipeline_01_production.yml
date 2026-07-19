@@ -27,7 +27,7 @@ jobs:
     with:
       tags: type=ref,event=tag
       push: true
-      deploy: true
+      deploy: false
       environment: production
       version: ${{ needs.defineversion.outputs.version }}
     secrets: 

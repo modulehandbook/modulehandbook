@@ -41,7 +41,8 @@ start_db: start_db_container
 # Runs Rails on local Machine (with postgres in docker container)
 
 start_host: start_db_container
-- source .env && bin/rails s
+- ./deploy/util/env_export.sh && rails s
+#- source .env && bin/rails s
 
 open_in_browser:
 - open http://localhost:3000

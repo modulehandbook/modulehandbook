@@ -6,12 +6,13 @@
 environment=$1
 echo ${environment}
 
-if [[ "${environment}" == "" ]]; then
-    env_file=.env
-else
-    env_file=deploy/environments/${environment}.env
-fi
 
+if [[ "${environment}" == "" ]]; then
+    environment=development
+fi
+env_file=deploy/environments/${environment}.env
+
+echo "using ${env_file}"
 
 while read line; do
     if [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*=.*$ ]]; then
