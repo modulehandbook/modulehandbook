@@ -403,7 +403,12 @@ build:
 - docker build . -f Dockerfile.alpine -t mh-rails80
 
 build_production:
-- RAILS_MASTER_KEY=$(shell cat config/credentials/production.key) && docker build -t modhand-prod --target modhand-prod --secret id=rails_master_key,env=RAILS_MASTER_KEY .
+- RAILS_MASTER_KEY=$(shell cat config/credentials/production.key) && docker build -t modhand-prod --target modhand-prod --secret id=rails_master_key,env=RAILS_MASTER_KEY --build-arg RAILS_ENV=production .
+build_imi_production:
+- RAILS_MASTER_KEY=$(shell cat config/credentials/imi_production.key) && docker build -t modhand-prod --target modhand-prod --secret id=rails_master_key,env=RAILS_MASTER_KEY --build-arg RAILS_ENV=imi_production .
+build_staging:
+- RAILS_MASTER_KEY=$(shell cat config/credentials/staging.key) && docker build -t modhand-prod --target modhand-prod --secret id=rails_master_key,env=RAILS_MASTER_KEY --build-arg RAILS_ENV=staging .
+
 
 RAILS_MASTER_KEY=$(shell cat config/credentials/production.key)
 DOCKER_ENV=-p 3004:3000 -e RAILS_MASTER_KEY='$(RAILS_MASTER_KEY)' -e POSTGRES_DB='mhdocker' -e RAILS_DB_HOST='host.docker.internal'

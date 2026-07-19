@@ -77,5 +77,6 @@ jobs:
           push: ${{ inputs.push }}
           tags: "ghcr.io/modulehandbook/modulehandbook:${{ inputs.version }}"
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: RAILS_ENV=${{ inputs.environment }}
           secrets: |
             "rails_master_key=${{ secrets.rails_master_key }}"
