@@ -11,6 +11,7 @@ on:
           type: string
         TEST_VARIABLE_STAGING:
           required: true
+          type: string
       secrets:
         TEST_STAGING:
           required: true
