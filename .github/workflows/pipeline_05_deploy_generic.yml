@@ -40,11 +40,13 @@ jobs:
                 echo "inputs.environment directly"
                 echo inputs.environment
                 echo "variable directly "
-                echo ${{ secrets.TEST_VARIABLE_STAGING }}
+                echo ${{ env.TEST_VARIABLE_STAGING }}
                 echo "secret directly "
+            
                 echo ${{ secrets.TEST_STAGING }}
+
                 echo "variable constructed"
-                echo ${{ env[format('secrets.TEST_VARIABLE_{0}', inputs.environment)] }}
+                echo ${{ env[format('env.TEST_VARIABLE_{0}', inputs.environment)] }}
             
                 echo "secret constructed"
                 echo ${{ env[format('secrets.TEST_{0}', inputs.environment)] }}
@@ -56,9 +58,11 @@ jobs:
             - name: Write to env Tryout
               run: |
                 echo "TEST_NOT_FILTERED=HUHU" >> $GITHUB_ENV
-                echo "TEST_NOT_FILTERED: ${{ env.TEST_NOT_FILTERED }}""
+                echo "TEST_NOT_FILTERED 1: ${{ env.TEST_NOT_FILTERED }}"
+                echo "TEST_NOT_FILTERED 2: $TEST_NOT_FILTERED"
                 echo "this should be the same as having it declared with env:"
-                echo "IMAGE_NAME: ${{ env.IMAGE_NAME }}""
+                echo "IMAGE_NAME: ${{ env.IMAGE_NAME }}"
+                echo "IMAGE_NAME2: $IMAGE_NAME"
 
 
             - name: Checkout Repository
