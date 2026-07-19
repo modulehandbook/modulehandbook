@@ -46,7 +46,7 @@ jobs:
 
                 echo "variable name constructed"
 
-                VAR_NAME="$(echo TEST_VARIABLE_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]"
+                VAR_NAME="$(echo TEST_VARIABLE_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
                 echo "VAR_NAME1:           ${VAR_NAME}"
                 echo "VAR_NAME2:           $VAR_NAME"
                 echo "vars[env.VAR_NAME]:  ${{ vars[env.VAR_NAME] }}"
