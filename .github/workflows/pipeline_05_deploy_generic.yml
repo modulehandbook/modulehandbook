@@ -40,20 +40,20 @@ jobs:
                 echo "inputs.environment directly"
                 echo inputs.environment
                 echo "variable directly "
-                echo ${{ env.TEST_VARIABLE_STAGING }}
-                echo "secret directly "
-            
-                echo ${{ secrets.TEST_STAGING }}
+                echo "TEST_VARIABLE_STAGING 1 ${TEST_VARIABLE_STAGING}"
+                echo "TEST_VARIABLE_STAGING 2 ${{ env.TEST_VARIABLE_STAGING }}"
 
                 echo "variable constructed"
-                echo ${{ env[format('env.TEST_VARIABLE_{0}', inputs.environment)] }}
+                echo "TEST_VARIABLE_STAGING 3 ${{ env[format('env.TEST_VARIABLE_{0}', inputs.environment)] }}"
             
                 echo "secret constructed"
                 echo ${{ env[format('secrets.TEST_{0}', inputs.environment)] }}
-                echo " XXX "
-                echo ${{ secrets.XXXX }}
+                echo "secret directly "
+                echo ${{ secrets.TEST_STAGING }}
 
-                echo done
+                echo " ---- done ---- "
+
+          
             
             - name: Write to env Tryout
               run: |
