@@ -36,12 +36,5 @@ jobs:
      with:
        tags: type=ref,event=tag
        push: true
-       environment: production
+       environment: imi_production
        version: ${{ needs.defineversion.outputs.version }}
-     secrets:
-       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
-       DEPLOY_MH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
-       DEPLOY_MH_USER: ${{ secrets.DEPLOY_MH_USER }}
-       DEPLOY_MHIMI_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-       DEPLOY_MHIMI_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
-

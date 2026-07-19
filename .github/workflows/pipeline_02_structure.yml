@@ -40,6 +40,10 @@ on:
         required: false
         type: string
         default: staging
+      deploy_production:
+        required: false
+        type: boolean
+        default: false
       version:
         required: false
         type: string
@@ -79,7 +83,8 @@ jobs:
       rails_master_key: ${{ secrets.rails_master_key }}
   
   trigger-staging-deployment:
-    needs: [all_tests, build_and_push]
+    #needs: [all_tests, build_and_push]
+    needs: build_and_push
     name: "3"
     if: ${{ inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
@@ -95,25 +100,31 @@ jobs:
     #needs: [all_tests, build_and_push]
     needs: build_and_push
     name: "3"
-    if: ${{ inputs.environment == 'imi-production' && inputs.push == true }}
+    if: ${{ inputs.deploy_production && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
-      environment: 'imi-production'
+      environment: ${{ inputs.environment }}
+      environment: 'imi_production'
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
+      ssh_user: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_IMI_PRODUCTION }}
 
   trigger-production-deployment:
-    needs: [all_tests, build_and_push]
-    name: "4"
-    if: ${{ inputs.environment == 'production'  && inputs.push == true }}
-    uses: ./.github/workflows/pipeline_05_deploy_to_production.yml
+    #needs: [all_tests, build_and_push]
+    needs: build_and_push
+    name: "3"
+    if: ${{ inputs.deploy_production && inputs.push == true }}
+    uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
-    secrets:
-      rails_master_key: ${{ secrets.rails_master_key }}
-      DEPLOY_MH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
-      DEPLOY_MH_USER: ${{ secrets.DEPLOY_MH_USER }}
-      DEPLOY_MHIMI_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-      DEPLOY_MHIMI_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
+      #environment: ${{ inputs.environment }}
+      environment: production
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
+      ssh_user: ${{ secrets.DEPLOY_USER_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
 
   info:
     name: Show Parameter

@@ -16,7 +16,3 @@ jobs:
       tags: type=sha
       push: false # branches should not publish (push) docker images!
       target: modhand-dev
-       
-    secrets:
-      rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
- 
