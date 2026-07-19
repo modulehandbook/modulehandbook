@@ -84,6 +84,7 @@ jobs:
     with:
       version: ${{ inputs.version }}
       environment: 'staging'
+      name: 'Deploy Staging'
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_STAGING }}
       ssh_user: ${{ secrets.DEPLOY_USER_STAGING }}

@@ -9,6 +9,10 @@ on:
         environment:
           required: true
           type: string
+        name:
+          required: false
+          type: string
+          default: "Deploy"
       secrets:
         ssh_key:
           required: true
@@ -21,6 +25,7 @@ on:
 jobs:
 
     deploy-gen:
+        name: ${{ inputs.name }}
         runs-on: ubuntu-latest
         env:
             REGISTRY: ghcr.io
