@@ -9,7 +9,7 @@ on:
 jobs:
   trigger-staging:
     name: "Tryout"
-    uses: ./.github/workflows/pipeline_05_deploy_generic.yml
+    uses: ./.github/workflows/pipeline_05_deploy.yml
     with:
       version: sha-de197ac
       environment: 'staging'
