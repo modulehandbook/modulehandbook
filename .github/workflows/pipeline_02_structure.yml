@@ -6,8 +6,6 @@
 name: "02: Pipeline Structure"
 on:
   workflow_call:
-    env:
-      run_tests: false
     inputs:
       tags:
         required: true
@@ -42,23 +40,25 @@ on:
         required: false
       rails_master_key:
         required: false
+    env:
+      RUN_TESTS: false
 
 jobs:
   unit_tests:
-    if: ${{ env.run_tests }}
+    if: ${{ env.RUN_TESTS }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
   system_test:
-    if: ${{ env.run_tests }}
+    if: ${{ env.RUN_TESTS }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_system_test.yml
   code_quality:
-    if: ${{ env.run_tests }}
+    if: ${{ env.RUN_TESTS }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_code_quality.yml
 
   all_tests:
-    if: ${{ env.run_tests }}
+    if: ${{ env.RUN_TESTS }}
     needs: [unit_tests, system_test, code_quality]
     name: All Tests OK
     runs-on: ubuntu-latest
