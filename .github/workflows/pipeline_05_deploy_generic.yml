@@ -58,6 +58,8 @@ jobs:
             - name: Write to env Tryout
               run: |
                 echo "TEST_NOT_FILTERED=HUHU" >> $GITHUB_ENV
+            - name: Read from  env Tryout
+              run: |
                 echo "TEST_NOT_FILTERED 1: ${{ env.TEST_NOT_FILTERED }}"
                 echo "TEST_NOT_FILTERED 2: $TEST_NOT_FILTERED"
                 echo "this should be the same as having it declared with env:"
