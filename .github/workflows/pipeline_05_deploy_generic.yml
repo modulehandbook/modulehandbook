@@ -65,8 +65,8 @@ jobs:
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
               with:
-                ssh-private-key: ${{ env.SSH_KEY }}
-                #ssh-private-key: ${{ secrets.DEPLOY_KEY_STAGING }}
+                ssh-private-key: ${{ secrets.DEPLOY_KEY_STAGING }}
+                #ssh-private-key: ${{ env.SSH_KEY }}
                 #ssh-private-key: ${{ secrets[env.SN_DEPLOY_KEY] }}
                 
             
