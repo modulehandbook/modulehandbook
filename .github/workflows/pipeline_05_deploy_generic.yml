@@ -37,9 +37,9 @@ jobs:
                
             - name: Write Secrets to Github env
               run: |
-                #echo "SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}" >> $GITHUB_ENV
-                #echo "SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
-                #echo "RAILS_MASTER_KEY=${{ secrets[env.SN_RAILS_MASTER_KEY] }}" >> $GITHUB_ENV
+                echo "SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}" >> $GITHUB_ENV
+                echo "SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
+                echo "RAILS_MASTER_KEY=${{ secrets[env.SN_RAILS_MASTER_KEY] }}" >> $GITHUB_ENV
                 echo "CHECK_SSH_KEY=${{ vars[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
                 
             # - name: Set Environment Variables
