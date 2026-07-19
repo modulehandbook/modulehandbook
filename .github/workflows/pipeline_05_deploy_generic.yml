@@ -18,7 +18,7 @@ jobs:
         env:
             REGISTRY: ghcr.io
             IMAGE_NAME: ${{ github.repository }}
-            SSH_KEY: ${{ secrets.DEPLOY_KEY_STAGING }}
+   #         SSH_KEY: ${{ secrets.DEPLOY_KEY_STAGING }}
         steps:
             - name: Generate Secret names
               run: |
