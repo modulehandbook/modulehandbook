@@ -10,12 +10,12 @@
 ENV=$1
 TAG=$2
 
-if [[ "$ENV" == "" || "$TAG" == "" ]; then
-  echo usage: _deploy <ENV> <TAG> 
+if [[ "$ENV" == "" || "$TAG" == "" ]]; then
+  echo "usage: _deploy <ENV> <TAG>"
   exit 1
 fi
 
-if [[ "$USER" == "" ]; then
+if [[ "$USER" == "" ]]; then
   echo $USER environment variable needs to be set 
   exit 2
 fi
@@ -30,7 +30,7 @@ UHOST="$USER@$HOST"
 if [ "$RAILS_MASTER_KEY" == "" ]; then
   echo "RAILS_MASTER_KEY not set, using config/credentials/$ENV.key"
   export RAILS_MASTER_KEY="$(cat config/credentials/$RAILS_ENV.key)"
-  echo set to: $RAILS_MASTER_KEY
+  #echo set to: $RAILS_MASTER_KEY
 fi
 
 #export RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key)

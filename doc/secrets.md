@@ -8,3 +8,7 @@ which is passed via --secret to the build.
 
 
 docker build --secret id=rails_master_key,env=RAILS_MASTER_KEY --target modhand-prod .
+
+
+DEPLOY_KEY_
+RAILS_MASTER_KEY
