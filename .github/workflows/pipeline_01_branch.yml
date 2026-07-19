@@ -5,6 +5,8 @@ on:
   push:
      #branches: [ 'main' ]
      branches: [ '*' ]
+     #branches_ignore: main
+     branches_ignore: [ main, update_devise_email_texts ]
      tags-ignore: [ '*' ]
 
 jobs:
