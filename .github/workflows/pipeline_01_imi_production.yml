@@ -17,6 +17,12 @@ jobs:
     steps:
       - id: defineversion
         run: echo "version=${TAG}" >> "$GITHUB_OUTPUT"
+    steps:
+      - name: print github environment
+        if: false
+        continue-on-error: true     
+        run: |
+          echo "---- github:\n${{ toJSON(github) }}"
 
   imi:
     needs: defineversion
@@ -35,15 +41,5 @@ jobs:
       ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
       ssh_user: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY_IMI_PRODUCTION }}
-
-
-  print_github_env:
-    if: false
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.defineversion.outputs.version}}
-    steps:
-      - name: print github environment
-        continue-on-error: true     
-        run: |
-          echo "---- github:\n${{ toJSON(github) }}"
+  
+  
