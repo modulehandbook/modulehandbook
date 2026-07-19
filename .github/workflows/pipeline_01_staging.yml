@@ -36,5 +36,5 @@ jobs:
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_IMI_STAGING }}
       ssh_user: ${{ secrets.DEPLOY_USER_IMI_STAGING }}
-      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
 
