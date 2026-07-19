@@ -17,7 +17,6 @@ jobs:
     steps:
       - id: defineversion
         run: echo "version=${TAG}" >> "$GITHUB_OUTPUT"
-    steps:
       - name: print github environment
         if: false
         continue-on-error: true     
