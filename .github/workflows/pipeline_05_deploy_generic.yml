@@ -40,14 +40,13 @@ jobs:
                 echo "inputs.environment directly"
                 echo inputs.environment
                 echo "variable directly "
-                echo "TEST_VARIABLE_STAGING 1 ${TEST_VARIABLE_STAGING}"
-                echo "TEST_VARIABLE_STAGING 2 ${{ env.TEST_VARIABLE_STAGING }}"
-                echo "TEST_VARIABLE_STAGING var ${{ vars.TEST_VARIABLE_STAGING }}"
+                echo "TEST_VARIABLE_STAGING 1 ${TEST_VARIABLE_STAGING} (prints nothing)"
+                echo "TEST_VARIABLE_STAGING 2 ${{ vars.TEST_VARIABLE_STAGING }} (works)"
 
                 echo "variable constructed"
-                echo "TEST_VARIABLE_STAGING 3 ${{ env[format('env.TEST_VARIABLE_{0}', inputs.environment)] }}"
-                echo "TEST_VARIABLE_STAGING 4  ${{ env['TEST_VARIABLE_STAGING'] }}"
-                echo "TEST_VARIABLE_STAGING 5  ${{ env[format('vars.TEST_VARIABLE_{0}', inputs.environment)] }}"
+                echo "TEST_VARIABLE_STAGING 3 ${{ vars[format('env.TEST_VARIABLE_{0}', inputs.environment)] }}"
+                echo "TEST_VARIABLE_STAGING 4 ${{ vars['TEST_VARIABLE_STAGING'] }}"
+                echo "TEST_VARIABLE_STAGING 5 ${{ vars[format('vars.TEST_VARIABLE_{0}', inputs.environment)] }}"
             
                 echo "--- will not be printed"
                 echo "secret constructed"
