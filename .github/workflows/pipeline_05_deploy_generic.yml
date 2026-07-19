@@ -57,7 +57,7 @@ jobs:
             - name: print .env in new step
               run: |
                  ./deploy/util/env_echo.sh ${{ inputs.environment }}
-                 echo "SSH_HOST=$HOST" >> $GITHUB_ENV
+                 echo "SSH_HOST=$SSH_HOST" >> $GITHUB_ENV
                  echo "KNOWN_HOST=$KNOWN_HOST" >> $GITHUB_ENV
 
             - name: Set Up SSH
