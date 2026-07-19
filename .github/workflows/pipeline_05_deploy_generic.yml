@@ -9,9 +9,7 @@ on:
         environment:
           required: true
           type: string
-      secrets:
-        DEPLOY_KEY_PRODUCTION:
-          required: true
+
 
 
 
