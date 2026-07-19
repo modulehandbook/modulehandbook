@@ -93,17 +93,12 @@ jobs:
 
             - name: source .env
               run: |
-                source deploy/environments/${{ inputs.environment }}.env
-                echo $DEVISE_EMAIL_HOSTNAME
                 ./deploy/util/env_export_to_github_env.sh ${{ inputs.environment }}
-                source $GITHUB_ENV
-                ./deploy/util/env_echo.sh ${{ inputs.environment }}
+
             - name: print .env in new step
               run: |
                 ./deploy/util/env_echo.sh ${{ inputs.environment }}
 
-            - name: .env to GITHUB_ENV
-              run: |
 
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
