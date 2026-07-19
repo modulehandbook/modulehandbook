@@ -36,13 +36,17 @@ jobs:
             # https://stackoverflow.com/questions/57968497/how-do-i-set-an-env-var-with-a-bash-expression-in-github-actions
             # https://github.com/orgs/community/discussions/23473
               run: |
+                echo "name"
+                echo env[format('secrets.TEST_{0}', inputs.environment)
+                echo "variable"
                 echo ${{ env[format('secrets.TEST_{0}', inputs.environment)] }}
             
             - name: Write to env Tryout
               run: |
                 echo "TEST_RAILS_MASTER_KEY=THE_KEY" >> $GITHUB_ENV
+                echo "TEST_RAILS_MASTER_KEY: ${{ env.TEST_RAILS_MASTER_KEY }}""
                 echo "this should be the same as having it declared with env:"
-                echo ${{ env.IMAGE_NAME }}
+                echo "IMAGE_NAME: ${{ env.IMAGE_NAME }}""
 
 
             - name: Checkout Repository

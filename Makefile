@@ -41,7 +41,7 @@ start_db: start_db_container
 # Runs Rails on local Machine (with postgres in docker container)
 
 start_host: start_db_container
-- bin/rails s
+- source .env && bin/rails s
 
 open_in_browser:
 - open http://localhost:3000
@@ -182,8 +182,21 @@ bash_selenium:
 #    ---- DB MAINTENANCE ----
 #
 #
+#
+#
 
 
+dump_file=dumps/mh-imi-2026-07-18--22-00-00.pgdump
+DBNAME=modhand-db-dev
+
+import_dump_host: $(dump_file)
+- cat $(dump_file) | docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
+- @echo "-----\nimported ${dump_file} to local host db"
+
+##
+# everything below is in need of cleanup! ---:
+##
+#file=$(shell cat tmp/DUMPFILENAME)
 db_reset_local_docker:
 - docker compose exec module-handbook rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development
 - docker compose exec module-handbook rails db:create RAILS_ENV=development
@@ -196,6 +209,8 @@ db_init_local: db_reset
 - docker compose exec module-handbook rails db:seed
 
 db_staging_to_dev: dump_staging import_dump
+
+
 #
 # DB Import Tasks directly via postgres container
 #
@@ -207,10 +222,7 @@ import_dump_complete: recreate_db import_dump
 
 # e.g. DBNAME=modhand-db-dev  file=../dumps-htw/modhand-2022-12-18--21-00-02.pgdump make import_dump
 
-file=$(shell cat tmp/DUMPFILENAME)
-import_dump: $(file)
-- cat $(file) | docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME}
-- echo "" > tmp/DUMPFILENAME
+
 
 local_dump_file=../mh-dumps/local/modhand-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
 dump_local:
