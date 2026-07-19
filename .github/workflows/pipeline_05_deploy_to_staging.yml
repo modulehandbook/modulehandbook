@@ -30,7 +30,7 @@ jobs:
        
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v7
               with:
                 fetch-depth: 0
 
@@ -45,7 +45,7 @@ jobs:
             
             - name: docker/metadata-action
               id: meta
-              uses: docker/metadata-action@v5
+              uses: docker/metadata-action@v6
               with:
                 images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
                 tags: ${{ inputs.tags}}

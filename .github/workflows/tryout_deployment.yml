@@ -1,0 +1,22 @@
+# this can be used to start the full pipeline from dev branches
+# names are short as they are pre-pended on gh actions
+name: Branch
+on:
+  push:
+    branches: [ '*' ]
+
+jobs:
+  trigger-staging:
+    name: "Tryout"
+    uses: ./.github/workflows/pipeline_05_deploy_generic.yml
+    with:
+      version: sha-de197ac
+      environment: 'staging'
+      #version: ${{ inputs.version }}
+      #host: 'module-handbook-staging.f4.htw-berlin.de'
+
+      #known_hosts: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
+    secrets: 
+      deploy_key: ${{ secrets.DEPLOY_MH_STAG_KEY }}
+      deploy_user: ${{ secrets.DEPLOY_MH_STAG_USER }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}

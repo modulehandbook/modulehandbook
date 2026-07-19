@@ -2,7 +2,8 @@
 name: Staging
 on:
   push:
-    branches: [ main, update_devise_email_texts ]
+    #branches: [ main, update_devise_email_texts ]
+    branches: [ main ]
     tags-ignore: [ '*' ]
 
 env:

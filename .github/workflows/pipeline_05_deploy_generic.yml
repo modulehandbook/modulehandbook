@@ -6,39 +6,47 @@ on:
         version:
           required: true
           type: string
-        host:
-          required: true
-          type: string
         environment:
           required: true
           type: string
-        known_hosts:
-          required: true
-          type: string
       secrets:
-        DEPLOY_KEY: 
+        deploy_key: 
           required: true
-        DEPLOY_USER:
+        deploy_user:
           required: true
-        RAILS_MASTER_KEY:
+        rails_master_key:
           required: true
 
 
 jobs:
 
-    deploy:
+    deploy-gen:
         runs-on: ubuntu-latest
         env:
-            SSH_KEY: ${{ secrets.DEPLOY_KEY }}
-            SSH_USER: ${{ secrets.DEPLOY_USER }}
+            SSH_KEY: ${{ secrets.deploy_key }}
+            SSH_USER: ${{ secrets.deploy_user }}
             SSH_HOST: ${{ inputs.host }}
             KNOWN_HOST: ${{ inputs.known_hosts }}
             REGISTRY: ghcr.io
             IMAGE_NAME: ${{ github.repository }}
        
         steps:
+
+            - name: Dynamic Secret Name Tryout
+            # https://stackoverflow.com/questions/57968497/how-do-i-set-an-env-var-with-a-bash-expression-in-github-actions
+            # https://github.com/orgs/community/discussions/23473
+              run: |
+                echo ${{ env[format('secrets.TEST_{0}', inputs.environment)] }}
+            
+            - name: Write to env Tryout
+              run: |
+                echo "TEST_RAILS_MASTER_KEY=THE_KEY" >> $GITHUB_ENV
+                echo "this should be the same as having it declared with env:"
+                echo ${{ env.IMAGE_NAME }}
+
+
             - name: Checkout Repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v7
               with:
                 fetch-depth: 0
 
@@ -53,7 +61,7 @@ jobs:
             
             - name: docker/metadata-action
               id: meta
-              uses: docker/metadata-action@v5
+              uses: docker/metadata-action@v6
               with:
                 images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
                 tags: ${{ inputs.tags}}
