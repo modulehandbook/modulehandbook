@@ -48,8 +48,8 @@ jobs:
   module-handbook:
     runs-on: ubuntu-latest
     env:
-      SSH_KEY: ${{ secrets.DEPLOY_PRODUCTION_KEY }}
-      SSH_USER: ${{ secrets.DEPLOY_PRODUCTION_USER }}
+      SSH_KEY: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
+      SSH_USER: ${{ secrets.DEPLOY_USER_PRODUCTION }}
       SSH_HOST: 'module-handbook.f4.htw-berlin.de'
       KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODwf4O4tjTDXA6sOiVh9s4sCDqvPEhFdu7mj6TdtaF8'
     steps:
