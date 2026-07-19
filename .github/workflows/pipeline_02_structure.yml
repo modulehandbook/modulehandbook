@@ -81,7 +81,7 @@ jobs:
   trigger-staging-deployment:
     needs: [all_tests, build_and_push]
     name: "3"
-    if: ${{ false && inputs.environment == 'staging' && inputs.push == true }}
+    if: ${{ inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
     with:
       version: ${{ inputs.version }}
@@ -94,13 +94,11 @@ jobs:
     #needs: [all_tests, build_and_push]
     #needs: build_and_push
     name: "3"
-    if: ${{ inputs.environment == 'staging' && inputs.push == true }}
+    if: ${{ false && inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
-      host: 'module-handbook-staging.f4.htw-berlin.de'
       environment: 'staging'
-      known_hosts: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
     secrets: 
       DEPLOY_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
       DEPLOY_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}

@@ -39,21 +39,16 @@ jobs:
               run: |
       
                 echo "--- how to access action variables set in settings/variables/actions"
-                echo "TEST_VARIABLE_STAGING: ${{ vars.TEST_VARIABLE_STAGING }} (works)"
+                echo "1. TEST_VARIABLE_STAGING: ${{ vars.TEST_VARIABLE_STAGING }} (works)"
 
                 echo "--- with the name of the variable in a string:"
-                echo "TEST_VARIABLE_STAGING 4 ${{ vars['TEST_VARIABLE_STAGING'] }} (works!)"
+                echo "2. TEST_VARIABLE_STAGING 4 ${{ vars['TEST_VARIABLE_STAGING'] }} (works!)"
 
                 echo "variable name constructed"
 
-                VAR_NAME="$(echo TEST_VARIABLE_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
-                echo "VAR_NAME1:           ${VAR_NAME}"
-                echo "VAR_NAME2:           $VAR_NAME"
-                echo "vars[env.VAR_NAME]:  ${{ vars[env.VAR_NAME] }}"
-                echo "TEST_VARIABLE_STAGING 6 ${{ vars[env.VAR_NAME] }}"
-                echo "VARNAME=$VARNAME" >> $GITHUB_ENV
-
-
+                VAR_NAME_DYN="$(echo TEST_VARIABLE_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
+                echo "VAR_NAME_DYN:           ${VAR_NAME_DYN}"
+                echo "VAR_NAME_DYN=$VAR_NAME_DYN" >> $GITHUB_ENV
 
                 echo "--- will not be printed"
                 echo "secret constructed"
@@ -64,12 +59,11 @@ jobs:
                 echo " ---- done ---- "
 
           
-
             - name: only available in new step
               run: |
-                echo "VAR_NAME2:           $VAR_NAME"
-                echo "env.VAR_NAME:  ${{ env.VAR_NAME }}"
-                echo "vars[env.VAR_NAME] ${{ vars[env.VAR_NAME] }}"
+                echo "VAR_NAME_DYN:           $VAR_NAME_DYN"
+                echo "env.VAR_NAME_DYN:  ${{ env.VAR_NAME_DYN }}"
+                echo "vars[env.VAR_NAME_DYN] ${{ vars[env.VAR_NAME_DYN] }}"
 
 
             
@@ -101,9 +95,12 @@ jobs:
               run: |
                 source deploy/environments/${{ inputs.environment }}.env
                 echo $DEVISE_EMAIL_HOSTNAME
-                ./deploy/util/env_export_to_github_env.sh
+                ./deploy/util/env_export_to_github_env.sh ${{ inputs.environment }}
                 source $GITHUB_ENV
-                ./deploy/util/env_echo.sh
+                ./deploy/util/env_echo.sh ${{ inputs.environment }}
+            - name: print .env in new step
+              run: |
+                ./deploy/util/env_echo.sh ${{ inputs.environment }}
 
             - name: .env to GITHUB_ENV
               run: |

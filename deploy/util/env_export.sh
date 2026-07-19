@@ -1,6 +1,8 @@
 #!/bin/bash
 
-#for l in $(cat .env); do 
+# exports environment from .env to make it available
+# to rails started directly on host
+
 while read line; do
     if [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*=.*$ ]]; then
         
