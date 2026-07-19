@@ -36,7 +36,7 @@ ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 # -------------------------------------------------------------------
 
 FROM modhand-base AS modhand-prod
-ENV MDHAND_IMAGE=modhand-prod
+ENV MODHAND_IMAGE=modhand-prod
 
 COPY . ./
 
