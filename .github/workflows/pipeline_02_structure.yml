@@ -74,25 +74,12 @@ jobs:
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
 
-  deployment:
-    #needs: [all_tests, build_and_push]
-    needs: build_and_push
-    name: "3"
-    if: ${{ inputs.deploy == true && inputs.push == true }}
-    uses: ./.github/workflows/pipeline_05_deploy_generic.yml
-    with:
-      version: ${{ inputs.version }}
-      environment: 'staging'
-    secrets: 
-      ssh_key: ${{ secrets.DEPLOY_KEY_STAGING }}
-      ssh_user: ${{ secrets.DEPLOY_USER_STAGING }}
-      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
 
   trigger-staging-deployment:
     #needs: [all_tests, build_and_push]
     needs: build_and_push
     name: "3"
-    if: ${{ inputs.environment == 'staging' && inputs.push == true }}
+    if: ${{ inputs.environment == 'staging' && inputs.deploy == true }}
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
@@ -106,7 +93,7 @@ jobs:
     #needs: [all_tests, build_and_push]
     needs: build_and_push
     name: "3"
-    if: ${{ inputs.deploy_production && inputs.push == true }}
+    if: ${{ inputs.environment == 'imi_production' && inputs.deploy == true }}
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
@@ -120,7 +107,7 @@ jobs:
     #needs: [all_tests, build_and_push]
     needs: build_and_push
     name: "3"
-    if: ${{ inputs.deploy_production && inputs.push == true }}
+    if: ${{ inputs.environment == 'production' && inputs.deploy == true }}
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
