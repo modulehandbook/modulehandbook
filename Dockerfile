@@ -42,7 +42,7 @@ ENV RAILS_ENV=$RAILS_ENV
 
 COPY . ./
 
-RUN  # --mount=type=secret,id=rails_master_key,env=RAILS_MASTER_KEY \
+RUN
   set -ex  \
   && yarn install \
   && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
