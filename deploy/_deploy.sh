@@ -16,7 +16,7 @@ if [[ "$ENV" == "" || "$TAG" == "" ]]; then
 fi
 
 if [[ "$SSH_USER" == "" ]]; then
-  echo $SSH_USER environment variable needs to be set 
+  echo SSH_USER environment variable needs to be set 
   exit 2
 fi
 

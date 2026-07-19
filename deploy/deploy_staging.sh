@@ -1,6 +1,8 @@
 #!/bin/bash
 
 ENV=staging
+source secrets/more.env
+./deploy/util/env_export.sh ${ENV}
 
 TAG=$1
 if [ $TAG == ""]; then
