@@ -72,10 +72,6 @@ jobs:
                 echo "env.VAR_NAME:  ${{ env.VAR_NAME }}"
                 echo "vars[env.VAR_NAME] ${{ vars[env.VAR_NAME] }}"
 
-            - name: source .env
-              run: |
-                source deploy/environments/${{ inputs.environment }}.env
-                echo $DEVISE_EMAIL_HOSTNAME
 
             
             - name: Write to env Tryout
@@ -94,6 +90,12 @@ jobs:
               uses: actions/checkout@v7
               with:
                 fetch-depth: 0
+
+            - name: source .env
+              run: |
+                source deploy/environments/${{ inputs.environment }}.env
+                echo $DEVISE_EMAIL_HOSTNAME
+
 
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
