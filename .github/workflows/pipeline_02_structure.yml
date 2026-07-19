@@ -82,26 +82,16 @@ jobs:
     needs: [all_tests, build_and_push]
     name: "3"
     if: ${{ inputs.environment == 'staging' && inputs.push == true }}
-    uses: ./.github/workflows/pipeline_05_deploy_to_staging.yml
-    with:
-      version: ${{ inputs.version }}
-    secrets: 
-      DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
-      RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
-
-  trigger-staging-deployment_via_generic_deployment:
-    #needs: [all_tests, build_and_push]
-    #needs: build_and_push
-    name: "3"
-    if: ${{ false && inputs.environment == 'staging' && inputs.push == true }}
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
       environment: 'staging'
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_STAGING }}
+      ssh_user: ${{ secrets.DEPLOY_USER_STAGING }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
 
-
-  trigger-imi-deployment_via_generic_deployment:
+  trigger-imi-deployment:
     #needs: [all_tests, build_and_push]
     needs: build_and_push
     name: "3"

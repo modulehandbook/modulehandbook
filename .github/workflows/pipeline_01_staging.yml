@@ -2,8 +2,8 @@
 name: Staging
 on:
   push:
-    #branches: [ main, update_devise_email_texts ]
-    branches: [ 'main' ]
+    branches: [ main, update_devise_email_texts ]
+    #branches: [ 'main' ]
     tags-ignore: [ '*' ]
 
 env:
@@ -32,8 +32,3 @@ jobs:
       environment: staging
       version: ${{ needs.defineversion.outputs.version }}
       target: modhand-prod
-    secrets:
-      rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
-      DEPLOY_MH_STAG_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      DEPLOY_MH_STAG_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
-      RAILS_MASTER_KEY_STAGING: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
