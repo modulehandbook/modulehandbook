@@ -4,6 +4,7 @@ FROM docker.io/library/ruby:$RUBY_VERSION-alpine AS  modhand-base
 ENV MODHAND_IMAGE=modhand-base
 ENV BUNDLER_VERSION=2.3.24
 
+ENV RAILS_ENV=production
 ENV NODE_ENV=production
 
 WORKDIR /module-handbook
@@ -36,9 +37,6 @@ ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
 FROM modhand-base AS modhand-prod
 ENV MDHAND_IMAGE=modhand-prod
-
-ARG RAILS_ENV
-ENV RAILS_ENV=$RAILS_ENV
 
 COPY . ./
 
