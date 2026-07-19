@@ -46,8 +46,10 @@ jobs:
 
                 echo "variable constructed"
                 echo "TEST_VARIABLE_STAGING 3 ${{ env[format('env.TEST_VARIABLE_{0}', inputs.environment)] }}"
-                echo "TEST_VARIABLE_STAGING 3 vars ${{ env[format('vars.TEST_VARIABLE_{0}', inputs.environment)] }}"
+                echo "TEST_VARIABLE_STAGING 4  ${{ env['TEST_VARIABLE_STAGING'] }}"
+                echo "TEST_VARIABLE_STAGING 5  ${{ env[format('vars.TEST_VARIABLE_{0}', inputs.environment)] }}"
             
+                echo "--- will not be printed"
                 echo "secret constructed"
                 echo ${{ env[format('secrets.TEST_{0}', inputs.environment)] }}
                 echo "secret directly "
