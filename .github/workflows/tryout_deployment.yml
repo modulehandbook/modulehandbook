@@ -10,7 +10,10 @@ jobs:
   trigger-staging:
     name: "Tryout"
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
-    secrets: inherit
     with:
       version: sha-de197ac
       environment: 'staging'
+    secrets:
+      ssh_user: ${{ secrets.DEPLOY_USER_STAGING }}
+      ssh_key: ${{ secrets.DEPLOY_KEY_STAGING }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
