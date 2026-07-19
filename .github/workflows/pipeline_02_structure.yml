@@ -34,7 +34,7 @@ on:
         default: latest
       run_tests:
         required: false
-        type:boolean
+        type: boolean
         default:false
 
     secrets:
