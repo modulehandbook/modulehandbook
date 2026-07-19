@@ -32,6 +32,10 @@ on:
         required: false
         type: string
         default: latest
+      run_tests:
+        required: false
+        type:boolean
+        default:false
 
     secrets:
       ssh_key:
@@ -40,25 +44,23 @@ on:
         required: false
       rails_master_key:
         required: false
-env:
-  RUN_TESTS: false
 
 jobs:
   unit_tests:
-    if: ${{ env.RUN_TESTS }}
+    if: ${{ inputs.run_tests }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
   system_test:
-    if: ${{ env.RUN_TESTS }}
+    if: ${{ inputs.run_tests }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_system_test.yml
   code_quality:
-    if: ${{ env.RUN_TESTS }}
+    if: ${{ inputs.run_tests }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_code_quality.yml
 
   all_tests:
-    if: ${{ env.RUN_TESTS }}
+    if: ${{ inputs.run_tests }}
     needs: [unit_tests, system_test, code_quality]
     name: All Tests OK
     runs-on: ubuntu-latest
