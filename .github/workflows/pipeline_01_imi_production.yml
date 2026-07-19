@@ -3,6 +3,8 @@ name: IMI
 on:
   push:
     tags: [ '*' ]
+  push:
+    branches: chain_production_deployments
 
 
 env:
