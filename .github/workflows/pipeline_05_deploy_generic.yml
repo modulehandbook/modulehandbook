@@ -20,7 +20,7 @@ jobs:
         env:
             REGISTRY: ghcr.io
             IMAGE_NAME: ${{ github.repository }}
-            SSH_KEY: ${{ secrets.DEPLOY_KEY_STAGING }}
+
         steps:
             - name: Generate Secret names
               run: |
@@ -39,10 +39,7 @@ jobs:
               run: |
                 echo "CHECK_SSH_KEY=${{ vars[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
                 
-            # - name: Set Environment Variables
-            #   run: |
-            #     echo "RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}" >> $GITHUB_ENV
-    
+     
             - name: Checkout Repository
               uses: actions/checkout@v7
               with:
@@ -64,8 +61,7 @@ jobs:
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
               with:
-                #ssh-private-key: "blabla"
-                ssh-private-key: ${{ secrets.DEPLOY_KEY_PRODUCTION}}
+                ssh-private-key: ${{ secrets.DEPLOY_KEY_STAGING}}
                 #ssh-private-key: ${{ env.SSH_KEY }}
                 #ssh-private-key: ${{ secrets[env.SN_DEPLOY_KEY] }}
                 
@@ -73,6 +69,7 @@ jobs:
             - name: Verify SSH Connection
               run: |
                   export SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}
+                  export SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}
                   ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
             
             - name: docker/metadata-action
