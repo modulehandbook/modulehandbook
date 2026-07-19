@@ -9,8 +9,8 @@ jobs:
   mh-imi:
     runs-on: ubuntu-latest
     env:
-      SSH_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-      SSH_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
+      SSH_KEY: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
+      SSH_USER: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
       SSH_HOST: 'mh-imi.f4.htw-berlin.de'
       KNOWN_HOST: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
     steps:
@@ -28,8 +28,8 @@ jobs:
   module-handbook-staging:
     runs-on: ubuntu-latest
     env:
-      SSH_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      SSH_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+      SSH_KEY: ${{ secrets.DEPLOY_KEY_STAGING }}
+      SSH_USER: ${{ secrets.DEPLOY_USER_STAGING }}
       SSH_HOST: 'module-handbook-staging.f4.htw-berlin.de'
       KNOWN_HOST: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
   
@@ -48,8 +48,8 @@ jobs:
   module-handbook:
     runs-on: ubuntu-latest
     env:
-      SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
-      SSH_USER: ${{ secrets.DEPLOY_MH_USER }}
+      SSH_KEY: ${{ secrets.DEPLOY_PRODUCTION_KEY }}
+      SSH_USER: ${{ secrets.DEPLOY_PRODUCTION_USER }}
       SSH_HOST: 'module-handbook.f4.htw-berlin.de'
       KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODwf4O4tjTDXA6sOiVh9s4sCDqvPEhFdu7mj6TdtaF8'
     steps:
