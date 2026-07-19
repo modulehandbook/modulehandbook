@@ -15,6 +15,6 @@ fi
 
 
 
-echo "deploy $TAG to $ENV"
+echo "deploy_environment: deploy $TAG to $ENV"
 
 deploy/_deploy.sh $ENV $TAG 

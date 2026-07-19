@@ -22,9 +22,9 @@ fi
 
 
 source ./deploy/environments/$ENV.env
-echo "---  deploy $TAG to $ENV ($HOST)"
+echo "---  deploy $TAG to $ENV ($SSH_HOST)"
 
-UHOST="$SSH_USER@$HOST"
+UHOST="$SSH_USER@$SSH_HOST"
 
 
 if [ "$RAILS_MASTER_KEY" == "" ]; then
