@@ -26,15 +26,16 @@ jobs:
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:
       tags: type=ref,event=tag
-      push: false
+      push: true
       deploy: true
       environment: imi_production
-      #version: ${{ needs.defineversion.outputs.version }}
-      version: vi0.0.2
+      version: ${{ needs.defineversion.outputs.version }}
+      
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
       ssh_user: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY_IMI_PRODUCTION }}
+x
 
   print_github_env:
     if: false

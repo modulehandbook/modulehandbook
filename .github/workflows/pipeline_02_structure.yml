@@ -83,45 +83,15 @@ jobs:
       rails_master_key: ${{ secrets.rails_master_key }}
 
 
-  trigger-staging-deployment:
+  deployment:
     #needs: [all_tests, build_and_push]
     needs: build_and_push
     name: "3"
-    if: ${{ inputs.environment == 'staging' && inputs.deploy == true }}
+    if: ${{ inputs.deploy == true }}
     uses: ./.github/workflows/pipeline_05_deploy.yml
     with:
       version: ${{ inputs.version }}
-      environment: 'staging'
-      name: 'Deploy Staging'
-    secrets: 
-      ssh_key: ${{ secrets.ssh_key }}
-      ssh_user: ${{ secrets.ssh_user }}
-      rails_master_key: ${{ secrets.rails_master_key }}
-
-  trigger-imi-deployment:
-    #needs: [all_tests, build_and_push]
-    needs: build_and_push
-    name: "3"
-    if: ${{ inputs.environment == 'imi_production' && inputs.deploy == true }}
-    uses: ./.github/workflows/pipeline_05_deploy.yml
-    with:
-      version: ${{ inputs.version }}
-      environment: 'imi_production'
-    secrets: 
-      ssh_key: ${{ secrets.ssh_key }}
-      ssh_user: ${{ secrets.ssh_user }}
-      rails_master_key: ${{ secrets.rails_master_key }}
-
-  trigger-production-deployment:
-    #needs: [all_tests, build_and_push]
-    needs: build_and_push
-    name: "3"
-    if: ${{ inputs.environment == 'production' && inputs.deploy == true }}
-    uses: ./.github/workflows/pipeline_05_deploy.yml
-    with:
-      version: ${{ inputs.version }}
-      #environment: ${{ inputs.environment }}
-      environment: production
+      environment: ${{ inputs.environment }}
     secrets: 
       ssh_key: ${{ secrets.ssh_key }}
       ssh_user: ${{ secrets.ssh_user }}

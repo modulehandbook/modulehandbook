@@ -32,7 +32,6 @@ jobs:
       deploy: true
       environment: staging
       version: ${{ needs.defineversion.outputs.version }}
-      #version: sha-0bf47a5
       target: modhand-prod
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_STAGING }}
