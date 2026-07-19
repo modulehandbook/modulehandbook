@@ -9,8 +9,13 @@ on:
         environment:
           required: true
           type: string
-
-
+      secrets:
+        ssh_key:
+          required: true
+        ssh_user:
+          required: true
+        rails_master_key:
+          required: true
 
 
 jobs:
@@ -20,46 +25,17 @@ jobs:
         env:
             REGISTRY: ghcr.io
             IMAGE_NAME: ${{ github.repository }}
+            SSH_KEY: ${{ secrets.ssh_key }}
+            SSH_USER: ${{ secrets.ssh_user }}
+            RAILS_MASTER_KEY: ${{ secrets.rails_master_key }}
+          
 
         steps:
-            - name: Generate Secret names
-              run: |
-                # SN: Secret name
-                SN_DEPLOY_KEY="$(echo DEPLOY_KEY_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
-                SN_DEPLOY_USER="$(echo DEPLOY_USER_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
-                SN_RAILS_MASTER_KEY="$(echo RAILS_MASTER_KEY_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
-                echo "secret names are: $SN_DEPLOY_KEY"
-                echo "secret names are: $SN_DEPLOY_USER"
-                echo "secret names are: $SN_RAILS_MASTER_KEY"
-                echo "SN_DEPLOY_KEY=$SN_DEPLOY_KEY" >> $GITHUB_ENV
-                echo "SN_DEPLOY_USER=$SN_DEPLOY_USER" >> $GITHUB_ENV
-                echo "SN_RAILS_MASTER_KEY=$SN_RAILS_MASTER_KEY" >> $GITHUB_ENV
-               
-            - name: Write Secrets to Github env - not possible.
-              run: |
-                echo "CHECK_SSH_KEY=${{ vars[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
-                echo "RAILS_MASTER_KEY=${{ secrets[env.SN_RAILS_MASTER_KEY] }}" >> $GITHUB_ENV
-                echo "SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}" >> $GITHUB_ENV
-                echo "SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
-                
      
             - name: Checkout Repository
               uses: actions/checkout@v7
               with:
                 fetch-depth: 0
-                
-  
-            - name: Environment Variables to Github env
-              run: |
-                ./deploy/util/env_export_to_github_env.sh ${{ inputs.environment }}
-       
-
-            - name: print .env in new step
-              run: |
-                ./deploy/util/env_echo.sh ${{ inputs.environment }}
-                echo "SSH_HOST=$HOST" >> $GITHUB_ENV
-                echo "KNOWN_HOST=$KNOWN_HOST" >> $GITHUB_ENV
-       
             
             - name: docker/metadata-action
               id: meta
@@ -72,16 +48,11 @@ jobs:
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
               with:
-                ssh-private-key: ${{ secrets.DEPLOY_KEY_STAGING}}
-                #ssh-private-key: ${{ env.SSH_KEY }}
-                #ssh-private-key: ${{ secrets[env.SN_DEPLOY_KEY] }}
-                
+                ssh-private-key: ${{ env.SSH_KEY }}
             
-            # - name: Verify SSH Connection
-            #   run: |
-            #       SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}
-            #       SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}
-            #       ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
+            - name: Verify SSH Connection
+              run: |
+                  ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
 
 
             
@@ -89,8 +60,5 @@ jobs:
               run: |
                 echo "Deploy version:\n ${{ inputs.version }} to ${{ inputs.environment }}"
                 chmod +x deploy/deploy_environment.sh
-                # export RAILS_MASTER_KEY=${{ secrets[env.SN_RAILS_MASTER_KEY] }}
-                # export SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}
-                # export SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}
                 ./deploy/deploy_environment.sh ${{ inputs.version }} ${{ inputs.environment }}
   
