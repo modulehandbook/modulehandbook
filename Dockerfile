@@ -11,7 +11,7 @@ WORKDIR /module-handbook
 COPY Gemfile Gemfile.lock ./
 
 ENV GENERAL_DEPS="bash gcompat libpq tzdata nodejs yarn"
-ENV BUILD_DEPS=g"it linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev"
+ENV BUILD_DEPS="git linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev"
 ENV NOKOGIRI_SYSTEM_LIBS="build-base libxml2-dev libxslt-dev"
 ENV AO="--no-install-recommends --no-cache"
 # general dependencies
@@ -26,31 +26,23 @@ RUN apk update \
   && bundle config set without 'development test' \
   && bundle config \
   && bundle install  \
+  && yarn install \
   && apk del builddependencies
 
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
 # -------------------------------------------------------------------
-# Production without assets (for Pull Requests)
-# -------------------------------------------------------------------
-
-FROM modhand-base AS modhand-prod-no-assets
-ENV MODHAND_IMAGE=modhand-prod-no-assets
-
-COPY . ./
-
-# -------------------------------------------------------------------
 # Production
 # -------------------------------------------------------------------
 
-FROM modhand-prod-no-assets AS modhand-prod
+FROM modhand-base AS modhand-prod
 ENV MODHAND_IMAGE=modhand-prod
-ARG RAILS_MASTER_KEY
-ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
+
+COPY . ./
 
 RUN set -ex  \
   && yarn install \
-  && rails assets:precompile
+  && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # -------------------------------------------------------------------
 # Development & Test
@@ -59,8 +51,8 @@ RUN set -ex  \
 FROM modhand-base AS modhand-dev
 ENV MODHAND_IMAGE=modhand-dev
 
-ENV RAILS_ENV development
-ENV NODE_ENV development
+ENV RAILS_ENV=development
+ENV NODE_ENV=development
 
 RUN bundle config unset without \
     && bundle config \

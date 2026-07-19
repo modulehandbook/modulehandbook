@@ -10,7 +10,9 @@ while true; do
     then
       make static_code_checks
     else
-      bin/rails test
+      #bin/rails test
+
+      make test
     fi
 
 

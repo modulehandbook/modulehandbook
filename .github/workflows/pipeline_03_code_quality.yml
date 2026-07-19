@@ -1,10 +1,7 @@
 name: 'rubocop, reek, brakeman'
 
 on:
-  push:
-    branches: '*'
   workflow_call:
-  pull_request:
 
 jobs:
   rubocop:
@@ -14,7 +11,7 @@ jobs:
     steps:
         
       - name: Check out repo code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -33,7 +30,7 @@ jobs:
     steps:
 
       - name: Check out repo code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -51,7 +48,7 @@ jobs:
     steps:
 
       - name: Check out repo code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:

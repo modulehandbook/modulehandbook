@@ -20,7 +20,7 @@ class ProgramsController < ApplicationController
   # GET /programs/1.json
   def show
 
-    @tab = (params['tab'] || :program).to_sym
+    @tab = (params['tab'] || :table).to_sym
     @course_programs = @program
                        .course_programs
                        .includes(:course)

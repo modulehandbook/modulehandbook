@@ -8,8 +8,8 @@
 # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
 
 services:
-  nginx:
-    profiles: [ dontstart ]
+ # nginx:
+ #   profiles: [ dontstart ]
   
   module-handbook-exporter:
     profiles: [ dontstart ]
@@ -25,10 +25,12 @@ services:
   module-handbook:
     platform: linux/amd64
     build:
+      secrets:
+        - rails_master_key
       context: .
       dockerfile: Dockerfile
       target: modhand-dev
-    image: mh-local-build
+
     ports:
       - "3000:3000"
     volumes:
@@ -39,3 +41,6 @@ services:
       - RAILS_ENV=development
       - PARALLEL_WORKERS=1
     restart: "no"
+secrets:
+  rails_master_key:
+    environment: RAILS_MASTER_KEY

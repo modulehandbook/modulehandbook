@@ -62,8 +62,7 @@ class ProgramsTest < ApplicationSystemTestCase
   test 'copy a program' do
     @original = programs(:copy_test)
 
-    # visit copy_program_url(@original.id)
-    visit program_url(@original.id)
+    visit program_url(@original.id, tab: :program)
     click_on 'Copy'
 
     click_on 'Update Program'

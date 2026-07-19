@@ -2,7 +2,7 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.action_mailer.default_url_options = { host: 'module-handbook-staging.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: ENV['DEVISE_EMAIL_HOSTNAME'] }
   # Code is not reloaded between requests.
   config.cache_classes = true
 

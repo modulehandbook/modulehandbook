@@ -9,30 +9,12 @@ jobs:
   mh-imi:
     runs-on: ubuntu-latest
     env:
-      SSH_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-      SSH_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
+      SSH_KEY: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
+      SSH_USER: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
       SSH_HOST: 'mh-imi.f4.htw-berlin.de'
       KNOWN_HOST: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
     steps:
-      - uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ env.SSH_KEY }}
-      - name: Create Known Hosts File
-        run: |
-            echo $KNOWN_HOST > ~/.ssh/known_hosts
-      - name: Test Connection
-        run: |
-          ssh $SSH_USER@$SSH_HOST "ls -lart"
-
-  infrastructure:
-    runs-on: ubuntu-latest
-    env:
-      SSH_KEY: ${{ secrets.DEPLOY_INF_KEY }}
-      SSH_USER: ${{ secrets.DEPLOY_INF_USER }}
-      SSH_HOST: 'infrastructure.f4.htw-berlin.de'
-      KNOWN_HOST: 'infrastructure.f4.htw-berlin.de ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFrJk3IjoJf61+rHU/ZMyD4ud488roXMJaa2NEeBiNruZGIw7k4YBLaZgCgfQNk+T/vzXTls+XIuY5S6rI8FD2I='
-    steps:
-      - uses: webfactory/ssh-agent@v0.9.0
+      - uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
       - name: Create Known Hosts File
@@ -46,13 +28,13 @@ jobs:
   module-handbook-staging:
     runs-on: ubuntu-latest
     env:
-      SSH_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      SSH_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
+      SSH_KEY: ${{ secrets.DEPLOY_KEY_STAGING }}
+      SSH_USER: ${{ secrets.DEPLOY_USER_STAGING }}
       SSH_HOST: 'module-handbook-staging.f4.htw-berlin.de'
       KNOWN_HOST: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
   
     steps:
-      - uses: webfactory/ssh-agent@v0.9.0
+      - uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
       - name: Create Known Hosts File
@@ -66,12 +48,12 @@ jobs:
   module-handbook:
     runs-on: ubuntu-latest
     env:
-      SSH_KEY: ${{ secrets.DEPLOY_MH_KEY }}
-      SSH_USER: ${{ secrets.DEPLOY_MH_USER }}
+      SSH_KEY: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
+      SSH_USER: ${{ secrets.DEPLOY_USER_PRODUCTION }}
       SSH_HOST: 'module-handbook.f4.htw-berlin.de'
       KNOWN_HOST: 'module-handbook.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODwf4O4tjTDXA6sOiVh9s4sCDqvPEhFdu7mj6TdtaF8'
     steps:
-      - uses: webfactory/ssh-agent@v0.9.0
+      - uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
       - name: Create Known Hosts File
@@ -89,7 +71,7 @@ jobs:
       SSH_HOST: 'progwebtec.f4.htw-berlin.de'
       KNOWN_HOST: 'progwebtec.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
     steps:
-      - uses: webfactory/ssh-agent@v0.9.0
+      - uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
       - name: Create Known Hosts File
@@ -107,7 +89,7 @@ jobs:
       SSH_HOST: 'makesign.f4.htw-berlin.de'
       KNOWN_HOST: 'makesign.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
     steps:
-      - uses: webfactory/ssh-agent@v0.9.0
+      - uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
       - name: Create Known Hosts File
@@ -125,7 +107,7 @@ jobs:
       SSH_HOST: 'showtime.f4.htw-berlin.de'
       KNOWN_HOST: 'showtime.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEC7pNAtG+bnI5K+FENhOng2m9fuD0jWC9okOWiAWOYa'
     steps:
-      - uses: webfactory/ssh-agent@v0.9.0
+      - uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ env.SSH_KEY }}
       - name: Create Known Hosts File

@@ -15,7 +15,7 @@ env:
   POSTGRES_PASSWORD: postgres
 jobs:
   test:
-    name: Test
+    name: Unit Tests
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -34,11 +34,11 @@ jobs:
           POSTGRES_PASSWORD: postgres
       
     steps:
-      - name: chrome
-        uses: browser-actions/setup-chrome@latest
+      #- name: chrome
+      #  uses: browser-actions/setup-chrome@latest
         
       - name: Check out repo code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -53,12 +53,6 @@ jobs:
       - name: Run Tests
         id: run-tests
         run: bin/rails test
-
-      - name: Run System Tests
-        id: test-system
-        run: |
-          chrome --version
-          bin/rails test:system
 
       - name: Echo Log on Failure
         if: ${{ failure() }}

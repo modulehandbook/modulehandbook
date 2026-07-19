@@ -1,13 +1,13 @@
 #!/bin/bash
 
-if [ $(docker ps -qa) == ""]; then
+if [ $(docker ps -qa) == "" ]; then
     echo no container
 else
     echo "remove all container..."
     docker rm $(docker ps -qa)
 fi
 
-if [ $(docker images -qa) == ""]; then
+if [ $(docker images -qa) == "" ]; then
     echo no images
 else
     echo "remove all images..."

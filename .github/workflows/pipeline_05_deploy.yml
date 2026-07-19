@@ -1,0 +1,79 @@
+name: Deploy
+
+on:
+    workflow_call:  # Triggered by the 02: Pipeline Structure workflow
+      inputs:     
+        version:
+          required: true
+          type: string
+        environment:
+          required: true
+          type: string
+        name:
+          required: false
+          type: string
+          default: "Deploy"
+      secrets:
+        ssh_key:
+          required: true
+        ssh_user:
+          required: true
+        rails_master_key:
+          required: true
+
+
+jobs:
+
+    deploy:
+        name: ${{ inputs.name }}
+        runs-on: ubuntu-latest
+        env:
+            REGISTRY: ghcr.io
+            IMAGE_NAME: ${{ github.repository }}
+            SSH_KEY: ${{ secrets.ssh_key }}
+            SSH_USER: ${{ secrets.ssh_user }}
+            RAILS_MASTER_KEY: ${{ secrets.rails_master_key }}
+          
+
+        steps:
+     
+            - name: Checkout Repository
+              uses: actions/checkout@v7
+              with:
+                fetch-depth: 0
+            
+            - name: docker/metadata-action
+              id: meta
+              uses: docker/metadata-action@v6
+              with:
+                images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+                tags: ${{ inputs.version }}
+
+
+            - name: Environment Variables to Github env
+              run: |
+                  ./deploy/util/env_export_to_github_env.sh ${{ inputs.environment }}
+ 
+            - name: print .env in new step
+              run: |
+                 ./deploy/util/env_echo.sh ${{ inputs.environment }}
+                 echo "SSH_HOST=$SSH_HOST" >> $GITHUB_ENV
+                 echo "KNOWN_HOST=$KNOWN_HOST" >> $GITHUB_ENV
+
+            - name: Set Up SSH
+              uses: webfactory/ssh-agent@v0.10.0
+              with:
+                ssh-private-key: ${{ env.SSH_KEY }}
+            
+            - name: Verify SSH Connection
+              run: |
+                  ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
+
+
+            
+            - name: Execute Deployment
+              run: |
+                echo "Deploy version:\n ${{ inputs.version }} to ${{ inputs.environment }}"
+                chmod +x deploy/deploy_environment.sh
+                ./deploy/deploy_environment.sh ${{ inputs.version }} ${{ inputs.environment }}
+  

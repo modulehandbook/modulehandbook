@@ -3,8 +3,10 @@
 name: Branch
 on:
   push:
-    branches: [ '*' ]
-    tags-ignore: [ '*' ]
+     branches: [ '*' ]
+     branches_ignore: main
+     #branches_ignore: [ main, update_devise_email_texts ]
+     tags-ignore: [ '*' ]
 
 jobs:
   branch:
@@ -14,8 +16,5 @@ jobs:
     with:
       tags: type=sha
       push: false # branches should not publish (push) docker images!
+      deploy: false
       target: modhand-dev
-       
-    secrets:
-      rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
- 

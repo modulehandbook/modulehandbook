@@ -22,13 +22,11 @@ services:
     restart: always
 
   module-handbook:
-    env_file: &env_file
-      - path: ./active-environment.env
-        required: false
     image: ghcr.io/modulehandbook/modulehandbook:${TAG_MODULE_HANDBOOK}
     container_name: modulehandbook
     environment:
       - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - RAILS_ENV=${RAILS_ENV}
       - RAILS_DB_HOST="module-handbook-postgres"
       - POSTGRES_USER=modhand
       - POSTGRES_PASSWORD=modhand
@@ -38,31 +36,33 @@ services:
       - TZ=Europe/Berlin
       - EDITOR=vi
       - TAG_MODULE_HANDBOOK=${TAG_MODULE_HANDBOOK}
+      - MODULE_HANDBOOK_INSTANCE=${MODULE_HANDBOOK_INSTANCE}
+      - DEVISE_EMAIL_HOSTNAME=${DEVISE_EMAIL_HOSTNAME}
+      - DEVISE_EMAIL=${DEVISE_EMAIL}
 
     depends_on:
       - module-handbook-postgres
 #     - module-handbook-exporter
     volumes:
       - ./container_logs:/module-handbook/log
-      - ./secrets:/module-handbook/secrets
-      - ./environments:/module-handbook/deploy/environments
       - ./nginx:/nginx
-      - ./deploy/environments:/module-handbook/deploy/environments
+      - ./entrypoints:/module-handbook/entrypoints
     restart: always
 
   nginx:
-     env_file: *env_file
      image: nginx:latest
      container_name: reverse_proxy
      volumes:
          - ./nginx/nginx.conf:/etc/nginx/nginx.conf
          - ./nginx/templates:/etc/nginx/templates
          - ./container_logs/nginx:/var/log/nginx
-         - ./secrets/nginx:/etc/ssl
+         - ./NGINX_CERTIFICATES_GO_HERE_PLEASE:/etc/ssl
      ports:
          - "80:80"
          - "443:443"
      environment:
+        - NGINX_CERT=${NGINX_CERT}
+        - NGINX_KEY=${NGINX_KEY}
         - NGINX_CERT_DIR=/etc/ssl
         - NGINX_PORT=80
         - NGINX_SSL_PORT=443

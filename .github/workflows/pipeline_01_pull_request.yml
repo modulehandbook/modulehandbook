@@ -12,4 +12,4 @@ jobs:
     with:
       tags: type=ref,event=pr
       push: false
-      target: modhand-prod-no-assets
+      target: modhand-dev

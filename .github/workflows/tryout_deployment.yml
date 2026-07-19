@@ -1,0 +1,19 @@
+# this can be used to start the full pipeline from dev branches
+# names are short as they are pre-pended on gh actions
+name: Tryout Deployment
+on:
+  workflow_dispatch:
+  #push:
+  #  branches: [ '*' ]
+
+jobs:
+  trigger-staging:
+    name: "Tryout"
+    uses: ./.github/workflows/pipeline_05_deploy.yml
+    with:
+      version: sha-de197ac
+      environment: 'staging'
+    secrets:
+      ssh_user: ${{ secrets.DEPLOY_USER_STAGING }}
+      ssh_key: ${{ secrets.DEPLOY_KEY_STAGING }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
