@@ -45,6 +45,16 @@ jobs:
                 tags: ${{ inputs.version }}
 
 
+            - name: Environment Variables to Github env
+               run: |
+                 ./deploy/util/env_export_to_github_env.sh ${{ inputs.environment }}
+ 
+            - name: print .env in new step
+               run: |
+                 ./deploy/util/env_echo.sh ${{ inputs.environment }}
+                 echo "SSH_HOST=$HOST" >> $GITHUB_ENV
+                 echo "KNOWN_HOST=$KNOWN_HOST" >> $GITHUB_ENV
+
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
               with:
