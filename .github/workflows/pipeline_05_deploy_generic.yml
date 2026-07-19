@@ -43,8 +43,8 @@ jobs:
             
             - name: Write to env Tryout
               run: |
-                echo "TEST_RAILS_MASTER_KEY=THE_KEY" >> $GITHUB_ENV
-                echo "TEST_RAILS_MASTER_KEY: ${{ env.TEST_RAILS_MASTER_KEY }}""
+                echo "TEST_NOT_FILTERED=HUHU" >> $GITHUB_ENV
+                echo "TEST_NOT_FILTERED: ${{ env.TEST_NOT_FILTERED }}""
                 echo "this should be the same as having it declared with env:"
                 echo "IMAGE_NAME: ${{ env.IMAGE_NAME }}""
 
