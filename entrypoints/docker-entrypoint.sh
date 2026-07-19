@@ -22,6 +22,7 @@ echo "----------  MODHAND_IMAGE = ${MODHAND_IMAGE} --------"
 # fi
 
 bundle exec rails db:migrate
+bundle exec rails util:clean_codes
 bundle exec rails s -b 0.0.0.0
 
 # tail -f Gemfile
