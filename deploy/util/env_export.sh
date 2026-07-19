@@ -4,7 +4,9 @@
 # to rails started directly on host
 
 environment=$1
-if [ "$environment" == "" ]; then
+echo ${environment}
+
+if [[ "${environment}" == "" ]]; then
     env_file=.env
 else
     env_file=deploy/environments/${environment}.env

@@ -41,10 +41,11 @@ ARG RAILS_ENV
 ENV RAILS_ENV=$RAILS_ENV
 
 COPY . ./
-RUN --mount=type=secret,id=rails_master_key,env=RAILS_MASTER_KEY \
+
+RUN  # --mount=type=secret,id=rails_master_key,env=RAILS_MASTER_KEY \
   set -ex  \
   && yarn install \
-  && rails assets:precompile
+  && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # -------------------------------------------------------------------
 # Development & Test
