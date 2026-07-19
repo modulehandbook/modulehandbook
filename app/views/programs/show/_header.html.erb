@@ -10,11 +10,11 @@
 <%= render 'comments/comments_teaser', has_comments_tab: true, this: @program%>
 
 <ul class="nav nav-tabs">
-  <% [['Program', :program, program_path(@program, { tab: :program})],
+  <% [['Table Overview', :table, program_path(@program, { tab: :table})],
       ['Course List', :course_list, program_path(@program, { tab: :course_list, objectives: false })],
       ['with Objectives', :course_list_with_objectives, program_path(@program, { tab: :course_list_with_objectives, objectives: true })],
       ['Plan', :overview,  program_path(@program, { tab: :overview})],
-      ['Table Overview', :table, program_path(@program, { tab: :table})],
+      ['Program Meta', :program, program_path(@program, { tab: :program})],
       ['Topics', :topics, program_path(@program, { tab: :topics})],
       ['Topics/Courses', :topics_for_courses, program_path(@program, {tab: :topics_for_courses})],
       ['Comments', :comments, program_path(@program, {tab: :comments})]
