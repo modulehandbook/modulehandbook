@@ -76,8 +76,8 @@ jobs:
             
             - name: Verify SSH Connection
               run: |
-                  export SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}
-                  export SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}
+                  SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}
+                  SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}
                   ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
 
 
