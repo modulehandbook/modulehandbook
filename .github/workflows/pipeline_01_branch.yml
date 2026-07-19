@@ -4,8 +4,8 @@ name: Branch
 on:
   push:
      branches: [ '*' ]
-     #branches_ignore: main
-     branches_ignore: [ main, update_devise_email_texts ]
+     branches_ignore: main
+     #branches_ignore: [ main, update_devise_email_texts ]
      tags-ignore: [ '*' ]
 
 jobs:

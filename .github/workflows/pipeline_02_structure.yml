@@ -35,7 +35,7 @@ on:
       run_tests:
         required: false
         type: boolean
-        default: false
+        default: true
 
     secrets:
       ssh_key:
@@ -84,8 +84,8 @@ jobs:
 
 
   deployment:
-    #needs: [all_tests, build_and_push]
-    needs: build_and_push
+    needs: [all_tests, build_and_push]
+    #needs: build_and_push
     name: "3"
     if: ${{ inputs.deploy == true }}
     uses: ./.github/workflows/pipeline_05_deploy.yml
