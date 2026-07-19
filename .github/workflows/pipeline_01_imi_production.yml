@@ -1,0 +1,47 @@
+# names are short as they are pre-pended on gh actions
+name: IMI
+on:
+  push:
+    tags: [ '*' ]
+
+
+env:
+  TAG:  ${{ github.ref_name }}
+
+jobs:
+
+  defineversion:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.defineversion.outputs.version }}
+    steps:
+      - id: defineversion
+        run: echo "version=${TAG}" >> "$GITHUB_OUTPUT"
+
+  imi:
+    needs: defineversion
+    name: IMI
+    # this will not work as the ref is ref/tags/0...
+    # if: github.ref == 'refs/heads/master'
+    uses: ./.github/workflows/pipeline_02_structure.yml
+    with:
+      tags: type=ref,event=tag
+      push: true
+      deploy: true
+      environment: imi_production
+      version: ${{ needs.defineversion.outputs.version }}
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
+      ssh_user: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_IMI_PRODUCTION }}
+
+  print_github_env:
+    if: false
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.defineversion.outputs.version}}
+    steps:
+      - name: print github environment
+        continue-on-error: true     
+        run: |
+          echo "---- github:\n${{ toJSON(github) }}"
