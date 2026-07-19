@@ -10,6 +10,7 @@ jobs:
   trigger-staging:
     name: "Tryout"
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
+    secrets: inherit
     with:
       version: sha-de197ac
       environment: 'staging'
