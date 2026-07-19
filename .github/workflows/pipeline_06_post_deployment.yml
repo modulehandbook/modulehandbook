@@ -11,6 +11,7 @@ on:
 
 jobs:
   post_deployment_things:
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy Production
         uses: ./.github/workflows/deploy_production.yml
