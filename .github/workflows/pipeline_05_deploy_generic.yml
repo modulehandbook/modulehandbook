@@ -37,26 +37,23 @@ jobs:
             # https://stackoverflow.com/questions/57968497/how-do-i-set-an-env-var-with-a-bash-expression-in-github-actions
             # https://github.com/orgs/community/discussions/23473
               run: |
-                echo "inputs.environment directly"
-                echo inputs.environment
-                echo "variable directly "
-                echo "TEST_VARIABLE_STAGING 1 ${TEST_VARIABLE_STAGING} (prints nothing)"
-                echo "TEST_VARIABLE_STAGING 2 ${{ vars.TEST_VARIABLE_STAGING }} (works)"
+      
+                echo "--- how to access action variables set in settings/variables/actions"
+                echo "TEST_VARIABLE_STAGING: ${{ vars.TEST_VARIABLE_STAGING }} (works)"
 
-                echo "variable constructed"
-                echo "TEST_VARIABLE_STAGING 3 ${{ vars[format('env.TEST_VARIABLE_{0}', inputs.environment)] }}"
+                echo "--- with the name of the variable in a string:"
                 echo "TEST_VARIABLE_STAGING 4 ${{ vars['TEST_VARIABLE_STAGING'] }} (works!)"
-                echo "TEST_VARIABLE_STAGING 5 ${{ vars[format('vars.TEST_VARIABLE_{0}', 'staging')] }}"
-                echo "TEST_VARIABLE_STAGING 6 ${{ vars[format('vars.TEST_VARIABLE_{0}', 'STAGING')] }}"
-                echo "TEST_VARIABLE_STAGING 7 ${{ vars[format('vars.TEST_VARIABLE_{0}', inputs.environment)] }}"
-                echo "inputs.environment ${{ inputs.environment }}"
-                VAR_NAME="TEST_VARIABLE_${{ inputs.environment }}"
-                echo "VAR_NAME1: ${VAR_NAME}"
-                echo "VAR_NAME2: $VAR_NAME"
-                echo "TEST_VARIABLE_STAGING 4 ${{ vars['TEST_VARIABLE_STAGING'] }} (works!)"
-                echo "env.VAR_NAME ${{ env.VAR_NAME }}"
+
+                echo "variable name constructed"
+
+                VAR_NAME="$(echo TEST_VARIABLE_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]"
+                echo "VAR_NAME1:           ${VAR_NAME}"
+                echo "VAR_NAME2:           $VAR_NAME"
+                echo "vars[env.VAR_NAME]:  ${{ vars[env.VAR_NAME] }}"
                 echo "TEST_VARIABLE_STAGING 6 ${{ vars[env.VAR_NAME] }}"
 
+              
+            
             
                 echo "--- will not be printed"
                 echo "secret constructed"
