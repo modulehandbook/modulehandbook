@@ -98,7 +98,6 @@ jobs:
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
-      version: ${{ inputs.version }}
       host: 'module-handbook-staging.f4.htw-berlin.de'
       environment: 'staging'
       known_hosts: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'

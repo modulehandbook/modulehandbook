@@ -71,6 +71,10 @@ static_code_checks_host:
 - reek
 - brakeman --no-pager
 
+
+quick_push:
+- git commit -am "gh workflow wip $(shell date +%Y-%m-%d--%H-%M-%S)" && git push
+
 #
 #
 #    ---- DOCKER ----

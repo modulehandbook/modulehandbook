@@ -36,8 +36,8 @@ jobs:
             # https://stackoverflow.com/questions/57968497/how-do-i-set-an-env-var-with-a-bash-expression-in-github-actions
             # https://github.com/orgs/community/discussions/23473
               run: |
-                echo "name"
-                echo env[format('secrets.TEST_{0}', inputs.environment)
+                echo "inputs.environment"
+                echo inputs.environment
                 echo "variable"
                 echo ${{ env[format('secrets.TEST_{0}', inputs.environment)] }}
             
