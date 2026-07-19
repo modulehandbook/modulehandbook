@@ -11,8 +11,6 @@ on:
           type: string
 
       secrets:
-        TEST_STAGING:
-          required: true
         deploy_key: 
           required: true
         deploy_user:

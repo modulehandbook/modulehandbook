@@ -73,7 +73,7 @@ static_code_checks_host:
 
 
 quick_push:
-- git commit -am "quickpush $(shell date +%H-%M-%S) workflow wip" && git push && open https://github.com/modulehandbook/modulehandbook/actions
+- git commit -am "quickpush $(shell date +%H-%M-%S) workflow wip" && git push 
 x_quick_push_old:
 - git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
 
