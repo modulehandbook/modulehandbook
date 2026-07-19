@@ -99,10 +99,7 @@ jobs:
     with:
       version: ${{ inputs.version }}
       environment: 'staging'
-    secrets: 
-      DEPLOY_KEY: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      DEPLOY_USER: ${{ secrets.DEPLOY_MH_STAG_USER }}
-      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
+
 
   trigger-imi-deployment_via_generic_deployment:
     #needs: [all_tests, build_and_push]
@@ -112,14 +109,8 @@ jobs:
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
-      host: 'mh-imi.f4.htw-berlin.de'
       environment: 'imi-production'
-      known_hosts: 'mh-imi.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWrRpNEpcWrj53aPwPYjzFfj9hKYtUn8rEttOSQCCml'
-    secrets: 
-      DEPLOY_KEY: ${{ secrets.DEPLOY_MHIMI_KEY }}
-      DEPLOY_USER: ${{ secrets.DEPLOY_MHIMI_USER }}
-      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
-  
+
   trigger-production-deployment:
     needs: [all_tests, build_and_push]
     name: "4"
