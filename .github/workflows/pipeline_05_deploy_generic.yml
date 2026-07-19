@@ -51,10 +51,10 @@ jobs:
                 echo "VAR_NAME2:           $VAR_NAME"
                 echo "vars[env.VAR_NAME]:  ${{ vars[env.VAR_NAME] }}"
                 echo "TEST_VARIABLE_STAGING 6 ${{ vars[env.VAR_NAME] }}"
+                echo "VARNAME=$VARNAME" >> $GITHUB_ENV
 
-              
-            
-            
+
+
                 echo "--- will not be printed"
                 echo "secret constructed"
                 echo ${{ env[format('secrets.TEST_{0}', inputs.environment)] }}
@@ -64,6 +64,19 @@ jobs:
                 echo " ---- done ---- "
 
           
+
+            - name: only available in new step
+              run: |
+                echo "VAR_NAME2:           $VAR_NAME"
+                echo "VAR_NAME2:           $VAR_NAME"
+                echo "env.VAR_NAME:  ${{ env.VAR_NAME }}"
+                echo "vars[env.VAR_NAME] ${{ vars[env.VAR_NAME] }}"
+
+            - name: source .env
+              run: |
+                source deploy/environments/${{ inputs.environment }}.env
+                echo $DEVISE_EMAIL_HOSTNAME
+
             
             - name: Write to env Tryout
               run: |
