@@ -24,7 +24,7 @@ on:
 
 jobs:
 
-    deploy-gen:
+    deploy:
         name: ${{ inputs.name }}
         runs-on: ubuntu-latest
         env:

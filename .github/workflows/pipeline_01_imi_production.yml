@@ -17,12 +17,7 @@ jobs:
     steps:
       - id: defineversion
         run: echo "version=${TAG}" >> "$GITHUB_OUTPUT"
-      - name: print github environment
-        if: false
-        continue-on-error: true     
-        run: |
-          echo "---- github:\n${{ toJSON(github) }}"
-
+      
   imi:
     needs: defineversion
     name: IMI

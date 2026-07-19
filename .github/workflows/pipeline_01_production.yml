@@ -4,7 +4,6 @@ on:
   push:
     tags: [ '*' ]
 
-
 env:
   TAG:  ${{ github.ref_name }}
 
@@ -34,14 +33,3 @@ jobs:
       ssh_key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
       ssh_user: ${{ secrets.DEPLOY_USER_PRODUCTION }}
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
-
-  print_github_env:
-    if: false
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.defineversion.outputs.version}}
-    steps:
-      - name: print github environment
-        continue-on-error: true     
-        run: |
-          echo "---- github:\n${{ toJSON(github) }}"
