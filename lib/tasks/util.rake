@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :util do
   desc 'shortens course codes'
   task clean_codes: :environment do
