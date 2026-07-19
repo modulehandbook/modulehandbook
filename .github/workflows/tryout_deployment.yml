@@ -2,6 +2,7 @@
 # names are short as they are pre-pended on gh actions
 name: Tryout Deployment
 on:
+  workflow_dispatch:
   push:
     branches: [ '*' ]
 
@@ -12,11 +13,3 @@ jobs:
     with:
       version: sha-de197ac
       environment: 'staging'
-      #version: ${{ inputs.version }}
-      #host: 'module-handbook-staging.f4.htw-berlin.de'
-
-      #known_hosts: 'module-handbook-staging.f4.htw-berlin.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEo5BCmDcatOwixOtx2GCrtNbMFzBtOHjeh9+isNrf9'
-    secrets: 
-      deploy_key: ${{ secrets.DEPLOY_MH_STAG_KEY }}
-      deploy_user: ${{ secrets.DEPLOY_MH_STAG_USER }}
-      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}

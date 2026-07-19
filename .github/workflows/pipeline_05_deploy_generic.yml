@@ -10,96 +10,57 @@ on:
           required: true
           type: string
 
-      secrets:
-        deploy_key: 
-          required: true
-        deploy_user:
-          required: true
-        rails_master_key:
-          required: true
-
 
 jobs:
 
     deploy-gen:
         runs-on: ubuntu-latest
         env:
-            SSH_KEY: ${{ secrets.deploy_key }}
-            SSH_USER: ${{ secrets.deploy_user }}
-            SSH_HOST: ${{ inputs.host }}
-            KNOWN_HOST: ${{ inputs.known_hosts }}
             REGISTRY: ghcr.io
             IMAGE_NAME: ${{ github.repository }}
        
         steps:
-
-            - name: Dynamic Secret Name Tryout
-            # https://stackoverflow.com/questions/57968497/how-do-i-set-an-env-var-with-a-bash-expression-in-github-actions
-            # https://github.com/orgs/community/discussions/23473
+            - name: Generate Secret names
               run: |
-      
-                echo "--- how to access action variables set in settings/variables/actions"
-                echo "1. TEST_VARIABLE_STAGING: ${{ vars.TEST_VARIABLE_STAGING }} (works)"
-
-                echo "--- with the name of the variable in a string:"
-                echo "2. TEST_VARIABLE_STAGING 4 ${{ vars['TEST_VARIABLE_STAGING'] }} (works!)"
-
-                echo "variable name constructed"
-
-                VAR_NAME_DYN="$(echo TEST_VARIABLE_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
-                echo "VAR_NAME_DYN:           ${VAR_NAME_DYN}"
-                echo "VAR_NAME_DYN=$VAR_NAME_DYN" >> $GITHUB_ENV
-
-                echo "--- will not be printed"
-                echo "secret constructed"
-                echo ${{ env[format('secrets.TEST_{0}', inputs.environment)] }}
-                echo "secret directly "
-                echo ${{ secrets.TEST_STAGING }}
-
-                echo " ---- done ---- "
-
-          
-            - name: only available in new step
+                # SN: Secret name
+                SN_DEPLOY_KEY="$(echo DEPLOY_KEY_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
+                SN_DEPLOY_USER="$(echo DEPLOY_USER_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
+                SN_RAILS_MASTER_KEY="$(echo RAILS_MASTER_KEY_${{ inputs.environment }} | tr '[:lower:]' '[:upper:]')"
+                echo "secret names are: $SN_DEPLOY_KEY"
+                echo "secret names are: $SN_DEPLOY_USER"
+                echo "secret names are: $SN_RAILS_MASTER_KEY"
+                echo "SN_DEPLOY_KEY=$SN_DEPLOY_KEY" >> $GITHUB_ENV
+                echo "SN_DEPLOY_USER=$SN_DEPLOY_USER" >> $GITHUB_ENV
+                echo "SN_RAILS_MASTER_KEY=$SN_RAILS_MASTER_KEY" >> $GITHUB_ENV
+                 
+            - name: Write Secrets to Github env
               run: |
-                echo "VAR_NAME_DYN:           $VAR_NAME_DYN"
-                echo "env.VAR_NAME_DYN:  ${{ env.VAR_NAME_DYN }}"
-                echo "vars[env.VAR_NAME_DYN] ${{ vars[env.VAR_NAME_DYN] }}"
+                echo "SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}" >> $GITHUB_ENV
+                echo "SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
+                echo "RAILS_MASTER_KEY=${{ secrets[env.SN_RAILS_MASTER_KEY] }}" >> $GITHUB_ENV
 
-
-            
-            - name: Write to env Tryout
-              run: |
-                VARNAME=the_variable_name
-                echo "TEST_NOT_FILTERED=HUHU" >> $GITHUB_ENV
-                echo "VARNAME=$VARNAME" >> $GITHUB_ENV
-
-            - name: Read from  env Tryout
-              run: |
-                echo "TEST_NOT_FILTERED 1: ${{ env.TEST_NOT_FILTERED }}"
-                echo "TEST_NOT_FILTERED 2: $TEST_NOT_FILTERED"
-
-                echo "VARNAME 1: ${{ env.VARNAME }}"
-                echo "VARNAME 2: $VARNAME"
-
-                echo "this should be the same as having it declared with env:"
-                echo "IMAGE_NAME: ${{ env.IMAGE_NAME }}"
-                echo "IMAGE_NAME2: $IMAGE_NAME"
-
-
+            # - name: Set Environment Variables
+            #   run: |
+            #     echo "RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}" >> $GITHUB_ENV
+    
             - name: Checkout Repository
               uses: actions/checkout@v7
               with:
                 fetch-depth: 0
-
-            - name: source .env
+                
+  
+            - name: Environment Variables to Github env
               run: |
                 ./deploy/util/env_export_to_github_env.sh ${{ inputs.environment }}
+       
 
             - name: print .env in new step
               run: |
                 ./deploy/util/env_echo.sh ${{ inputs.environment }}
-
-
+                echo "SSH_HOST=$$HOST" >> $GITHUB_ENV
+                echo "KNOWN_HOST=$$HOST" >> $GITHUB_ENV
+       
+ 
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
               with:
@@ -114,16 +75,13 @@ jobs:
               uses: docker/metadata-action@v6
               with:
                 images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-                tags: ${{ inputs.tags}}
+                tags: ${{ inputs.version }}
 
-            - name: Set Environment Variables
-              run: |
-                echo "RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}" >> $GITHUB_ENV
-
+            
             - name: Execute Deployment
               run: |
-                echo "Deploy version:\n ${{ inputs.version }} to "
+                echo "Deploy version:\n ${{ inputs.version }} to ${{ inputs.environment }}"
                 chmod +x deploy/deploy_environment.sh
-                export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+                #export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
                 ./deploy/deploy_environment.sh ${{ inputs.version }} ${{ inputs.environment }}
   
