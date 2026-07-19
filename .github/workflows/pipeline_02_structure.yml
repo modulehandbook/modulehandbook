@@ -35,7 +35,7 @@ on:
       run_tests:
         required: false
         type: boolean
-        default:false
+        default: false
 
     secrets:
       ssh_key:
