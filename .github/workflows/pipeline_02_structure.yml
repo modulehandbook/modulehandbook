@@ -40,8 +40,8 @@ on:
         required: false
       rails_master_key:
         required: false
-    env:
-      RUN_TESTS: false
+  env:
+    RUN_TESTS: false
 
 jobs:
   unit_tests:
