@@ -65,8 +65,8 @@ jobs:
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
               with:
-                ssh-private-key: "blabla"
-                #ssh-private-key: ${{ secrets.DEPLOY_KEY_STAGING }}
+                #ssh-private-key: "blabla"
+                ssh-private-key: ${{ secrets.DEPLOY_KEY_PRODUCTION}}
                 #ssh-private-key: ${{ env.SSH_KEY }}
                 #ssh-private-key: ${{ secrets[env.SN_DEPLOY_KEY] }}
                 
@@ -88,6 +88,7 @@ jobs:
               run: |
                 echo "Deploy version:\n ${{ inputs.version }} to ${{ inputs.environment }}"
                 chmod +x deploy/deploy_environment.sh
-                #export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+                export RAILS_MASTER_KEY=${{ secrets[env.SN_RAILS_MASTER_KEY] }}
+                export USER=${{ secrets[env.SN_DEPLOY_USER] }}
                 ./deploy/deploy_environment.sh ${{ inputs.version }} ${{ inputs.environment }}
   
