@@ -68,7 +68,6 @@ jobs:
             - name: only available in new step
               run: |
                 echo "VAR_NAME2:           $VAR_NAME"
-                echo "VAR_NAME2:           $VAR_NAME"
                 echo "env.VAR_NAME:  ${{ env.VAR_NAME }}"
                 echo "vars[env.VAR_NAME] ${{ vars[env.VAR_NAME] }}"
 
@@ -76,11 +75,18 @@ jobs:
             
             - name: Write to env Tryout
               run: |
+                VARNAME=the_variable_name
                 echo "TEST_NOT_FILTERED=HUHU" >> $GITHUB_ENV
+                echo "VARNAME=$VARNAME" >> $GITHUB_ENV
+
             - name: Read from  env Tryout
               run: |
                 echo "TEST_NOT_FILTERED 1: ${{ env.TEST_NOT_FILTERED }}"
                 echo "TEST_NOT_FILTERED 2: $TEST_NOT_FILTERED"
+
+                echo "VARNAME 1: ${{ env.VARNAME }}"
+                echo "VARNAME 2: $VARNAME"
+
                 echo "this should be the same as having it declared with env:"
                 echo "IMAGE_NAME: ${{ env.IMAGE_NAME }}"
                 echo "IMAGE_NAME2: $IMAGE_NAME"
@@ -95,7 +101,12 @@ jobs:
               run: |
                 source deploy/environments/${{ inputs.environment }}.env
                 echo $DEVISE_EMAIL_HOSTNAME
+                ./deploy/util/env_export_to_github_env.sh
+                source $GITHUB_ENV
+                ./deploy/util/env_echo.sh
 
+            - name: .env to GITHUB_ENV
+              run: |
 
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
