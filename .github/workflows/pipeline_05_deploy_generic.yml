@@ -18,7 +18,7 @@ jobs:
         env:
             REGISTRY: ghcr.io
             IMAGE_NAME: ${{ github.repository }}
-       
+            SSH_KEY: ${{ secrets.DEPLOY_KEY_STAGING }}
         steps:
             - name: Generate Secret names
               run: |
@@ -35,9 +35,9 @@ jobs:
                
             - name: Write Secrets to Github env
               run: |
-                echo "SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}" >> $GITHUB_ENV
-                echo "SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
-                echo "RAILS_MASTER_KEY=${{ secrets[env.SN_RAILS_MASTER_KEY] }}" >> $GITHUB_ENV
+                #echo "SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}" >> $GITHUB_ENV
+                #echo "SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
+                #echo "RAILS_MASTER_KEY=${{ secrets[env.SN_RAILS_MASTER_KEY] }}" >> $GITHUB_ENV
                 echo "CHECK_SSH_KEY=${{ vars[env.SN_DEPLOY_KEY] }}" >> $GITHUB_ENV
                 
             # - name: Set Environment Variables
@@ -65,9 +65,9 @@ jobs:
             - name: Set Up SSH
               uses: webfactory/ssh-agent@v0.10.0
               with:
-                ssh-private-key: ${{ secrets.DEPLOY_KEY_STAGING }}
+                #ssh-private-key: ${{ secrets.DEPLOY_KEY_STAGING }}
                 #ssh-private-key: ${{ secrets[env.SN_DEPLOY_KEY] }}
-                #ssh-private-key: ${{ env.SSH_KEY }}
+                ssh-private-key: ${{ env.SSH_KEY }}
             
             - name: Verify SSH Connection
               run: |

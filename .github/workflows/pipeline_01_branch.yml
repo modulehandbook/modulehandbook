@@ -3,8 +3,8 @@
 name: Branch
 on:
   push:
-     branches: [ 'main' ]
-  #  branches: [ '*' ]
+     #branches: [ 'main' ]
+     branches: [ '*' ]
      tags-ignore: [ '*' ]
 
 jobs:
