@@ -40,8 +40,7 @@ ENV MDHAND_IMAGE=modhand-prod
 
 COPY . ./
 
-RUN
-  set -ex  \
+RUN set -ex  \
   && yarn install \
   && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
