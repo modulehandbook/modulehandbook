@@ -104,7 +104,6 @@ jobs:
     uses: ./.github/workflows/pipeline_05_deploy_generic.yml
     with:
       version: ${{ inputs.version }}
-      environment: ${{ inputs.environment }}
       environment: 'imi_production'
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
