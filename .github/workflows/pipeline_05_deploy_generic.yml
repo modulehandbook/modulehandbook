@@ -9,6 +9,10 @@ on:
         environment:
           required: true
           type: string
+      secrets:
+        DEPLOY_KEY_PRODUCTION:
+          required: true
+
 
 
 jobs:
@@ -73,7 +77,7 @@ jobs:
             
             - name: Verify SSH Connection
               run: |
-                
+                  export SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}
                   ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
             
             - name: docker/metadata-action
