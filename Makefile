@@ -73,7 +73,9 @@ static_code_checks_host:
 
 
 quick_push:
-- git commit -am "gh workflow wip $(shell date +%Y-%m-%d--%H-%M-%S)" && git push
+- git commit -am "gh workflow wip $(shell date +%Y-%m-%d--%H-%M-%S)" && git push && open https://github.com/modulehandbook/modulehandbook/actions
+x_quick_push_old:
+- git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
 
 #
 #
@@ -388,8 +390,6 @@ clean:
 - rm -rf gem_cache
 - docker compose down --rmi all -v --remove-orphans
 
-quick-push:
-- git commit -am "commit at $(shell date "+%H:%M:%S")" && git push && open https://github.com/modulehandbook/modulehandbook/actions
 
 selenium:
 - open http://localhost:7900/?autoconnect=1&resize=scale&password=secret
