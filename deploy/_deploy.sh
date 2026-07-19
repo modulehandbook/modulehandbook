@@ -15,8 +15,8 @@ if [[ "$ENV" == "" || "$TAG" == "" ]]; then
   exit 1
 fi
 
-if [[ "$USER" == "" ]]; then
-  echo $USER environment variable needs to be set 
+if [[ "$SSH_USER" == "" ]]; then
+  echo $SSH_USER environment variable needs to be set 
   exit 2
 fi
 
@@ -24,7 +24,7 @@ fi
 source ./deploy/environments/$ENV.env
 echo "---  deploy $TAG to $ENV ($HOST)"
 
-UHOST="$USER@$HOST"
+UHOST="$SSH_USER@$HOST"
 
 
 if [ "$RAILS_MASTER_KEY" == "" ]; then

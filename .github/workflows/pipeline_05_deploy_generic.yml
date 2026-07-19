@@ -74,11 +74,11 @@ jobs:
                 #ssh-private-key: ${{ secrets[env.SN_DEPLOY_KEY] }}
                 
             
-            - name: Verify SSH Connection
-              run: |
-                  SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}
-                  SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}
-                  ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
+            # - name: Verify SSH Connection
+            #   run: |
+            #       SSH_USER=${{ secrets[env.SN_DEPLOY_USER] }}
+            #       SSH_KEY=${{ secrets[env.SN_DEPLOY_KEY] }}
+            #       ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo 'SSH Connection Successful'"
 
 
             
