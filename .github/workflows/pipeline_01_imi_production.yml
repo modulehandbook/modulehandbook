@@ -33,7 +33,7 @@ jobs:
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
       ssh_user: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
-      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_IMI_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
 
   print_github_env:
     if: false
