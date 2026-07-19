@@ -53,8 +53,8 @@ jobs:
                 VAR_NAME="TEST_VARIABLE_${{ inputs.environment }}"
                 echo "VAR_NAME: ${VAR_NAME}"
                 echo "TEST_VARIABLE_STAGING 4 ${{ vars['TEST_VARIABLE_STAGING'] }} (works!)"
-                echo "env.VAR_NAME ${{ env.VAR_NAME }}
-                echo "TEST_VARIABLE_STAGING 6 ${{ vars[env.VAR_NAME] }}
+                echo "env.VAR_NAME ${{ env.VAR_NAME }}"
+                echo "TEST_VARIABLE_STAGING 6 ${{ vars[env.VAR_NAME] }}"
 
             
                 echo "--- will not be printed"
