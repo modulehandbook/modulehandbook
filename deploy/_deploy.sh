@@ -59,8 +59,7 @@ ssh $UHOST "echo TAG_MODULE_HANDBOOK_EXPORTER=sha-4ef1b2d >> .env"
 ssh $UHOST "echo RAILS_MASTER_KEY=$RAILS_MASTER_KEY >> .env"
 ssh $UHOST "echo TAG_MODULE_HANDBOOK=$TAG >> .env"
 
-# just delete mh images
-# ssh $UHOST "rm ./docker-cleanup.sh"
+ssh $UHOST "./docker-cleanup.sh"
 
 ssh $UHOST "docker compose down"
 ssh $UHOST "docker compose up -d"
