@@ -16,10 +16,12 @@ jobs:
       version: ${{ steps.defineversion.outputs.version }}
     steps:
       - id: defineversion
-        run: echo "version=${TAG}" >> "$GITHUB_OUTPUT"
+        run: |
+        echo "setting version to ${TAG}"
+        echo "version=${TAG}" >> "$GITHUB_OUTPUT"
 
   build-and-test:
-    needs: defineversion
+    needs: [defineversion, build-and-test]
     name: Prod
     # this will not work as the ref is ref/tags/0...
     # if: github.ref == 'refs/heads/master'
@@ -33,7 +35,7 @@ jobs:
 
 
   deploy_imi_production:
-    needs: build-and-test
+    needs: [defineversion, build-and-test]
     name: "IMI"
     uses: ./.github/workflows/pipeline_05_deploy.yml
     with:
@@ -51,8 +53,8 @@ jobs:
     uses: ./.github/workflows/pipeline_05_deploy.yml
     with:
       environment: production
-      #version: ${{ needs.defineversion.outputs.version }}
-      version: 0.2.27
+      version: ${{ needs.defineversion.outputs.version }}
+      #version: 0.2.27
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
       ssh_user: ${{ secrets.DEPLOY_USER_PRODUCTION }}

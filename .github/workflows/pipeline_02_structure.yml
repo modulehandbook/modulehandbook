@@ -90,7 +90,7 @@ jobs:
           echo "target: ${{ inputs.target }}"
           echo "environment: ${{ inputs.environment }}"
       - name: print github environment
-        if: false
+        #if: false
         continue-on-error: true     
         run: |
           echo "---- github:\n${{ toJSON(github) }}"
