@@ -244,6 +244,15 @@ import_dump_via_transfer_dir:
 - 	docker compose exec modulehandbook-database pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME} /var/lib/postgresql/$(file)
 
 
+
+DBNAME_DEV=modhand-db-dev
+transfer_file=tmp/mh-imi-$(shell date +%Y-%m-%d--%H-%M-%S).pgdump
+transfer-mh-imi-to-local:
+- echo "dumping to ${transfer_file}"
+- ssh local@mh-imi.f4.htw-berlin.de "docker compose exec -T module-handbook-postgres pg_dump  -Fc --clean --if-exists --create --encoding UTF8 -h localhost -d modhand-db-prod -U modhand" > ${transfer_file}
+- cat $(transfer_file) | docker compose exec -T module-handbook-postgres pg_restore --verbose --clean --no-acl --no-owner -h localhost -U modhand -d ${DBNAME_DEV}
+
+
 #
 #
 #    ---- SERVER ADMIN ----

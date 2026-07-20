@@ -34,7 +34,7 @@ class CoursesTest < ApplicationSystemTestCase
     fill_in 'Skills intellectual', with: @course.skills_intellectual
     fill_in 'Skills knowledge understanding', with: @course.skills_knowledge_understanding
     fill_in 'Skills practical', with: @course.skills_practical
-    click_on 'Create Course'
+    click_on 'course_form_submit'
 
     assert_text 'Course was successfully created'
     click_on 'Back'
@@ -58,7 +58,7 @@ class CoursesTest < ApplicationSystemTestCase
     fill_in 'Skills intellectual', with: @course.skills_intellectual
     fill_in 'Skills knowledge understanding', with: @course.skills_knowledge_understanding
     fill_in 'Skills practical', with: @course.skills_practical
-    click_on 'Update Course'
+    click_on 'course_form_submit'
 
     assert_text 'Course was successfully updated', wait: true
     click_on 'Back'
@@ -68,7 +68,7 @@ class CoursesTest < ApplicationSystemTestCase
     visit edit_course_url(@course2)
     new_data = 3732.3
     fill_in('course_lectureHrs', with: new_data)
-    click_on 'Update Course'
+    click_on 'course_form_submit'
     assert_text 'Course was successfully updated'
     assert_text new_data
     course = Course.find(@course2.id)
@@ -79,7 +79,7 @@ class CoursesTest < ApplicationSystemTestCase
     visit edit_course_url(@course2)
     new_data = 58_293.3
     fill_in('course_labHrs', with: new_data)
-    click_on 'Update Course'
+    click_on 'course_form_submit'
     assert_text 'Course was successfully updated'
     assert_text new_data
     course = Course.find(@course2.id)
@@ -90,7 +90,7 @@ class CoursesTest < ApplicationSystemTestCase
     visit edit_course_url(@course2)
     new_data = 782_347_823.3
     fill_in('course_tutorialHrs', with: new_data)
-    click_on 'Update Course'
+    click_on 'course_form_submit'
     assert_text 'Course was successfully updated'
     assert_text new_data
     course = Course.find(@course2.id)
@@ -101,7 +101,7 @@ class CoursesTest < ApplicationSystemTestCase
     visit edit_course_url(@course2)
     new_data = 'many computers'
     fill_in('course_equipment', with: new_data)
-    click_on 'Update Course'
+    click_on 'course_form_submit'
     assert_text 'Course was successfully updated'
     assert_text new_data
     course = Course.find(@course2.id)
@@ -112,7 +112,7 @@ class CoursesTest < ApplicationSystemTestCase
     visit edit_course_url(@course2)
     new_data = 'sunny room in bright colors'
     fill_in('course_room', with: new_data)
-    click_on 'Update Course'
+    click_on 'course_form_submit'
     assert_text 'Course was successfully updated'
     assert_text new_data
     course = Course.find(@course2.id)
@@ -124,7 +124,7 @@ class CoursesTest < ApplicationSystemTestCase
     assert_logged_in
     new_data = 'does need more editing'
     fill_in('course_comment', with: new_data)
-    click_on 'Update Course'
+    click_on 'course_form_submit'
     assert_text 'Course was successfully updated'
     assert_text new_data
     course = Course.find(@course3.id)
@@ -135,7 +135,7 @@ class CoursesTest < ApplicationSystemTestCase
     visit edit_course_url(@course3)
     new_data = 'Prof. Dr. Barne Kleinen'
     fill_in('course_responsible_person', with: new_data)
-    click_on 'Update Course'
+    click_on 'course_form_submit'
     assert_text 'Course was successfully updated'
     assert_text new_data
     course = Course.find(@course3.id)

@@ -1,5 +1,6 @@
 <%= form_with(model: course, local: true) do |form| %>
   <%= render 'layouts/form_include' %>
+
   <% if course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
@@ -18,12 +19,14 @@
   </h4>
   <%= hidden_field_tag(:program_id, program.id) %>
   <% end %>
-
+    <div class="actions">
+    <%= form.submit  class: "btn btn-success btn-sm" %>
+  </div>
 
   <%= render 'course_template', course: @course, editing: true, form: form %>
 
 
   <div class="actions">
-    <%= form.submit  class: "btn btn-success btn-sm" %>
+    <%= form.submit(class: "btn btn-success btn-sm",id: 'course_form_submit') %>
   </div>
 <% end %>

@@ -33,7 +33,6 @@ if [ "$RAILS_MASTER_KEY" == "" ]; then
   #echo set to: $RAILS_MASTER_KEY
 fi
 
-#export RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key)
 if [ $RAILS_MASTER_KEY == "" ]; then
   echo "RAILS_MASTER_KEY missing"
   exit 42
@@ -59,7 +58,8 @@ ssh $UHOST "echo TAG_MODULE_HANDBOOK_EXPORTER=sha-4ef1b2d >> .env"
 ssh $UHOST "echo RAILS_MASTER_KEY=$RAILS_MASTER_KEY >> .env"
 ssh $UHOST "echo TAG_MODULE_HANDBOOK=$TAG >> .env"
 
-ssh $UHOST "./docker-cleanup.sh"
+
 
 ssh $UHOST "docker compose down"
+ssh $UHOST "./docker-cleanup.sh"
 ssh $UHOST "docker compose up -d"
