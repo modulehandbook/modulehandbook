@@ -9,10 +9,22 @@ on:
     
 jobs:
   consume-matrix:
-  strategy:
-    matrix:
-      environment: ${{ fromJSON(inputs.deploy-to) }}
-  uses: ./.github/workflows/matrix_03_deploy_all.yml
-  with:
-    environment: ${{ matrix.environment }}
-    version: 'sha-fb8b096'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: ${{ fromJSON(inputs.deploy-to) }}
+    steps:
+      #- uses: actions/checkout@v4
+      - run: 
+      - name: Test matrix
+        run: echo "Processing ${{ matrix.environment }}"
+           
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: call deployment
+       # this does not work :(
+       # uses: ./.github/workflows/matrix_03_deploy_${{ matrix.environment }}.yml
+        uses: ./.github/workflows/matrix_03_deploy_all.yml
+        with:
+          environment: ${{ matrix.environment }}
+          version: 'sha-fb8b096'
