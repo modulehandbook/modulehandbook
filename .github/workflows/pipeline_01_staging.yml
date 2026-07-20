@@ -17,8 +17,8 @@ jobs:
     steps:
       - id: defineversion
         run: |
-        echo "setting version to sha-${SHA:0:7}"
-        echo "version=sha-${SHA:0:7}" >> "$GITHUB_OUTPUT"
+          echo "setting version to sha-${SHA:0:7}"
+          echo "version=sha-${SHA:0:7}" >> "$GITHUB_OUTPUT"
 
   build-and-test:
     needs: defineversion

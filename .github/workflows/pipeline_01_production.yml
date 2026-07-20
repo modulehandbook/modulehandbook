@@ -17,8 +17,8 @@ jobs:
     steps:
       - id: defineversion
         run: |
-        echo "setting version to ${TAG}"
-        echo "version=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "setting version to ${TAG}"
+          echo "version=${TAG}" >> "$GITHUB_OUTPUT"
 
   build-and-test:
     needs: [defineversion, build-and-test]
