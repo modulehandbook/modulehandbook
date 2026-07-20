@@ -69,7 +69,7 @@ iptables -A OUTPUT -o lo -d 127.0.0.0/8 -s 127.0.0.0/8 -j ACCEPT
 #
 # Include Rules for Module-Handbook
 #
-./firewall-mh-extern.sh
+./firewall-module-handbook-parts/firewall-mh-extern.sh
 
 #
 # alles von/nach aussen DROP
@@ -125,7 +125,7 @@ iptables -A OUTPUT -p tcp --dport 465 -d 141.45.10.101 -j ACCEPT
 #
 # Include Rules for Module-Handbook
 #
-./firewall-mh-intern.sh
+./firewall-module-handbook-parts/firewall-mh-intern.sh
 
 
 iptables-save > /etc/firewall.conf
