@@ -2,7 +2,7 @@
 name: Production
 on:
   push:
-    tags: [ 'xxxx' ]
+    tags: [ '*' ]
 
 env:
   TAG:  ${{ github.ref_name }}
@@ -17,7 +17,7 @@ jobs:
       - id: defineversion
         run: echo "version=${TAG}" >> "$GITHUB_OUTPUT"
 
-  production:
+  build-and-test:
     needs: defineversion
     name: Prod
     # this will not work as the ref is ref/tags/0...
@@ -27,6 +27,31 @@ jobs:
       tags: type=ref,event=tag
       push: true
       deploy: false
+      environment: production
+      version: ${{ needs.defineversion.outputs.version }}
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
+      ssh_user: ${{ secrets.DEPLOY_USER_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
+
+  deploy_imi_production:
+    needs: build-and-test
+    name: "3"
+    if: ${{ inputs.environment == 'imi_production' }}
+    uses: ./.github/workflows/pipeline_05_deploy.yml
+    with:
+      environment: imi_production
+      version: ${{ needs.defineversion.outputs.version }}
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
+      ssh_user: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_IMI_PRODUCTION }}
+
+  deploy_production:
+    name: "3"
+    if: ${{ inputs.environment == 'production' }}
+    uses: ./.github/workflows/pipeline_05_deploy.yml
+    with:
       environment: production
       version: ${{ needs.defineversion.outputs.version }}
     secrets: 
