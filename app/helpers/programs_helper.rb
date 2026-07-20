@@ -16,7 +16,18 @@ module ProgramsHelper
     return "" if n == 0
     "#{'%.0f' % n}"
   end
+  def htw_art(cp)
+    
+    return "-" if cp.required.nil?
+    
+    map = {'required' => 'P', 
+          'mandatory' => 'P',
+          'elective' => 'WP',
+          'elective-option' => 'OPT' }
 
+    return map[cp.required.to_s]
+    
+  end
   def htw_form(course)
     su = course.lectureHrs || 0
     lab = course.labHrs || 0

@@ -43,7 +43,7 @@
           <tr>
             <td><%=link_to cp.course.code, cp.course %></td>
             <td ><%=link_to cp.course.name, cp.course %></td>
-            <td>Art</td>
+            <td><%= htw_art(cp)%></td>
             <td><%= htw_form(cp.course) %></td>
             <td><%= htw_sws(cp.course)%></td>
             <td><%= cp.course.ects %></td>
