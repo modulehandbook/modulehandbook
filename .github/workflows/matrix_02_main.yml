@@ -9,7 +9,6 @@ on:
     
 jobs:
   consume-matrix:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         environment: ${{ fromJSON(inputs.deploy-to) }}
