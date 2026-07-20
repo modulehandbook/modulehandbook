@@ -3,7 +3,7 @@
 name: Branch
 on:
   push:
-     branches: [ 'main', 'wf_matrix' ]
+     branches: [ 'main' ]
      tags-ignore: [ '*' ]
 
 jobs:
