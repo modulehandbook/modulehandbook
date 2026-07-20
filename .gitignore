@@ -83,3 +83,5 @@ active-environment.env
 .env
 
 github-action-ips
+
+**/output/firewall-conf/*

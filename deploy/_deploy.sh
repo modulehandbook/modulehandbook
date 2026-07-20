@@ -48,8 +48,8 @@ scp -r nginx $UHOST:~
 scp -r entrypoints $UHOST:~
 
 
-scp deploy/vms/copy_to_host_home_directories/* $UHOST:~
-scp deploy/vms/copy_to_host_home_directories/.bashrc $UHOST:~
+scp -r deploy/vms/copy_to_host_home_directories/* $UHOST:~
+#scp deploy/vms/copy_to_host_home_directories/.bashrc $UHOST:~
 
 
 # .env

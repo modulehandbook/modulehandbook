@@ -97,6 +97,13 @@ jobs:
       ssh_user: ${{ secrets.ssh_user }}
       rails_master_key: ${{ secrets.rails_master_key }}
 
+  post_deployment:
+    needs: deployment
+    name: "4"
+    uses: ./.github/workflows/pipeline_06_post_deployment.yml
+    with:
+      version: ${{ inputs.version }}
+
   info:
     name: Show Parameter
     runs-on: ubuntu-latest
