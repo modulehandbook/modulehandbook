@@ -27,6 +27,12 @@ module ProgramsHelper
     "SL/Ü"
   end
 
+  def sws_ll(course)
+    su = course.lectureHrs || 0
+    lab = course.labHrs || 0
+    su + 2*lab
+  end
+
 
 
 end

@@ -6,14 +6,22 @@
 
 <table class="table table-sm" xmlns="http://www.w3.org/1999/html">
     <% ects_total = 0
+       lectureHrsTotal = 0
+       labHrsTotal = 0
+       
        @semester.each do | semester, cps | %>
 
     
-    <% lectureHrs = cps.inject(0){|sum,cp| sum = sum + (cp.course.lectureHrs.nil? ?  0 : cp.course.lectureHrs ) } %>
-    <% labHrs = cps.inject(0){|sum,cp| sum = sum + (cp.course.labHrs.nil? ?  0 : cp.course.labHrs ) } %>
-
-       <% ects = cps.inject(0){|sum,cp| sum = sum + (cp.course.ects.nil? ?  0 : cp.course.ects ) }
-           ects_total += ects unless semester.to_s.starts_with? 'elective'%>
+    <% 
+    lectureHrs = cps.inject(0){|sum,cp| sum = sum + (cp.course.lectureHrs.nil? ?  0 : cp.course.lectureHrs ) } 
+    labHrs = cps.inject(0){|sum,cp| sum = sum + (cp.course.labHrs.nil? ?  0 : cp.course.labHrs ) } 
+    ects = cps.inject(0){|sum,cp| sum = sum + (cp.course.ects.nil? ?  0 : cp.course.ects ) }
+    ects_total += ects unless semester.to_s.starts_with? 'elective'
+    lectureHrsTotal += lectureHrs unless semester.to_s.starts_with? 'elective'
+    labHrsTotal += labHrs unless semester.to_s.starts_with? 'elective'
+          
+          
+          %>
 
       <tr><td colspan ="8">&nbsp;</td></tr>
     <thead class="table-light">
@@ -25,6 +33,7 @@
           <th>Form</th>
           <th>SWS</th>
           <th>LP</th>
+          <th>LL</th>
           <th>Info</th>
         </tr>
         </thead>
@@ -38,6 +47,7 @@
             <td><%= htw_form(cp.course) %></td>
             <td><%= htw_sws(cp.course)%></td>
             <td><%= cp.course.ects %></td>
+            <td><%= sws_ll(cp.course) %></td>
             <td class="bg-required-<%= cp.required %>">
               <span class="bg-<%= cp.course.aasm_state %>">&nbsp;&nbsp;&nbsp; </span>&nbsp;&nbsp;
               <%= link_to "#{cp.required}, in #{cp.course.course_programs.count} programs", course_programs_url(course_id: cp.course) %>
@@ -54,7 +64,7 @@
             <th></th>
             <th><%= pn(lectureHrs) %>/<%= pn(labHrs) %></th>
             <th><%= ects %></th>
-            <th></th>
+            <th><%= lectureHrs+2*labHrs %></th>
           </tr>
           </thead>
 
@@ -62,7 +72,11 @@
 
 
 </table>
+Summe: <%= ects_total %> ECTS
+<br>
+Lecture Hours: <%= lectureHrsTotal %> SWS 
+<br>
+Lab Hours: <%= labHrsTotal %> SWS 
+<br>
 
-        Summe: <%= ects_total %> ECTS
-
-
+Lehrleistung gesamt = <%= lectureHrsTotal + 2* labHrsTotal%>
