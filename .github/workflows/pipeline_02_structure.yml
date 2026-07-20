@@ -19,10 +19,6 @@ on:
         required: false
         type: boolean
         default: false
-      deploy:
-        required: false
-        type: boolean
-        default: false
 
       environment:
         required: false
@@ -41,14 +37,6 @@ on:
         required: false
         type: boolean
         default: false
-
-    secrets:
-      ssh_key:
-        required: false
-      ssh_user:
-        required: false
-      rails_master_key:
-        required: false
 
 jobs:
   unit_tests:
@@ -76,7 +64,7 @@ jobs:
   
   build_and_push:
     if: ${{ inputs.build_docker }}
-    # needs: test_app   #### for now to get faster results on the builds
+    needs: all_tests
     name: "2"
     uses: ./.github/workflows/pipeline_04_docker_build_and_push.yml
     with:
@@ -87,28 +75,6 @@ jobs:
       version: ${{ inputs.version }}
     secrets:
       rails_master_key: ${{ secrets.rails_master_key }}
-
-
-  # deployment:
-  #   needs: [all_tests, build_and_push]
-  #   #needs: build_and_push
-  #   name: "3"
-  #   if: ${{ inputs.deploy == true }}
-  #   uses: ./.github/workflows/pipeline_05_deploy.yml
-  #   with:
-  #     version: ${{ inputs.version }}
-  #     environment: ${{ inputs.environment }}
-  #   secrets: 
-  #     ssh_key: ${{ secrets.ssh_key }}
-  #     ssh_user: ${{ secrets.ssh_user }}
-  #     rails_master_key: ${{ secrets.rails_master_key }}
-# 
-  # post_deployment:
-  #   needs: deployment
-  #   name: "4"
-  #   uses: ./.github/workflows/pipeline_06_post_deployment.yml
-  #   with:
-  #     version: ${{ inputs.version }}
 
   info:
     name: Show Parameter
