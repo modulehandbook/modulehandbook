@@ -39,6 +39,7 @@ services:
       - MODULE_HANDBOOK_INSTANCE=${MODULE_HANDBOOK_INSTANCE}
       - DEVISE_EMAIL_HOSTNAME=${DEVISE_EMAIL_HOSTNAME}
       - DEVISE_EMAIL=${DEVISE_EMAIL}
+      - LANDING_PATH=${LANDING_PATH}
 
     depends_on:
       - module-handbook-postgres
