@@ -1,0 +1,58 @@
+
+name: "M A"
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Deploy
+        run: echo "Deploy to  ${{ inputs.environment }}"
+
+
+  deploy_production:
+    name: "3"
+    if: ${{ inputs.environment == 'production' }}
+    uses: ./.github/workflows/pipeline_05_deploy.yml
+    with:
+      version: ${{ inputs.version }}
+      environment: ${{ inputs.environment }}
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
+      ssh_user: ${{ secrets.DEPLOY_USER_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
+
+  deploy_staging:
+    name: "3"
+    if: ${{ inputs.environment == 'staging' }}
+    uses: ./.github/workflows/pipeline_05_deploy.yml
+    with:
+      version: ${{ inputs.version }}
+      environment: ${{ inputs.environment }}
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_STAGING }}
+      ssh_user: ${{ secrets.DEPLOY_USER_STAGING }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
+
+
+
+  deploy_imi_production:
+    name: "3"
+    if: ${{ inputs.environment == 'imi_production' }}
+    uses: ./.github/workflows/pipeline_05_deploy.yml
+    with:
+      version: ${{ inputs.version }}
+      environment: ${{ inputs.environment }}
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
+      ssh_user: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_IMI_PRODUCTION }}

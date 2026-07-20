@@ -2,7 +2,8 @@
 name: Production
 on:
   push:
-    tags: [ 'xxxx' ]
+    branches: wf_matrix
+    tags: [ '*' ]
 
 env:
   TAG:  ${{ github.ref_name }}
@@ -15,9 +16,11 @@ jobs:
       version: ${{ steps.defineversion.outputs.version }}
     steps:
       - id: defineversion
-        run: echo "version=${TAG}" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "setting version to ${TAG}"
+          echo "version=${TAG}" >> "$GITHUB_OUTPUT"
 
-  production:
+  build-and-test:
     needs: defineversion
     name: Prod
     # this will not work as the ref is ref/tags/0...
@@ -26,9 +29,32 @@ jobs:
     with:
       tags: type=ref,event=tag
       push: true
-      deploy: false
       environment: production
       version: ${{ needs.defineversion.outputs.version }}
+      target: modhand-prod
+
+
+  deploy_imi_production:
+    needs: [defineversion, build-and-test]
+    name: "IMI"
+    uses: ./.github/workflows/pipeline_05_deploy.yml
+    with:
+      environment: imi_production
+      version: ${{ needs.defineversion.outputs.version }}
+      #version: 0.2.27
+    secrets: 
+      ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
+      ssh_user: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_IMI_PRODUCTION }}
+
+  deploy_production:
+    needs: [defineversion, build-and-test]
+    name: "Deploy Production"
+    uses: ./.github/workflows/pipeline_05_deploy.yml
+    with:
+      environment: production
+      version: ${{ needs.defineversion.outputs.version }}
+      #version: 0.2.27
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
       ssh_user: ${{ secrets.DEPLOY_USER_PRODUCTION }}

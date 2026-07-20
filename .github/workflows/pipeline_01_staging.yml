@@ -2,8 +2,8 @@
 name: Staging
 on:
   push:
-    branches: [ 'main' ]
-    #branches: [ main, update_devise_email_texts ]
+    #branches: [ 'main' ]
+    branches: [ main,  wf_matrix ]
     tags-ignore: [ '*' ]
 
 env:
@@ -16,9 +16,11 @@ jobs:
       version: ${{ steps.defineversion.outputs.version}}
     steps:
       - id: defineversion
-        run: echo "version=sha-${SHA:0:7}" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "setting version to sha-${SHA:0:7}"
+          echo "version=sha-${SHA:0:7}" >> "$GITHUB_OUTPUT"
 
-  staging:
+  build-and-test:
     needs: defineversion
     name: "Stag"
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main' }}
@@ -26,12 +28,19 @@ jobs:
     with:
       tags: type=sha
       push: true
-      deploy: true
       environment: staging
       version: ${{ needs.defineversion.outputs.version }}
       target: modhand-prod
+
+
+  deploy_staging:
+    needs: [defineversion, build-and-test]
+    name: "Deploy Staging"
+    uses: ./.github/workflows/pipeline_05_deploy.yml
+    with:
+      environment: staging
+      version: ${{ needs.defineversion.outputs.version }}
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_STAGING }}
       ssh_user: ${{ secrets.DEPLOY_USER_STAGING }}
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY_STAGING }}
-

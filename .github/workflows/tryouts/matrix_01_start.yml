@@ -1,0 +1,12 @@
+name: Start
+on:
+  workflow_dispatch:
+  #push:
+  #   branches: [ '*' ]
+
+jobs:
+  branch:
+    name: Start
+    uses: ./.github/workflows/matrix_02_main.yml
+    with:
+      deploy-to: '["production", "staging", "imi_production"]'
