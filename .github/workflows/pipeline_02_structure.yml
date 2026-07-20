@@ -28,32 +28,30 @@ on:
         required: false
         type: string
         default: latest
+
 # these are mainly for testing
-      run_tests:
+      fast_track:
         required: false
         type: boolean
         default: false
-      build_docker:
-        required: false
-        type: boolean
-        default: true
+
 
 jobs:
   unit_tests:
-    if: ${{ inputs.run_tests }}
+    if: ${{ !inputs.fast_track }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
   system_test:
-    if: ${{ inputs.run_tests }}
+    if: ${{ !inputs.fast_track }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_system_test.yml
   code_quality:
-    if: ${{ inputs.run_tests }}
+    if: ${{ !inputs.fast_track }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_code_quality.yml
 
   all_tests:
-    if: ${{ inputs.run_tests }}
+    if: ${{ !inputs.fast_track }}
     needs: [unit_tests, system_test, code_quality]
     name: All Tests OK
     runs-on: ubuntu-latest
@@ -63,7 +61,7 @@ jobs:
           
   
   build_and_push:
-    if: ${{ inputs.build_docker }}
+    if: ${{ !inputs.fast_track }}
     needs: all_tests
     name: "2"
     uses: ./.github/workflows/pipeline_04_docker_build_and_push.yml
