@@ -3,7 +3,7 @@
 name: Branch
 on:
   push:
-     branches: [ 'main' ]
+     branches: [ 'main', 'wf_matrix' ]
      tags-ignore: [ '*' ]
 
 jobs:
@@ -14,5 +14,6 @@ jobs:
     with:
       tags: type=sha
       push: false # branches should not publish (push) docker images!
-      deploy: false
       target: modhand-dev
+      environment: development
+      version: latest

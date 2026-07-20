@@ -18,7 +18,7 @@ jobs:
       - id: defineversion
         run: echo "version=sha-${SHA:0:7}" >> "$GITHUB_OUTPUT"
 
-  staging:
+  build-and-test:
     needs: defineversion
     name: "Stag"
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/main' }}

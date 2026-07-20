@@ -27,13 +27,10 @@ jobs:
     with:
       tags: type=ref,event=tag
       push: true
-      deploy: false
       environment: production
       version: ${{ needs.defineversion.outputs.version }}
-    secrets: 
-      ssh_key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
-      ssh_user: ${{ secrets.DEPLOY_USER_PRODUCTION }}
-      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
+      target: modhand-prod
+
 
   deploy_imi_production:
     needs: build-and-test
