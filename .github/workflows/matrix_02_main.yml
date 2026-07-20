@@ -5,7 +5,7 @@ on:
     inputs:
       deploy-to:
         type: string
-        required:true
+        required: true
     
 jobs:
   consume-matrix:
