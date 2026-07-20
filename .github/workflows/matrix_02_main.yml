@@ -19,4 +19,9 @@ jobs:
       - name: Test matrix
         run: echo "Processing ${{ matrix.environment }}"
       - name: call deployment
-        uses: ./.github/workflows/matrix_03_deploy_${{ matrix.environment }}.yml
+       # this does not work :(
+       # uses: ./.github/workflows/matrix_03_deploy_${{ matrix.environment }}.yml
+        uses: ./.github/workflows/matrix_03_deploy_all.yml
+          with:
+            environment: ${{ matrix.environment }}
+            version: 'sha-fb8b096'
