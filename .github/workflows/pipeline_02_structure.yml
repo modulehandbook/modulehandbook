@@ -32,10 +32,15 @@ on:
         required: false
         type: string
         default: latest
+# these are mainly for testing
       run_tests:
         required: false
         type: boolean
-        default: true
+        default: false
+      build_docker:
+        required: false
+        type: boolean
+        default: false
 
     secrets:
       ssh_key:
@@ -70,7 +75,7 @@ jobs:
           
   
   build_and_push:
-    if: false
+    if: ${{ inputs.build_docker }}
     # needs: test_app   #### for now to get faster results on the builds
     name: "2"
     uses: ./.github/workflows/pipeline_04_docker_build_and_push.yml
