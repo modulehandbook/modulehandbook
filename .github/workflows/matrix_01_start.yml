@@ -9,6 +9,4 @@ jobs:
     name: Start
     uses: ./.github/workflows/matrix_02_main.yml
     with:
-      #deploy-to: ['a', 'b', 'c']
-      # JSON, e.g., '["item1", "item2", "item3"]'
-      deploy-to: '["a", "b", "c"]'
+      deploy-to: '["production", "staging", "imi_production"]'
