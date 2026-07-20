@@ -9,11 +9,10 @@ on:
     
 jobs:
   consume-matrix:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: ${{ fromJSON(inputs.deploy-to) }}
-    uses: ./.github/workflows/matrix_03_deploy_all.yml
-    with:
-      environment: ${{ matrix.environment }}
-      version: 'sha-fb8b096'
+  strategy:
+    matrix:
+      environment: ${{ fromJSON(inputs.deploy-to) }}
+  uses: ./.github/workflows/matrix_03_deploy_all.yml
+  with:
+    environment: ${{ matrix.environment }}
+    version: 'sha-fb8b096'
