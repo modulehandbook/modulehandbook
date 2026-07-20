@@ -20,3 +20,4 @@ jobs:
       ssh_user: ${{ secrets.DEPLOY_USER_PRODUCTION }}
       ssh_key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY_PRODUCTION }}
+

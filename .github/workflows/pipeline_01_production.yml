@@ -38,8 +38,8 @@ jobs:
     uses: ./.github/workflows/pipeline_05_deploy.yml
     with:
       environment: imi_production
-      #version: ${{ needs.defineversion.outputs.version }}
-      version: 0.2.27
+      version: ${{ needs.defineversion.outputs.version }}
+      #version: 0.2.27
     secrets: 
       ssh_key: ${{ secrets.DEPLOY_KEY_IMI_PRODUCTION }}
       ssh_user: ${{ secrets.DEPLOY_USER_IMI_PRODUCTION }}
