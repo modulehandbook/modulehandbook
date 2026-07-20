@@ -56,7 +56,14 @@ class ProgramsController < ApplicationController
       @rows["electives #{semester}"] = cps
     end
     @options = @program.course_programs.where(required: 'elective-option')
-    @semester = @rows
+
+    # sort the courses by code within each semester
+    @semester = {}
+    @rows.each do | semester, cps |
+      @semester[semester] =  cps.sort do |cp1, cp2|
+           compare_course_codes(cp1.course.code, cp2.course.code)
+        end
+    end
     @semester
   end
 

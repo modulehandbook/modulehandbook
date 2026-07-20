@@ -1,15 +1,14 @@
-<% content_for(:title, "Program Overview") %>
+<% content_for(:title, " Program Overview") %>
 
 <br/></br>
 
 <%= link_to @program.name, @program %>
 
-
 <table class="table table-sm" xmlns="http://www.w3.org/1999/html">
     <% ects_total = 0
        @semester.each do | semester, cps | %>
 
-
+    
     <% lectureHrs = cps.inject(0){|sum,cp| sum = sum + (cp.course.lectureHrs.nil? ?  0 : cp.course.lectureHrs ) } %>
     <% labHrs = cps.inject(0){|sum,cp| sum = sum + (cp.course.labHrs.nil? ?  0 : cp.course.labHrs ) } %>
 
@@ -30,6 +29,7 @@
         </tr>
         </thead>
       <tbody>
+
       <% cps.each do | cp | %>
           <tr>
             <td><%=link_to cp.course.code, cp.course %></td>
