@@ -4,8 +4,8 @@ name: Branch
 on:
   push:
      branches: [ '*' ]
-     #branches_ignore: main
-     branches_ignore: [main, chain_production_deployments ]
+     #branches_ignore: 'wf-matrix'
+     branches_ignore: [main, wf-matrix ]
      tags-ignore: [ '*' ]
 
 jobs:

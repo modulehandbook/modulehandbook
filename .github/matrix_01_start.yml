@@ -1,4 +1,4 @@
-name: Matrix Start
+name: Start
 on:
   workflow_dispatch:
   push:
