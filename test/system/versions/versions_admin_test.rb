@@ -14,7 +14,7 @@ class VersionsAdminTest < ApplicationSystemTestCase
     click_on 'edit_course'
     fill_in 'course_responsible_person', with: responsible_person
     fill_in 'course_ects', with: ects
-    click_on 'Update Course'
+    click_on 'course_form_submit'
     assert_text 'Course was successfully updated.'
   end
 
