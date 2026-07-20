@@ -2,12 +2,13 @@
 name: "M A"
 on:
   workflow_call:
-    version:
-      required: true
-      type: string
-    environment:
-      required: true
-      type: string
+    inputs:
+      version:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
     
 jobs:
   deploy:
