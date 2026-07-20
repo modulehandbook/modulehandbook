@@ -3,8 +3,6 @@ name: IMI
 on:
   push:
     tags: [ '*' ]
-    branches: chain_production_deployments
-
 
 env:
   TAG:  ${{ github.ref_name }}
