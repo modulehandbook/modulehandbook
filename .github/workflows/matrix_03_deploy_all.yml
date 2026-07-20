@@ -11,6 +11,12 @@ on:
         type: string
     
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Deploy
+        run: echo "Deploy to  ${{ inputs.environment }}"
 
 
   deploy_production:
