@@ -1,10 +1,10 @@
 # this can be used to start the full pipeline from dev branches
 # names are short as they are pre-pended on gh actions
-name: B
+name: Branch
 on:
   push:
      branches: [ '*' ]
-     branches_ignore: [ 'main', 'wf_matrix' ]
+     branches-ignore: [ 'main', 'wf_matrix' ]
      tags-ignore: [ '*' ]
 
 jobs:
