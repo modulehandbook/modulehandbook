@@ -1,15 +1,12 @@
 #!/bin/bash
 
-if [ $(docker ps -qa) == "" ]; then
-    echo no container
-else
-    echo "remove all container..."
-    docker rm $(docker ps -qa)
-fi
+echo "remove all container..."
+docker rm $(docker ps -qa)
 
-if [ $(docker images -qa) == "" ]; then
-    echo no images
-else
-    echo "remove all images..."
-    docker rmi $(docker images -qa)
-fi
+
+echo "remove all images..."
+docker rmi $(docker images -q ghcr.io/modulehandbook/modulehandbook)
+
+
+sudo rm container_logs/*.log
+sudo rm container_logs/nginx/*.log

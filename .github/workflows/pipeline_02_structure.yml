@@ -28,41 +28,34 @@ on:
         required: false
         type: string
         default: latest
-
+        
 # these are mainly for testing
-      fast_track:
+      run_tests:
         required: false
         type: boolean
         default: false
-
+      build_docker:
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   unit_tests:
-    if: ${{ !inputs.fast_track }}
+    if: ${{ inputs.run_tests }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_test_rails_app.yml
   system_test:
-    if: ${{ !inputs.fast_track }}
+    if: ${{ inputs.run_tests }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_system_test.yml
   code_quality:
-    if: ${{ !inputs.fast_track }}
+    if: ${{ inputs.run_tests }}
     name: "1"
     uses: ./.github/workflows/pipeline_03_code_quality.yml
 
-  all_tests:
-    if: ${{ !inputs.fast_track }}
-    needs: [unit_tests, system_test, code_quality]
-    name: All Tests OK
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo All Tests have passed!
-          
-  
+
   build_and_push:
-    if: ${{ !inputs.fast_track }}
-    needs: all_tests
+    if: ${{ inputs.build_docker }}
     name: "2"
     uses: ./.github/workflows/pipeline_04_docker_build_and_push.yml
     with:
@@ -72,7 +65,7 @@ jobs:
       environment: ${{ inputs.environment }}
       version: ${{ inputs.version }}
     secrets:
-      rails_master_key: ${{ secrets.rails_master_key }}
+      rails_master_key: ${{ secrets.RAILS_MASTER_KEY_IMI_PRODUCTION }}
 
   info:
     name: Show Parameter
