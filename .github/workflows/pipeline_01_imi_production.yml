@@ -2,7 +2,7 @@
 name: IMI
 on:
   push:
-    tags: [ '*' ]
+    tags: [ 'XXXX' ]
 
 env:
   TAG:  ${{ github.ref_name }}

@@ -70,6 +70,7 @@ jobs:
           
   
   build_and_push:
+    if: false
     # needs: test_app   #### for now to get faster results on the builds
     name: "2"
     uses: ./.github/workflows/pipeline_04_docker_build_and_push.yml
@@ -83,26 +84,26 @@ jobs:
       rails_master_key: ${{ secrets.rails_master_key }}
 
 
-  deployment:
-    needs: [all_tests, build_and_push]
-    #needs: build_and_push
-    name: "3"
-    if: ${{ inputs.deploy == true }}
-    uses: ./.github/workflows/pipeline_05_deploy.yml
-    with:
-      version: ${{ inputs.version }}
-      environment: ${{ inputs.environment }}
-    secrets: 
-      ssh_key: ${{ secrets.ssh_key }}
-      ssh_user: ${{ secrets.ssh_user }}
-      rails_master_key: ${{ secrets.rails_master_key }}
-
-  post_deployment:
-    needs: deployment
-    name: "4"
-    uses: ./.github/workflows/pipeline_06_post_deployment.yml
-    with:
-      version: ${{ inputs.version }}
+  # deployment:
+  #   needs: [all_tests, build_and_push]
+  #   #needs: build_and_push
+  #   name: "3"
+  #   if: ${{ inputs.deploy == true }}
+  #   uses: ./.github/workflows/pipeline_05_deploy.yml
+  #   with:
+  #     version: ${{ inputs.version }}
+  #     environment: ${{ inputs.environment }}
+  #   secrets: 
+  #     ssh_key: ${{ secrets.ssh_key }}
+  #     ssh_user: ${{ secrets.ssh_user }}
+  #     rails_master_key: ${{ secrets.rails_master_key }}
+# 
+  # post_deployment:
+  #   needs: deployment
+  #   name: "4"
+  #   uses: ./.github/workflows/pipeline_06_post_deployment.yml
+  #   with:
+  #     version: ${{ inputs.version }}
 
   info:
     name: Show Parameter
