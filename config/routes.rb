@@ -16,9 +16,12 @@ Rails.application.routes.draw do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
 
+  get 'welcome', to: 'welcome#index', defaults: { allow_redirect: 'false' }
+
   authenticated :user do
     root to: 'welcome#index', as: :authenticated_root
   end
+
 
   get 'abilities', to: 'abilities#index', as: 'abilities'
   resources :users, only: %i[index show edit update destroy]

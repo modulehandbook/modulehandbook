@@ -33,7 +33,6 @@ if [ "$RAILS_MASTER_KEY" == "" ]; then
   #echo set to: $RAILS_MASTER_KEY
 fi
 
-#export RAILS_MASTER_KEY=$(cat secrets/config/credentials/$ENV.key)
 if [ $RAILS_MASTER_KEY == "" ]; then
   echo "RAILS_MASTER_KEY missing"
   exit 42
