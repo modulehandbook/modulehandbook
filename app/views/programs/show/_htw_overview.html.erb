@@ -33,26 +33,35 @@
           <th>Form</th>
           <th>SWS</th>
           <th>LP</th>
+          <th>Edit</th>
           <th>LL</th>
-          <th>Info</th>
+          <th>State</th>
+          <th>CP-Link</th>
+          
         </tr>
         </thead>
       <tbody>
 
       <% cps.each do | cp | %>
           <tr>
+           
             <td><%=link_to cp.course.code, cp.course %></td>
             <td ><%=link_to cp.course.name, cp.course %></td>
             <td><%= htw_art(cp)%></td>
             <td><%= htw_form(cp.course) %></td>
             <td><%= htw_sws(cp.course)%></td>
             <td><%= cp.course.ects %></td>
+            <td><%= link_to "✎", edit_course_url(cp.course) %></td>
             <td><%= sws_ll(cp.course) %></td>
-            <td class="bg-required-<%= cp.required %>">
-              <span class="bg-<%= cp.course.aasm_state %>">&nbsp;&nbsp;&nbsp; </span>&nbsp;&nbsp;
-              <%= link_to "#{cp.required}, in #{cp.course.course_programs.count} programs", course_programs_url(course_id: cp.course) %>
+            
+            <td>
+            <span class="bg-<%= cp.course.aasm_state %>">&nbsp;&nbsp;&nbsp; </span>&nbsp;&nbsp;
             </td>
-          </tr>
+            <td class="bg-required-<%= cp.required %>"><%= link_to "#{cp.required}", course_programs_url(course_id: cp.course) %>
+            <%= link_to "✎", edit_course_program_url(cp) %></td>
+           
+          
+            </tr>
 
           <% end %>
       </tbody>
@@ -64,7 +73,10 @@
             <th></th>
             <th><%= pn(lectureHrs) %>/<%= pn(labHrs) %></th>
             <th><%= ects %></th>
+            <th></th>
             <th><%= lectureHrs+2*labHrs %></th>
+            <th></th>
+            <th></th>
           </tr>
           </thead>
 
