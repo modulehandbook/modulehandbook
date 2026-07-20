@@ -1,0 +1,14 @@
+name: Matrix Start
+on:
+  workflow_dispatch:
+  push:
+     branches: [ '*' ]
+
+jobs:
+  branch:
+    name: Start
+    uses: ./.github/workflows/matrix_02_main.yml
+    with:
+      #deploy-to: ['a', 'b', 'c']
+      # JSON, e.g., '["item1", "item2", "item3"]'
+      deploy-to: '["a", "b", "c"]'

@@ -1,0 +1,18 @@
+
+name: "Main"
+on:
+  workflow_call:
+    inputs:
+      deploy-to:
+        type: string
+        required:true
+    
+jobs:
+  consume-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: ${{ fromJSON(inputs.deploy-to) }}
+    steps:
+      #- uses: actions/checkout@v4
+      - run: echo "Processing ${{ matrix.environment }}"
